@@ -1,13 +1,15 @@
 import {createApp} from "vue";
 import App from "./apps/AppText.vue";
-import { WebLayer3D } from "ethereal";
+import { WebLayer3D } from "../packages/ethereal/ethereal.es.js";
 
-const cardVue = createApp(App, {}).mount(document.createElement("div"));
+const cardDiv = document.createElement("div")
+const cardVue = createApp(App, {}).mount(cardDiv);
 const cardLayer = new WebLayer3D(cardVue.$el);
 
-var data = {
+const data = {
+    div: cardDiv,
     webLayer3D: cardLayer,
-    width: 3,   // what we want the target size to be
-    height: 2
+    width: 2,   // what we want the target size to be
+    height: 2.25
 }
 export default data

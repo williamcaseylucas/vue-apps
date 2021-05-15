@@ -7,7 +7,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "ethereal": "file:../../gatech/ethereal/packages/ethereal",
     "vue": "^3.0.5"
   },
   "devDependencies": {
