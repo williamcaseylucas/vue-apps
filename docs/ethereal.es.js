@@ -1,3 +1,4 @@
+var _imports_0 = "./assets/logo.03d6d6da.png";
 var t = THREE;
 var e = THREE.Matrix4;
 class r {
@@ -9988,4 +9989,4 @@ const gh = new class {
     this.top = 0, this.left = 0, this.bottom = 0, this.right = 0, this.horizontal = 0, this.vertical = 0;
   }
 }(), vh = new hh.Matrix4(), xh = new hh.Vector3(), wh = new hh.Vector3(0, 0, -1);
-export {yh as y};
+export {_imports_0 as _, yh as y};

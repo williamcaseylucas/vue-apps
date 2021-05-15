@@ -1,6 +1,5 @@
 import {p as pushScopeId, a as popScopeId, r as reactive, o as openBlock, b as createBlock, d as createVNode, t as toDisplayString, u as unref, F as Fragment, e as createTextVNode, c as createApp} from "./vendor.js";
-import {_ as _imports_0} from "./logo.js";
-import {y as yh} from "./ethereal.es.js";
+import {_ as _imports_0, y as yh} from "./ethereal.es.js";
 var HelloWorld_vue_vue_type_style_index_0_scoped_true_lang = "\na[data-v-1e1fadd6] {\n  color: #42b983;\n}\n";
 pushScopeId("data-v-1e1fadd6");
 const _hoisted_1$1 = /* @__PURE__ */ createVNode("p", null, [
@@ -59,4 +58,11 @@ const _sfc_main = {
 };
 const cardDiv = document.createElement("div");
 const cardVue = createApp(_sfc_main, {}).mount(cardDiv);
-new yh(cardVue.$el);
+const cardLayer = new yh(cardVue.$el);
+const data = {
+  div: cardDiv,
+  webLayer3D: cardLayer,
+  width: 2,
+  height: 2.5
+};
+export {data as d};
