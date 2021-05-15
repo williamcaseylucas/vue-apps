@@ -1,7 +1,7 @@
 <template>
   <div id="top">
       <img alt="Vue logo" src="../assets/logo.png" />
-      <HelloWorld msg="Hello World, From the HelloWorld Component" />
+      <HelloWorld msg="Hello From the HelloWorld Component" />
   </div>
 </template>
 
