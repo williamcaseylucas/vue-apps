@@ -13,6 +13,7 @@ export default defineConfig({
       port: 443
     }
   },
+  base: './',
   build: {
     minify: false,
     outDir: "docs",

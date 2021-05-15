@@ -52,7 +52,7 @@ const _sfc_main = {
     return (_ctx, _cache) => {
       return openBlock(), createBlock("div", _hoisted_1, [
         _hoisted_2,
-        createVNode(_sfc_main$1, {msg: "Hello World, From the HelloWorld Component"})
+        createVNode(_sfc_main$1, {msg: "Hello From the HelloWorld Component"})
       ]);
     };
   }
