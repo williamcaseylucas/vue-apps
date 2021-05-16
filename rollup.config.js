@@ -6,8 +6,6 @@
 //   hubsTest2
 // ];
 import vue from 'rollup-plugin-vue'
-//import css from 'rollup-plugin-css-only'
-//import resolve from 'rollup-plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
 import url from '@rollup/plugin-url';
@@ -20,9 +18,6 @@ export default {
         dir: 'docs/dist',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        // paths: {
-        //     vue: 'https://resources.realitymedia.digital/html-objects/libs/vue.js'
-        // },
         format: 'esm'
       }, 
 
@@ -35,23 +30,9 @@ export default {
           limit: Infinity,
           publicPath: '/public',
       }),
-      //css(),
-    //   postcss({
-    //     extensions: [ '.css' ],
-    //   }),
-    rollupPluginNodeResolve(),
-
+      rollupPluginNodeResolve(),
       vue({
         preprocessStyles: true
-
-        //css: true
-        // {
-        //     loaderOptions: {
-        //       css: {
-        //         localIdentName: '[local][HubsVue][hash:base64:8]'
-        //       }
-        //     }
-        //   }
       }),
       postcss()
 
