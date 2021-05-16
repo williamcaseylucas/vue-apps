@@ -5,6 +5,7 @@
 //   hubsTest1,
 //   hubsTest2
 // ];
+import replace from '@rollup/plugin-replace'
 import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
@@ -18,7 +19,7 @@ export default {
         dir: 'docs/dist',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        format: 'esm'
+        format: 'es'
       }, 
 
     plugins: [
@@ -31,6 +32,9 @@ export default {
           publicPath: '/public',
       }),
       rollupPluginNodeResolve(),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify( 'production' )
+      }),  
       vue({
         preprocessStyles: true
       }),
