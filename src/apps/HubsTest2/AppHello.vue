@@ -23,5 +23,8 @@ import HelloWorld from '../../components/HelloWorld.vue'
 
   width: 400px; height: 500px;
   position: absolute;
+
+  display: block;
+  background-color: white;
 }
 </style>

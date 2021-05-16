@@ -23,5 +23,8 @@ import SomeText from '../../components/SomeText.vue'
 
   width: 400px; height: 450px;
   position: absolute;
+
+  display: block;
+  background-color: white;
 }
 </style>
