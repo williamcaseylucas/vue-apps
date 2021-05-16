@@ -1,9 +1,9 @@
 
-a[data-v-1e1fadd6] {
-  color: #42b983;
+a[data-v-20a5fcc1] {
+  color: #b542b9;
 }
 
-#top {
+#top[data-v-5fab10e2] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,6 +11,6 @@ a[data-v-1e1fadd6] {
   color: #50312c;
   margin-top: 30px;
 
-  width: 400px; height: 500px;
+  width: 400px; height: 450px;
   position: absolute;
 }

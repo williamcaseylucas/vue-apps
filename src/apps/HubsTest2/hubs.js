@@ -1,6 +1,6 @@
 import {createApp} from "vue";
-import App from "./apps/AppText.vue";
-import { WebLayer3D } from "../packages/ethereal/ethereal.es.js";
+import App from "./AppHello.vue";
+import { WebLayer3D } from "../../../packages/ethereal/ethereal.es";
 
 const cardDiv = document.createElement("div")
 const cardVue = createApp(App, {}).mount(cardDiv);
