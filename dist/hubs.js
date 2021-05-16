@@ -5426,7 +5426,7 @@ return (_ctx, _cache) => {
 
 };
 
-var css_248z$2 = "\n#top[data-v-05605788] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 450px;\n  position: absolute;\n}\n";
+var css_248z$2 = "\n#top[data-v-05605788] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 450px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n";
 styleInject(css_248z$2);
 
 script$2.__scopeId = "data-v-05605788";
@@ -5522,7 +5522,7 @@ return (_ctx, _cache) => {
 
 };
 
-var css_248z = "\n#top[data-v-1654fff2] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n}\n";
+var css_248z = "\n#top[data-v-1654fff2] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n";
 styleInject(css_248z);
 
 script.__scopeId = "data-v-1654fff2";

@@ -39,8 +39,8 @@ const _sfc_main$1 = {
   }
 };
 _sfc_main$1.__scopeId = "data-v-1e1fadd6";
-var AppHello_vue_vue_type_style_index_0_scoped_true_lang = "\n#top[data-v-595fb930] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n}\n";
-pushScopeId("data-v-595fb930");
+var AppHello_vue_vue_type_style_index_0_scoped_true_lang = "\n#top[data-v-25768650] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n";
+pushScopeId("data-v-25768650");
 const _hoisted_1 = {id: "top"};
 const _hoisted_2 = /* @__PURE__ */ createVNode("img", {
   alt: "Vue logo",
@@ -58,5 +58,5 @@ const _sfc_main = {
     };
   }
 };
-_sfc_main.__scopeId = "data-v-595fb930";
+_sfc_main.__scopeId = "data-v-25768650";
 export {_sfc_main as _};

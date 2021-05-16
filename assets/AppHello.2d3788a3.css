@@ -3,7 +3,7 @@ a[data-v-1e1fadd6] {
   color: #42b983;
 }
 
-#top[data-v-595fb930] {
+#top[data-v-25768650] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,4 +13,7 @@ a[data-v-1e1fadd6] {
 
   width: 400px; height: 500px;
   position: absolute;
+
+  display: block;
+  background-color: white;
 }
