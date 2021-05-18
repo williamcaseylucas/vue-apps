@@ -5,7 +5,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ shadowdom-test ]
 
 jobs:
   build-and-deploy:
