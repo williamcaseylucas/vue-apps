@@ -5411,7 +5411,10 @@ class HubsApp {
         this.appDiv  = document.createElement("div");
         this.shadow  = this.headDiv.attachShadow({mode: 'open'});
     
-        this.styleDiv.appendChild(styles);
+        var style = document.createElement('style');
+        style.textContent = styles;
+
+        this.styleDiv.appendChild(style);
         this.styleDiv.appendChild(this.appDiv);
         this.shadow.appendChild(this.styleDiv);
     
@@ -5425,7 +5428,7 @@ class HubsTest1 extends HubsApp {
         super(styles, width, height);
 
         this.vueApp = createApp(script$2, {}).mount(this.appDiv);
-        this.webLayer3D = new yh(this.vueApp.$el, {autoRefresh: true});
+        this.webLayer3D = new yh(this.headDiv, {autoRefresh: true});
     }
 }
 
@@ -5515,7 +5518,7 @@ class HubsTest2 extends HubsApp {
         super(styles, width, height);
 
         this.vueApp = createApp(script, {}).mount(this.appDiv);
-        this.webLayer3D = new yh(this.vueApp.$el, {autoRefresh: true});
+        this.webLayer3D = new yh(this.headDiv, {autoRefresh: true});
     }
 }
 
@@ -5524,12 +5527,12 @@ var init = function (styles) {
 };
 
 var myStylesheets = ['https://blairhome.ngrok.io/test-vue-app/dist/hubs.css'];
-var styles = document.createElement('style');
+var styles = "";
 
 async function loadStyles(stylesheets) {
     let arr = await Promise.all(stylesheets.map(url => fetch(url)));
     arr = await Promise.all(arr.map(url => url.text()));
-    styles.textContent = arr.reduce(
+    styles = arr.reduce(
         (prev, fileContents) => prev + fileContents, ''
     );
     //document.head.appendChild(style);
