@@ -8,7 +8,7 @@ export class HubsTest1 extends HubsApp {
         super(styles, width, height)
 
         this.vueApp = createApp(App, {}).mount(this.appDiv);
-        this.webLayer3D = new WebLayer3D(this.vueApp.$el, {autoRefresh: true});
+        this.webLayer3D = new WebLayer3D(this.headDiv, {autoRefresh: true});
     }
 }
 

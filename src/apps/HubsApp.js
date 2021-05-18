@@ -5,7 +5,10 @@ export class HubsApp {
         this.appDiv  = document.createElement("div")
         this.shadow  = this.headDiv.attachShadow({mode: 'open'});
     
-        this.styleDiv.appendChild(styles)
+        var style = document.createElement('style')
+        style.textContent = styles;
+
+        this.styleDiv.appendChild(style)
         this.styleDiv.appendChild(this.appDiv)
         this.shadow.appendChild(this.styleDiv)
     
