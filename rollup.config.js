@@ -36,9 +36,16 @@ export default {
         'process.env.NODE_ENV': JSON.stringify( 'production' )
       }),  
       vue({
-        preprocessStyles: true
+        // preprocessStyles: true,
+        //css: false,
+        // template: {
+        //   isProduction: true,
+        // },
+        // isWebComponent: true // important
+        //         // css: true,
+        // // shadowMode: true
       }),
-      postcss()
+      postcss({ extract: true})
 
     ]
   }

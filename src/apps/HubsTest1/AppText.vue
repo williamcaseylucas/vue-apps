@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="top" class="reset-this">
       <img alt="Vue logo" src="../../assets/logo.png" />
       <SomeText msg="Some Text We passed to the SomeText Component" />
   </div>
@@ -26,5 +26,14 @@ import SomeText from '../../components/SomeText.vue'
 
   display: block;
   background-color: white;
+}
+
+* {
+    box-sizing: content-box;
+}
+
+img {
+    max-width: none;
+    display: inline;
 }
 </style>

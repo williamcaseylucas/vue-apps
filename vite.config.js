@@ -24,7 +24,7 @@ export default defineConfig({
         index: resolve(__dirname, 'index.html'),
         index1: resolve(__dirname, 'src/apps/HubsTest1/index.html'),
         index2: resolve(__dirname, 'src/apps/HubsTest2/index.html'),
-        hubs: resolve(__dirname, 'hubs.js')
+        //hubs: resolve(__dirname, 'hubs.js')
       },
       output: {
         entryFileNames: '[name].js',
