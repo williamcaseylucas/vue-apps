@@ -10,6 +10,6 @@ const data = {
     div: cardDiv,
     webLayer3D: cardLayer,
     width: 2,   // what we want the target size to be
-    height: 2.5
+    height: 2.25
 }
 export default data

@@ -27,4 +27,13 @@ import SomeText from '../../components/SomeText.vue'
   display: block;
   background-color: white;
 }
+
+
+* {
+    box-sizing: content-box;
+}
+img {
+    max-width: none;
+        display: inline;
+}
 </style>
