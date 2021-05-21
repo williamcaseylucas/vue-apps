@@ -1,18 +1,18 @@
 
-a[data-v-7e13b068] {
+a[data-v-50c804dc] {
   color: #b542b9;
 }
-*[data-v-7e13b068] {
+*[data-v-50c804dc] {
     line-height : normal;
 }
-p[data-v-7e13b068] {
+p[data-v-50c804dc] {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-h1[data-v-7e13b068] {
+h1[data-v-50c804dc] {
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
@@ -21,7 +21,7 @@ h1[data-v-7e13b068] {
     margin-inline-end: 0px;
     font-weight: bold;
 }
-button[data-v-7e13b068] {
+button[data-v-50c804dc] {
     appearance: auto;
     -webkit-writing-mode: horizontal-tb !important;
     text-rendering: auto;
@@ -47,7 +47,7 @@ button[data-v-7e13b068] {
     border-radius: 2px;
 }
 
-#top[data-v-20003312] {
+#top[data-v-4e6b9bdb] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -61,10 +61,10 @@ button[data-v-7e13b068] {
   display: block;
   background-color: white;
 }
-*[data-v-20003312] {
+*[data-v-4e6b9bdb] {
     box-sizing: content-box;
 }
-img[data-v-20003312] {
+img[data-v-4e6b9bdb] {
     max-width: none;
-    display: inline;
+        display: inline;
 }
