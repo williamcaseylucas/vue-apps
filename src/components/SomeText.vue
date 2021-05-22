@@ -1,10 +1,10 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <h1 xr-layer class="fade">{{ msg }}</h1>
   <p>
     Here's some more text just to make things not blank.
   </p>
 
-  <button @click="state.count++">count is: {{ state.count }}</button>
+  <button xr-layer @click="state.count++">count is: {{ state.count }}</button>
 </template>
 
 <script setup>
@@ -25,6 +25,16 @@ a {
 * {
     line-height : normal;
 }
+
+.fade {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+
+.fade:hover {
+  color: #a78e06;
+}
+  
 p {
     display: block;
     margin-block-start: 1em;
@@ -33,6 +43,8 @@ p {
     margin-inline-end: 0px;
 }
 h1 {
+      /* text-align: center; */
+
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;

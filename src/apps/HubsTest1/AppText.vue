@@ -20,7 +20,9 @@ import SomeText from '../../components/SomeText.vue'
   text-align: center;
   color: #50312c;
   margin-top: 30px;
-
+  border: 5;
+  border-radius: 10px;
+  border-color: red;
   width: 400px; height: 450px;
   position: absolute;
 

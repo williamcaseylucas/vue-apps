@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import copy from 'rollup-plugin-copy'
 import node_resolve from '@rollup/plugin-node-resolve';
+import virtual from '@rollup/plugin-virtual';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,12 +27,21 @@ export default defineConfig({
         index2: resolve(__dirname, 'src/apps/HubsTest2/index.html'),
         hubs: resolve(__dirname, 'hubs.js')
       },
+    //   external: ['three'],
+    //   globals: {
+    //     'three': 'THREE'
+    //   },
+  
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         format: 'es'
       }, 
       plugins: [
+        // virtual({
+        //     three: `export default THREE`
+        //   }),
+      
           node_resolve(),
       ]
     }

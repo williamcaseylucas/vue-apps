@@ -10,11 +10,16 @@ import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
 import url from '@rollup/plugin-url';
+import virtual from '@rollup/plugin-virtual';
 
 
 export default {
     input: 'hubs.js',
-    
+    // external: ['three'],
+    // globals: {
+    //   'three': 'THREE'
+    // },
+  
     output: {
         dir: 'docs/dist',
         entryFileNames: '[name].js',
@@ -23,6 +28,10 @@ export default {
       }, 
 
     plugins: [
+        virtual({
+            three: `export default THREE`
+          }),
+
       url({
           // by default, rollup-plugin-url will not handle font files
           include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],

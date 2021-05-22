@@ -1,15 +1,18 @@
-import {createApp} from "vue";
 import App from "./AppText.vue";
-import { WebLayer3D } from "../../../packages/ethereal/ethereal.es";
+import { HubsApp } from "../HubsApp";
 
-const cardDiv = document.createElement("div")
-const cardVue = createApp(App, {}).mount(cardDiv);
-const cardLayer = new WebLayer3D(cardVue.$el);
+export class HubsTest1 extends HubsApp {
+    constructor (width, height) {
+        super(width, height, App)
 
-const data = {
-    div: cardDiv,
-    webLayer3D: cardLayer,
-    width: 2,   // what we want the target size to be
-    height: 2.25
+        // this.createWebLayer(App)
+        // this.vueApp = createApp(App, {}).mount(this.appDiv);
+        // this.webLayer3D = new WebLayer3D(this.vueApp.$el, {autoRefresh: true});
+    }
 }
-export default data
+
+var init = function () {
+    return new HubsTest1(2, 2.25)
+}
+
+export default init
