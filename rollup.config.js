@@ -43,8 +43,9 @@ export default {
           include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
           // setting infinite limit will ensure that the files 
           // are always bundled with the code, not copied to /dist
-          limit: Infinity,
-          publicPath: '/public',
+          //limit: Infinity,
+          limit: 100,
+          publicPath: '/test-vue-app/dist/',
       }),
       rollupPluginNodeResolve(),
       replace({
