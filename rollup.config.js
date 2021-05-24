@@ -45,7 +45,7 @@ export default {
           // are always bundled with the code, not copied to /dist
           //limit: Infinity,
           limit: 100,
-          publicPath: '/test-vue-app/dist/',
+          publicPath: 'https://resources.realitymedia.digital/test-vue-app/dist/',
       }),
       rollupPluginNodeResolve(),
       replace({
