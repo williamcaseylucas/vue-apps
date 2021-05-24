@@ -32,7 +32,8 @@ export default {
         dir: 'docs/dist',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        format: 'es'
+        format: 'es',
+        sourcemap: 'inline'
       },
       {
         file: "docs/dist/hubs.min.js", 

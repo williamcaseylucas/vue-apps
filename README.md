@@ -1,0 +1,1 @@
+### Test Example of Using Vue with Hubs and the "html-script" 
