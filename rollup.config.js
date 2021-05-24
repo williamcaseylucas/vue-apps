@@ -12,6 +12,7 @@ import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
 import url from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 var serverPath
 if ((process.env.BUILD !== 'production')) {
@@ -45,7 +46,6 @@ export default {
       virtual({
           three: `export default THREE`
       }),
-
       url({
           // by default, rollup-plugin-url will not handle font files
           include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
@@ -58,10 +58,11 @@ export default {
       rollupPluginNodeResolve(),
       replace({
           'process.env.NODE_ENV': JSON.stringify( 'production' )
-      }),  
+      }),
       vue({
           preprocessStyles: true
       }),
+      sourcemaps(),
       postcss()
 
     ]
