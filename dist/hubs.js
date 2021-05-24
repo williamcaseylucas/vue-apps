@@ -5336,7 +5336,7 @@ function normalizeContainer(container) {
     return container;
 }
 
-var _imports_0 = "/test-vue-app/dist/1a6ace377133f14a.png";
+var _imports_0 = "https://resources.realitymedia.digital/test-vue-app/dist/1a6ace377133f14a.png";
 
 pushScopeId("data-v-76142bf1");
 const _hoisted_1$3 = {
