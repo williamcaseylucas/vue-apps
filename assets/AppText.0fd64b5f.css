@@ -1,25 +1,25 @@
 
-a[data-v-3e6dff0c] {
+a[data-v-35d9426e] {
   color: #b542b9;
 }
-*[data-v-3e6dff0c] {
+*[data-v-35d9426e] {
     line-height : normal;
 }
-.fade[data-v-3e6dff0c] {
+.fade[data-v-35d9426e] {
   color: #9803a5;
   /* transition: color 1s; */
 }
-.fade[data-v-3e6dff0c]:hover {
+.fade[data-v-35d9426e]:hover {
   color: #a78e06;
 }
-p[data-v-3e6dff0c] {
+p[data-v-35d9426e] {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-h1[data-v-3e6dff0c] {
+h1[data-v-35d9426e] {
       /* text-align: center; */
 
     display: block;
@@ -30,7 +30,9 @@ h1[data-v-3e6dff0c] {
     margin-inline-end: 0px;
     font-weight: bold;
 }
-button[data-v-3e6dff0c] {
+button[data-v-35d9426e] {
+    /* width: 100px;
+    height: 30px; */
     appearance: auto;
     -webkit-writing-mode: horizontal-tb !important;
     text-rendering: auto;
@@ -55,6 +57,10 @@ button[data-v-3e6dff0c] {
     border-image: initial;
     border-radius: 2px;
 }
+
+/* button :hover {
+    background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
+} */
 
 #top[data-v-7773218a] {
   font-family: Avenir, Helvetica, Arial, sans-serif;

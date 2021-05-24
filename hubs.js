@@ -9533,7 +9533,7 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     n2.append(i2);
     const s2 = i2.sheet;
     let a2 = 0;
-    if (uu(s2, `[${hh.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; width:var(--x-width); height:var(--x-height);", a2++), uu(s2, `[${hh.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:static !important; text-align:left !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]::before, [${hh.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", a2++), r2 === e2) {
+    if (uu(s2, `[${hh.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", a2++), uu(s2, `[${hh.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:static !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]::before, [${hh.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", a2++), r2 === e2) {
       let t4 = "";
       const e3 = () => {
         if (t4 != window.location.hash && window.location.hash)
@@ -9815,17 +9815,17 @@ class yh extends lh.Group {
   constructor(t3, e2 = {}) {
     super(), this.options = e2, this.textures = new Map(), this.textureNeedsUpdate = false, this.contentMesh = new lh.Mesh(vh.GEOMETRY, new lh.MeshBasicMaterial({transparent: true, alphaTest: 1e-3, opacity: 1})), this._boundsMesh = new lh.Mesh(vh.GEOMETRY, new lh.MeshBasicMaterial({visible: false})), this.cursor = new lh.Object3D(), this.depthMaterial = new lh.MeshDepthMaterial({depthPacking: lh.RGBADepthPacking, alphaTest: 0.01}), this.domLayout = new lh.Object3D(), this.domSize = new lh.Vector3(1, 1, 1), this.childWebLayers = [], this.shouldApplyDOMLayout = "auto";
     const r2 = this.element = typeof t3 == "string" ? fu(t3) : t3;
-    this.name = r2.id, this._webLayer = ch.getClosestLayer(r2), this.add(this.contentMesh), this.add(this._boundsMesh), this.cursor.visible = false, this.matrixAutoUpdate = true, this.contentMesh.matrixAutoUpdate = true, this.contentMesh.visible = false, this.contentMesh.customDepthMaterial = this.depthMaterial, this._boundsMesh.matrixAutoUpdate = true, vh.layersByElement.set(this.element, this), vh.layersByMesh.set(this.contentMesh, this);
+    this.name = r2.id, this._webLayer = ch.getClosestLayer(r2), this.add(this.contentMesh), this.add(this._boundsMesh), this.cursor.visible = false, this.matrixAutoUpdate = true, this.contentMesh.matrixAutoUpdate = true, this.contentMesh.material.toneMapped = false, this.contentMesh.visible = false, this.contentMesh.customDepthMaterial = this.depthMaterial, this._boundsMesh.matrixAutoUpdate = true, vh.layersByElement.set(this.element, this), vh.layersByMesh.set(this.contentMesh, this);
   }
   get currentTexture() {
     if (this._webLayer.element.tagName === "VIDEO") {
       const t4 = this._webLayer.element;
       let e3 = this.textures.get(t4);
-      return e3 || (e3 = new lh.VideoTexture(t4), e3.wrapS = lh.ClampToEdgeWrapping, e3.wrapT = lh.ClampToEdgeWrapping, e3.minFilter = lh.LinearFilter, this.textures.set(t4, e3)), e3;
+      return e3 || (e3 = new lh.VideoTexture(t4), e3.wrapS = lh.ClampToEdgeWrapping, e3.wrapT = lh.ClampToEdgeWrapping, e3.minFilter = lh.LinearFilter, this.options.textureEncoding && (e3.encoding = this.options.textureEncoding), this.textures.set(t4, e3)), e3;
     }
     const t3 = this._webLayer.canvas;
     let e2 = this.textures.get(t3);
-    return e2 ? this.textureNeedsUpdate && (this.textureNeedsUpdate = false, e2.needsUpdate = true) : (e2 = new lh.Texture(t3), e2.needsUpdate = true, e2.wrapS = lh.ClampToEdgeWrapping, e2.wrapT = lh.ClampToEdgeWrapping, e2.minFilter = lh.LinearFilter, this.textures.set(t3, e2)), e2;
+    return e2 ? this.textureNeedsUpdate && (this.textureNeedsUpdate = false, e2.needsUpdate = true) : (e2 = new lh.Texture(t3), e2.needsUpdate = true, e2.wrapS = lh.ClampToEdgeWrapping, e2.wrapT = lh.ClampToEdgeWrapping, e2.minFilter = lh.LinearFilter, this.options.textureEncoding && (e2.encoding = this.options.textureEncoding), this.textures.set(t3, e2)), e2;
   }
   get pseudoStates() {
     return this._webLayer.psuedoStates;
@@ -9866,7 +9866,7 @@ class yh extends lh.Group {
   }
   updateContent() {
     const t3 = this.contentMesh, e2 = this.currentTexture, r2 = t3.material;
-    e2.image && r2.map !== e2 && (r2.map = e2, this.depthMaterial.map = e2, this.depthMaterial.needsUpdate = true, r2.depthWrite = false, this.renderOrder = this.depth + 1e-3 * this.index, r2.needsUpdate = true);
+    e2.image && r2.map !== e2 && (r2.map = e2, this.depthMaterial.map = e2, this.depthMaterial.needsUpdate = true, r2.depthWrite = false, this.renderOrder = this.depth + 1e-3 * this.index + (this.options.renderOrderOffset || 0), r2.needsUpdate = true);
   }
   _doUpdate() {
     this.updateLayout(), this.updateContent(), this.needsRefresh && this.options.autoRefresh && this.refresh(), ch.scheduleTasksIfNeeded();
