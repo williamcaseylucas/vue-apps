@@ -54,6 +54,8 @@ h1 {
     font-weight: bold;
 }
 button {
+    /* width: 100px;
+    height: 30px; */
     appearance: auto;
     -webkit-writing-mode: horizontal-tb !important;
     text-rendering: auto;
@@ -78,4 +80,8 @@ button {
     border-image: initial;
     border-radius: 2px;
 }
+
+/* button :hover {
+    background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
+} */
 </style>

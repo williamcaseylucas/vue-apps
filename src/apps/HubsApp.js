@@ -20,11 +20,13 @@ export class HubsApp {
         this.webLayer3D = new WebLayer3D(this.vueApp.$el, {
             autoRefresh: true,
             onLayerCreate: (layer) => {
-                // layer.renderOrder -= 1000
-                // layer.contentMesh.renderOrder -= 1000
-                // layer.children[0].renderOrder -= 1000
-                // layer.children[1].renderOrder -= 1000
-            }
+                // nothing yet
+            },
+            onAfterRasterize(layer) {
+                   // nothing yet
+            },
+            textureEncoding: THREE.sRGBEncoding,
+            renderOrderOffset: -1000
         });
     }
 }

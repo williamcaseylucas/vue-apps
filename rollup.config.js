@@ -11,6 +11,7 @@ import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
 import url from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
+import { terser } from "rollup-plugin-terser";
 
 
 export default {
@@ -20,17 +21,22 @@ export default {
     //   'three': 'THREE'
     // },
   
-    output: {
+    output: [{
         dir: 'docs/dist',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         format: 'es'
-      }, 
+      },
+      {
+        file: "docs/dist/hubs.min.js", 
+        format: 'es', 
+        plugins: [terser()]
+      }], 
 
     plugins: [
-        virtual({
-            three: `export default THREE`
-          }),
+      virtual({
+          three: `export default THREE`
+      }),
 
       url({
           // by default, rollup-plugin-url will not handle font files
@@ -42,10 +48,10 @@ export default {
       }),
       rollupPluginNodeResolve(),
       replace({
-        'process.env.NODE_ENV': JSON.stringify( 'production' )
+          'process.env.NODE_ENV': JSON.stringify( 'production' )
       }),  
       vue({
-        preprocessStyles: true
+          preprocessStyles: true
       }),
       postcss()
 
