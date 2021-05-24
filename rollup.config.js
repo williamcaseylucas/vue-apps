@@ -13,6 +13,13 @@ import url from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 
+var serverPath
+if ((process.env.BUILD !== 'production')) {
+    // your ngrok host name for local testing
+    serverPath = "https://blairhome.ngrok.io";
+} else {
+    serverPath = "https://resources.realitymedia.digital";
+}
 
 export default {
     input: 'hubs.js',
@@ -45,7 +52,7 @@ export default {
           // are always bundled with the code, not copied to /dist
           //limit: Infinity,
           limit: 100,
-          publicPath: 'https://resources.realitymedia.digital/test-vue-app/dist/',
+          publicPath: serverPath + '/test-vue-app/dist/',
       }),
       rollupPluginNodeResolve(),
       replace({

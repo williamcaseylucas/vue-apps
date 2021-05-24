@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && rollup -c rollup.config.js",
-    "serve": "vite preview"
+    "build": "vite build && rollup -c rollup.config.js --environment BUILD:production",
+    "buildDev": "vite build && rollup -c rollup.config.js --environment BUILD:dev",
+    "serve": "npm run buildDev && vite preview"
   },
   "dependencies": {
     "three": "^0.122.0",
