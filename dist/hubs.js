@@ -5338,7 +5338,7 @@ function normalizeContainer(container) {
 
 var _imports_0 = "https://resources.realitymedia.digital/test-vue-app/dist/1a6ace377133f14a.png";
 
-pushScopeId("data-v-76142bf1");
+pushScopeId("data-v-7e018511");
 const _hoisted_1$3 = {
   "xr-layer": "",
   class: "fade"
@@ -5399,13 +5399,12 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$3 = "\na[data-v-76142bf1] {\n  color: #b542b9;\n}\n*[data-v-76142bf1] {\n    line-height : normal;\n}\n.fade[data-v-76142bf1] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-76142bf1]:hover {\n  color: #a78e06;\n}\np[data-v-76142bf1] {\n    display: block;\n    margin-block-start: 1em;\n    margin-block-end: 1em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n}\nh1[data-v-76142bf1] {\n      /* text-align: center; */\n\n    display: block;\n    font-size: 2em;\n    margin-block-start: 0.67em;\n    margin-block-end: 0.67em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n    font-weight: bold;\n}\nbutton[data-v-76142bf1] {\n    /* width: 100px;\n    height: 30px; */\n    appearance: auto;\n    -webkit-writing-mode: horizontal-tb !important;\n    text-rendering: auto;\n    color: -internal-light-dark(black, white);\n    letter-spacing: normal;\n    word-spacing: normal;\n    text-transform: none;\n    text-indent: 0px;\n    text-shadow: none;\n    display: inline-block;\n    text-align: center;\n    align-items: flex-start;\n    cursor: default;\n    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));\n    box-sizing: border-box;\n    margin: 0em;\n    font: 400 13.3333px Arial;\n    padding: 1px 6px;\n    border-width: 2px;\n    border-style: outset;\n    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));\n    border-image: initial;\n    border-radius: 2px;\n}\n\n/* button :hover {\n    background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));\n} */\n";
+var css_248z$3 = "\na[data-v-7e018511] {\n  color: #b542b9;\n}\n*[data-v-7e018511] {\n    line-height : normal;\n}\n.fade[data-v-7e018511] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-7e018511]:hover {\n  color: #a78e06;\n}\np[data-v-7e018511] {\n    display: block;\n    margin-block-start: 1em;\n    margin-block-end: 1em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n}\nh1[data-v-7e018511] {\n      /* text-align: center; */\n\n    display: block;\n    font-size: 2em;\n    margin-block-start: 0.67em;\n    margin-block-end: 0.67em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n    font-weight: bold;\n}\nbutton[data-v-7e018511] {\n    /* width: 100px;\n    height: 30px; */\n    appearance: auto;\n    -webkit-writing-mode: horizontal-tb !important;\n    text-rendering: auto;\n    color: -internal-light-dark(black, white);\n    letter-spacing: normal;\n    word-spacing: normal;\n    text-transform: none;\n    text-indent: 0px;\n    text-shadow: none;\n    display: inline-block;\n    text-align: center;\n    align-items: flex-start;\n    cursor: default;\n    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));\n    box-sizing: border-box;\n    margin: 0em;\n    font: 400 13.3333px Arial;\n    padding: 1px 6px;\n    border-width: 2px;\n    border-style: outset;\n    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));\n    border-image: initial;\n    border-radius: 2px;\n}\n\n/* button :hover {\n    background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));\n} */\n";
 styleInject(css_248z$3);
 
-script$3.__scopeId = "data-v-76142bf1";
-script$3.__file = "src/components/SomeText.vue";
+script$3.__scopeId = "data-v-7e018511";
 
-pushScopeId("data-v-05605788");
+pushScopeId("data-v-2d63f690");
 const _hoisted_1$2 = { id: "top" };
 const _hoisted_2$2 = /*#__PURE__*/createVNode("img", {
   alt: "Vue logo",
@@ -5431,11 +5430,10 @@ return (_ctx, _cache) => {
 
 };
 
-var css_248z$2 = "\n#top[data-v-05605788] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n  border: 5;\n  border-radius: 10px;\n  border-color: red;\n  width: 400px; height: 450px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-05605788] {\n    box-sizing: content-box;\n}\nimg[data-v-05605788] {\n    max-width: none;\n        display: inline;\n}\n";
+var css_248z$2 = "\n#top[data-v-2d63f690] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n  border: 5;\n  border-radius: 10px;\n  border-color: red;\n  width: 400px; height: 450px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-2d63f690] {\n    box-sizing: content-box;\n}\nimg[data-v-2d63f690] {\n    max-width: none;\n        display: inline;\n}\n";
 styleInject(css_248z$2);
 
-script$2.__scopeId = "data-v-05605788";
-script$2.__file = "src/apps/HubsTest1/AppText.vue";
+script$2.__scopeId = "data-v-2d63f690";
 
 var THREE$1 = THREE;
 
@@ -5505,7 +5503,7 @@ var init$1 = function () {
     return new HubsTest1(2, 2.25)
 };
 
-pushScopeId("data-v-469af010");
+pushScopeId("data-v-46f7ad08");
 const _hoisted_1$1 = /*#__PURE__*/createVNode("p", null, [
   /*#__PURE__*/createVNode("a", {
     href: "https://vitejs.dev/guide/features.html",
@@ -5550,13 +5548,12 @@ return (_ctx, _cache) => {
 
 };
 
-var css_248z$1 = "\na[data-v-469af010] {\n  color: #42b983;\n}\n*[data-v-469af010] {\n    box-sizing: content-box;\n}\nh1[data-v-469af010] {\n    display: block;\n    font-size: 2em;\n    margin-block-start: 0.67em;\n    margin-block-end: 0.67em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n    font-weight: bold;\n}\n";
+var css_248z$1 = "\na[data-v-46f7ad08] {\n  color: #42b983;\n}\n*[data-v-46f7ad08] {\n    box-sizing: content-box;\n}\nh1[data-v-46f7ad08] {\n    display: block;\n    font-size: 2em;\n    margin-block-start: 0.67em;\n    margin-block-end: 0.67em;\n    margin-inline-start: 0px;\n    margin-inline-end: 0px;\n    font-weight: bold;\n}\n";
 styleInject(css_248z$1);
 
-script$1.__scopeId = "data-v-469af010";
-script$1.__file = "src/components/HelloWorld.vue";
+script$1.__scopeId = "data-v-46f7ad08";
 
-pushScopeId("data-v-1654fff2");
+pushScopeId("data-v-4e9fe16f");
 const _hoisted_1 = { id: "top" };
 const _hoisted_2 = /*#__PURE__*/createVNode("img", {
   alt: "Vue logo",
@@ -5582,11 +5579,10 @@ return (_ctx, _cache) => {
 
 };
 
-var css_248z = "\n#top[data-v-1654fff2] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-1654fff2] {\n    box-sizing: content-box;\n}\nimg[data-v-1654fff2] {\n    max-width: none;\n        display: inline;\n}\n";
+var css_248z = "\n#top[data-v-4e9fe16f] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n\n  width: 400px; height: 500px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-4e9fe16f] {\n    box-sizing: content-box;\n}\nimg[data-v-4e9fe16f] {\n    max-width: none;\n        display: inline;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-1654fff2";
-script.__file = "src/apps/HubsTest2/AppHello.vue";
+script.__scopeId = "data-v-4e9fe16f";
 
 class HubsTest2 extends HubsApp {
     constructor (width, height) {
