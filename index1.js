@@ -1,5 +1,5 @@
 import {c as createStore, a as createApp} from "./vendor.js";
-import {_ as _sfc_main} from "./AppText.js";
+import {_ as _sfc_main} from "./AppTest1.js";
 import "./logo.js";
 const store = createStore({
   state() {

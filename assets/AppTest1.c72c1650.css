@@ -1,25 +1,25 @@
 
-a[data-v-04325fd8] {
+a[data-v-7c7584b0] {
   color: #b542b9;
 }
-*[data-v-04325fd8] {
+*[data-v-7c7584b0] {
     line-height : normal;
 }
-.fade[data-v-04325fd8] {
+.fade[data-v-7c7584b0] {
   color: #9803a5;
   /* transition: color 1s; */
 }
-.fade[data-v-04325fd8]:hover {
+.fade[data-v-7c7584b0]:hover {
   color: #a78e06;
 }
-p[data-v-04325fd8] {
+p[data-v-7c7584b0] {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-h1[data-v-04325fd8] {
+h1[data-v-7c7584b0] {
       /* text-align: center; */
 
     display: block;
@@ -30,7 +30,7 @@ h1[data-v-04325fd8] {
     margin-inline-end: 0px;
     font-weight: bold;
 }
-button[data-v-04325fd8] {
+button[data-v-7c7584b0] {
     /* width: 100px;
     height: 30px; */
     appearance: auto;
@@ -62,7 +62,7 @@ button[data-v-04325fd8] {
     background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
 } */
 
-#top[data-v-5abdd922] {
+#top[data-v-638890e1] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -78,10 +78,10 @@ button[data-v-04325fd8] {
   display: block;
   background-color: white;
 }
-*[data-v-5abdd922] {
+*[data-v-638890e1] {
     box-sizing: content-box;
 }
-img[data-v-5abdd922] {
+img[data-v-638890e1] {
     max-width: none;
         display: inline;
 }
