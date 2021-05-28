@@ -1,11 +1,18 @@
 
-a[data-v-50c510c4] {
+a[data-v-f88e72d8] {
   color: #42b983;
 }
-*[data-v-50c510c4] {
+*[data-v-f88e72d8] {
     box-sizing: content-box;
 }
-h1[data-v-50c510c4] {
+p[data-v-f88e72d8] {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+h1[data-v-f88e72d8] {
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;

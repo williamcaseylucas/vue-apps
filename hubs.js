@@ -1,5 +1,5 @@
 import "./AppText.js";
-import {f as t} from "./vendor.js";
+import {h as t} from "./vendor.js";
 import "./AppHello.js";
 import "./logo.js";
 class e {

@@ -1,5 +1,24 @@
-import {c as createApp} from "./vendor.js";
+import {c as createStore, a as createApp} from "./vendor.js";
 import {_ as _sfc_main} from "./AppText.js";
 import "./logo.js";
-let app = createApp(_sfc_main).mount("#app");
+const store = createStore({
+  state() {
+    return {
+      count: 0
+    };
+  },
+  mutations: {
+    setCount(state, count) {
+      state.count = count;
+    }
+  },
+  actions: {
+    increment(context) {
+      context.commit("setCount", context.state.count + 1);
+    }
+  }
+});
+let app = createApp(_sfc_main);
+app.use(store);
+app.mount("#app");
 app.$el.style.border = "solid 0.1em";
