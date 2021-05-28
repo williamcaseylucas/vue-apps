@@ -4,17 +4,47 @@
     Here's some more text just to make things not blank.
   </p>
 
-  <button xr-layer @click="state.count++">count is: {{ state.count }}</button>
+  <button xr-layer @click="inc">count is: {{ count }}</button>
 </template>
 
-<script setup>
-import { defineProps, reactive } from 'vue'
+<script>
+import { defineProps } from 'vue'
+import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 
-defineProps({
-  msg: String
-})
+// defineProps({
+//   msg: String
+// })
 
-const state = reactive({ count: 0 })
+export default {
+    props: {
+        msg: {
+          type: String,
+          required: true
+        }
+    },
+
+    computed: mapState({
+        count: state => state.count,
+            // passing the string value 'count' is same as `state => state.count`
+        countAlias: 'count',
+
+    }),
+
+    methods: {
+        ...mapActions([
+            'increment', // map `this.increment()` to `this.$store.dispatch('increment')`
+        ]),
+
+        inc() {
+            this.increment()
+            console.log(this.count)
+        }
+    },
+    // setup (props) {
+
+    // }
+}
 </script>
 
 <style scoped>

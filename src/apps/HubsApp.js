@@ -2,7 +2,13 @@ import {createApp} from "vue";
 import { WebLayer3D } from "../../packages/ethereal/ethereal.es";
 
 export class HubsApp {
-    constructor (width, height, App) {
+    constructor (width, height, App, createOptions={}) {
+        this.isInteractive = false;
+        this.isNetworked = false;
+
+        this.takeOwnership = this.takeOwnershipProto.bind(this)
+        this.setSharedData = this.setSharedDataProto.bind(this)
+
         this.headDiv = document.createElement("div")
         this.appDiv  = document.createElement("div")
     
@@ -16,8 +22,12 @@ export class HubsApp {
         this.width = width
         this.height = height
 
-        this.vueApp = createApp(App, {}).mount(this.appDiv);
-        this.webLayer3D = new WebLayer3D(this.vueApp.$el, {
+        this.vueApp = createApp(App, createOptions)
+    }
+
+    mount() {
+        this.vueRoot = this.vueApp.mount(this.appDiv);
+        this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
             autoRefresh: true,
             onLayerCreate: (layer) => {
                 // nothing yet
@@ -28,5 +38,41 @@ export class HubsApp {
             textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: -1000
         });
+    }
+
+    setNetworkMethods(takeOwnership, setSharedData) {
+        this.takeOwnership = takeOwnership;
+        this.setSharedData = setSharedData;
+    }
+
+    // dummy functions, just to avoid errors if they get called before
+    // networking is initialized, or called when networked is false
+    takeOwnershipProto() {
+        return true;
+    }
+    setSharedDataProto(object) {
+        return true;
+    }
+
+    // receive data updates.  should be overridden by subclasses
+    updateSharedData(dataObject) {
+        raise("updateData should be overridden by subclasses")
+    }
+
+    // receive data updates.  should be overridden by subclasses
+    getSharedData(dataObject) {
+        raise("getSharedData should be overridden by subclasses")
+    }
+    
+    play() {
+        // if we can figure out how to pause, then restart here
+    }
+
+    pause() {
+        // perhaps figure out how to pause the Vue component?
+    }
+    
+    destroy() {
+        // TODO: destroy the vue component and any resources, etc., it has
     }
 }
