@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
 
-import App from './AppText.vue'
+import App from './AppTest1.vue'
 
 // Create a new store instance.
 const store = createStore({

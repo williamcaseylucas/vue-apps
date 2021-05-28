@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './AppHello.vue'
+import App from './AppTest2.vue'
 
 let app = createApp(App)
 app.mount('#app')

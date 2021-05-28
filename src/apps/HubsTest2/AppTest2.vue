@@ -1,13 +1,15 @@
 <template>
   <div id="top">
       <img alt="Vue logo" src="../../assets/logo.png" />
-      <SomeText msg="Some Text We passed to the SomeText Component" />
+      <HelloWorld msg="Vue Component with Local Button Count" />
   </div>
 </template>
 
 <script setup>
-import SomeText from '../../components/SomeText.vue'
+import HelloWorld from '../../components/HelloWorld.vue'
 
+// This starter template is using Vue 3 experimental <script setup> SFCs
+// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>
 
 <style scoped>
@@ -18,10 +20,8 @@ import SomeText from '../../components/SomeText.vue'
   text-align: center;
   color: #50312c;
   margin-top: 30px;
-  border: 5;
-  border-radius: 10px;
-  border-color: red;
-  width: 400px; height: 450px;
+
+  width: 500px; height: 500px;
   position: absolute;
 
   display: block;

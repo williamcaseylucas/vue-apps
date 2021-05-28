@@ -1,4 +1,4 @@
-import App from "./AppText.vue";
+import App from "./AppTest1.vue";
 import { HubsApp } from "../HubsApp";
 import { createStore } from 'vuex'
 

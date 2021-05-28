@@ -1,15 +1,13 @@
 <template>
   <div id="top">
       <img alt="Vue logo" src="../../assets/logo.png" />
-      <HelloWorld msg="Hello From the HelloWorld Component" />
+      <SomeText msg="Networked Vue Component with Shared Button Count" />
   </div>
 </template>
 
 <script setup>
-import HelloWorld from '../../components/HelloWorld.vue'
+import SomeText from '../../components/NetworkedHelloWorld.vue'
 
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>
 
 <style scoped>
@@ -20,8 +18,10 @@ import HelloWorld from '../../components/HelloWorld.vue'
   text-align: center;
   color: #50312c;
   margin-top: 30px;
-
-  width: 400px; height: 500px;
+  border: 5;
+  border-radius: 10px;
+  border-color: red;
+  width: 400px; height: 450px;
   position: absolute;
 
   display: block;
