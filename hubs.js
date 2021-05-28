@@ -1,6 +1,6 @@
-import "./AppTest1.js";
-import {h as t} from "./vendor.js";
-import "./AppTest2.js";
+import "./App.js";
+import {g as t} from "./vendor.js";
+import "./App2.js";
 import "./logo.js";
 class e {
   constructor(t3 = 0, e2 = 0) {

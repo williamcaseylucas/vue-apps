@@ -1,19 +1,27 @@
 
-a[data-v-fc4b85ee] {
-  color: #42b983;
+a[data-v-0a071200] {
+  color: #b542b9;
 }
-*[data-v-fc4b85ee] {
-    box-sizing: content-box;
+*[data-v-0a071200] {
     line-height : normal;
 }
-p[data-v-fc4b85ee] {
+.fade[data-v-0a071200] {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+.fade[data-v-0a071200]:hover {
+  color: #a78e06;
+}
+p[data-v-0a071200] {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
-h1[data-v-fc4b85ee] {
+h1[data-v-0a071200] {
+      /* text-align: center; */
+
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
@@ -22,7 +30,7 @@ h1[data-v-fc4b85ee] {
     margin-inline-end: 0px;
     font-weight: bold;
 }
-button[data-v-fc4b85ee] {
+button[data-v-0a071200] {
     /* width: 100px;
     height: 30px; */
     appearance: auto;
@@ -50,25 +58,30 @@ button[data-v-fc4b85ee] {
     border-radius: 2px;
 }
 
+/* button :hover {
+    background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
+} */
 
-#top[data-v-7726ec25] {
+#top[data-v-c8cc23f4] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #50312c;
   margin-top: 30px;
-
-  width: 500px; height: 500px;
+  border: 5;
+  border-radius: 10px;
+  border-color: red;
+  width: 400px; height: 450px;
   position: absolute;
 
   display: block;
   background-color: white;
 }
-*[data-v-7726ec25] {
+*[data-v-c8cc23f4] {
     box-sizing: content-box;
 }
-img[data-v-7726ec25] {
+img[data-v-c8cc23f4] {
     max-width: none;
         display: inline;
 }

@@ -1,24 +1,48 @@
-import {c as createStore, a as createApp} from "./vendor.js";
-import {_ as _sfc_main} from "./AppTest1.js";
+import {c as createApp, r as reactive, a as readonly} from "./vendor.js";
+import {_ as _sfc_main} from "./App.js";
 import "./logo.js";
-const store = createStore({
-  state() {
-    return {
+class WebApp$1 {
+  constructor(App, createOptions = {}) {
+    this.takeOwnership = this.takeOwnershipProto.bind(this);
+    this.setSharedData = this.setSharedDataProto.bind(this);
+    this.vueApp = createApp(App, createOptions);
+  }
+  mount() {
+    this.vueRoot = this.vueApp.mount("#app");
+  }
+  takeOwnershipProto() {
+    return true;
+  }
+  setSharedDataProto(object) {
+    return true;
+  }
+}
+class Store {
+  constructor(app2) {
+    this._state = reactive({
       count: 0
-    };
-  },
-  mutations: {
-    setCount(state, count) {
-      state.count = count;
-    }
-  },
-  actions: {
-    increment(context) {
-      context.commit("setCount", context.state.count + 1);
+    });
+    this.app = app2;
+    this.state = readonly(this._state);
+  }
+  increment() {
+    if (this.app.takeOwnership()) {
+      this._state.count++;
+      this.app.setSharedData(this.state);
     }
   }
-});
-let app = createApp(_sfc_main);
-app.use(store);
-app.mount("#app");
+  updateSharedData(dataObject) {
+    this._state.count = dataObject.count;
+  }
+}
+class WebApp extends WebApp$1 {
+  constructor() {
+    super(_sfc_main);
+    this.shared = new Store(this);
+    this.vueApp.provide("shared", this.shared);
+    console.log(JSON.stringify(this.shared.data));
+  }
+}
+let app = new WebApp();
+app.mount();
 app.$el.style.border = "solid 0.1em";
