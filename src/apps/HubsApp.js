@@ -1,7 +1,7 @@
 import {createApp} from "vue";
 import { WebLayer3D } from "../../packages/ethereal/ethereal.es";
 
-export class HubsApp {
+export default class HubsApp {
     constructor (width, height, App, createOptions={}) {
         this.isInteractive = false;
         this.isNetworked = false;
@@ -71,7 +71,7 @@ export class HubsApp {
     pause() {
         // perhaps figure out how to pause the Vue component?
     }
-    
+
     destroy() {
         // TODO: destroy the vue component and any resources, etc., it has
     }

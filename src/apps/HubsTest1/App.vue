@@ -7,7 +7,6 @@
 
 <script setup>
 import SomeText from '../../components/NetworkedHelloWorld.vue'
-
 </script>
 
 <style scoped>

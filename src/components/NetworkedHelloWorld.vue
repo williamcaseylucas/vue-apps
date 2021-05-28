@@ -4,47 +4,17 @@
     Here's some more text just to make things not blank.
   </p>
 
-  <button xr-layer @click="inc">count is: {{ count }}</button>
+  <button xr-layer @click="shared.increment">count is: {{ shared.state.count }}</button>
 </template>
 
-<script>
-import { defineProps } from 'vue'
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
+<script setup>
+import { defineProps, inject } from 'vue'
 
-// defineProps({
-//   msg: String
-// })
+defineProps({
+  msg: String
+})
 
-export default {
-    props: {
-        msg: {
-          type: String,
-          required: true
-        }
-    },
-
-    computed: mapState({
-        count: state => state.count,
-            // passing the string value 'count' is same as `state => state.count`
-        countAlias: 'count',
-
-    }),
-
-    methods: {
-        ...mapActions([
-            'increment', // map `this.increment()` to `this.$store.dispatch('increment')`
-        ]),
-
-        inc() {
-            this.increment()
-            console.log(this.count)
-        }
-    },
-    // setup (props) {
-
-    // }
-}
+const shared = inject('shared')
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
-import App from "./AppTest2.vue";
-import { HubsApp } from "../HubsApp";
+import App from "./App.vue";
+import HubsAppProto from "../HubsApp";
 
-export class HubsTest2 extends HubsApp {
+class HubsApp extends HubsAppProto {
     constructor (width, height) {
         super(width, height, App)
         this.isInteractive = true;
@@ -9,7 +9,7 @@ export class HubsTest2 extends HubsApp {
 }
 
 var init = function () {
-    let app = new HubsTest2(2.5, 2.5)
+    let app = new HubsApp(2.5, 2.5)
     app.mount()
     return app
 }

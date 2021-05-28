@@ -1,29 +1,21 @@
-import { createApp } from 'vue'
-import { createStore } from 'vuex'
+import WebAppProto from "../WebApp";
+import App from './App.vue'
+import Store from "./shared"
 
-import App from './AppTest1.vue'
+class WebApp extends WebAppProto {
+    constructor () {
+        super(App)
 
-// Create a new store instance.
-const store = createStore({
-      state () {
-        return {
-          count: 0
-        }
-      },
-      mutations: {
-          setCount (state, count) {
-            state.count = count;  
-          }
-      },
-      actions: {
-          increment (context) {
-             context.commit('setCount', context.state.count+1)
-          }
-      }
-  })
+        // create our shared data object that will
+        // share data between vue and hubs
+        this.shared = new Store(this)
+        this.vueApp.provide('shared', this.shared)
 
-let app = createApp(App)
-app.use(store)
-app.mount('#app')
+        console.log (JSON.stringify(this.shared.data))
+    }
+}
+
+let app = new WebApp()
+app.mount()
 
 app.$el.style.border = "solid 0.1em"
