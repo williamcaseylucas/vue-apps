@@ -3,8 +3,8 @@ import HubsAppProto from "../HubsApp";
 import Store from "./shared"
 
 class HubsApp extends HubsAppProto {
-    constructor (width, height) {
-        super(width, height, App)
+    constructor () {
+        super(App)
 
         // create our shared data object that will
         // share data between vue and hubs
@@ -14,7 +14,7 @@ class HubsApp extends HubsAppProto {
         this.isInteractive = true;
         this.isNetworked = true;
         this.isStatic = false;
-        
+
         console.log (JSON.stringify(this.shared.data))
     }
     
@@ -28,7 +28,7 @@ class HubsApp extends HubsAppProto {
 }
 
 var init = function () {
-    let app = new HubsApp(2, 2.25)
+    let app = new HubsApp()
     app.mount()
     return app
 }

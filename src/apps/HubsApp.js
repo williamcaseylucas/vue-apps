@@ -2,11 +2,11 @@ import {createApp} from "vue";
 import { WebLayer3D } from "../../packages/ethereal/ethereal.es";
 
 export default class HubsApp {
-    constructor (width, height, App, createOptions={}) {
+    constructor (App, createOptions={}) {
         this.isInteractive = false;
         this.isNetworked = false;
         this.isStatic = true;
-        
+
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
 
@@ -19,9 +19,6 @@ export default class HubsApp {
         
         this.headDiv.appendChild(this.appDiv)
         // document.body.appendChild(this.headDiv)
-
-        this.width = width
-        this.height = height
 
         this.vueApp = createApp(App, createOptions)
     }
