@@ -5,7 +5,8 @@ export default class HubsApp {
     constructor (width, height, App, createOptions={}) {
         this.isInteractive = false;
         this.isNetworked = false;
-
+        this.isStatic = true;
+        
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
 
