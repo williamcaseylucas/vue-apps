@@ -38,3 +38,11 @@ Step 5. In a terminal in the `core-components` directory, run `npm run start` to
 Step 6. In your room in hubs, point it's script URL at `[https url from step3]/src/rooms/index.html`
 
 Now, when you enter the room, the core-components script will be loaded, and it will in turn load this repository's components.  If you make a change to the code in this repo, simple rerun the `npm run serve` command, and reload the hubs room.
+
+## Adding Content to Hubs
+
+In Hubs, you will want to use the `core-components/src/entities/html-script-billboard-spoke-no-name.glb` in Spoke to add elements to the Spoke scene for your room.
+
+You should name the glb element in spoke `[anything]_[componentName]` (e.g., "hubs test node 1_hubsTest1". `[anything]` is any naming you want in spoke (e.g., "hubs test node 1") and `[componentName]` is the name of the component exactly as it is exported in the top level hubs.js file.
+
+You should scale the plane you see to the size you want your content to appear.  If the aspect ration doesn't match the aspect ration of your HTML component, it will be scaled so that it is as big as it can be while retaining it's aspect.
