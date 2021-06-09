@@ -34,7 +34,7 @@ export default class HubsApp {
                    // nothing yet
             },
             textureEncoding: THREE.sRGBEncoding,
-            renderOrderOffset: -1000
+            renderOrderOffset: 0  // -1000
         });
     }
 

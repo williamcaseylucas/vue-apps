@@ -1,11 +1,16 @@
 import WebAppProto from "../WebApp";
 import App from './App.vue'
 import Store from "./shared"
+import loadStyles from './styles'
+
+import '../../../node_modules/reveal.js/dist/reveal.css';
+import '../../../node_modules/reveal.js/dist/theme/white.css';
 
 class WebApp extends WebAppProto {
     constructor () {
         super(App)
 
+        loadStyles()
         // create our shared data object that will
         // share data between vue and hubs
         this.shared = new Store(this)
@@ -18,4 +23,4 @@ class WebApp extends WebAppProto {
 let app = new WebApp()
 app.mount()
 
-app.vueApp.$el.style.border = "solid 0.1em"
+app.vueRoot.$el.style.border = "solid 0.1em"

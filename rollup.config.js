@@ -13,6 +13,9 @@ import url from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 import sourcemaps from 'rollup-plugin-sourcemaps';
+import copy from 'rollup-plugin-copy'
+import cssImport from "postcss-import"
+import cssUrl from 'postcss-url'
 
 var serverPath
 if ((process.env.BUILD !== 'production')) {
@@ -21,7 +24,7 @@ if ((process.env.BUILD !== 'production')) {
 } else {
     serverPath = "https://resources.realitymedia.digital";
 }
-
+var componentPath = serverPath + '/test-vue-app/'
 export default {
     input: 'hubs.js',
     // external: ['three'],
@@ -46,24 +49,45 @@ export default {
       virtual({
           three: `export default THREE`
       }),
-      url({
-          // by default, rollup-plugin-url will not handle font files
-          include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
-          // setting infinite limit will ensure that the files 
-          // are always bundled with the code, not copied to /dist
-          //limit: Infinity,
-          limit: 100,
-          publicPath: serverPath + '/test-vue-app/dist/',
+      copy({
+        targets: [{ src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' }],
+        verbose: true
       }),
       rollupPluginNodeResolve(),
+      url({
+        // by default, rollup-plugin-url will not handle font files
+        include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
+        // setting infinite limit will ensure that the files 
+        // are always bundled with the code, not copied to /dist
+        //limit: Infinity,
+        limit: 1000,
+        publicPath: serverPath + '/test-vue-app/dist/',
+      }),
       replace({
-          'process.env.NODE_ENV': JSON.stringify( 'production' )
+          'process.env.NODE_ENV': JSON.stringify( 'production' ),
+         // 'https://resources.realitymedia.digital/test-vue-app/': componentPath //JSON.stringify( componentPath )
+
       }),
       vue({
           preprocessStyles: true
       }),
+      postcss({
+        plugins: [
+        //     cssUrl({
+        //     url: "inline", // enable inline assets using base64 encoding
+        //     maxSize: 1000, // maximum file size to inline (in kilobytes)
+        //     publicPath: serverPath + '/test-vue-app/dist/',
+        // }),
+          cssImport({
+            plugins: [
+                cssUrl({
+                    filter: ['src/assets/theme/fonts/**/*.eot', 'src/assets/theme/fonts/**/*.ttf', 'src/assets/theme/fonts/**/*.woff'], 
+                    
+                    url: (asset) => `${serverPath}/test-vue-app/dist/public/fonts/${asset.relativePath}`             
+                })]
+          })]
+      }),
       sourcemaps(),
-      postcss()
 
     ]
   }
