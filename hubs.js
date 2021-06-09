@@ -1,10 +1,10 @@
 import "./App.js";
-import {g as t} from "./vendor.js";
+import {j as t} from "./vendor.js";
 import "./App2.js";
 import "./logo.js";
 class e {
   constructor(t3 = 0, e2 = 0) {
-    Object.defineProperty(this, "isVector2", {value: true}), this.x = t3, this.y = e2;
+    this.x = t3, this.y = e2;
   }
   get width() {
     return this.x;
@@ -187,21 +187,32 @@ class e {
     return this.x = Math.random(), this.y = Math.random(), this;
   }
 }
+e.prototype.isVector2 = true;
 const r = [];
-for (let Oh = 0; Oh < 256; Oh++)
-  r[Oh] = (Oh < 16 ? "0" : "") + Oh.toString(16);
+for (let Ih = 0; Ih < 256; Ih++)
+  r[Ih] = (Ih < 16 ? "0" : "") + Ih.toString(16);
 let n = 1234567;
-const i = {DEG2RAD: Math.PI / 180, RAD2DEG: 180 / Math.PI, generateUUID: function() {
+const i = Math.PI / 180, s = 180 / Math.PI;
+function a(t3, e2, r2) {
+  return Math.max(e2, Math.min(r2, t3));
+}
+function o(t3, e2) {
+  return (t3 % e2 + e2) % e2;
+}
+function u(t3, e2, r2) {
+  return (1 - r2) * t3 + r2 * e2;
+}
+Object.freeze({__proto__: null, [Symbol.toStringTag]: "Module", DEG2RAD: i, RAD2DEG: s, generateUUID: function() {
   const t3 = 4294967295 * Math.random() | 0, e2 = 4294967295 * Math.random() | 0, n2 = 4294967295 * Math.random() | 0, i2 = 4294967295 * Math.random() | 0;
   return (r[255 & t3] + r[t3 >> 8 & 255] + r[t3 >> 16 & 255] + r[t3 >> 24 & 255] + "-" + r[255 & e2] + r[e2 >> 8 & 255] + "-" + r[e2 >> 16 & 15 | 64] + r[e2 >> 24 & 255] + "-" + r[63 & n2 | 128] + r[n2 >> 8 & 255] + "-" + r[n2 >> 16 & 255] + r[n2 >> 24 & 255] + r[255 & i2] + r[i2 >> 8 & 255] + r[i2 >> 16 & 255] + r[i2 >> 24 & 255]).toUpperCase();
-}, clamp: function(t3, e2, r2) {
-  return Math.max(e2, Math.min(r2, t3));
-}, euclideanModulo: function(t3, e2) {
-  return (t3 % e2 + e2) % e2;
-}, mapLinear: function(t3, e2, r2, n2, i2) {
+}, clamp: a, euclideanModulo: o, mapLinear: function(t3, e2, r2, n2, i2) {
   return n2 + (t3 - e2) * (i2 - n2) / (r2 - e2);
-}, lerp: function(t3, e2, r2) {
-  return (1 - r2) * t3 + r2 * e2;
+}, inverseLerp: function(t3, e2, r2) {
+  return t3 !== e2 ? (r2 - t3) / (e2 - t3) : 0;
+}, lerp: u, damp: function(t3, e2, r2, n2) {
+  return u(t3, e2, 1 - Math.exp(-r2 * n2));
+}, pingpong: function(t3, e2 = 1) {
+  return e2 - Math.abs(o(t3, 2 * e2) - e2);
 }, smoothstep: function(t3, e2, r2) {
   return t3 <= e2 ? 0 : t3 >= r2 ? 1 : (t3 = (t3 - e2) / (r2 - e2)) * t3 * (3 - 2 * t3);
 }, smootherstep: function(t3, e2, r2) {
@@ -215,9 +226,9 @@ const i = {DEG2RAD: Math.PI / 180, RAD2DEG: 180 / Math.PI, generateUUID: functio
 }, seededRandom: function(t3) {
   return t3 !== void 0 && (n = t3 % 2147483647), n = 16807 * n % 2147483647, (n - 1) / 2147483646;
 }, degToRad: function(t3) {
-  return t3 * i.DEG2RAD;
+  return t3 * i;
 }, radToDeg: function(t3) {
-  return t3 * i.RAD2DEG;
+  return t3 * s;
 }, isPowerOfTwo: function(t3) {
   return (t3 & t3 - 1) == 0 && t3 !== 0;
 }, ceilPowerOfTwo: function(t3) {
@@ -225,7 +236,7 @@ const i = {DEG2RAD: Math.PI / 180, RAD2DEG: 180 / Math.PI, generateUUID: functio
 }, floorPowerOfTwo: function(t3) {
   return Math.pow(2, Math.floor(Math.log(t3) / Math.LN2));
 }, setQuaternionFromProperEuler: function(t3, e2, r2, n2, i2) {
-  const s2 = Math.cos, a2 = Math.sin, o2 = s2(r2 / 2), u2 = a2(r2 / 2), h = s2((e2 + n2) / 2), c2 = a2((e2 + n2) / 2), l2 = s2((e2 - n2) / 2), p2 = a2((e2 - n2) / 2), f2 = s2((n2 - e2) / 2), d2 = a2((n2 - e2) / 2);
+  const s2 = Math.cos, a2 = Math.sin, o2 = s2(r2 / 2), u2 = a2(r2 / 2), h = s2((e2 + n2) / 2), c2 = a2((e2 + n2) / 2), l2 = s2((e2 - n2) / 2), p2 = a2((e2 - n2) / 2), f2 = s2((n2 - e2) / 2), d = a2((n2 - e2) / 2);
   switch (i2) {
     case "XYX":
       t3.set(o2 * c2, u2 * l2, u2 * p2, o2 * h);
@@ -237,37 +248,41 @@ const i = {DEG2RAD: Math.PI / 180, RAD2DEG: 180 / Math.PI, generateUUID: functio
       t3.set(u2 * l2, u2 * p2, o2 * c2, o2 * h);
       break;
     case "XZX":
-      t3.set(o2 * c2, u2 * d2, u2 * f2, o2 * h);
+      t3.set(o2 * c2, u2 * d, u2 * f2, o2 * h);
       break;
     case "YXY":
-      t3.set(u2 * f2, o2 * c2, u2 * d2, o2 * h);
+      t3.set(u2 * f2, o2 * c2, u2 * d, o2 * h);
       break;
     case "ZYZ":
-      t3.set(u2 * d2, u2 * f2, o2 * c2, o2 * h);
+      t3.set(u2 * d, u2 * f2, o2 * c2, o2 * h);
       break;
     default:
       console.warn("THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: " + i2);
   }
-}};
-class s {
+}});
+class c {
   constructor(t3 = 0, e2 = 0, r2 = 0, n2 = 1) {
-    Object.defineProperty(this, "isQuaternion", {value: true}), this._x = t3, this._y = e2, this._z = r2, this._w = n2;
+    this._x = t3, this._y = e2, this._z = r2, this._w = n2;
   }
   static slerp(t3, e2, r2, n2) {
-    return r2.copy(t3).slerp(e2, n2);
+    return console.warn("THREE.Quaternion: Static .slerp() has been deprecated. Use qm.slerpQuaternions( qa, qb, t ) instead."), r2.slerpQuaternions(t3, e2, n2);
   }
   static slerpFlat(t3, e2, r2, n2, i2, s2, a2) {
     let o2 = r2[n2 + 0], u2 = r2[n2 + 1], h = r2[n2 + 2], c2 = r2[n2 + 3];
-    const l2 = i2[s2 + 0], p2 = i2[s2 + 1], f2 = i2[s2 + 2], d2 = i2[s2 + 3];
-    if (c2 !== d2 || o2 !== l2 || u2 !== p2 || h !== f2) {
+    const l2 = i2[s2 + 0], p2 = i2[s2 + 1], f2 = i2[s2 + 2], d = i2[s2 + 3];
+    if (a2 === 0)
+      return t3[e2 + 0] = o2, t3[e2 + 1] = u2, t3[e2 + 2] = h, void (t3[e2 + 3] = c2);
+    if (a2 === 1)
+      return t3[e2 + 0] = l2, t3[e2 + 1] = p2, t3[e2 + 2] = f2, void (t3[e2 + 3] = d);
+    if (c2 !== d || o2 !== l2 || u2 !== p2 || h !== f2) {
       let t4 = 1 - a2;
-      const e3 = o2 * l2 + u2 * p2 + h * f2 + c2 * d2, r3 = e3 >= 0 ? 1 : -1, n3 = 1 - e3 * e3;
+      const e3 = o2 * l2 + u2 * p2 + h * f2 + c2 * d, r3 = e3 >= 0 ? 1 : -1, n3 = 1 - e3 * e3;
       if (n3 > Number.EPSILON) {
         const i4 = Math.sqrt(n3), s3 = Math.atan2(i4, e3 * r3);
         t4 = Math.sin(t4 * s3) / i4, a2 = Math.sin(a2 * s3) / i4;
       }
       const i3 = a2 * r3;
-      if (o2 = o2 * t4 + l2 * i3, u2 = u2 * t4 + p2 * i3, h = h * t4 + f2 * i3, c2 = c2 * t4 + d2 * i3, t4 === 1 - a2) {
+      if (o2 = o2 * t4 + l2 * i3, u2 = u2 * t4 + p2 * i3, h = h * t4 + f2 * i3, c2 = c2 * t4 + d * i3, t4 === 1 - a2) {
         const t5 = 1 / Math.sqrt(o2 * o2 + u2 * u2 + h * h + c2 * c2);
         o2 *= t5, u2 *= t5, h *= t5, c2 *= t5;
       }
@@ -362,10 +377,10 @@ class s {
   }
   setFromUnitVectors(t3, e2) {
     let r2 = t3.dot(e2) + 1;
-    return r2 < 1e-6 ? (r2 = 0, Math.abs(t3.x) > Math.abs(t3.z) ? (this._x = -t3.y, this._y = t3.x, this._z = 0, this._w = r2) : (this._x = 0, this._y = -t3.z, this._z = t3.y, this._w = r2)) : (this._x = t3.y * e2.z - t3.z * e2.y, this._y = t3.z * e2.x - t3.x * e2.z, this._z = t3.x * e2.y - t3.y * e2.x, this._w = r2), this.normalize();
+    return r2 < Number.EPSILON ? (r2 = 0, Math.abs(t3.x) > Math.abs(t3.z) ? (this._x = -t3.y, this._y = t3.x, this._z = 0, this._w = r2) : (this._x = 0, this._y = -t3.z, this._z = t3.y, this._w = r2)) : (this._x = t3.y * e2.z - t3.z * e2.y, this._y = t3.z * e2.x - t3.x * e2.z, this._z = t3.x * e2.y - t3.y * e2.x, this._w = r2), this.normalize();
   }
   angleTo(t3) {
-    return 2 * Math.acos(Math.abs(i.clamp(this.dot(t3), -1, 1)));
+    return 2 * Math.acos(Math.abs(a(this.dot(t3), -1, 1)));
   }
   rotateTowards(t3, e2) {
     const r2 = this.angleTo(t3);
@@ -377,7 +392,7 @@ class s {
   identity() {
     return this.set(0, 0, 0, 1);
   }
-  inverse() {
+  invert() {
     return this.conjugate();
   }
   conjugate() {
@@ -423,6 +438,9 @@ class s {
     const u2 = Math.sqrt(o2), h = Math.atan2(u2, a2), c2 = Math.sin((1 - e2) * h) / u2, l2 = Math.sin(e2 * h) / u2;
     return this._w = s2 * c2 + this._w * l2, this._x = r2 * c2 + this._x * l2, this._y = n2 * c2 + this._y * l2, this._z = i2 * c2 + this._z * l2, this._onChangeCallback(), this;
   }
+  slerpQuaternions(t3, e2, r2) {
+    this.copy(t3).slerp(e2, r2);
+  }
   equals(t3) {
     return t3._x === this._x && t3._y === this._y && t3._z === this._z && t3._w === this._w;
   }
@@ -441,9 +459,10 @@ class s {
   _onChangeCallback() {
   }
 }
-class a {
+c.prototype.isQuaternion = true;
+class l {
   constructor(t3 = 0, e2 = 0, r2 = 0) {
-    Object.defineProperty(this, "isVector3", {value: true}), this.x = t3, this.y = e2, this.z = r2;
+    this.x = t3, this.y = e2, this.z = r2;
   }
   set(t3, e2, r2) {
     return r2 === void 0 && (r2 = this.z), this.x = t3, this.y = e2, this.z = r2, this;
@@ -525,10 +544,10 @@ class a {
     return this.x = t3.x * e2.x, this.y = t3.y * e2.y, this.z = t3.z * e2.z, this;
   }
   applyEuler(t3) {
-    return t3 && t3.isEuler || console.error("THREE.Vector3: .applyEuler() now expects an Euler rotation rather than a Vector3 and order."), this.applyQuaternion(u.setFromEuler(t3));
+    return t3 && t3.isEuler || console.error("THREE.Vector3: .applyEuler() now expects an Euler rotation rather than a Vector3 and order."), this.applyQuaternion(f.setFromEuler(t3));
   }
   applyAxisAngle(t3, e2) {
-    return this.applyQuaternion(u.setFromAxisAngle(t3, e2));
+    return this.applyQuaternion(f.setFromAxisAngle(t3, e2));
   }
   applyMatrix3(t3) {
     const e2 = this.x, r2 = this.y, n2 = this.z, i2 = t3.elements;
@@ -631,17 +650,17 @@ class a {
     return this.copy(t3).multiplyScalar(r2);
   }
   projectOnPlane(t3) {
-    return o.copy(this).projectOnVector(t3), this.sub(o);
+    return p.copy(this).projectOnVector(t3), this.sub(p);
   }
   reflect(t3) {
-    return this.sub(o.copy(t3).multiplyScalar(2 * this.dot(t3)));
+    return this.sub(p.copy(t3).multiplyScalar(2 * this.dot(t3)));
   }
   angleTo(t3) {
     const e2 = Math.sqrt(this.lengthSq() * t3.lengthSq());
     if (e2 === 0)
       return Math.PI / 2;
     const r2 = this.dot(t3) / e2;
-    return Math.acos(i.clamp(r2, -1, 1));
+    return Math.acos(a(r2, -1, 1));
   }
   distanceTo(t3) {
     return Math.sqrt(this.distanceToSquared(t3));
@@ -696,20 +715,21 @@ class a {
     return this.x = Math.random(), this.y = Math.random(), this.z = Math.random(), this;
   }
 }
-const o = new a(), u = new s();
-class c {
+l.prototype.isVector3 = true;
+const p = new l(), f = new c();
+class m {
   constructor() {
-    Object.defineProperty(this, "isMatrix4", {value: true}), this.elements = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], arguments.length > 0 && console.error("THREE.Matrix4: the constructor no longer reads arguments. use .set() instead.");
+    this.elements = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], arguments.length > 0 && console.error("THREE.Matrix4: the constructor no longer reads arguments. use .set() instead.");
   }
-  set(t3, e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2, d2, m2) {
+  set(t3, e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2, d, m2) {
     const y2 = this.elements;
-    return y2[0] = t3, y2[4] = e2, y2[8] = r2, y2[12] = n2, y2[1] = i2, y2[5] = s2, y2[9] = a2, y2[13] = o2, y2[2] = u2, y2[6] = h, y2[10] = c2, y2[14] = l2, y2[3] = p2, y2[7] = f2, y2[11] = d2, y2[15] = m2, this;
+    return y2[0] = t3, y2[4] = e2, y2[8] = r2, y2[12] = n2, y2[1] = i2, y2[5] = s2, y2[9] = a2, y2[13] = o2, y2[2] = u2, y2[6] = h, y2[10] = c2, y2[14] = l2, y2[3] = p2, y2[7] = f2, y2[11] = d, y2[15] = m2, this;
   }
   identity() {
     return this.set(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), this;
   }
   clone() {
-    return new c().fromArray(this.elements);
+    return new m().fromArray(this.elements);
   }
   copy(t3) {
     const e2 = this.elements, r2 = t3.elements;
@@ -719,6 +739,10 @@ class c {
     const e2 = this.elements, r2 = t3.elements;
     return e2[12] = r2[12], e2[13] = r2[13], e2[14] = r2[14], this;
   }
+  setFromMatrix3(t3) {
+    const e2 = t3.elements;
+    return this.set(e2[0], e2[3], e2[6], 0, e2[1], e2[4], e2[7], 0, e2[2], e2[5], e2[8], 0, 0, 0, 0, 1), this;
+  }
   extractBasis(t3, e2, r2) {
     return t3.setFromMatrixColumn(this, 0), e2.setFromMatrixColumn(this, 1), r2.setFromMatrixColumn(this, 2), this;
   }
@@ -726,7 +750,7 @@ class c {
     return this.set(t3.x, e2.x, r2.x, 0, t3.y, e2.y, r2.y, 0, t3.z, e2.z, r2.z, 0, 0, 0, 0, 1), this;
   }
   extractRotation(t3) {
-    const e2 = this.elements, r2 = t3.elements, n2 = 1 / l.setFromMatrixColumn(t3, 0).length(), i2 = 1 / l.setFromMatrixColumn(t3, 1).length(), s2 = 1 / l.setFromMatrixColumn(t3, 2).length();
+    const e2 = this.elements, r2 = t3.elements, n2 = 1 / y.setFromMatrixColumn(t3, 0).length(), i2 = 1 / y.setFromMatrixColumn(t3, 1).length(), s2 = 1 / y.setFromMatrixColumn(t3, 2).length();
     return e2[0] = r2[0] * n2, e2[1] = r2[1] * n2, e2[2] = r2[2] * n2, e2[3] = 0, e2[4] = r2[4] * i2, e2[5] = r2[5] * i2, e2[6] = r2[6] * i2, e2[7] = 0, e2[8] = r2[8] * s2, e2[9] = r2[9] * s2, e2[10] = r2[10] * s2, e2[11] = 0, e2[12] = 0, e2[13] = 0, e2[14] = 0, e2[15] = 1, this;
   }
   makeRotationFromEuler(t3) {
@@ -754,11 +778,11 @@ class c {
     return e2[3] = 0, e2[7] = 0, e2[11] = 0, e2[12] = 0, e2[13] = 0, e2[14] = 0, e2[15] = 1, this;
   }
   makeRotationFromQuaternion(t3) {
-    return this.compose(f, t3, d);
+    return this.compose(v, t3, x);
   }
   lookAt(t3, e2, r2) {
     const n2 = this.elements;
-    return g.subVectors(t3, e2), g.lengthSq() === 0 && (g.z = 1), g.normalize(), m.crossVectors(r2, g), m.lengthSq() === 0 && (Math.abs(r2.z) === 1 ? g.x += 1e-4 : g.z += 1e-4, g.normalize(), m.crossVectors(r2, g)), m.normalize(), y.crossVectors(g, m), n2[0] = m.x, n2[4] = y.x, n2[8] = g.x, n2[1] = m.y, n2[5] = y.y, n2[9] = g.y, n2[2] = m.z, n2[6] = y.z, n2[10] = g.z, this;
+    return _.subVectors(t3, e2), _.lengthSq() === 0 && (_.z = 1), _.normalize(), w.crossVectors(r2, _), w.lengthSq() === 0 && (Math.abs(r2.z) === 1 ? _.x += 1e-4 : _.z += 1e-4, _.normalize(), w.crossVectors(r2, _)), w.normalize(), b.crossVectors(_, w), n2[0] = w.x, n2[4] = b.x, n2[8] = _.x, n2[1] = w.y, n2[5] = b.y, n2[9] = _.y, n2[2] = w.z, n2[6] = b.z, n2[10] = _.z, this;
   }
   multiply(t3, e2) {
     return e2 !== void 0 ? (console.warn("THREE.Matrix4: .multiply() now only accepts one argument. Use .multiplyMatrices( a, b ) instead."), this.multiplyMatrices(t3, e2)) : this.multiplyMatrices(this, t3);
@@ -767,8 +791,8 @@ class c {
     return this.multiplyMatrices(t3, this);
   }
   multiplyMatrices(t3, e2) {
-    const r2 = t3.elements, n2 = e2.elements, i2 = this.elements, s2 = r2[0], a2 = r2[4], o2 = r2[8], u2 = r2[12], h = r2[1], c2 = r2[5], l2 = r2[9], p2 = r2[13], f2 = r2[2], d2 = r2[6], m2 = r2[10], y2 = r2[14], g2 = r2[3], v = r2[7], x = r2[11], w = r2[15], b = n2[0], _ = n2[4], M = n2[8], E = n2[12], N = n2[1], S = n2[5], T = n2[9], O2 = n2[13], z2 = n2[2], A2 = n2[6], C2 = n2[10], R2 = n2[14], D2 = n2[3], k2 = n2[7], I2 = n2[11], L2 = n2[15];
-    return i2[0] = s2 * b + a2 * N + o2 * z2 + u2 * D2, i2[4] = s2 * _ + a2 * S + o2 * A2 + u2 * k2, i2[8] = s2 * M + a2 * T + o2 * C2 + u2 * I2, i2[12] = s2 * E + a2 * O2 + o2 * R2 + u2 * L2, i2[1] = h * b + c2 * N + l2 * z2 + p2 * D2, i2[5] = h * _ + c2 * S + l2 * A2 + p2 * k2, i2[9] = h * M + c2 * T + l2 * C2 + p2 * I2, i2[13] = h * E + c2 * O2 + l2 * R2 + p2 * L2, i2[2] = f2 * b + d2 * N + m2 * z2 + y2 * D2, i2[6] = f2 * _ + d2 * S + m2 * A2 + y2 * k2, i2[10] = f2 * M + d2 * T + m2 * C2 + y2 * I2, i2[14] = f2 * E + d2 * O2 + m2 * R2 + y2 * L2, i2[3] = g2 * b + v * N + x * z2 + w * D2, i2[7] = g2 * _ + v * S + x * A2 + w * k2, i2[11] = g2 * M + v * T + x * C2 + w * I2, i2[15] = g2 * E + v * O2 + x * R2 + w * L2, this;
+    const r2 = t3.elements, n2 = e2.elements, i2 = this.elements, s2 = r2[0], a2 = r2[4], o2 = r2[8], u2 = r2[12], h = r2[1], c2 = r2[5], l2 = r2[9], p2 = r2[13], f2 = r2[2], d = r2[6], m2 = r2[10], y2 = r2[14], g2 = r2[3], v2 = r2[7], x2 = r2[11], w2 = r2[15], b2 = n2[0], _2 = n2[4], M = n2[8], N = n2[12], E = n2[1], S = n2[5], T = n2[9], O = n2[13], z = n2[2], C = n2[6], A = n2[10], R = n2[14], D = n2[3], k = n2[7], I = n2[11], L = n2[15];
+    return i2[0] = s2 * b2 + a2 * E + o2 * z + u2 * D, i2[4] = s2 * _2 + a2 * S + o2 * C + u2 * k, i2[8] = s2 * M + a2 * T + o2 * A + u2 * I, i2[12] = s2 * N + a2 * O + o2 * R + u2 * L, i2[1] = h * b2 + c2 * E + l2 * z + p2 * D, i2[5] = h * _2 + c2 * S + l2 * C + p2 * k, i2[9] = h * M + c2 * T + l2 * A + p2 * I, i2[13] = h * N + c2 * O + l2 * R + p2 * L, i2[2] = f2 * b2 + d * E + m2 * z + y2 * D, i2[6] = f2 * _2 + d * S + m2 * C + y2 * k, i2[10] = f2 * M + d * T + m2 * A + y2 * I, i2[14] = f2 * N + d * O + m2 * R + y2 * L, i2[3] = g2 * b2 + v2 * E + x2 * z + w2 * D, i2[7] = g2 * _2 + v2 * S + x2 * C + w2 * k, i2[11] = g2 * M + v2 * T + x2 * A + w2 * I, i2[15] = g2 * N + v2 * O + x2 * R + w2 * L, this;
   }
   multiplyScalar(t3) {
     const e2 = this.elements;
@@ -787,13 +811,12 @@ class c {
     const n2 = this.elements;
     return t3.isVector3 ? (n2[12] = t3.x, n2[13] = t3.y, n2[14] = t3.z) : (n2[12] = t3, n2[13] = e2, n2[14] = r2), this;
   }
-  getInverse(t3, e2) {
-    e2 !== void 0 && console.warn("THREE.Matrix4: .getInverse() can no longer be configured to throw on degenerate.");
-    const r2 = this.elements, n2 = t3.elements, i2 = n2[0], s2 = n2[1], a2 = n2[2], o2 = n2[3], u2 = n2[4], h = n2[5], c2 = n2[6], l2 = n2[7], p2 = n2[8], f2 = n2[9], d2 = n2[10], m2 = n2[11], y2 = n2[12], g2 = n2[13], v = n2[14], x = n2[15], w = f2 * v * l2 - g2 * d2 * l2 + g2 * c2 * m2 - h * v * m2 - f2 * c2 * x + h * d2 * x, b = y2 * d2 * l2 - p2 * v * l2 - y2 * c2 * m2 + u2 * v * m2 + p2 * c2 * x - u2 * d2 * x, _ = p2 * g2 * l2 - y2 * f2 * l2 + y2 * h * m2 - u2 * g2 * m2 - p2 * h * x + u2 * f2 * x, M = y2 * f2 * c2 - p2 * g2 * c2 - y2 * h * d2 + u2 * g2 * d2 + p2 * h * v - u2 * f2 * v, E = i2 * w + s2 * b + a2 * _ + o2 * M;
-    if (E === 0)
+  invert() {
+    const t3 = this.elements, e2 = t3[0], r2 = t3[1], n2 = t3[2], i2 = t3[3], s2 = t3[4], a2 = t3[5], o2 = t3[6], u2 = t3[7], h = t3[8], c2 = t3[9], l2 = t3[10], p2 = t3[11], f2 = t3[12], d = t3[13], m2 = t3[14], y2 = t3[15], g2 = c2 * m2 * u2 - d * l2 * u2 + d * o2 * p2 - a2 * m2 * p2 - c2 * o2 * y2 + a2 * l2 * y2, v2 = f2 * l2 * u2 - h * m2 * u2 - f2 * o2 * p2 + s2 * m2 * p2 + h * o2 * y2 - s2 * l2 * y2, x2 = h * d * u2 - f2 * c2 * u2 + f2 * a2 * p2 - s2 * d * p2 - h * a2 * y2 + s2 * c2 * y2, w2 = f2 * c2 * o2 - h * d * o2 - f2 * a2 * l2 + s2 * d * l2 + h * a2 * m2 - s2 * c2 * m2, b2 = e2 * g2 + r2 * v2 + n2 * x2 + i2 * w2;
+    if (b2 === 0)
       return this.set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    const N = 1 / E;
-    return r2[0] = w * N, r2[1] = (g2 * d2 * o2 - f2 * v * o2 - g2 * a2 * m2 + s2 * v * m2 + f2 * a2 * x - s2 * d2 * x) * N, r2[2] = (h * v * o2 - g2 * c2 * o2 + g2 * a2 * l2 - s2 * v * l2 - h * a2 * x + s2 * c2 * x) * N, r2[3] = (f2 * c2 * o2 - h * d2 * o2 - f2 * a2 * l2 + s2 * d2 * l2 + h * a2 * m2 - s2 * c2 * m2) * N, r2[4] = b * N, r2[5] = (p2 * v * o2 - y2 * d2 * o2 + y2 * a2 * m2 - i2 * v * m2 - p2 * a2 * x + i2 * d2 * x) * N, r2[6] = (y2 * c2 * o2 - u2 * v * o2 - y2 * a2 * l2 + i2 * v * l2 + u2 * a2 * x - i2 * c2 * x) * N, r2[7] = (u2 * d2 * o2 - p2 * c2 * o2 + p2 * a2 * l2 - i2 * d2 * l2 - u2 * a2 * m2 + i2 * c2 * m2) * N, r2[8] = _ * N, r2[9] = (y2 * f2 * o2 - p2 * g2 * o2 - y2 * s2 * m2 + i2 * g2 * m2 + p2 * s2 * x - i2 * f2 * x) * N, r2[10] = (u2 * g2 * o2 - y2 * h * o2 + y2 * s2 * l2 - i2 * g2 * l2 - u2 * s2 * x + i2 * h * x) * N, r2[11] = (p2 * h * o2 - u2 * f2 * o2 - p2 * s2 * l2 + i2 * f2 * l2 + u2 * s2 * m2 - i2 * h * m2) * N, r2[12] = M * N, r2[13] = (p2 * g2 * a2 - y2 * f2 * a2 + y2 * s2 * d2 - i2 * g2 * d2 - p2 * s2 * v + i2 * f2 * v) * N, r2[14] = (y2 * h * a2 - u2 * g2 * a2 - y2 * s2 * c2 + i2 * g2 * c2 + u2 * s2 * v - i2 * h * v) * N, r2[15] = (u2 * f2 * a2 - p2 * h * a2 + p2 * s2 * c2 - i2 * f2 * c2 - u2 * s2 * d2 + i2 * h * d2) * N, this;
+    const _2 = 1 / b2;
+    return t3[0] = g2 * _2, t3[1] = (d * l2 * i2 - c2 * m2 * i2 - d * n2 * p2 + r2 * m2 * p2 + c2 * n2 * y2 - r2 * l2 * y2) * _2, t3[2] = (a2 * m2 * i2 - d * o2 * i2 + d * n2 * u2 - r2 * m2 * u2 - a2 * n2 * y2 + r2 * o2 * y2) * _2, t3[3] = (c2 * o2 * i2 - a2 * l2 * i2 - c2 * n2 * u2 + r2 * l2 * u2 + a2 * n2 * p2 - r2 * o2 * p2) * _2, t3[4] = v2 * _2, t3[5] = (h * m2 * i2 - f2 * l2 * i2 + f2 * n2 * p2 - e2 * m2 * p2 - h * n2 * y2 + e2 * l2 * y2) * _2, t3[6] = (f2 * o2 * i2 - s2 * m2 * i2 - f2 * n2 * u2 + e2 * m2 * u2 + s2 * n2 * y2 - e2 * o2 * y2) * _2, t3[7] = (s2 * l2 * i2 - h * o2 * i2 + h * n2 * u2 - e2 * l2 * u2 - s2 * n2 * p2 + e2 * o2 * p2) * _2, t3[8] = x2 * _2, t3[9] = (f2 * c2 * i2 - h * d * i2 - f2 * r2 * p2 + e2 * d * p2 + h * r2 * y2 - e2 * c2 * y2) * _2, t3[10] = (s2 * d * i2 - f2 * a2 * i2 + f2 * r2 * u2 - e2 * d * u2 - s2 * r2 * y2 + e2 * a2 * y2) * _2, t3[11] = (h * a2 * i2 - s2 * c2 * i2 - h * r2 * u2 + e2 * c2 * u2 + s2 * r2 * p2 - e2 * a2 * p2) * _2, t3[12] = w2 * _2, t3[13] = (h * d * n2 - f2 * c2 * n2 + f2 * r2 * l2 - e2 * d * l2 - h * r2 * m2 + e2 * c2 * m2) * _2, t3[14] = (f2 * a2 * n2 - s2 * d * n2 - f2 * r2 * o2 + e2 * d * o2 + s2 * r2 * m2 - e2 * a2 * m2) * _2, t3[15] = (s2 * c2 * n2 - h * a2 * n2 + h * r2 * o2 - e2 * c2 * o2 - s2 * r2 * l2 + e2 * a2 * l2) * _2, this;
   }
   scale(t3) {
     const e2 = this.elements, r2 = t3.x, n2 = t3.y, i2 = t3.z;
@@ -825,20 +848,20 @@ class c {
   makeScale(t3, e2, r2) {
     return this.set(t3, 0, 0, 0, 0, e2, 0, 0, 0, 0, r2, 0, 0, 0, 0, 1), this;
   }
-  makeShear(t3, e2, r2) {
-    return this.set(1, e2, r2, 0, t3, 1, r2, 0, t3, e2, 1, 0, 0, 0, 0, 1), this;
+  makeShear(t3, e2, r2, n2, i2, s2) {
+    return this.set(1, r2, i2, 0, t3, 1, s2, 0, e2, n2, 1, 0, 0, 0, 0, 1), this;
   }
   compose(t3, e2, r2) {
-    const n2 = this.elements, i2 = e2._x, s2 = e2._y, a2 = e2._z, o2 = e2._w, u2 = i2 + i2, h = s2 + s2, c2 = a2 + a2, l2 = i2 * u2, p2 = i2 * h, f2 = i2 * c2, d2 = s2 * h, m2 = s2 * c2, y2 = a2 * c2, g2 = o2 * u2, v = o2 * h, x = o2 * c2, w = r2.x, b = r2.y, _ = r2.z;
-    return n2[0] = (1 - (d2 + y2)) * w, n2[1] = (p2 + x) * w, n2[2] = (f2 - v) * w, n2[3] = 0, n2[4] = (p2 - x) * b, n2[5] = (1 - (l2 + y2)) * b, n2[6] = (m2 + g2) * b, n2[7] = 0, n2[8] = (f2 + v) * _, n2[9] = (m2 - g2) * _, n2[10] = (1 - (l2 + d2)) * _, n2[11] = 0, n2[12] = t3.x, n2[13] = t3.y, n2[14] = t3.z, n2[15] = 1, this;
+    const n2 = this.elements, i2 = e2._x, s2 = e2._y, a2 = e2._z, o2 = e2._w, u2 = i2 + i2, h = s2 + s2, c2 = a2 + a2, l2 = i2 * u2, p2 = i2 * h, f2 = i2 * c2, d = s2 * h, m2 = s2 * c2, y2 = a2 * c2, g2 = o2 * u2, v2 = o2 * h, x2 = o2 * c2, w2 = r2.x, b2 = r2.y, _2 = r2.z;
+    return n2[0] = (1 - (d + y2)) * w2, n2[1] = (p2 + x2) * w2, n2[2] = (f2 - v2) * w2, n2[3] = 0, n2[4] = (p2 - x2) * b2, n2[5] = (1 - (l2 + y2)) * b2, n2[6] = (m2 + g2) * b2, n2[7] = 0, n2[8] = (f2 + v2) * _2, n2[9] = (m2 - g2) * _2, n2[10] = (1 - (l2 + d)) * _2, n2[11] = 0, n2[12] = t3.x, n2[13] = t3.y, n2[14] = t3.z, n2[15] = 1, this;
   }
   decompose(t3, e2, r2) {
     const n2 = this.elements;
-    let i2 = l.set(n2[0], n2[1], n2[2]).length();
-    const s2 = l.set(n2[4], n2[5], n2[6]).length(), a2 = l.set(n2[8], n2[9], n2[10]).length();
-    this.determinant() < 0 && (i2 = -i2), t3.x = n2[12], t3.y = n2[13], t3.z = n2[14], p.copy(this);
+    let i2 = y.set(n2[0], n2[1], n2[2]).length();
+    const s2 = y.set(n2[4], n2[5], n2[6]).length(), a2 = y.set(n2[8], n2[9], n2[10]).length();
+    this.determinant() < 0 && (i2 = -i2), t3.x = n2[12], t3.y = n2[13], t3.z = n2[14], g.copy(this);
     const o2 = 1 / i2, u2 = 1 / s2, h = 1 / a2;
-    return p.elements[0] *= o2, p.elements[1] *= o2, p.elements[2] *= o2, p.elements[4] *= u2, p.elements[5] *= u2, p.elements[6] *= u2, p.elements[8] *= h, p.elements[9] *= h, p.elements[10] *= h, e2.setFromRotationMatrix(p), r2.x = i2, r2.y = s2, r2.z = a2, this;
+    return g.elements[0] *= o2, g.elements[1] *= o2, g.elements[2] *= o2, g.elements[4] *= u2, g.elements[5] *= u2, g.elements[6] *= u2, g.elements[8] *= h, g.elements[9] *= h, g.elements[10] *= h, e2.setFromRotationMatrix(g), r2.x = i2, r2.y = s2, r2.z = a2, this;
   }
   makePerspective(t3, e2, r2, n2, i2, s2) {
     s2 === void 0 && console.warn("THREE.Matrix4: .makePerspective() has been redefined and has a new signature. Please check the docs.");
@@ -866,230 +889,12 @@ class c {
     return t3[e2] = r2[0], t3[e2 + 1] = r2[1], t3[e2 + 2] = r2[2], t3[e2 + 3] = r2[3], t3[e2 + 4] = r2[4], t3[e2 + 5] = r2[5], t3[e2 + 6] = r2[6], t3[e2 + 7] = r2[7], t3[e2 + 8] = r2[8], t3[e2 + 9] = r2[9], t3[e2 + 10] = r2[10], t3[e2 + 11] = r2[11], t3[e2 + 12] = r2[12], t3[e2 + 13] = r2[13], t3[e2 + 14] = r2[14], t3[e2 + 15] = r2[15], t3;
   }
 }
-const l = new a(), p = new c(), f = new a(0, 0, 0), d = new a(1, 1, 1), m = new a(), y = new a(), g = new a();
-new c();
-new s();
-const O = new e();
-class z {
-  constructor(t3, r2) {
-    Object.defineProperty(this, "isBox2", {value: true}), this.min = t3 !== void 0 ? t3 : new e(1 / 0, 1 / 0), this.max = r2 !== void 0 ? r2 : new e(-1 / 0, -1 / 0);
-  }
-  set(t3, e2) {
-    return this.min.copy(t3), this.max.copy(e2), this;
-  }
-  setFromPoints(t3) {
-    this.makeEmpty();
-    for (let e2 = 0, r2 = t3.length; e2 < r2; e2++)
-      this.expandByPoint(t3[e2]);
-    return this;
-  }
-  setFromCenterAndSize(t3, e2) {
-    const r2 = O.copy(e2).multiplyScalar(0.5);
-    return this.min.copy(t3).sub(r2), this.max.copy(t3).add(r2), this;
-  }
-  clone() {
-    return new this.constructor().copy(this);
-  }
-  copy(t3) {
-    return this.min.copy(t3.min), this.max.copy(t3.max), this;
-  }
-  makeEmpty() {
-    return this.min.x = this.min.y = 1 / 0, this.max.x = this.max.y = -1 / 0, this;
-  }
-  isEmpty() {
-    return this.max.x < this.min.x || this.max.y < this.min.y;
-  }
-  getCenter(t3) {
-    return t3 === void 0 && (console.warn("THREE.Box2: .getCenter() target is now required"), t3 = new e()), this.isEmpty() ? t3.set(0, 0) : t3.addVectors(this.min, this.max).multiplyScalar(0.5);
-  }
-  getSize(t3) {
-    return t3 === void 0 && (console.warn("THREE.Box2: .getSize() target is now required"), t3 = new e()), this.isEmpty() ? t3.set(0, 0) : t3.subVectors(this.max, this.min);
-  }
-  expandByPoint(t3) {
-    return this.min.min(t3), this.max.max(t3), this;
-  }
-  expandByVector(t3) {
-    return this.min.sub(t3), this.max.add(t3), this;
-  }
-  expandByScalar(t3) {
-    return this.min.addScalar(-t3), this.max.addScalar(t3), this;
-  }
-  containsPoint(t3) {
-    return !(t3.x < this.min.x || t3.x > this.max.x || t3.y < this.min.y || t3.y > this.max.y);
-  }
-  containsBox(t3) {
-    return this.min.x <= t3.min.x && t3.max.x <= this.max.x && this.min.y <= t3.min.y && t3.max.y <= this.max.y;
-  }
-  getParameter(t3, r2) {
-    return r2 === void 0 && (console.warn("THREE.Box2: .getParameter() target is now required"), r2 = new e()), r2.set((t3.x - this.min.x) / (this.max.x - this.min.x), (t3.y - this.min.y) / (this.max.y - this.min.y));
-  }
-  intersectsBox(t3) {
-    return !(t3.max.x < this.min.x || t3.min.x > this.max.x || t3.max.y < this.min.y || t3.min.y > this.max.y);
-  }
-  clampPoint(t3, r2) {
-    return r2 === void 0 && (console.warn("THREE.Box2: .clampPoint() target is now required"), r2 = new e()), r2.copy(t3).clamp(this.min, this.max);
-  }
-  distanceToPoint(t3) {
-    return O.copy(t3).clamp(this.min, this.max).sub(t3).length();
-  }
-  intersect(t3) {
-    return this.min.max(t3.min), this.max.min(t3.max), this;
-  }
-  union(t3) {
-    return this.min.min(t3.min), this.max.max(t3.max), this;
-  }
-  translate(t3) {
-    return this.min.add(t3), this.max.add(t3), this;
-  }
-  equals(t3) {
-    return t3.min.equals(this.min) && t3.max.equals(this.max);
-  }
-}
-class A {
-  constructor(t3, e2) {
-    Object.defineProperty(this, "isBox3", {value: true}), this.min = t3 !== void 0 ? t3 : new a(1 / 0, 1 / 0, 1 / 0), this.max = e2 !== void 0 ? e2 : new a(-1 / 0, -1 / 0, -1 / 0);
-  }
-  set(t3, e2) {
-    return this.min.copy(t3), this.max.copy(e2), this;
-  }
-  setFromArray(t3) {
-    let e2 = 1 / 0, r2 = 1 / 0, n2 = 1 / 0, i2 = -1 / 0, s2 = -1 / 0, a2 = -1 / 0;
-    for (let o2 = 0, u2 = t3.length; o2 < u2; o2 += 3) {
-      const u3 = t3[o2], h = t3[o2 + 1], c2 = t3[o2 + 2];
-      u3 < e2 && (e2 = u3), h < r2 && (r2 = h), c2 < n2 && (n2 = c2), u3 > i2 && (i2 = u3), h > s2 && (s2 = h), c2 > a2 && (a2 = c2);
-    }
-    return this.min.set(e2, r2, n2), this.max.set(i2, s2, a2), this;
-  }
-  setFromBufferAttribute(t3) {
-    let e2 = 1 / 0, r2 = 1 / 0, n2 = 1 / 0, i2 = -1 / 0, s2 = -1 / 0, a2 = -1 / 0;
-    for (let o2 = 0, u2 = t3.count; o2 < u2; o2++) {
-      const u3 = t3.getX(o2), h = t3.getY(o2), c2 = t3.getZ(o2);
-      u3 < e2 && (e2 = u3), h < r2 && (r2 = h), c2 < n2 && (n2 = c2), u3 > i2 && (i2 = u3), h > s2 && (s2 = h), c2 > a2 && (a2 = c2);
-    }
-    return this.min.set(e2, r2, n2), this.max.set(i2, s2, a2), this;
-  }
-  setFromPoints(t3) {
-    this.makeEmpty();
-    for (let e2 = 0, r2 = t3.length; e2 < r2; e2++)
-      this.expandByPoint(t3[e2]);
-    return this;
-  }
-  setFromCenterAndSize(t3, e2) {
-    const r2 = D.copy(e2).multiplyScalar(0.5);
-    return this.min.copy(t3).sub(r2), this.max.copy(t3).add(r2), this;
-  }
-  setFromObject(t3) {
-    return this.makeEmpty(), this.expandByObject(t3);
-  }
-  clone() {
-    return new this.constructor().copy(this);
-  }
-  copy(t3) {
-    return this.min.copy(t3.min), this.max.copy(t3.max), this;
-  }
-  makeEmpty() {
-    return this.min.x = this.min.y = this.min.z = 1 / 0, this.max.x = this.max.y = this.max.z = -1 / 0, this;
-  }
-  isEmpty() {
-    return this.max.x < this.min.x || this.max.y < this.min.y || this.max.z < this.min.z;
-  }
-  getCenter(t3) {
-    return t3 === void 0 && (console.warn("THREE.Box3: .getCenter() target is now required"), t3 = new a()), this.isEmpty() ? t3.set(0, 0, 0) : t3.addVectors(this.min, this.max).multiplyScalar(0.5);
-  }
-  getSize(t3) {
-    return t3 === void 0 && (console.warn("THREE.Box3: .getSize() target is now required"), t3 = new a()), this.isEmpty() ? t3.set(0, 0, 0) : t3.subVectors(this.max, this.min);
-  }
-  expandByPoint(t3) {
-    return this.min.min(t3), this.max.max(t3), this;
-  }
-  expandByVector(t3) {
-    return this.min.sub(t3), this.max.add(t3), this;
-  }
-  expandByScalar(t3) {
-    return this.min.addScalar(-t3), this.max.addScalar(t3), this;
-  }
-  expandByObject(t3) {
-    t3.updateWorldMatrix(false, false);
-    const e2 = t3.geometry;
-    e2 !== void 0 && (e2.boundingBox === null && e2.computeBoundingBox(), k.copy(e2.boundingBox), k.applyMatrix4(t3.matrixWorld), this.union(k));
-    const r2 = t3.children;
-    for (let n2 = 0, i2 = r2.length; n2 < i2; n2++)
-      this.expandByObject(r2[n2]);
-    return this;
-  }
-  containsPoint(t3) {
-    return !(t3.x < this.min.x || t3.x > this.max.x || t3.y < this.min.y || t3.y > this.max.y || t3.z < this.min.z || t3.z > this.max.z);
-  }
-  containsBox(t3) {
-    return this.min.x <= t3.min.x && t3.max.x <= this.max.x && this.min.y <= t3.min.y && t3.max.y <= this.max.y && this.min.z <= t3.min.z && t3.max.z <= this.max.z;
-  }
-  getParameter(t3, e2) {
-    return e2 === void 0 && (console.warn("THREE.Box3: .getParameter() target is now required"), e2 = new a()), e2.set((t3.x - this.min.x) / (this.max.x - this.min.x), (t3.y - this.min.y) / (this.max.y - this.min.y), (t3.z - this.min.z) / (this.max.z - this.min.z));
-  }
-  intersectsBox(t3) {
-    return !(t3.max.x < this.min.x || t3.min.x > this.max.x || t3.max.y < this.min.y || t3.min.y > this.max.y || t3.max.z < this.min.z || t3.min.z > this.max.z);
-  }
-  intersectsSphere(t3) {
-    return this.clampPoint(t3.center, D), D.distanceToSquared(t3.center) <= t3.radius * t3.radius;
-  }
-  intersectsPlane(t3) {
-    let e2, r2;
-    return t3.normal.x > 0 ? (e2 = t3.normal.x * this.min.x, r2 = t3.normal.x * this.max.x) : (e2 = t3.normal.x * this.max.x, r2 = t3.normal.x * this.min.x), t3.normal.y > 0 ? (e2 += t3.normal.y * this.min.y, r2 += t3.normal.y * this.max.y) : (e2 += t3.normal.y * this.max.y, r2 += t3.normal.y * this.min.y), t3.normal.z > 0 ? (e2 += t3.normal.z * this.min.z, r2 += t3.normal.z * this.max.z) : (e2 += t3.normal.z * this.max.z, r2 += t3.normal.z * this.min.z), e2 <= -t3.constant && r2 >= -t3.constant;
-  }
-  intersectsTriangle(t3) {
-    if (this.isEmpty())
-      return false;
-    this.getCenter(j), q.subVectors(this.max, j), I.subVectors(t3.a, j), L.subVectors(t3.b, j), B.subVectors(t3.c, j), F.subVectors(L, I), P.subVectors(B, L), U.subVectors(I, B);
-    let e2 = [0, -F.z, F.y, 0, -P.z, P.y, 0, -U.z, U.y, F.z, 0, -F.x, P.z, 0, -P.x, U.z, 0, -U.x, -F.y, F.x, 0, -P.y, P.x, 0, -U.y, U.x, 0];
-    return !!C(e2, I, L, B, q) && (e2 = [1, 0, 0, 0, 1, 0, 0, 0, 1], !!C(e2, I, L, B, q) && (H.crossVectors(F, P), e2 = [H.x, H.y, H.z], C(e2, I, L, B, q)));
-  }
-  clampPoint(t3, e2) {
-    return e2 === void 0 && (console.warn("THREE.Box3: .clampPoint() target is now required"), e2 = new a()), e2.copy(t3).clamp(this.min, this.max);
-  }
-  distanceToPoint(t3) {
-    return D.copy(t3).clamp(this.min, this.max).sub(t3).length();
-  }
-  getBoundingSphere(t3) {
-    return t3 === void 0 && console.error("THREE.Box3: .getBoundingSphere() target is now required"), this.getCenter(t3.center), t3.radius = 0.5 * this.getSize(D).length(), t3;
-  }
-  intersect(t3) {
-    return this.min.max(t3.min), this.max.min(t3.max), this.isEmpty() && this.makeEmpty(), this;
-  }
-  union(t3) {
-    return this.min.min(t3.min), this.max.max(t3.max), this;
-  }
-  applyMatrix4(t3) {
-    return this.isEmpty() || (R[0].set(this.min.x, this.min.y, this.min.z).applyMatrix4(t3), R[1].set(this.min.x, this.min.y, this.max.z).applyMatrix4(t3), R[2].set(this.min.x, this.max.y, this.min.z).applyMatrix4(t3), R[3].set(this.min.x, this.max.y, this.max.z).applyMatrix4(t3), R[4].set(this.max.x, this.min.y, this.min.z).applyMatrix4(t3), R[5].set(this.max.x, this.min.y, this.max.z).applyMatrix4(t3), R[6].set(this.max.x, this.max.y, this.min.z).applyMatrix4(t3), R[7].set(this.max.x, this.max.y, this.max.z).applyMatrix4(t3), this.setFromPoints(R)), this;
-  }
-  translate(t3) {
-    return this.min.add(t3), this.max.add(t3), this;
-  }
-  equals(t3) {
-    return t3.min.equals(this.min) && t3.max.equals(this.max);
-  }
-}
-function C(t3, e2, r2, n2, i2) {
-  for (let s2 = 0, a2 = t3.length - 3; s2 <= a2; s2 += 3) {
-    V.fromArray(t3, s2);
-    const a3 = i2.x * Math.abs(V.x) + i2.y * Math.abs(V.y) + i2.z * Math.abs(V.z), o2 = e2.dot(V), u2 = r2.dot(V), h = n2.dot(V);
-    if (Math.max(-Math.max(o2, u2, h), Math.min(o2, u2, h)) > a3)
-      return false;
-  }
-  return true;
-}
-const R = [new a(), new a(), new a(), new a(), new a(), new a(), new a(), new a()], D = new a(), k = new A(), I = new a(), L = new a(), B = new a(), F = new a(), P = new a(), U = new a(), j = new a(), q = new a(), H = new a(), V = new a();
-new a();
-new a();
-new a();
-new a();
-new a();
-new a();
-new a();
-new a();
-new a();
-class rt {
+m.prototype.isMatrix4 = true;
+const y = new l(), g = new m(), v = new l(0, 0, 0), x = new l(1, 1, 1), w = new l(), b = new l(), _ = new l();
+new m();
+class ot {
   constructor() {
-    Object.defineProperty(this, "isMatrix3", {value: true}), this.elements = [1, 0, 0, 0, 1, 0, 0, 0, 1], arguments.length > 0 && console.error("THREE.Matrix3: the constructor no longer reads arguments. use .set() instead.");
+    this.elements = [1, 0, 0, 0, 1, 0, 0, 0, 1], arguments.length > 0 && console.error("THREE.Matrix3: the constructor no longer reads arguments. use .set() instead.");
   }
   set(t3, e2, r2, n2, i2, s2, a2, o2, u2) {
     const h = this.elements;
@@ -1097,9 +902,6 @@ class rt {
   }
   identity() {
     return this.set(1, 0, 0, 0, 1, 0, 0, 0, 1), this;
-  }
-  clone() {
-    return new this.constructor().fromArray(this.elements);
   }
   copy(t3) {
     const e2 = this.elements, r2 = t3.elements;
@@ -1119,8 +921,8 @@ class rt {
     return this.multiplyMatrices(t3, this);
   }
   multiplyMatrices(t3, e2) {
-    const r2 = t3.elements, n2 = e2.elements, i2 = this.elements, s2 = r2[0], a2 = r2[3], o2 = r2[6], u2 = r2[1], h = r2[4], c2 = r2[7], l2 = r2[2], p2 = r2[5], f2 = r2[8], d2 = n2[0], m2 = n2[3], y2 = n2[6], g2 = n2[1], v = n2[4], x = n2[7], w = n2[2], b = n2[5], _ = n2[8];
-    return i2[0] = s2 * d2 + a2 * g2 + o2 * w, i2[3] = s2 * m2 + a2 * v + o2 * b, i2[6] = s2 * y2 + a2 * x + o2 * _, i2[1] = u2 * d2 + h * g2 + c2 * w, i2[4] = u2 * m2 + h * v + c2 * b, i2[7] = u2 * y2 + h * x + c2 * _, i2[2] = l2 * d2 + p2 * g2 + f2 * w, i2[5] = l2 * m2 + p2 * v + f2 * b, i2[8] = l2 * y2 + p2 * x + f2 * _, this;
+    const r2 = t3.elements, n2 = e2.elements, i2 = this.elements, s2 = r2[0], a2 = r2[3], o2 = r2[6], u2 = r2[1], h = r2[4], c2 = r2[7], l2 = r2[2], p2 = r2[5], f2 = r2[8], d = n2[0], m2 = n2[3], y2 = n2[6], g2 = n2[1], v2 = n2[4], x2 = n2[7], w2 = n2[2], b2 = n2[5], _2 = n2[8];
+    return i2[0] = s2 * d + a2 * g2 + o2 * w2, i2[3] = s2 * m2 + a2 * v2 + o2 * b2, i2[6] = s2 * y2 + a2 * x2 + o2 * _2, i2[1] = u2 * d + h * g2 + c2 * w2, i2[4] = u2 * m2 + h * v2 + c2 * b2, i2[7] = u2 * y2 + h * x2 + c2 * _2, i2[2] = l2 * d + p2 * g2 + f2 * w2, i2[5] = l2 * m2 + p2 * v2 + f2 * b2, i2[8] = l2 * y2 + p2 * x2 + f2 * _2, this;
   }
   multiplyScalar(t3) {
     const e2 = this.elements;
@@ -1130,13 +932,12 @@ class rt {
     const t3 = this.elements, e2 = t3[0], r2 = t3[1], n2 = t3[2], i2 = t3[3], s2 = t3[4], a2 = t3[5], o2 = t3[6], u2 = t3[7], h = t3[8];
     return e2 * s2 * h - e2 * a2 * u2 - r2 * i2 * h + r2 * a2 * o2 + n2 * i2 * u2 - n2 * s2 * o2;
   }
-  getInverse(t3, e2) {
-    e2 !== void 0 && console.warn("THREE.Matrix3: .getInverse() can no longer be configured to throw on degenerate.");
-    const r2 = t3.elements, n2 = this.elements, i2 = r2[0], s2 = r2[1], a2 = r2[2], o2 = r2[3], u2 = r2[4], h = r2[5], c2 = r2[6], l2 = r2[7], p2 = r2[8], f2 = p2 * u2 - h * l2, d2 = h * c2 - p2 * o2, m2 = l2 * o2 - u2 * c2, y2 = i2 * f2 + s2 * d2 + a2 * m2;
-    if (y2 === 0)
+  invert() {
+    const t3 = this.elements, e2 = t3[0], r2 = t3[1], n2 = t3[2], i2 = t3[3], s2 = t3[4], a2 = t3[5], o2 = t3[6], u2 = t3[7], h = t3[8], c2 = h * s2 - a2 * u2, l2 = a2 * o2 - h * i2, p2 = u2 * i2 - s2 * o2, f2 = e2 * c2 + r2 * l2 + n2 * p2;
+    if (f2 === 0)
       return this.set(0, 0, 0, 0, 0, 0, 0, 0, 0);
-    const g2 = 1 / y2;
-    return n2[0] = f2 * g2, n2[1] = (a2 * l2 - p2 * s2) * g2, n2[2] = (h * s2 - a2 * u2) * g2, n2[3] = d2 * g2, n2[4] = (p2 * i2 - a2 * c2) * g2, n2[5] = (a2 * o2 - h * i2) * g2, n2[6] = m2 * g2, n2[7] = (s2 * c2 - l2 * i2) * g2, n2[8] = (u2 * i2 - s2 * o2) * g2, this;
+    const d = 1 / f2;
+    return t3[0] = c2 * d, t3[1] = (n2 * u2 - h * r2) * d, t3[2] = (a2 * r2 - n2 * s2) * d, t3[3] = l2 * d, t3[4] = (h * e2 - n2 * o2) * d, t3[5] = (n2 * i2 - a2 * e2) * d, t3[6] = p2 * d, t3[7] = (r2 * o2 - u2 * e2) * d, t3[8] = (s2 * e2 - r2 * i2) * d, this;
   }
   transpose() {
     let t3;
@@ -1144,7 +945,7 @@ class rt {
     return t3 = e2[1], e2[1] = e2[3], e2[3] = t3, t3 = e2[2], e2[2] = e2[6], e2[6] = t3, t3 = e2[5], e2[5] = e2[7], e2[7] = t3, this;
   }
   getNormalMatrix(t3) {
-    return this.setFromMatrix4(t3).getInverse(this).transpose();
+    return this.setFromMatrix4(t3).invert().transpose();
   }
   transposeIntoArray(t3) {
     const e2 = this.elements;
@@ -1152,7 +953,7 @@ class rt {
   }
   setUvTransform(t3, e2, r2, n2, i2, s2, a2) {
     const o2 = Math.cos(i2), u2 = Math.sin(i2);
-    this.set(r2 * o2, r2 * u2, -r2 * (o2 * s2 + u2 * a2) + s2 + t3, -n2 * u2, n2 * o2, -n2 * (-u2 * s2 + o2 * a2) + a2 + e2, 0, 0, 1);
+    return this.set(r2 * o2, r2 * u2, -r2 * (o2 * s2 + u2 * a2) + s2 + t3, -n2 * u2, n2 * o2, -n2 * (-u2 * s2 + o2 * a2) + a2 + e2, 0, 0, 1), this;
   }
   scale(t3, e2) {
     const r2 = this.elements;
@@ -1182,222 +983,207 @@ class rt {
     const r2 = this.elements;
     return t3[e2] = r2[0], t3[e2 + 1] = r2[1], t3[e2 + 2] = r2[2], t3[e2 + 3] = r2[3], t3[e2 + 4] = r2[4], t3[e2 + 5] = r2[5], t3[e2 + 6] = r2[6], t3[e2 + 7] = r2[7], t3[e2 + 8] = r2[8], t3;
   }
+  clone() {
+    return new this.constructor().fromArray(this.elements);
+  }
 }
-new a();
-new a();
-new rt();
+ot.prototype.isMatrix3 = true;
+new ot();
 Object.freeze(new e(0, 0));
 Object.freeze(new e(1, 1));
-Object.freeze(new a(0, 0, 0));
-Object.freeze(new a(1, 0, 0));
-Object.freeze(new a(0, 1, 0));
-Object.freeze(new a(0, 0, 1));
-Object.freeze(new a(1, 1, 1));
-Object.freeze(new s());
-({RIGHT: Object.freeze(new a(1, 0, 0)), UP: Object.freeze(new a(0, 1, 0)), NEAR: Object.freeze(new a(0, 0, 1)), LEFT: Object.freeze(new a(-1, 0, 0)), DOWN: Object.freeze(new a(0, -1, 0)), FAR: Object.freeze(new a(0, 0, -1))});
-new a();
-(() => {
-  const t3 = 2 * Math.PI, e2 = new a(0, 0, 1), r2 = new s(), n2 = new s(), i2 = new a(), o2 = new s();
-  return function(s2 = 1, a2 = 1) {
-    var u2 = (Math.random() - 0.5) * t3 * s2, h = Math.random() * t3, c2 = Math.random() * Math.PI * a2;
-    return i2.set(1, 0, 0).applyAxisAngle(e2, h), r2.setFromAxisAngle(e2, u2), n2.setFromAxisAngle(i2, c2), o2.multiplyQuaternions(n2, r2);
-  };
-})();
-(() => {
-  const t3 = new a();
-  return function(e2, r2, n2) {
-    const i2 = t3.set(e2.x, e2.y, e2.z), s2 = r2.dot(i2), a2 = t3.copy(r2).multiplyScalar(s2), o2 = n2.set(a2.x, a2.y, a2.z, e2.w).normalize();
-    return s2 < 0 && (o2.x = -o2.x, o2.y = -o2.y, o2.z = -o2.z, o2.w = -o2.w), o2;
-  };
-})();
-new z(), new z(), new e(), new e();
-new a(), new a(), new a(), new a(), new a(), new a(), new a();
-var Xt = function(t3) {
+Object.freeze(new l(0, 0, 0));
+Object.freeze(new l(1, 0, 0));
+Object.freeze(new l(0, 1, 0));
+Object.freeze(new l(0, 0, 1));
+Object.freeze(new l(1, 1, 1));
+Object.freeze(new c());
+({RIGHT: Object.freeze(new l(1, 0, 0)), UP: Object.freeze(new l(0, 1, 0)), NEAR: Object.freeze(new l(0, 0, 1)), LEFT: Object.freeze(new l(-1, 0, 0)), DOWN: Object.freeze(new l(0, -1, 0)), FAR: Object.freeze(new l(0, 0, -1))});
+var ee = function(t3) {
   return function(e2) {
     return 1 - t3(1 - e2);
   };
-}, Qt = function(t3) {
+}, re = function(t3) {
   return function(e2) {
     return e2 <= 0.5 ? t3(2 * e2) / 2 : (2 - t3(2 * (1 - e2))) / 2;
   };
-}, Jt = Xt, Kt = Qt, te = function(t3) {
+}, ne = ee, ie = re, se = function(t3) {
   return function(e2) {
     return Math.pow(e2, t3);
   };
-}, ee = function(t3) {
+}, ae = function(t3) {
   return function(e2) {
     return e2 * e2 * ((t3 + 1) * e2 - t3);
   };
-}, re = function(t3) {
-  var e2 = ee(t3);
+}, oe = function(t3) {
+  var e2 = ae(t3);
   return function(t4) {
     return (t4 *= 2) < 1 ? 0.5 * e2(t4) : 0.5 * (2 - Math.pow(2, -10 * (t4 - 1)));
   };
-}, ne = te(2), ie = Xt(ne), se = Qt(ne), ae = function(t3) {
+}, ue = se(2), he = ee(ue), ce = re(ue), le = function(t3) {
   return 1 - Math.sin(Math.acos(t3));
-}, oe = Xt(ae), ue = Qt(oe), he = ee(1.525), ce = Xt(he), le = Qt(he), pe = re(1.525), fe = function(t3) {
+}, pe = ee(le), fe = re(pe), de = ae(1.525), me = ee(de), ye = re(de), ge = oe(1.525), ve = function(t3) {
   var e2 = t3 * t3;
   return t3 < 0.36363636363636365 ? 7.5625 * e2 : t3 < 0.7272727272727273 ? 9.075 * e2 - 9.9 * t3 + 3.4 : t3 < 0.9 ? 12.066481994459833 * e2 - 19.63545706371191 * t3 + 8.898060941828255 : 10.8 * t3 * t3 - 20.52 * t3 + 10.72;
-}, de = typeof Float32Array != "undefined", me = function(t3, e2) {
+}, xe = typeof Float32Array != "undefined", we = function(t3, e2) {
   return 1 - 3 * e2 + 3 * t3;
-}, ye = function(t3, e2) {
+}, be = function(t3, e2) {
   return 3 * e2 - 6 * t3;
-}, ge = function(t3) {
+}, _e = function(t3) {
   return 3 * t3;
-}, ve = function(t3, e2, r2) {
-  return 3 * me(e2, r2) * t3 * t3 + 2 * ye(e2, r2) * t3 + ge(e2);
-}, xe = function(t3, e2, r2) {
-  return ((me(e2, r2) * t3 + ye(e2, r2)) * t3 + ge(e2)) * t3;
+}, Me = function(t3, e2, r2) {
+  return 3 * we(e2, r2) * t3 * t3 + 2 * be(e2, r2) * t3 + _e(e2);
+}, Ne = function(t3, e2, r2) {
+  return ((we(e2, r2) * t3 + be(e2, r2)) * t3 + _e(e2)) * t3;
 };
-Object.freeze({__proto__: null, [Symbol.toStringTag]: "Module", reversed: Xt, mirrored: Qt, createReversedEasing: Jt, createMirroredEasing: Kt, createExpoIn: te, createBackIn: ee, createAnticipateEasing: re, linear: function(t3) {
+Object.freeze({__proto__: null, [Symbol.toStringTag]: "Module", reversed: ee, mirrored: re, createReversedEasing: ne, createMirroredEasing: ie, createExpoIn: se, createBackIn: ae, createAnticipateEasing: oe, linear: function(t3) {
   return t3;
-}, easeIn: ne, easeOut: ie, easeInOut: se, circIn: ae, circOut: oe, circInOut: ue, backIn: he, backOut: ce, backInOut: le, anticipate: pe, bounceOut: fe, bounceIn: function(t3) {
-  return 1 - fe(1 - t3);
+}, easeIn: ue, easeOut: he, easeInOut: ce, circIn: le, circOut: pe, circInOut: fe, backIn: de, backOut: me, backInOut: ye, anticipate: ge, bounceOut: ve, bounceIn: function(t3) {
+  return 1 - ve(1 - t3);
 }, bounceInOut: function(t3) {
-  return t3 < 0.5 ? 0.5 * (1 - fe(1 - 2 * t3)) : 0.5 * fe(2 * t3 - 1) + 0.5;
+  return t3 < 0.5 ? 0.5 * (1 - ve(1 - 2 * t3)) : 0.5 * ve(2 * t3 - 1) + 0.5;
 }, cubicBezier: function(t3, e2, r2, n2) {
-  var i2 = de ? new Float32Array(11) : new Array(11), s2 = function(e3) {
+  var i2 = xe ? new Float32Array(11) : new Array(11), s2 = function(e3) {
     for (var n3, s3, a2, o2 = 0, u2 = 1; u2 !== 10 && i2[u2] <= e3; ++u2)
       o2 += 0.1;
-    return --u2, n3 = (e3 - i2[u2]) / (i2[u2 + 1] - i2[u2]), (a2 = ve(s3 = o2 + 0.1 * n3, t3, r2)) >= 1e-3 ? function(e4, n4) {
+    return --u2, n3 = (e3 - i2[u2]) / (i2[u2 + 1] - i2[u2]), (a2 = Me(s3 = o2 + 0.1 * n3, t3, r2)) >= 1e-3 ? function(e4, n4) {
       for (var i3 = 0, s4 = 0; i3 < 8; ++i3) {
-        if ((s4 = ve(n4, t3, r2)) === 0)
+        if ((s4 = Me(n4, t3, r2)) === 0)
           return n4;
-        n4 -= (xe(n4, t3, r2) - e4) / s4;
+        n4 -= (Ne(n4, t3, r2) - e4) / s4;
       }
       return n4;
     }(e3, s3) : a2 === 0 ? s3 : function(e4, n4, i3) {
       var s4, a3, o3 = 0;
       do {
-        (s4 = xe(a3 = n4 + (i3 - n4) / 2, t3, r2) - e4) > 0 ? i3 = a3 : n4 = a3;
+        (s4 = Ne(a3 = n4 + (i3 - n4) / 2, t3, r2) - e4) > 0 ? i3 = a3 : n4 = a3;
       } while (Math.abs(s4) > 1e-7 && ++o3 < 10);
       return a3;
     }(e3, o2, o2 + 0.1);
   };
   return function() {
     for (var e3 = 0; e3 < 11; ++e3)
-      i2[e3] = xe(0.1 * e3, t3, r2);
+      i2[e3] = Ne(0.1 * e3, t3, r2);
   }(), function(i3) {
-    return t3 === e2 && r2 === n2 ? i3 : i3 === 0 ? 0 : i3 === 1 ? 1 : xe(s2(i3), e2, n2);
+    return t3 === e2 && r2 === n2 ? i3 : i3 === 0 ? 0 : i3 === 1 ? 1 : Ne(s2(i3), e2, n2);
   };
 }});
-function Te(t3) {
+function Re(t3) {
   return typeof t3 == "number";
 }
-function Oe(t3) {
+function De(t3) {
   return t3 && t3.constructor.prototype.isBigNumber === true || false;
 }
-function ze(t3) {
+function ke(t3) {
   return t3 && typeof t3 == "object" && Object.getPrototypeOf(t3).isComplex === true || false;
 }
-function Ae(t3) {
+function Ie(t3) {
   return t3 && typeof t3 == "object" && Object.getPrototypeOf(t3).isFraction === true || false;
 }
-function Ce(t3) {
+function Le(t3) {
   return t3 && t3.constructor.prototype.isUnit === true || false;
 }
-function Re(t3) {
+function Be(t3) {
   return typeof t3 == "string";
 }
-var De = Array.isArray;
-function ke(t3) {
+var Fe = Array.isArray;
+function Pe(t3) {
   return t3 && t3.constructor.prototype.isMatrix === true || false;
 }
-function Ie(t3) {
-  return Array.isArray(t3) || ke(t3);
-}
-function Le(t3) {
-  return t3 && t3.isDenseMatrix && t3.constructor.prototype.isMatrix === true || false;
-}
-function Be(t3) {
-  return t3 && t3.isSparseMatrix && t3.constructor.prototype.isMatrix === true || false;
-}
-function Fe(t3) {
-  return t3 && t3.constructor.prototype.isRange === true || false;
-}
-function Pe(t3) {
-  return t3 && t3.constructor.prototype.isIndex === true || false;
-}
 function Ue(t3) {
-  return typeof t3 == "boolean";
+  return Array.isArray(t3) || Pe(t3);
 }
 function je(t3) {
-  return t3 && t3.constructor.prototype.isResultSet === true || false;
+  return t3 && t3.isDenseMatrix && t3.constructor.prototype.isMatrix === true || false;
 }
 function qe(t3) {
-  return t3 && t3.constructor.prototype.isHelp === true || false;
+  return t3 && t3.isSparseMatrix && t3.constructor.prototype.isMatrix === true || false;
 }
 function He(t3) {
-  return typeof t3 == "function";
+  return t3 && t3.constructor.prototype.isRange === true || false;
 }
 function Ve(t3) {
-  return t3 instanceof Date;
+  return t3 && t3.constructor.prototype.isIndex === true || false;
 }
 function $e(t3) {
-  return t3 instanceof RegExp;
+  return typeof t3 == "boolean";
 }
 function Ge(t3) {
-  return !(!t3 || typeof t3 != "object" || t3.constructor !== Object || ze(t3) || Ae(t3));
+  return t3 && t3.constructor.prototype.isResultSet === true || false;
 }
 function We(t3) {
-  return t3 === null;
+  return t3 && t3.constructor.prototype.isHelp === true || false;
 }
 function Ye(t3) {
-  return t3 === void 0;
+  return typeof t3 == "function";
 }
 function Ze(t3) {
-  return t3 && t3.isAccessorNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 instanceof Date;
 }
 function Xe(t3) {
-  return t3 && t3.isArrayNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 instanceof RegExp;
 }
 function Qe(t3) {
-  return t3 && t3.isAssignmentNode === true && t3.constructor.prototype.isNode === true || false;
+  return !(!t3 || typeof t3 != "object" || t3.constructor !== Object || ke(t3) || Ie(t3));
 }
 function Je(t3) {
-  return t3 && t3.isBlockNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 === null;
 }
 function Ke(t3) {
-  return t3 && t3.isConditionalNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 === void 0;
 }
 function tr(t3) {
-  return t3 && t3.isConstantNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isAccessorNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function er(t3) {
-  return t3 && t3.isFunctionAssignmentNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isArrayNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function rr(t3) {
-  return t3 && t3.isFunctionNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isAssignmentNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function nr(t3) {
-  return t3 && t3.isIndexNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isBlockNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function ir(t3) {
-  return t3 && t3.isNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isConditionalNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function sr(t3) {
-  return t3 && t3.isObjectNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isConstantNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function ar(t3) {
-  return t3 && t3.isOperatorNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isFunctionAssignmentNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function or(t3) {
-  return t3 && t3.isParenthesisNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isFunctionNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function ur(t3) {
-  return t3 && t3.isRangeNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isIndexNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function hr(t3) {
-  return t3 && t3.isSymbolNode === true && t3.constructor.prototype.isNode === true || false;
+  return t3 && t3.isNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function cr(t3) {
-  return t3 && t3.constructor.prototype.isChain === true || false;
+  return t3 && t3.isObjectNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function lr(t3) {
-  var e2 = typeof t3;
-  return e2 === "object" ? t3 === null ? "null" : Array.isArray(t3) ? "Array" : t3 instanceof Date ? "Date" : t3 instanceof RegExp ? "RegExp" : Oe(t3) ? "BigNumber" : ze(t3) ? "Complex" : Ae(t3) ? "Fraction" : ke(t3) ? "Matrix" : Ce(t3) ? "Unit" : Pe(t3) ? "Index" : Fe(t3) ? "Range" : je(t3) ? "ResultSet" : ir(t3) ? t3.type : cr(t3) ? "Chain" : qe(t3) ? "Help" : "Object" : e2 === "function" ? "Function" : e2;
+  return t3 && t3.isOperatorNode === true && t3.constructor.prototype.isNode === true || false;
 }
 function pr(t3) {
+  return t3 && t3.isParenthesisNode === true && t3.constructor.prototype.isNode === true || false;
+}
+function fr(t3) {
+  return t3 && t3.isRangeNode === true && t3.constructor.prototype.isNode === true || false;
+}
+function dr(t3) {
+  return t3 && t3.isSymbolNode === true && t3.constructor.prototype.isNode === true || false;
+}
+function mr(t3) {
+  return t3 && t3.constructor.prototype.isChain === true || false;
+}
+function yr(t3) {
+  var e2 = typeof t3;
+  return e2 === "object" ? t3 === null ? "null" : Array.isArray(t3) ? "Array" : t3 instanceof Date ? "Date" : t3 instanceof RegExp ? "RegExp" : De(t3) ? "BigNumber" : ke(t3) ? "Complex" : Ie(t3) ? "Fraction" : Pe(t3) ? "Matrix" : Le(t3) ? "Unit" : Ve(t3) ? "Index" : He(t3) ? "Range" : Ge(t3) ? "ResultSet" : hr(t3) ? t3.type : mr(t3) ? "Chain" : We(t3) ? "Help" : "Object" : e2 === "function" ? "Function" : e2;
+}
+function gr(t3) {
   var e2 = typeof t3;
   if (e2 === "number" || e2 === "string" || e2 === "boolean" || t3 == null)
     return t3;
@@ -1405,28 +1191,28 @@ function pr(t3) {
     return t3.clone();
   if (Array.isArray(t3))
     return t3.map(function(t4) {
-      return pr(t4);
+      return gr(t4);
     });
   if (t3 instanceof Date)
     return new Date(t3.valueOf());
-  if (Oe(t3))
+  if (De(t3))
     return t3;
   if (t3 instanceof RegExp)
     throw new TypeError("Cannot clone " + t3);
-  return fr(t3, pr);
+  return vr(t3, gr);
 }
-function fr(t3, e2) {
+function vr(t3, e2) {
   var r2 = {};
   for (var n2 in t3)
-    wr(t3, n2) && (r2[n2] = e2(t3[n2]));
+    Er(t3, n2) && (r2[n2] = e2(t3[n2]));
   return r2;
 }
-function dr(t3, e2) {
+function xr(t3, e2) {
   for (var r2 in e2)
-    wr(e2, r2) && (t3[r2] = e2[r2]);
+    Er(e2, r2) && (t3[r2] = e2[r2]);
   return t3;
 }
-function yr(t3, e2) {
+function br(t3, e2) {
   var r2, n2, i2;
   if (Array.isArray(t3)) {
     if (!Array.isArray(e2))
@@ -1434,7 +1220,7 @@ function yr(t3, e2) {
     if (t3.length !== e2.length)
       return false;
     for (n2 = 0, i2 = t3.length; n2 < i2; n2++)
-      if (!yr(t3[n2], e2[n2]))
+      if (!br(t3[n2], e2[n2]))
         return false;
     return true;
   }
@@ -1444,23 +1230,23 @@ function yr(t3, e2) {
     if (Array.isArray(e2) || !(e2 instanceof Object))
       return false;
     for (r2 in t3)
-      if (!(r2 in e2) || !yr(t3[r2], e2[r2]))
+      if (!(r2 in e2) || !br(t3[r2], e2[r2]))
         return false;
     for (r2 in e2)
-      if (!(r2 in t3) || !yr(t3[r2], e2[r2]))
+      if (!(r2 in t3) || !br(t3[r2], e2[r2]))
         return false;
     return true;
   }
   return t3 === e2;
 }
-function wr(t3, e2) {
+function Er(t3, e2) {
   return t3 && Object.hasOwnProperty.call(t3, e2);
 }
-var Sr = typeof globalThis != "undefined" ? globalThis : typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {};
-function Tr(t3) {
+var Ar = typeof globalThis != "undefined" ? globalThis : typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {};
+function Rr(t3) {
   return t3 && t3.__esModule && Object.prototype.hasOwnProperty.call(t3, "default") ? t3.default : t3;
 }
-var zr = function() {
+var kr = function() {
   function t3() {
     return true;
   }
@@ -1542,14 +1328,14 @@ var zr = function() {
       }
       throw new Error("Cannot convert from " + r3 + " to " + e3);
     }
-    function d2(t4) {
+    function d(t4) {
       return t4.map(function(t5) {
         var e3 = t5.types.map(M);
         return (t5.restParam ? "..." : "") + e3.join("|");
       }).join(",");
     }
     function m2(t4, e3) {
-      var r3 = t4.indexOf("...") === 0, n3 = (r3 ? t4.length > 3 ? t4.slice(3) : "any" : t4).split("|").map(P2).filter(U2).filter(F2), i3 = C2(e3, n3), s3 = n3.map(function(t5) {
+      var r3 = t4.indexOf("...") === 0, n3 = (r3 ? t4.length > 3 ? t4.slice(3) : "any" : t4).split("|").map(P).filter(U).filter(F), i3 = A(e3, n3), s3 = n3.map(function(t5) {
         var e4 = h(t5);
         return {name: t5, typeIndex: c2(e4), test: e4.test, conversion: null, conversionIndex: -1};
       }), a3 = i3.map(function(t5) {
@@ -1560,23 +1346,23 @@ var zr = function() {
     }
     function y2(t4, e3, r3) {
       var n3 = [];
-      return t4.trim() !== "" && (n3 = t4.split(",").map(P2).map(function(t5, e4, n4) {
+      return t4.trim() !== "" && (n3 = t4.split(",").map(P).map(function(t5, e4, n4) {
         var i3 = m2(t5, r3);
         if (i3.restParam && e4 !== n4.length - 1)
           throw new SyntaxError('Unexpected rest parameter "' + t5 + '": only allowed for the last parameter');
         return i3;
-      })), n3.some(q2) ? null : {params: n3, fn: e3};
+      })), n3.some(q) ? null : {params: n3, fn: e3};
     }
     function g2(t4) {
-      var e3 = V2(t4);
+      var e3 = V(t4);
       return !!e3 && e3.restParam;
     }
-    function v(t4) {
+    function v2(t4) {
       return t4.types.some(function(t5) {
         return t5.conversion != null;
       });
     }
-    function x(e3) {
+    function x2(e3) {
       if (e3 && e3.types.length !== 0) {
         if (e3.types.length === 1)
           return h(e3.types[0].name).test;
@@ -1598,10 +1384,10 @@ var zr = function() {
       }
       return t3;
     }
-    function w(t4) {
+    function w2(t4) {
       var e3, r3, n3;
       if (g2(t4)) {
-        var i3 = (e3 = H2(t4).map(x)).length, s3 = x(V2(t4)), a3 = function(t5) {
+        var i3 = (e3 = H(t4).map(x2)).length, s3 = x2(V(t4)), a3 = function(t5) {
           for (var e4 = i3; e4 < t5.length; e4++)
             if (!s3(t5[e4]))
               return false;
@@ -1616,33 +1402,33 @@ var zr = function() {
       }
       return t4.length === 0 ? function(t5) {
         return t5.length === 0;
-      } : t4.length === 1 ? (r3 = x(t4[0]), function(t5) {
+      } : t4.length === 1 ? (r3 = x2(t4[0]), function(t5) {
         return r3(t5[0]) && t5.length === 1;
-      }) : t4.length === 2 ? (r3 = x(t4[0]), n3 = x(t4[1]), function(t5) {
+      }) : t4.length === 2 ? (r3 = x2(t4[0]), n3 = x2(t4[1]), function(t5) {
         return r3(t5[0]) && n3(t5[1]) && t5.length === 2;
-      }) : (e3 = t4.map(x), function(t5) {
+      }) : (e3 = t4.map(x2), function(t5) {
         for (var r4 = 0; r4 < e3.length; r4++)
           if (!e3[r4](t5[r4]))
             return false;
         return t5.length === e3.length;
       });
     }
-    function b(t4, e3) {
-      return e3 < t4.params.length ? t4.params[e3] : g2(t4.params) ? V2(t4.params) : null;
+    function b2(t4, e3) {
+      return e3 < t4.params.length ? t4.params[e3] : g2(t4.params) ? V(t4.params) : null;
     }
-    function _(t4, e3, r3) {
-      var n3 = b(t4, e3);
-      return (n3 ? r3 ? n3.types.filter(E) : n3.types : []).map(M);
+    function _2(t4, e3, r3) {
+      var n3 = b2(t4, e3);
+      return (n3 ? r3 ? n3.types.filter(N) : n3.types : []).map(M);
     }
     function M(t4) {
       return t4.name;
     }
-    function E(t4) {
+    function N(t4) {
       return t4.conversion === null || t4.conversion === void 0;
     }
-    function N(t4, e3) {
+    function E(t4, e3) {
       var r3 = Z(X(t4, function(t5) {
-        return _(t5, e3, false);
+        return _2(t5, e3, false);
       }));
       return r3.indexOf("any") !== -1 ? ["any"] : r3;
     }
@@ -1650,11 +1436,11 @@ var zr = function() {
       var n3, i3, s3, a3 = t4 || "unnamed", o3 = r3;
       for (s3 = 0; s3 < e3.length; s3++) {
         var u3 = o3.filter(function(t5) {
-          var r4 = x(b(t5, s3));
+          var r4 = x2(b2(t5, s3));
           return (s3 < t5.params.length || g2(t5.params)) && r4(e3[s3]);
         });
         if (u3.length === 0) {
-          if ((i3 = N(o3, s3)).length > 0) {
+          if ((i3 = E(o3, s3)).length > 0) {
             var h2 = l2(e3[s3]);
             return (n3 = new TypeError("Unexpected type of argument in function " + a3 + " (expected: " + i3.join(" or ") + ", actual: " + h2 + ", index: " + s3 + ")")).data = {category: "wrongType", fn: a3, index: s3, actual: h2, expected: i3}, n3;
           }
@@ -1665,37 +1451,37 @@ var zr = function() {
         return g2(t5.params) ? 1 / 0 : t5.params.length;
       });
       if (e3.length < Math.min.apply(null, c3))
-        return i3 = N(o3, s3), (n3 = new TypeError("Too few arguments in function " + a3 + " (expected: " + i3.join(" or ") + ", index: " + e3.length + ")")).data = {category: "tooFewArgs", fn: a3, index: e3.length, expected: i3}, n3;
+        return i3 = E(o3, s3), (n3 = new TypeError("Too few arguments in function " + a3 + " (expected: " + i3.join(" or ") + ", index: " + e3.length + ")")).data = {category: "tooFewArgs", fn: a3, index: e3.length, expected: i3}, n3;
       var p3 = Math.max.apply(null, c3);
       return e3.length > p3 ? ((n3 = new TypeError("Too many arguments in function " + a3 + " (expected: " + p3 + ", actual: " + e3.length + ")")).data = {category: "tooManyArgs", fn: a3, index: e3.length, expectedLength: p3}, n3) : ((n3 = new TypeError('Arguments of type "' + e3.join(", ") + '" do not match any of the defined signatures of function ' + a3 + ".")).data = {category: "mismatch", actual: e3.map(l2)}, n3);
     }
     function T(t4) {
       for (var e3 = 999, r3 = 0; r3 < t4.types.length; r3++)
-        E(t4.types[r3]) && (e3 = Math.min(e3, t4.types[r3].typeIndex));
+        N(t4.types[r3]) && (e3 = Math.min(e3, t4.types[r3].typeIndex));
       return e3;
     }
-    function O2(t4) {
+    function O(t4) {
       for (var e3 = 999, r3 = 0; r3 < t4.types.length; r3++)
-        E(t4.types[r3]) || (e3 = Math.min(e3, t4.types[r3].conversionIndex));
+        N(t4.types[r3]) || (e3 = Math.min(e3, t4.types[r3].conversionIndex));
       return e3;
     }
-    function z2(t4, e3) {
+    function z(t4, e3) {
       var r3;
-      return (r3 = t4.restParam - e3.restParam) != 0 || (r3 = v(t4) - v(e3)) != 0 || (r3 = T(t4) - T(e3)) != 0 ? r3 : O2(t4) - O2(e3);
+      return (r3 = t4.restParam - e3.restParam) != 0 || (r3 = v2(t4) - v2(e3)) != 0 || (r3 = T(t4) - T(e3)) != 0 ? r3 : O(t4) - O(e3);
     }
-    function A2(t4, e3) {
+    function C(t4, e3) {
       var r3, n3, i3 = Math.min(t4.params.length, e3.params.length);
-      if ((n3 = t4.params.some(v) - e3.params.some(v)) != 0)
+      if ((n3 = t4.params.some(v2) - e3.params.some(v2)) != 0)
         return n3;
       for (r3 = 0; r3 < i3; r3++)
-        if ((n3 = v(t4.params[r3]) - v(e3.params[r3])) != 0)
+        if ((n3 = v2(t4.params[r3]) - v2(e3.params[r3])) != 0)
           return n3;
       for (r3 = 0; r3 < i3; r3++)
-        if ((n3 = z2(t4.params[r3], e3.params[r3])) !== 0)
+        if ((n3 = z(t4.params[r3], e3.params[r3])) !== 0)
           return n3;
       return t4.params.length - e3.params.length;
     }
-    function C2(t4, e3) {
+    function A(t4, e3) {
       var r3 = {};
       return t4.forEach(function(t5) {
         e3.indexOf(t5.from) !== -1 || e3.indexOf(t5.to) === -1 || r3[t5.from] || (r3[t5.from] = t5);
@@ -1703,10 +1489,10 @@ var zr = function() {
         return r3[t5];
       });
     }
-    function R2(t4, e3) {
+    function R(t4, e3) {
       var r3 = e3;
-      if (t4.some(v)) {
-        var n3 = g2(t4), i3 = t4.map(D2);
+      if (t4.some(v2)) {
+        var n3 = g2(t4), i3 = t4.map(D);
         r3 = function() {
           for (var t5 = [], r4 = n3 ? arguments.length - 1 : arguments.length, s4 = 0; s4 < r4; s4++)
             t5[s4] = i3[s4](arguments[s4]);
@@ -1722,7 +1508,7 @@ var zr = function() {
       }
       return s3;
     }
-    function D2(t4) {
+    function D(t4) {
       var e3, r3, n3, i3, s3 = [], a3 = [];
       switch (t4.types.forEach(function(t5) {
         t5.conversion && (s3.push(h(t5.conversion.from).test), a3.push(t5.conversion.convert));
@@ -1748,20 +1534,20 @@ var zr = function() {
           };
       }
     }
-    function k2(t4) {
+    function k(t4) {
       var e3 = {};
       return t4.forEach(function(t5) {
-        t5.params.some(v) || I2(t5.params, true).forEach(function(r3) {
-          e3[d2(r3)] = t5.fn;
+        t5.params.some(v2) || I(t5.params, true).forEach(function(r3) {
+          e3[d(r3)] = t5.fn;
         });
       }), e3;
     }
-    function I2(t4, e3) {
+    function I(t4, e3) {
       function r3(t5, n3, i3) {
         if (n3 < t5.length) {
-          var s3, a3 = t5[n3], o3 = e3 ? a3.types.filter(E) : a3.types;
+          var s3, a3 = t5[n3], o3 = e3 ? a3.types.filter(N) : a3.types;
           if (a3.restParam) {
-            var u3 = o3.filter(E);
+            var u3 = o3.filter(N);
             s3 = u3.length < o3.length ? [u3, o3] : [o3];
           } else
             s3 = o3.map(function(t6) {
@@ -1777,70 +1563,70 @@ var zr = function() {
       }
       return r3(t4, 0, []);
     }
-    function L2(t4, e3) {
+    function L(t4, e3) {
       for (var r3 = Math.max(t4.params.length, e3.params.length), n3 = 0; n3 < r3; n3++)
-        if (!W(_(t4, n3, true), _(e3, n3, true)))
+        if (!W(_2(t4, n3, true), _2(e3, n3, true)))
           return false;
       var i3 = t4.params.length, s3 = e3.params.length, a3 = g2(t4.params), o3 = g2(e3.params);
       return a3 ? o3 ? i3 === s3 : s3 >= i3 : o3 ? i3 >= s3 : i3 === s3;
     }
-    function B2(t4, n3) {
+    function B(t4, n3) {
       if (Object.keys(n3).length === 0)
         throw new SyntaxError("No signatures provided");
       var i3 = [];
       Object.keys(n3).map(function(t5) {
         return y2(t5, n3[t5], u2.conversions);
-      }).filter(j2).forEach(function(t5) {
+      }).filter(j).forEach(function(t5) {
         var e3 = Y(i3, function(e4) {
-          return L2(e4, t5);
+          return L(e4, t5);
         });
         if (e3)
-          throw new TypeError('Conflicting signatures "' + d2(e3.params) + '" and "' + d2(t5.params) + '".');
+          throw new TypeError('Conflicting signatures "' + d(e3.params) + '" and "' + d(t5.params) + '".');
         i3.push(t5);
       });
       var s3 = X(i3, function(t5) {
-        return (t5 ? I2(t5.params, false) : []).map(function(e3) {
+        return (t5 ? I(t5.params, false) : []).map(function(e3) {
           return {params: e3, fn: t5.fn};
         });
-      }).filter(j2);
-      s3.sort(A2);
+      }).filter(j);
+      s3.sort(C);
       var a3 = s3[0] && s3[0].params.length <= 2 && !g2(s3[0].params), o3 = s3[1] && s3[1].params.length <= 2 && !g2(s3[1].params), h2 = s3[2] && s3[2].params.length <= 2 && !g2(s3[2].params), c3 = s3[3] && s3[3].params.length <= 2 && !g2(s3[3].params), l3 = s3[4] && s3[4].params.length <= 2 && !g2(s3[4].params), p3 = s3[5] && s3[5].params.length <= 2 && !g2(s3[5].params), f3 = a3 && o3 && h2 && c3 && l3 && p3, m3 = s3.map(function(t5) {
-        return w(t5.params);
-      }), v2 = a3 ? x(s3[0].params[0]) : e2, b2 = o3 ? x(s3[1].params[0]) : e2, _2 = h2 ? x(s3[2].params[0]) : e2, M2 = c3 ? x(s3[3].params[0]) : e2, E2 = l3 ? x(s3[4].params[0]) : e2, N2 = p3 ? x(s3[5].params[0]) : e2, T2 = a3 ? x(s3[0].params[1]) : e2, O3 = o3 ? x(s3[1].params[1]) : e2, z3 = h2 ? x(s3[2].params[1]) : e2, C3 = c3 ? x(s3[3].params[1]) : e2, D3 = l3 ? x(s3[4].params[1]) : e2, B3 = p3 ? x(s3[5].params[1]) : e2, F3 = s3.map(function(t5) {
-        return R2(t5.params, t5.fn);
-      }), P3 = a3 ? F3[0] : r2, U3 = o3 ? F3[1] : r2, q3 = h2 ? F3[2] : r2, H3 = c3 ? F3[3] : r2, V3 = l3 ? F3[4] : r2, $2 = p3 ? F3[5] : r2, G2 = a3 ? s3[0].params.length : -1, W2 = o3 ? s3[1].params.length : -1, Z2 = h2 ? s3[2].params.length : -1, Q2 = c3 ? s3[3].params.length : -1, J2 = l3 ? s3[4].params.length : -1, K = p3 ? s3[5].params.length : -1, tt = f3 ? 6 : 0, et = s3.length, rt2 = function() {
+        return w2(t5.params);
+      }), v3 = a3 ? x2(s3[0].params[0]) : e2, b3 = o3 ? x2(s3[1].params[0]) : e2, _3 = h2 ? x2(s3[2].params[0]) : e2, M2 = c3 ? x2(s3[3].params[0]) : e2, N2 = l3 ? x2(s3[4].params[0]) : e2, E2 = p3 ? x2(s3[5].params[0]) : e2, T2 = a3 ? x2(s3[0].params[1]) : e2, O2 = o3 ? x2(s3[1].params[1]) : e2, z2 = h2 ? x2(s3[2].params[1]) : e2, A2 = c3 ? x2(s3[3].params[1]) : e2, D2 = l3 ? x2(s3[4].params[1]) : e2, B2 = p3 ? x2(s3[5].params[1]) : e2, F2 = s3.map(function(t5) {
+        return R(t5.params, t5.fn);
+      }), P2 = a3 ? F2[0] : r2, U2 = o3 ? F2[1] : r2, q2 = h2 ? F2[2] : r2, H2 = c3 ? F2[3] : r2, V2 = l3 ? F2[4] : r2, $2 = p3 ? F2[5] : r2, G2 = a3 ? s3[0].params.length : -1, W2 = o3 ? s3[1].params.length : -1, Z2 = h2 ? s3[2].params.length : -1, Q2 = c3 ? s3[3].params.length : -1, J2 = l3 ? s3[4].params.length : -1, K = p3 ? s3[5].params.length : -1, tt = f3 ? 6 : 0, et = s3.length, rt = function() {
         for (var e3 = tt; e3 < et; e3++)
           if (m3[e3](arguments))
-            return F3[e3].apply(this, arguments);
+            return F2[e3].apply(this, arguments);
         throw S(t4, arguments, s3);
       }, nt = function t5(e3, r3) {
-        return arguments.length === G2 && v2(e3) && T2(r3) ? P3.apply(t5, arguments) : arguments.length === W2 && b2(e3) && O3(r3) ? U3.apply(t5, arguments) : arguments.length === Z2 && _2(e3) && z3(r3) ? q3.apply(t5, arguments) : arguments.length === Q2 && M2(e3) && C3(r3) ? H3.apply(t5, arguments) : arguments.length === J2 && E2(e3) && D3(r3) ? V3.apply(t5, arguments) : arguments.length === K && N2(e3) && B3(r3) ? $2.apply(t5, arguments) : rt2.apply(t5, arguments);
+        return arguments.length === G2 && v3(e3) && T2(r3) ? P2.apply(t5, arguments) : arguments.length === W2 && b3(e3) && O2(r3) ? U2.apply(t5, arguments) : arguments.length === Z2 && _3(e3) && z2(r3) ? q2.apply(t5, arguments) : arguments.length === Q2 && M2(e3) && A2(r3) ? H2.apply(t5, arguments) : arguments.length === J2 && N2(e3) && D2(r3) ? V2.apply(t5, arguments) : arguments.length === K && E2(e3) && B2(r3) ? $2.apply(t5, arguments) : rt.apply(t5, arguments);
       };
       try {
         Object.defineProperty(nt, "name", {value: t4});
       } catch (it) {
       }
-      return nt.signatures = k2(s3), nt;
+      return nt.signatures = k(s3), nt;
     }
-    function F2(t4) {
+    function F(t4) {
       return u2.ignore.indexOf(t4) === -1;
     }
-    function P2(t4) {
+    function P(t4) {
       return t4.trim();
     }
-    function U2(t4) {
+    function U(t4) {
       return !!t4;
     }
-    function j2(t4) {
+    function j(t4) {
       return t4 !== null;
     }
-    function q2(t4) {
+    function q(t4) {
       return t4.types.length === 0;
     }
-    function H2(t4) {
+    function H(t4) {
       return t4.slice(0, t4.length - 1);
     }
-    function V2(t4) {
+    function V(t4) {
       return t4[t4.length - 1];
     }
     function $(t4, e3, r3) {
@@ -1901,15 +1687,15 @@ var zr = function() {
       }
       return r3;
     }
-    return (u2 = B2("typed", {"string, Object": B2, Object: function(t4) {
+    return (u2 = B("typed", {"string, Object": B, Object: function(t4) {
       var e3 = [];
       for (var r3 in t4)
         t4.hasOwnProperty(r3) && e3.push(t4[r3]);
-      return B2(Q(e3), t4);
+      return B(Q(e3), t4);
     }, "...Function": function(t4) {
-      return B2(Q(t4), J(t4));
+      return B(Q(t4), J(t4));
     }, "string, ...Function": function(t4, e3) {
-      return B2(t4, J(e3));
+      return B(t4, J(e3));
     }})).create = n2, u2.types = i2, u2.conversions = o2, u2.ignore = a2, u2.convert = f2, u2.find = p2, u2.addType = function(t4, e3) {
       if (!t4 || typeof t4.name != "string" || typeof t4.test != "function")
         throw new TypeError("Object with properties {name: string, test: function} expected");
@@ -1927,13 +1713,13 @@ var zr = function() {
   }
   return n2();
 }();
-function Ar(t3) {
+function Ir(t3) {
   return typeof t3 == "boolean" || !!isFinite(t3) && t3 === Math.round(t3);
 }
-var Cr = Math.sign || function(t3) {
+var Lr = Math.sign || function(t3) {
   return t3 > 0 ? 1 : t3 < 0 ? -1 : 0;
 };
-function Rr(t3, e2) {
+function Br(t3, e2) {
   if (typeof e2 == "function")
     return e2(t3);
   if (t3 === 1 / 0)
@@ -1943,17 +1729,17 @@ function Rr(t3, e2) {
   if (isNaN(t3))
     return "NaN";
   var r2, n2 = "auto";
-  switch (e2 && (e2.notation && (n2 = e2.notation), Te(e2) ? r2 = e2 : Te(e2.precision) && (r2 = e2.precision)), n2) {
+  switch (e2 && (e2.notation && (n2 = e2.notation), Re(e2) ? r2 = e2 : Re(e2.precision) && (r2 = e2.precision)), n2) {
     case "fixed":
-      return kr(t3, r2);
+      return Pr(t3, r2);
     case "exponential":
-      return Ir(t3, r2);
+      return Ur(t3, r2);
     case "engineering":
       return function(t4, e3) {
         if (isNaN(t4) || !isFinite(t4))
           return String(t4);
-        var r3 = Lr(Dr(t4), e3), n3 = r3.exponent, i2 = r3.coefficients, s2 = n3 % 3 == 0 ? n3 : n3 < 0 ? n3 - 3 - n3 % 3 : n3 - n3 % 3;
-        if (Te(e3))
+        var r3 = jr(Fr(t4), e3), n3 = r3.exponent, i2 = r3.coefficients, s2 = n3 % 3 == 0 ? n3 : n3 < 0 ? n3 - 3 - n3 % 3 : n3 - n3 % 3;
+        if (Re(e3))
           for (; e3 > i2.length || n3 - s2 + 1 > i2.length; )
             i2.push(0);
         else
@@ -1962,20 +1748,20 @@ function Rr(t3, e2) {
         var u2 = Math.abs(n3 - s2), h = 1;
         for (; u2 > 0; )
           h++, u2--;
-        var c2 = i2.slice(h).join(""), l2 = Te(e3) && c2.length || c2.match(/[1-9]/) ? "." + c2 : "", p2 = i2.slice(0, h).join("") + l2 + "e" + (n3 >= 0 ? "+" : "") + s2.toString();
+        var c2 = i2.slice(h).join(""), l2 = Re(e3) && c2.length || c2.match(/[1-9]/) ? "." + c2 : "", p2 = i2.slice(0, h).join("") + l2 + "e" + (n3 >= 0 ? "+" : "") + s2.toString();
         return r3.sign + p2;
       }(t3, r2);
     case "auto":
       return function(t4, e3, r3) {
         if (isNaN(t4) || !isFinite(t4))
           return String(t4);
-        var n3 = r3 && r3.lowerExp !== void 0 ? r3.lowerExp : -3, i2 = r3 && r3.upperExp !== void 0 ? r3.upperExp : 5, s2 = Dr(t4), a2 = e3 ? Lr(s2, e3) : s2;
+        var n3 = r3 && r3.lowerExp !== void 0 ? r3.lowerExp : -3, i2 = r3 && r3.upperExp !== void 0 ? r3.upperExp : 5, s2 = Fr(t4), a2 = e3 ? jr(s2, e3) : s2;
         if (a2.exponent < n3 || a2.exponent >= i2)
-          return Ir(t4, e3);
+          return Ur(t4, e3);
         var o2 = a2.coefficients, u2 = a2.exponent;
-        o2.length < e3 && (o2 = o2.concat(Br(e3 - o2.length))), o2 = o2.concat(Br(u2 - o2.length + 1 + (o2.length < e3 ? e3 - o2.length : 0)));
+        o2.length < e3 && (o2 = o2.concat(qr(e3 - o2.length))), o2 = o2.concat(qr(u2 - o2.length + 1 + (o2.length < e3 ? e3 - o2.length : 0)));
         var h = u2 > 0 ? u2 : 0;
-        return h < (o2 = Br(-u2).concat(o2)).length - 1 && o2.splice(h + 1, 0, "."), a2.sign + o2.join("");
+        return h < (o2 = qr(-u2).concat(o2)).length - 1 && o2.splice(h + 1, 0, "."), a2.sign + o2.join("");
       }(t3, r2, e2 && e2).replace(/((\.\d*?)(0+))($|e)/, function() {
         var t4 = arguments[2], e3 = arguments[4];
         return t4 !== "." ? t4 + e3 : e3;
@@ -1984,7 +1770,7 @@ function Rr(t3, e2) {
       throw new Error('Unknown notation "' + n2 + '". Choose "auto", "exponential", or "fixed".');
   }
 }
-function Dr(t3) {
+function Fr(t3) {
   var e2 = String(t3).toLowerCase().match(/^0*?(-?)(\d+\.?\d*)(e([+-]?\d+))?$/);
   if (!e2)
     throw new SyntaxError("Invalid number " + t3);
@@ -1997,21 +1783,21 @@ function Dr(t3) {
   });
   return a2.length === 0 && (a2.push(0), i2++), {sign: r2, coefficients: a2, exponent: i2};
 }
-function kr(t3, e2) {
+function Pr(t3, e2) {
   if (isNaN(t3) || !isFinite(t3))
     return String(t3);
-  var r2 = Dr(t3), n2 = typeof e2 == "number" ? Lr(r2, r2.exponent + 1 + e2) : r2, i2 = n2.coefficients, s2 = n2.exponent + 1, a2 = s2 + (e2 || 0);
-  return i2.length < a2 && (i2 = i2.concat(Br(a2 - i2.length))), s2 < 0 && (i2 = Br(1 - s2).concat(i2), s2 = 1), s2 < i2.length && i2.splice(s2, 0, s2 === 0 ? "0." : "."), n2.sign + i2.join("");
+  var r2 = Fr(t3), n2 = typeof e2 == "number" ? jr(r2, r2.exponent + 1 + e2) : r2, i2 = n2.coefficients, s2 = n2.exponent + 1, a2 = s2 + (e2 || 0);
+  return i2.length < a2 && (i2 = i2.concat(qr(a2 - i2.length))), s2 < 0 && (i2 = qr(1 - s2).concat(i2), s2 = 1), s2 < i2.length && i2.splice(s2, 0, s2 === 0 ? "0." : "."), n2.sign + i2.join("");
 }
-function Ir(t3, e2) {
+function Ur(t3, e2) {
   if (isNaN(t3) || !isFinite(t3))
     return String(t3);
-  var r2 = Dr(t3), n2 = e2 ? Lr(r2, e2) : r2, i2 = n2.coefficients, s2 = n2.exponent;
-  i2.length < e2 && (i2 = i2.concat(Br(e2 - i2.length)));
+  var r2 = Fr(t3), n2 = e2 ? jr(r2, e2) : r2, i2 = n2.coefficients, s2 = n2.exponent;
+  i2.length < e2 && (i2 = i2.concat(qr(e2 - i2.length)));
   var a2 = i2.shift();
   return n2.sign + a2 + (i2.length > 0 ? "." + i2.join("") : "") + "e" + (s2 >= 0 ? "+" : "") + s2;
 }
-function Lr(t3, e2) {
+function jr(t3, e2) {
   for (var r2 = {sign: t3.sign, coefficients: t3.coefficients, exponent: t3.exponent}, n2 = r2.coefficients; e2 <= 0; )
     n2.unshift(0), r2.exponent++, e2++;
   if (n2.length > e2 && n2.splice(e2, n2.length - e2)[0] >= 5) {
@@ -2021,13 +1807,13 @@ function Lr(t3, e2) {
   }
   return r2;
 }
-function Br(t3) {
+function qr(t3) {
   for (var e2 = [], r2 = 0; r2 < t3; r2++)
     e2.push(0);
   return e2;
 }
-var Fr = Number.EPSILON || 2220446049250313e-31;
-function Pr(t3, e2, r2) {
+var Hr = Number.EPSILON || 2220446049250313e-31;
+function Vr(t3, e2, r2) {
   if (r2 == null)
     return t3 === e2;
   if (t3 === e2)
@@ -2036,11 +1822,11 @@ function Pr(t3, e2, r2) {
     return false;
   if (isFinite(t3) && isFinite(e2)) {
     var n2 = Math.abs(t3 - e2);
-    return n2 < Fr || n2 <= Math.max(Math.abs(t3), Math.abs(e2)) * r2;
+    return n2 < Hr || n2 <= Math.max(Math.abs(t3), Math.abs(e2)) * r2;
   }
   return false;
 }
-function Ur(t3, e2) {
+function $r(t3, e2) {
   if (typeof e2 == "function")
     return e2(t3);
   if (!t3.isFinite())
@@ -2052,7 +1838,7 @@ function Ur(t3, e2) {
         return t4.toFixed(e3);
       }(t3, r2);
     case "exponential":
-      return jr(t3, r2);
+      return Gr(t3, r2);
     case "engineering":
       return function(t4, e3) {
         var r3 = t4.e, n3 = r3 % 3 == 0 ? r3 : r3 < 0 ? r3 - 3 - r3 % 3 : r3 - r3 % 3, i3 = t4.mul(Math.pow(10, -n3)), s3 = i3.toPrecision(e3);
@@ -2064,7 +1850,7 @@ function Ur(t3, e2) {
       if (t3.isZero())
         return "0";
       var a2 = t3.toSignificantDigits(r2), o2 = a2.e;
-      return (o2 >= i2 && o2 < s2 ? a2.toFixed() : jr(t3, r2)).replace(/((\.\d*?)(0+))($|e)/, function() {
+      return (o2 >= i2 && o2 < s2 ? a2.toFixed() : Gr(t3, r2)).replace(/((\.\d*?)(0+))($|e)/, function() {
         var t4 = arguments[2], e3 = arguments[4];
         return t4 !== "." ? t4 + e3 : e3;
       });
@@ -2072,100 +1858,100 @@ function Ur(t3, e2) {
       throw new Error('Unknown notation "' + n2 + '". Choose "auto", "exponential", or "fixed".');
   }
 }
-function jr(t3, e2) {
+function Gr(t3, e2) {
   return e2 !== void 0 ? t3.toExponential(e2 - 1) : t3.toExponential();
 }
-function qr(t3, e2) {
+function Wr(t3, e2) {
   var r2 = t3.length - e2.length, n2 = t3.length;
   return t3.substring(r2, n2) === e2;
 }
-function Hr(t3, e2) {
-  return typeof t3 == "number" ? Rr(t3, e2) : Oe(t3) ? Ur(t3, e2) : function(t4) {
+function Yr(t3, e2) {
+  return typeof t3 == "number" ? Br(t3, e2) : De(t3) ? $r(t3, e2) : function(t4) {
     return t4 && typeof t4 == "object" && typeof t4.s == "number" && typeof t4.n == "number" && typeof t4.d == "number" || false;
-  }(t3) ? e2 && e2.fraction === "decimal" ? t3.toString() : t3.s * t3.n + "/" + t3.d : Array.isArray(t3) ? Gr(t3, e2) : Re(t3) ? '"' + t3 + '"' : typeof t3 == "function" ? t3.syntax ? String(t3.syntax) : "function" : t3 && typeof t3 == "object" ? typeof t3.format == "function" ? t3.format(e2) : t3 && t3.toString(e2) !== {}.toString() ? t3.toString(e2) : "{" + Object.keys(t3).map((r2) => '"' + r2 + '": ' + Hr(t3[r2], e2)).join(", ") + "}" : String(t3);
+  }(t3) ? e2 && e2.fraction === "decimal" ? t3.toString() : t3.s * t3.n + "/" + t3.d : Array.isArray(t3) ? Qr(t3, e2) : Be(t3) ? '"' + t3 + '"' : typeof t3 == "function" ? t3.syntax ? String(t3.syntax) : "function" : t3 && typeof t3 == "object" ? typeof t3.format == "function" ? t3.format(e2) : t3 && t3.toString(e2) !== {}.toString() ? t3.toString(e2) : "{" + Object.keys(t3).map((r2) => '"' + r2 + '": ' + Yr(t3[r2], e2)).join(", ") + "}" : String(t3);
 }
-function Vr(t3) {
+function Zr(t3) {
   for (var e2 = String(t3), r2 = "", n2 = 0; n2 < e2.length; ) {
     var i2 = e2.charAt(n2);
     i2 === "\\" ? (r2 += i2, n2++, (i2 = e2.charAt(n2)) !== "" && '"\\/bfnrtu'.indexOf(i2) !== -1 || (r2 += "\\"), r2 += i2) : r2 += i2 === '"' ? '\\"' : i2, n2++;
   }
   return '"' + r2 + '"';
 }
-function $r(t3) {
+function Xr(t3) {
   var e2 = String(t3);
   return e2 = e2.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
-function Gr(t3, e2) {
+function Qr(t3, e2) {
   if (Array.isArray(t3)) {
     for (var r2 = "[", n2 = t3.length, i2 = 0; i2 < n2; i2++)
-      i2 !== 0 && (r2 += ", "), r2 += Gr(t3[i2], e2);
+      i2 !== 0 && (r2 += ", "), r2 += Qr(t3[i2], e2);
     return r2 += "]";
   }
-  return Hr(t3, e2);
+  return Yr(t3, e2);
 }
-function Wr(t3, e2, r2) {
-  if (!(this instanceof Wr))
+function Jr(t3, e2, r2) {
+  if (!(this instanceof Jr))
     throw new SyntaxError("Constructor must be called with the new operator");
   this.actual = t3, this.expected = e2, this.relation = r2, this.message = "Dimension mismatch (" + (Array.isArray(t3) ? "[" + t3.join(", ") + "]" : t3) + " " + (this.relation || "!=") + " " + (Array.isArray(e2) ? "[" + e2.join(", ") + "]" : e2) + ")", this.stack = new Error().stack;
 }
-function Yr(t3, e2, r2) {
-  if (!(this instanceof Yr))
+function Kr(t3, e2, r2) {
+  if (!(this instanceof Kr))
     throw new SyntaxError("Constructor must be called with the new operator");
   this.index = t3, arguments.length < 3 ? (this.min = 0, this.max = e2) : (this.min = e2, this.max = r2), this.min !== void 0 && this.index < this.min ? this.message = "Index out of range (" + this.index + " < " + this.min + ")" : this.max !== void 0 && this.index >= this.max ? this.message = "Index out of range (" + this.index + " > " + (this.max - 1) + ")" : this.message = "Index out of range (" + this.index + ")", this.stack = new Error().stack;
 }
-function Zr(t3) {
+function tn(t3) {
   for (var e2 = []; Array.isArray(t3); )
     e2.push(t3.length), t3 = t3[0];
   return e2;
 }
-function Xr(t3, e2, r2) {
+function en(t3, e2, r2) {
   var n2, i2 = t3.length;
   if (i2 !== e2[r2])
-    throw new Wr(i2, e2[r2]);
+    throw new Jr(i2, e2[r2]);
   if (r2 < e2.length - 1) {
     var s2 = r2 + 1;
     for (n2 = 0; n2 < i2; n2++) {
       var a2 = t3[n2];
       if (!Array.isArray(a2))
-        throw new Wr(e2.length - 1, e2.length, "<");
-      Xr(t3[n2], e2, s2);
+        throw new Jr(e2.length - 1, e2.length, "<");
+      en(t3[n2], e2, s2);
     }
   } else
     for (n2 = 0; n2 < i2; n2++)
       if (Array.isArray(t3[n2]))
-        throw new Wr(e2.length + 1, e2.length, ">");
+        throw new Jr(e2.length + 1, e2.length, ">");
 }
-function Qr(t3, e2) {
+function rn(t3, e2) {
   if (e2.length === 0) {
     if (Array.isArray(t3))
-      throw new Wr(t3.length, 0);
+      throw new Jr(t3.length, 0);
   } else
-    Xr(t3, e2, 0);
+    en(t3, e2, 0);
 }
-function Jr(t3, e2) {
-  if (!Te(t3) || !Ar(t3))
+function nn(t3, e2) {
+  if (!Re(t3) || !Ir(t3))
     throw new TypeError("Index must be an integer (value: " + t3 + ")");
   if (t3 < 0 || typeof e2 == "number" && t3 >= e2)
-    throw new Yr(t3, e2);
+    throw new Kr(t3, e2);
 }
-function Kr(t3, e2, r2) {
+function sn(t3, e2, r2) {
   if (!Array.isArray(t3) || !Array.isArray(e2))
     throw new TypeError("Array expected");
   if (e2.length === 0)
     throw new Error("Resizing to scalar is not supported");
   return e2.forEach(function(t4) {
-    if (!Te(t4) || !Ar(t4) || t4 < 0)
-      throw new TypeError("Invalid size, must contain positive integers (size: " + Hr(e2) + ")");
-  }), tn(t3, e2, 0, r2 !== void 0 ? r2 : 0), t3;
+    if (!Re(t4) || !Ir(t4) || t4 < 0)
+      throw new TypeError("Invalid size, must contain positive integers (size: " + Yr(e2) + ")");
+  }), an(t3, e2, 0, r2 !== void 0 ? r2 : 0), t3;
 }
-function tn(t3, e2, r2, n2) {
+function an(t3, e2, r2, n2) {
   var i2, s2, a2 = t3.length, o2 = e2[r2], u2 = Math.min(a2, o2);
   if (t3.length = o2, r2 < e2.length - 1) {
     var h = r2 + 1;
     for (i2 = 0; i2 < u2; i2++)
-      s2 = t3[i2], Array.isArray(s2) || (s2 = [s2], t3[i2] = s2), tn(s2, e2, h, n2);
+      s2 = t3[i2], Array.isArray(s2) || (s2 = [s2], t3[i2] = s2), an(s2, e2, h, n2);
     for (i2 = u2; i2 < o2; i2++)
-      s2 = [], t3[i2] = s2, tn(s2, e2, h, n2);
+      s2 = [], t3[i2] = s2, an(s2, e2, h, n2);
   } else {
     for (i2 = 0; i2 < u2; i2++)
       for (; Array.isArray(t3[i2]); )
@@ -2174,7 +1960,7 @@ function tn(t3, e2, r2, n2) {
       t3[i2] = n2;
   }
 }
-function en(t3, e2) {
+function on(t3, e2) {
   var r2, n2 = function(t4) {
     if (!Array.isArray(t4))
       return t4;
@@ -2189,11 +1975,11 @@ function en(t3, e2) {
   if (!Array.isArray(t3) || !Array.isArray(e2))
     throw new TypeError("Array expected");
   if (e2.length === 0)
-    throw new Wr(0, i2(Zr(t3)), "!=");
+    throw new Jr(0, i2(tn(t3)), "!=");
   for (var s2 = 1, a2 = 0; a2 < e2.length; a2++)
     s2 *= e2[a2];
   if (n2.length !== s2)
-    throw new Wr(i2(e2), i2(Zr(t3)), "!=");
+    throw new Jr(i2(e2), i2(tn(t3)), "!=");
   try {
     r2 = function(t4, e3) {
       for (var r3, n3 = t4, i3 = e3.length - 1; i3 > 0; i3--) {
@@ -2206,47 +1992,47 @@ function en(t3, e2) {
       return n3;
     }(n2, e2);
   } catch (o2) {
-    if (o2 instanceof Wr)
-      throw new Wr(i2(e2), i2(Zr(t3)), "!=");
+    if (o2 instanceof Jr)
+      throw new Jr(i2(e2), i2(tn(t3)), "!=");
     throw o2;
   }
   return r2;
 }
-function rn(t3, e2, r2, n2) {
-  var i2 = n2 || Zr(t3);
+function un(t3, e2, r2, n2) {
+  var i2 = n2 || tn(t3);
   if (r2)
     for (var s2 = 0; s2 < r2; s2++)
       t3 = [t3], i2.unshift(1);
-  for (t3 = nn(t3, e2, 0); i2.length < e2; )
+  for (t3 = hn(t3, e2, 0); i2.length < e2; )
     i2.push(1);
   return t3;
 }
-function nn(t3, e2, r2) {
+function hn(t3, e2, r2) {
   var n2, i2;
   if (Array.isArray(t3)) {
     var s2 = r2 + 1;
     for (n2 = 0, i2 = t3.length; n2 < i2; n2++)
-      t3[n2] = nn(t3[n2], e2, s2);
+      t3[n2] = hn(t3[n2], e2, s2);
   } else
     for (var a2 = r2; a2 < e2; a2++)
       t3 = [t3];
   return t3;
 }
-function sn(t3, e2) {
+function cn(t3, e2) {
   return Array.prototype.map.call(t3, e2);
 }
-function an(t3, e2) {
+function ln(t3, e2) {
   Array.prototype.forEach.call(t3, e2);
 }
-function on(t3, e2) {
+function pn(t3, e2) {
   return Array.prototype.join.call(t3, e2);
 }
-function un(t3, e2) {
+function fn(t3, e2) {
   for (var r2, n2 = 0, i2 = 0; i2 < t3.length; i2++) {
     var s2 = t3[i2], a2 = Array.isArray(s2);
     if (i2 === 0 && a2 && (n2 = s2.length), a2 && s2.length !== n2)
       return;
-    var o2 = a2 ? un(s2, e2) : e2(s2);
+    var o2 = a2 ? fn(s2, e2) : e2(s2);
     if (r2 === void 0)
       r2 = o2;
     else if (r2 !== o2)
@@ -2254,7 +2040,7 @@ function un(t3, e2) {
   }
   return r2;
 }
-function cn(t3, e2, r2, n2) {
+function mn(t3, e2, r2, n2) {
   function i2(n3) {
     var i3 = function(t4, e3) {
       for (var r3 = {}, n4 = 0; n4 < e3.length; n4++) {
@@ -2262,7 +2048,7 @@ function cn(t3, e2, r2, n2) {
         s2 !== void 0 && (r3[i4] = s2);
       }
       return r3;
-    }(n3, e2.map(pn));
+    }(n3, e2.map(gn));
     return function(t4, e3, r3) {
       if (!e3.filter((t5) => !function(t6) {
         return t6 && t6[0] === "?";
@@ -2274,30 +2060,30 @@ function cn(t3, e2, r2, n2) {
   }
   return i2.isFactory = true, i2.fn = t3, i2.dependencies = e2.slice().sort(), n2 && (i2.meta = n2), i2;
 }
-function pn(t3) {
+function gn(t3) {
   return t3 && t3[0] === "?" ? t3.slice(1) : t3;
 }
-Wr.prototype = new RangeError(), Wr.prototype.constructor = RangeError, Wr.prototype.name = "DimensionError", Wr.prototype.isDimensionError = true, Yr.prototype = new RangeError(), Yr.prototype.constructor = RangeError, Yr.prototype.name = "IndexError", Yr.prototype.isIndexError = true;
-var fn = function() {
-  return fn = zr.create, zr;
-}, dn = cn("typed", ["?BigNumber", "?Complex", "?DenseMatrix", "?Fraction"], function(t3) {
-  var {BigNumber: e2, Complex: r2, DenseMatrix: n2, Fraction: i2} = t3, s2 = fn();
-  return s2.types = [{name: "number", test: Te}, {name: "Complex", test: ze}, {name: "BigNumber", test: Oe}, {name: "Fraction", test: Ae}, {name: "Unit", test: Ce}, {name: "string", test: Re}, {name: "Chain", test: cr}, {name: "Array", test: De}, {name: "Matrix", test: ke}, {name: "DenseMatrix", test: Le}, {name: "SparseMatrix", test: Be}, {name: "Range", test: Fe}, {name: "Index", test: Pe}, {name: "boolean", test: Ue}, {name: "ResultSet", test: je}, {name: "Help", test: qe}, {name: "function", test: He}, {name: "Date", test: Ve}, {name: "RegExp", test: $e}, {name: "null", test: We}, {name: "undefined", test: Ye}, {name: "AccessorNode", test: Ze}, {name: "ArrayNode", test: Xe}, {name: "AssignmentNode", test: Qe}, {name: "BlockNode", test: Je}, {name: "ConditionalNode", test: Ke}, {name: "ConstantNode", test: tr}, {name: "FunctionNode", test: rr}, {name: "FunctionAssignmentNode", test: er}, {name: "IndexNode", test: nr}, {name: "Node", test: ir}, {name: "ObjectNode", test: sr}, {name: "OperatorNode", test: ar}, {name: "ParenthesisNode", test: or}, {name: "RangeNode", test: ur}, {name: "SymbolNode", test: hr}, {name: "Object", test: Ge}], s2.conversions = [{from: "number", to: "BigNumber", convert: function(t4) {
-    if (e2 || mn(t4), t4.toExponential().replace(/e.*$/, "").replace(/^0\.?0*|\./, "").length > 15)
+Jr.prototype = new RangeError(), Jr.prototype.constructor = RangeError, Jr.prototype.name = "DimensionError", Jr.prototype.isDimensionError = true, Kr.prototype = new RangeError(), Kr.prototype.constructor = RangeError, Kr.prototype.name = "IndexError", Kr.prototype.isIndexError = true;
+var vn = function() {
+  return vn = kr.create, kr;
+}, xn = mn("typed", ["?BigNumber", "?Complex", "?DenseMatrix", "?Fraction"], function(t3) {
+  var {BigNumber: e2, Complex: r2, DenseMatrix: n2, Fraction: i2} = t3, s2 = vn();
+  return s2.types = [{name: "number", test: Re}, {name: "Complex", test: ke}, {name: "BigNumber", test: De}, {name: "Fraction", test: Ie}, {name: "Unit", test: Le}, {name: "string", test: Be}, {name: "Chain", test: mr}, {name: "Array", test: Fe}, {name: "Matrix", test: Pe}, {name: "DenseMatrix", test: je}, {name: "SparseMatrix", test: qe}, {name: "Range", test: He}, {name: "Index", test: Ve}, {name: "boolean", test: $e}, {name: "ResultSet", test: Ge}, {name: "Help", test: We}, {name: "function", test: Ye}, {name: "Date", test: Ze}, {name: "RegExp", test: Xe}, {name: "null", test: Je}, {name: "undefined", test: Ke}, {name: "AccessorNode", test: tr}, {name: "ArrayNode", test: er}, {name: "AssignmentNode", test: rr}, {name: "BlockNode", test: nr}, {name: "ConditionalNode", test: ir}, {name: "ConstantNode", test: sr}, {name: "FunctionNode", test: or}, {name: "FunctionAssignmentNode", test: ar}, {name: "IndexNode", test: ur}, {name: "Node", test: hr}, {name: "ObjectNode", test: cr}, {name: "OperatorNode", test: lr}, {name: "ParenthesisNode", test: pr}, {name: "RangeNode", test: fr}, {name: "SymbolNode", test: dr}, {name: "Object", test: Qe}], s2.conversions = [{from: "number", to: "BigNumber", convert: function(t4) {
+    if (e2 || wn(t4), t4.toExponential().replace(/e.*$/, "").replace(/^0\.?0*|\./, "").length > 15)
       throw new TypeError("Cannot implicitly convert a number with >15 significant digits to BigNumber (value: " + t4 + "). Use function bignumber(x) to convert to BigNumber.");
     return new e2(t4);
   }}, {from: "number", to: "Complex", convert: function(t4) {
-    return r2 || yn(t4), new r2(t4, 0);
+    return r2 || bn(t4), new r2(t4, 0);
   }}, {from: "number", to: "string", convert: function(t4) {
     return t4 + "";
   }}, {from: "BigNumber", to: "Complex", convert: function(t4) {
-    return r2 || yn(t4), new r2(t4.toNumber(), 0);
+    return r2 || bn(t4), new r2(t4.toNumber(), 0);
   }}, {from: "Fraction", to: "BigNumber", convert: function(t4) {
     throw new TypeError("Cannot implicitly convert a Fraction to BigNumber or vice versa. Use function bignumber(x) to convert to BigNumber or fraction(x) to convert to Fraction.");
   }}, {from: "Fraction", to: "Complex", convert: function(t4) {
-    return r2 || yn(t4), new r2(t4.valueOf(), 0);
+    return r2 || bn(t4), new r2(t4.valueOf(), 0);
   }}, {from: "number", to: "Fraction", convert: function(t4) {
-    i2 || gn(t4);
+    i2 || _n(t4);
     var e3 = new i2(t4);
     if (e3.valueOf() !== t4)
       throw new TypeError("Cannot implicitly convert a number to a Fraction when there will be a loss of precision (value: " + t4 + "). Use function fraction(x) to convert to Fraction.");
@@ -2308,21 +2094,21 @@ var fn = function() {
       throw new Error('Cannot convert "' + t4 + '" to a number');
     return e3;
   }}, {from: "string", to: "BigNumber", convert: function(t4) {
-    e2 || mn(t4);
+    e2 || wn(t4);
     try {
       return new e2(t4);
     } catch (r3) {
       throw new Error('Cannot convert "' + t4 + '" to BigNumber');
     }
   }}, {from: "string", to: "Fraction", convert: function(t4) {
-    i2 || gn(t4);
+    i2 || _n(t4);
     try {
       return new i2(t4);
     } catch (e3) {
       throw new Error('Cannot convert "' + t4 + '" to Fraction');
     }
   }}, {from: "string", to: "Complex", convert: function(t4) {
-    r2 || yn(t4);
+    r2 || bn(t4);
     try {
       return new r2(t4);
     } catch (e3) {
@@ -2331,9 +2117,9 @@ var fn = function() {
   }}, {from: "boolean", to: "number", convert: function(t4) {
     return +t4;
   }}, {from: "boolean", to: "BigNumber", convert: function(t4) {
-    return e2 || mn(t4), new e2(+t4);
+    return e2 || wn(t4), new e2(+t4);
   }}, {from: "boolean", to: "Fraction", convert: function(t4) {
-    return i2 || gn(t4), new i2(+t4);
+    return i2 || _n(t4), new i2(+t4);
   }}, {from: "boolean", to: "string", convert: function(t4) {
     return String(t4);
   }}, {from: "Array", to: "Matrix", convert: function(t4) {
@@ -2344,16 +2130,16 @@ var fn = function() {
     return t4.valueOf();
   }}], s2;
 });
-function mn(t3) {
+function wn(t3) {
   throw new Error("Cannot convert value ".concat(t3, " into a BigNumber: no class 'BigNumber' provided"));
 }
-function yn(t3) {
+function bn(t3) {
   throw new Error("Cannot convert value ".concat(t3, " into a Complex number: no class 'Complex' provided"));
 }
-function gn(t3) {
+function _n(t3) {
   throw new Error("Cannot convert value ".concat(t3, " into a Fraction, no class 'Fraction' provided."));
 }
-var vn, xn, wn = cn("ResultSet", [], () => {
+var Mn, Nn, En = mn("ResultSet", [], () => {
   function t3(e2) {
     if (!(this instanceof t3))
       throw new SyntaxError("Constructor must be called with the new operator");
@@ -2368,44 +2154,44 @@ var vn, xn, wn = cn("ResultSet", [], () => {
   }, t3.fromJSON = function(e2) {
     return new t3(e2.entries);
   }, t3;
-}, {isClass: true}), bn = 9e15, _n = "0123456789abcdef", Mn = "2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983419677840422862486334095254650828067566662873690987816894829072083255546808437998948262331985283935053089653777326288461633662222876982198867465436674744042432743651550489343149393914796194044002221051017141748003688084012647080685567743216228355220114804663715659121373450747856947683463616792101806445070648000277502684916746550586856935673420670581136429224554405758925724208241314695689016758940256776311356919292033376587141660230105703089634572075440370847469940168269282808481184289314848524948644871927809676271275775397027668605952496716674183485704422507197965004714951050492214776567636938662976979522110718264549734772662425709429322582798502585509785265383207606726317164309505995087807523710333101197857547331541421808427543863591778117054309827482385045648019095610299291824318237525357709750539565187697510374970888692180205189339507238539205144634197265287286965110862571492198849978748873771345686209167058", En = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632789", Nn = {precision: 20, rounding: 4, modulo: 1, toExpNeg: -7, toExpPos: 21, minE: -bn, maxE: bn, crypto: false}, Sn = true, Tn = "[DecimalError] Invalid argument: ", On = Math.floor, zn = Math.pow, An = /^0b([01]+(\.[01]*)?|\.[01]+)(p[+-]?\d+)?$/i, Cn = /^0x([0-9a-f]+(\.[0-9a-f]*)?|\.[0-9a-f]+)(p[+-]?\d+)?$/i, Rn = /^0o([0-7]+(\.[0-7]*)?|\.[0-7]+)(p[+-]?\d+)?$/i, Dn = /^(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i, kn = 1e7, In = Mn.length - 1, Ln = En.length - 1, Bn = {name: "[object Decimal]"};
-function Fn(t3) {
+}, {isClass: true}), Sn = 9e15, Tn = "0123456789abcdef", On = "2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983419677840422862486334095254650828067566662873690987816894829072083255546808437998948262331985283935053089653777326288461633662222876982198867465436674744042432743651550489343149393914796194044002221051017141748003688084012647080685567743216228355220114804663715659121373450747856947683463616792101806445070648000277502684916746550586856935673420670581136429224554405758925724208241314695689016758940256776311356919292033376587141660230105703089634572075440370847469940168269282808481184289314848524948644871927809676271275775397027668605952496716674183485704422507197965004714951050492214776567636938662976979522110718264549734772662425709429322582798502585509785265383207606726317164309505995087807523710333101197857547331541421808427543863591778117054309827482385045648019095610299291824318237525357709750539565187697510374970888692180205189339507238539205144634197265287286965110862571492198849978748873771345686209167058", zn = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632789", Cn = {precision: 20, rounding: 4, modulo: 1, toExpNeg: -7, toExpPos: 21, minE: -Sn, maxE: Sn, crypto: false}, An = true, Rn = "[DecimalError] Invalid argument: ", Dn = Math.floor, kn = Math.pow, In = /^0b([01]+(\.[01]*)?|\.[01]+)(p[+-]?\d+)?$/i, Ln = /^0x([0-9a-f]+(\.[0-9a-f]*)?|\.[0-9a-f]+)(p[+-]?\d+)?$/i, Bn = /^0o([0-7]+(\.[0-7]*)?|\.[0-7]+)(p[+-]?\d+)?$/i, Fn = /^(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i, Pn = 1e7, Un = On.length - 1, jn = zn.length - 1, qn = {name: "[object Decimal]"};
+function Hn(t3) {
   var e2, r2, n2, i2 = t3.length - 1, s2 = "", a2 = t3[0];
   if (i2 > 0) {
     for (s2 += a2, e2 = 1; e2 < i2; e2++)
-      (r2 = 7 - (n2 = t3[e2] + "").length) && (s2 += Zn(r2)), s2 += n2;
-    (r2 = 7 - (n2 = (a2 = t3[e2]) + "").length) && (s2 += Zn(r2));
+      (r2 = 7 - (n2 = t3[e2] + "").length) && (s2 += ti(r2)), s2 += n2;
+    (r2 = 7 - (n2 = (a2 = t3[e2]) + "").length) && (s2 += ti(r2));
   } else if (a2 === 0)
     return "0";
   for (; a2 % 10 == 0; )
     a2 /= 10;
   return s2 + a2;
 }
-function Pn(t3, e2, r2) {
+function Vn(t3, e2, r2) {
   if (t3 !== ~~t3 || t3 < e2 || t3 > r2)
-    throw Error(Tn + t3);
+    throw Error(Rn + t3);
 }
-function Un(t3, e2, r2, n2) {
+function $n(t3, e2, r2, n2) {
   var i2, s2, a2, o2;
   for (s2 = t3[0]; s2 >= 10; s2 /= 10)
     --e2;
-  return --e2 < 0 ? (e2 += 7, i2 = 0) : (i2 = Math.ceil((e2 + 1) / 7), e2 %= 7), s2 = zn(10, 7 - e2), o2 = t3[i2] % s2 | 0, n2 == null ? e2 < 3 ? (e2 == 0 ? o2 = o2 / 100 | 0 : e2 == 1 && (o2 = o2 / 10 | 0), a2 = r2 < 4 && o2 == 99999 || r2 > 3 && o2 == 49999 || o2 == 5e4 || o2 == 0) : a2 = (r2 < 4 && o2 + 1 == s2 || r2 > 3 && o2 + 1 == s2 / 2) && (t3[i2 + 1] / s2 / 100 | 0) == zn(10, e2 - 2) - 1 || (o2 == s2 / 2 || o2 == 0) && (t3[i2 + 1] / s2 / 100 | 0) == 0 : e2 < 4 ? (e2 == 0 ? o2 = o2 / 1e3 | 0 : e2 == 1 ? o2 = o2 / 100 | 0 : e2 == 2 && (o2 = o2 / 10 | 0), a2 = (n2 || r2 < 4) && o2 == 9999 || !n2 && r2 > 3 && o2 == 4999) : a2 = ((n2 || r2 < 4) && o2 + 1 == s2 || !n2 && r2 > 3 && o2 + 1 == s2 / 2) && (t3[i2 + 1] / s2 / 1e3 | 0) == zn(10, e2 - 3) - 1, a2;
+  return --e2 < 0 ? (e2 += 7, i2 = 0) : (i2 = Math.ceil((e2 + 1) / 7), e2 %= 7), s2 = kn(10, 7 - e2), o2 = t3[i2] % s2 | 0, n2 == null ? e2 < 3 ? (e2 == 0 ? o2 = o2 / 100 | 0 : e2 == 1 && (o2 = o2 / 10 | 0), a2 = r2 < 4 && o2 == 99999 || r2 > 3 && o2 == 49999 || o2 == 5e4 || o2 == 0) : a2 = (r2 < 4 && o2 + 1 == s2 || r2 > 3 && o2 + 1 == s2 / 2) && (t3[i2 + 1] / s2 / 100 | 0) == kn(10, e2 - 2) - 1 || (o2 == s2 / 2 || o2 == 0) && (t3[i2 + 1] / s2 / 100 | 0) == 0 : e2 < 4 ? (e2 == 0 ? o2 = o2 / 1e3 | 0 : e2 == 1 ? o2 = o2 / 100 | 0 : e2 == 2 && (o2 = o2 / 10 | 0), a2 = (n2 || r2 < 4) && o2 == 9999 || !n2 && r2 > 3 && o2 == 4999) : a2 = ((n2 || r2 < 4) && o2 + 1 == s2 || !n2 && r2 > 3 && o2 + 1 == s2 / 2) && (t3[i2 + 1] / s2 / 1e3 | 0) == kn(10, e2 - 3) - 1, a2;
 }
-function jn(t3, e2, r2) {
+function Gn(t3, e2, r2) {
   for (var n2, i2, s2 = [0], a2 = 0, o2 = t3.length; a2 < o2; ) {
     for (i2 = s2.length; i2--; )
       s2[i2] *= e2;
-    for (s2[0] += _n.indexOf(t3.charAt(a2++)), n2 = 0; n2 < s2.length; n2++)
+    for (s2[0] += Tn.indexOf(t3.charAt(a2++)), n2 = 0; n2 < s2.length; n2++)
       s2[n2] > r2 - 1 && (s2[n2 + 1] === void 0 && (s2[n2 + 1] = 0), s2[n2 + 1] += s2[n2] / r2 | 0, s2[n2] %= r2);
   }
   return s2.reverse();
 }
-Bn.absoluteValue = Bn.abs = function() {
+qn.absoluteValue = qn.abs = function() {
   var t3 = new this.constructor(this);
-  return t3.s < 0 && (t3.s = 1), Hn(t3);
-}, Bn.ceil = function() {
-  return Hn(new this.constructor(this), this.e + 1, 2);
-}, Bn.comparedTo = Bn.cmp = function(t3) {
+  return t3.s < 0 && (t3.s = 1), Yn(t3);
+}, qn.ceil = function() {
+  return Yn(new this.constructor(this), this.e + 1, 2);
+}, qn.comparedTo = qn.cmp = function(t3) {
   var e2, r2, n2, i2, s2 = this, a2 = s2.d, o2 = (t3 = new s2.constructor(t3)).d, u2 = s2.s, h = t3.s;
   if (!a2 || !o2)
     return u2 && h ? u2 !== h ? u2 : a2 === o2 ? 0 : !a2 ^ u2 < 0 ? 1 : -1 : NaN;
@@ -2419,135 +2205,135 @@ Bn.absoluteValue = Bn.abs = function() {
     if (a2[e2] !== o2[e2])
       return a2[e2] > o2[e2] ^ u2 < 0 ? 1 : -1;
   return n2 === i2 ? 0 : n2 > i2 ^ u2 < 0 ? 1 : -1;
-}, Bn.cosine = Bn.cos = function() {
+}, qn.cosine = qn.cos = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
   return r2.d ? r2.d[0] ? (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + Math.max(r2.e, r2.sd()) + 7, n2.rounding = 1, r2 = function(t4, e3) {
     var r3, n3, i2 = e3.d.length;
-    i2 < 32 ? n3 = (1 / ii(4, r3 = Math.ceil(i2 / 3))).toString() : (r3 = 16, n3 = "2.3283064365386962890625e-10");
-    t4.precision += r3, e3 = ni(t4, 1, e3.times(n3), new t4(1));
+    i2 < 32 ? n3 = (1 / hi(4, r3 = Math.ceil(i2 / 3))).toString() : (r3 = 16, n3 = "2.3283064365386962890625e-10");
+    t4.precision += r3, e3 = ui(t4, 1, e3.times(n3), new t4(1));
     for (var s2 = r3; s2--; ) {
       var a2 = e3.times(e3);
       e3 = a2.times(a2).minus(a2).times(8).plus(1);
     }
     return t4.precision -= r3, e3;
-  }(n2, si(n2, r2)), n2.precision = t3, n2.rounding = e2, Hn(xn == 2 || xn == 3 ? r2.neg() : r2, t3, e2, true)) : new n2(1) : new n2(NaN);
-}, Bn.cubeRoot = Bn.cbrt = function() {
+  }(n2, ci(n2, r2)), n2.precision = t3, n2.rounding = e2, Yn(Nn == 2 || Nn == 3 ? r2.neg() : r2, t3, e2, true)) : new n2(1) : new n2(NaN);
+}, qn.cubeRoot = qn.cbrt = function() {
   var t3, e2, r2, n2, i2, s2, a2, o2, u2, h, c2 = this, l2 = c2.constructor;
   if (!c2.isFinite() || c2.isZero())
     return new l2(c2);
-  for (Sn = false, (s2 = c2.s * zn(c2.s * c2, 1 / 3)) && Math.abs(s2) != 1 / 0 ? n2 = new l2(s2.toString()) : (r2 = Fn(c2.d), (s2 = ((t3 = c2.e) - r2.length + 1) % 3) && (r2 += s2 == 1 || s2 == -2 ? "0" : "00"), s2 = zn(r2, 1 / 3), t3 = On((t3 + 1) / 3) - (t3 % 3 == (t3 < 0 ? -1 : 2)), (n2 = new l2(r2 = s2 == 1 / 0 ? "5e" + t3 : (r2 = s2.toExponential()).slice(0, r2.indexOf("e") + 1) + t3)).s = c2.s), a2 = (t3 = l2.precision) + 3; ; )
-    if (h = (u2 = (o2 = n2).times(o2).times(o2)).plus(c2), n2 = qn(h.plus(c2).times(o2), h.plus(u2), a2 + 2, 1), Fn(o2.d).slice(0, a2) === (r2 = Fn(n2.d)).slice(0, a2)) {
+  for (An = false, (s2 = c2.s * kn(c2.s * c2, 1 / 3)) && Math.abs(s2) != 1 / 0 ? n2 = new l2(s2.toString()) : (r2 = Hn(c2.d), (s2 = ((t3 = c2.e) - r2.length + 1) % 3) && (r2 += s2 == 1 || s2 == -2 ? "0" : "00"), s2 = kn(r2, 1 / 3), t3 = Dn((t3 + 1) / 3) - (t3 % 3 == (t3 < 0 ? -1 : 2)), (n2 = new l2(r2 = s2 == 1 / 0 ? "5e" + t3 : (r2 = s2.toExponential()).slice(0, r2.indexOf("e") + 1) + t3)).s = c2.s), a2 = (t3 = l2.precision) + 3; ; )
+    if (h = (u2 = (o2 = n2).times(o2).times(o2)).plus(c2), n2 = Wn(h.plus(c2).times(o2), h.plus(u2), a2 + 2, 1), Hn(o2.d).slice(0, a2) === (r2 = Hn(n2.d)).slice(0, a2)) {
       if ((r2 = r2.slice(a2 - 3, a2 + 1)) != "9999" && (i2 || r2 != "4999")) {
-        +r2 && (+r2.slice(1) || r2.charAt(0) != "5") || (Hn(n2, t3 + 1, 1), e2 = !n2.times(n2).times(n2).eq(c2));
+        +r2 && (+r2.slice(1) || r2.charAt(0) != "5") || (Yn(n2, t3 + 1, 1), e2 = !n2.times(n2).times(n2).eq(c2));
         break;
       }
-      if (!i2 && (Hn(o2, t3 + 1, 0), o2.times(o2).times(o2).eq(c2))) {
+      if (!i2 && (Yn(o2, t3 + 1, 0), o2.times(o2).times(o2).eq(c2))) {
         n2 = o2;
         break;
       }
       a2 += 4, i2 = 1;
     }
-  return Sn = true, Hn(n2, t3, l2.rounding, e2);
-}, Bn.decimalPlaces = Bn.dp = function() {
+  return An = true, Yn(n2, t3, l2.rounding, e2);
+}, qn.decimalPlaces = qn.dp = function() {
   var t3, e2 = this.d, r2 = NaN;
   if (e2) {
-    if (r2 = 7 * ((t3 = e2.length - 1) - On(this.e / 7)), t3 = e2[t3])
+    if (r2 = 7 * ((t3 = e2.length - 1) - Dn(this.e / 7)), t3 = e2[t3])
       for (; t3 % 10 == 0; t3 /= 10)
         r2--;
     r2 < 0 && (r2 = 0);
   }
   return r2;
-}, Bn.dividedBy = Bn.div = function(t3) {
-  return qn(this, new this.constructor(t3));
-}, Bn.dividedToIntegerBy = Bn.divToInt = function(t3) {
+}, qn.dividedBy = qn.div = function(t3) {
+  return Wn(this, new this.constructor(t3));
+}, qn.dividedToIntegerBy = qn.divToInt = function(t3) {
   var e2 = this.constructor;
-  return Hn(qn(this, new e2(t3), 0, 1, 1), e2.precision, e2.rounding);
-}, Bn.equals = Bn.eq = function(t3) {
+  return Yn(Wn(this, new e2(t3), 0, 1, 1), e2.precision, e2.rounding);
+}, qn.equals = qn.eq = function(t3) {
   return this.cmp(t3) === 0;
-}, Bn.floor = function() {
-  return Hn(new this.constructor(this), this.e + 1, 3);
-}, Bn.greaterThan = Bn.gt = function(t3) {
+}, qn.floor = function() {
+  return Yn(new this.constructor(this), this.e + 1, 3);
+}, qn.greaterThan = qn.gt = function(t3) {
   return this.cmp(t3) > 0;
-}, Bn.greaterThanOrEqualTo = Bn.gte = function(t3) {
+}, qn.greaterThanOrEqualTo = qn.gte = function(t3) {
   var e2 = this.cmp(t3);
   return e2 == 1 || e2 === 0;
-}, Bn.hyperbolicCosine = Bn.cosh = function() {
+}, qn.hyperbolicCosine = qn.cosh = function() {
   var t3, e2, r2, n2, i2, s2 = this, a2 = s2.constructor, o2 = new a2(1);
   if (!s2.isFinite())
     return new a2(s2.s ? 1 / 0 : NaN);
   if (s2.isZero())
     return o2;
-  r2 = a2.precision, n2 = a2.rounding, a2.precision = r2 + Math.max(s2.e, s2.sd()) + 4, a2.rounding = 1, (i2 = s2.d.length) < 32 ? e2 = (1 / ii(4, t3 = Math.ceil(i2 / 3))).toString() : (t3 = 16, e2 = "2.3283064365386962890625e-10"), s2 = ni(a2, 1, s2.times(e2), new a2(1), true);
+  r2 = a2.precision, n2 = a2.rounding, a2.precision = r2 + Math.max(s2.e, s2.sd()) + 4, a2.rounding = 1, (i2 = s2.d.length) < 32 ? e2 = (1 / hi(4, t3 = Math.ceil(i2 / 3))).toString() : (t3 = 16, e2 = "2.3283064365386962890625e-10"), s2 = ui(a2, 1, s2.times(e2), new a2(1), true);
   for (var u2, h = t3, c2 = new a2(8); h--; )
     u2 = s2.times(s2), s2 = o2.minus(u2.times(c2.minus(u2.times(c2))));
-  return Hn(s2, a2.precision = r2, a2.rounding = n2, true);
-}, Bn.hyperbolicSine = Bn.sinh = function() {
+  return Yn(s2, a2.precision = r2, a2.rounding = n2, true);
+}, qn.hyperbolicSine = qn.sinh = function() {
   var t3, e2, r2, n2, i2 = this, s2 = i2.constructor;
   if (!i2.isFinite() || i2.isZero())
     return new s2(i2);
   if (e2 = s2.precision, r2 = s2.rounding, s2.precision = e2 + Math.max(i2.e, i2.sd()) + 4, s2.rounding = 1, (n2 = i2.d.length) < 3)
-    i2 = ni(s2, 2, i2, i2, true);
+    i2 = ui(s2, 2, i2, i2, true);
   else {
-    t3 = (t3 = 1.4 * Math.sqrt(n2)) > 16 ? 16 : 0 | t3, i2 = ni(s2, 2, i2 = i2.times(1 / ii(5, t3)), i2, true);
+    t3 = (t3 = 1.4 * Math.sqrt(n2)) > 16 ? 16 : 0 | t3, i2 = ui(s2, 2, i2 = i2.times(1 / hi(5, t3)), i2, true);
     for (var a2, o2 = new s2(5), u2 = new s2(16), h = new s2(20); t3--; )
       a2 = i2.times(i2), i2 = i2.times(o2.plus(a2.times(u2.times(a2).plus(h))));
   }
-  return s2.precision = e2, s2.rounding = r2, Hn(i2, e2, r2, true);
-}, Bn.hyperbolicTangent = Bn.tanh = function() {
+  return s2.precision = e2, s2.rounding = r2, Yn(i2, e2, r2, true);
+}, qn.hyperbolicTangent = qn.tanh = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
-  return r2.isFinite() ? r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 7, n2.rounding = 1, qn(r2.sinh(), r2.cosh(), n2.precision = t3, n2.rounding = e2)) : new n2(r2.s);
-}, Bn.inverseCosine = Bn.acos = function() {
+  return r2.isFinite() ? r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 7, n2.rounding = 1, Wn(r2.sinh(), r2.cosh(), n2.precision = t3, n2.rounding = e2)) : new n2(r2.s);
+}, qn.inverseCosine = qn.acos = function() {
   var t3, e2 = this, r2 = e2.constructor, n2 = e2.abs().cmp(1), i2 = r2.precision, s2 = r2.rounding;
-  return n2 !== -1 ? n2 === 0 ? e2.isNeg() ? Wn(r2, i2, s2) : new r2(0) : new r2(NaN) : e2.isZero() ? Wn(r2, i2 + 4, s2).times(0.5) : (r2.precision = i2 + 6, r2.rounding = 1, e2 = e2.asin(), t3 = Wn(r2, i2 + 4, s2).times(0.5), r2.precision = i2, r2.rounding = s2, t3.minus(e2));
-}, Bn.inverseHyperbolicCosine = Bn.acosh = function() {
+  return n2 !== -1 ? n2 === 0 ? e2.isNeg() ? Jn(r2, i2, s2) : new r2(0) : new r2(NaN) : e2.isZero() ? Jn(r2, i2 + 4, s2).times(0.5) : (r2.precision = i2 + 6, r2.rounding = 1, e2 = e2.asin(), t3 = Jn(r2, i2 + 4, s2).times(0.5), r2.precision = i2, r2.rounding = s2, t3.minus(e2));
+}, qn.inverseHyperbolicCosine = qn.acosh = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
-  return r2.lte(1) ? new n2(r2.eq(1) ? 0 : NaN) : r2.isFinite() ? (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + Math.max(Math.abs(r2.e), r2.sd()) + 4, n2.rounding = 1, Sn = false, r2 = r2.times(r2).minus(1).sqrt().plus(r2), Sn = true, n2.precision = t3, n2.rounding = e2, r2.ln()) : new n2(r2);
-}, Bn.inverseHyperbolicSine = Bn.asinh = function() {
+  return r2.lte(1) ? new n2(r2.eq(1) ? 0 : NaN) : r2.isFinite() ? (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + Math.max(Math.abs(r2.e), r2.sd()) + 4, n2.rounding = 1, An = false, r2 = r2.times(r2).minus(1).sqrt().plus(r2), An = true, n2.precision = t3, n2.rounding = e2, r2.ln()) : new n2(r2);
+}, qn.inverseHyperbolicSine = qn.asinh = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
-  return !r2.isFinite() || r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 2 * Math.max(Math.abs(r2.e), r2.sd()) + 6, n2.rounding = 1, Sn = false, r2 = r2.times(r2).plus(1).sqrt().plus(r2), Sn = true, n2.precision = t3, n2.rounding = e2, r2.ln());
-}, Bn.inverseHyperbolicTangent = Bn.atanh = function() {
+  return !r2.isFinite() || r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 2 * Math.max(Math.abs(r2.e), r2.sd()) + 6, n2.rounding = 1, An = false, r2 = r2.times(r2).plus(1).sqrt().plus(r2), An = true, n2.precision = t3, n2.rounding = e2, r2.ln());
+}, qn.inverseHyperbolicTangent = qn.atanh = function() {
   var t3, e2, r2, n2, i2 = this, s2 = i2.constructor;
-  return i2.isFinite() ? i2.e >= 0 ? new s2(i2.abs().eq(1) ? i2.s / 0 : i2.isZero() ? i2 : NaN) : (t3 = s2.precision, e2 = s2.rounding, n2 = i2.sd(), Math.max(n2, t3) < 2 * -i2.e - 1 ? Hn(new s2(i2), t3, e2, true) : (s2.precision = r2 = n2 - i2.e, i2 = qn(i2.plus(1), new s2(1).minus(i2), r2 + t3, 1), s2.precision = t3 + 4, s2.rounding = 1, i2 = i2.ln(), s2.precision = t3, s2.rounding = e2, i2.times(0.5))) : new s2(NaN);
-}, Bn.inverseSine = Bn.asin = function() {
+  return i2.isFinite() ? i2.e >= 0 ? new s2(i2.abs().eq(1) ? i2.s / 0 : i2.isZero() ? i2 : NaN) : (t3 = s2.precision, e2 = s2.rounding, n2 = i2.sd(), Math.max(n2, t3) < 2 * -i2.e - 1 ? Yn(new s2(i2), t3, e2, true) : (s2.precision = r2 = n2 - i2.e, i2 = Wn(i2.plus(1), new s2(1).minus(i2), r2 + t3, 1), s2.precision = t3 + 4, s2.rounding = 1, i2 = i2.ln(), s2.precision = t3, s2.rounding = e2, i2.times(0.5))) : new s2(NaN);
+}, qn.inverseSine = qn.asin = function() {
   var t3, e2, r2, n2, i2 = this, s2 = i2.constructor;
-  return i2.isZero() ? new s2(i2) : (e2 = i2.abs().cmp(1), r2 = s2.precision, n2 = s2.rounding, e2 !== -1 ? e2 === 0 ? ((t3 = Wn(s2, r2 + 4, n2).times(0.5)).s = i2.s, t3) : new s2(NaN) : (s2.precision = r2 + 6, s2.rounding = 1, i2 = i2.div(new s2(1).minus(i2.times(i2)).sqrt().plus(1)).atan(), s2.precision = r2, s2.rounding = n2, i2.times(2)));
-}, Bn.inverseTangent = Bn.atan = function() {
+  return i2.isZero() ? new s2(i2) : (e2 = i2.abs().cmp(1), r2 = s2.precision, n2 = s2.rounding, e2 !== -1 ? e2 === 0 ? ((t3 = Jn(s2, r2 + 4, n2).times(0.5)).s = i2.s, t3) : new s2(NaN) : (s2.precision = r2 + 6, s2.rounding = 1, i2 = i2.div(new s2(1).minus(i2.times(i2)).sqrt().plus(1)).atan(), s2.precision = r2, s2.rounding = n2, i2.times(2)));
+}, qn.inverseTangent = qn.atan = function() {
   var t3, e2, r2, n2, i2, s2, a2, o2, u2, h = this, c2 = h.constructor, l2 = c2.precision, p2 = c2.rounding;
   if (h.isFinite()) {
     if (h.isZero())
       return new c2(h);
-    if (h.abs().eq(1) && l2 + 4 <= Ln)
-      return (a2 = Wn(c2, l2 + 4, p2).times(0.25)).s = h.s, a2;
+    if (h.abs().eq(1) && l2 + 4 <= jn)
+      return (a2 = Jn(c2, l2 + 4, p2).times(0.25)).s = h.s, a2;
   } else {
     if (!h.s)
       return new c2(NaN);
-    if (l2 + 4 <= Ln)
-      return (a2 = Wn(c2, l2 + 4, p2).times(0.5)).s = h.s, a2;
+    if (l2 + 4 <= jn)
+      return (a2 = Jn(c2, l2 + 4, p2).times(0.5)).s = h.s, a2;
   }
   for (c2.precision = o2 = l2 + 10, c2.rounding = 1, t3 = r2 = Math.min(28, o2 / 7 + 2 | 0); t3; --t3)
     h = h.div(h.times(h).plus(1).sqrt().plus(1));
-  for (Sn = false, e2 = Math.ceil(o2 / 7), n2 = 1, u2 = h.times(h), a2 = new c2(h), i2 = h; t3 !== -1; )
+  for (An = false, e2 = Math.ceil(o2 / 7), n2 = 1, u2 = h.times(h), a2 = new c2(h), i2 = h; t3 !== -1; )
     if (i2 = i2.times(u2), s2 = a2.minus(i2.div(n2 += 2)), i2 = i2.times(u2), (a2 = s2.plus(i2.div(n2 += 2))).d[e2] !== void 0)
       for (t3 = e2; a2.d[t3] === s2.d[t3] && t3--; )
         ;
-  return r2 && (a2 = a2.times(2 << r2 - 1)), Sn = true, Hn(a2, c2.precision = l2, c2.rounding = p2, true);
-}, Bn.isFinite = function() {
+  return r2 && (a2 = a2.times(2 << r2 - 1)), An = true, Yn(a2, c2.precision = l2, c2.rounding = p2, true);
+}, qn.isFinite = function() {
   return !!this.d;
-}, Bn.isInteger = Bn.isInt = function() {
-  return !!this.d && On(this.e / 7) > this.d.length - 2;
-}, Bn.isNaN = function() {
+}, qn.isInteger = qn.isInt = function() {
+  return !!this.d && Dn(this.e / 7) > this.d.length - 2;
+}, qn.isNaN = function() {
   return !this.s;
-}, Bn.isNegative = Bn.isNeg = function() {
+}, qn.isNegative = qn.isNeg = function() {
   return this.s < 0;
-}, Bn.isPositive = Bn.isPos = function() {
+}, qn.isPositive = qn.isPos = function() {
   return this.s > 0;
-}, Bn.isZero = function() {
+}, qn.isZero = function() {
   return !!this.d && this.d[0] === 0;
-}, Bn.lessThan = Bn.lt = function(t3) {
+}, qn.lessThan = qn.lt = function(t3) {
   return this.cmp(t3) < 0;
-}, Bn.lessThanOrEqualTo = Bn.lte = function(t3) {
+}, qn.lessThanOrEqualTo = qn.lte = function(t3) {
   return this.cmp(t3) < 1;
-}, Bn.logarithm = Bn.log = function(t3) {
+}, qn.logarithm = qn.log = function(t3) {
   var e2, r2, n2, i2, s2, a2, o2, u2, h = this, c2 = h.constructor, l2 = c2.precision, p2 = c2.rounding;
   if (t3 == null)
     t3 = new c2(10), e2 = true;
@@ -2566,31 +2352,31 @@ Bn.absoluteValue = Bn.abs = function() {
         i2 /= 10;
       s2 = i2 !== 1;
     }
-  if (Sn = false, a2 = ti(h, o2 = l2 + 5), n2 = e2 ? Gn(c2, o2 + 10) : ti(t3, o2), Un((u2 = qn(a2, n2, o2, 1)).d, i2 = l2, p2))
+  if (An = false, a2 = si(h, o2 = l2 + 5), n2 = e2 ? Qn(c2, o2 + 10) : si(t3, o2), $n((u2 = Wn(a2, n2, o2, 1)).d, i2 = l2, p2))
     do {
-      if (a2 = ti(h, o2 += 10), n2 = e2 ? Gn(c2, o2 + 10) : ti(t3, o2), u2 = qn(a2, n2, o2, 1), !s2) {
-        +Fn(u2.d).slice(i2 + 1, i2 + 15) + 1 == 1e14 && (u2 = Hn(u2, l2 + 1, 0));
+      if (a2 = si(h, o2 += 10), n2 = e2 ? Qn(c2, o2 + 10) : si(t3, o2), u2 = Wn(a2, n2, o2, 1), !s2) {
+        +Hn(u2.d).slice(i2 + 1, i2 + 15) + 1 == 1e14 && (u2 = Yn(u2, l2 + 1, 0));
         break;
       }
-    } while (Un(u2.d, i2 += 10, p2));
-  return Sn = true, Hn(u2, l2, p2);
-}, Bn.minus = Bn.sub = function(t3) {
-  var e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = this, d2 = f2.constructor;
-  if (t3 = new d2(t3), !f2.d || !t3.d)
-    return f2.s && t3.s ? f2.d ? t3.s = -t3.s : t3 = new d2(t3.d || f2.s !== t3.s ? f2 : NaN) : t3 = new d2(NaN), t3;
+    } while ($n(u2.d, i2 += 10, p2));
+  return An = true, Yn(u2, l2, p2);
+}, qn.minus = qn.sub = function(t3) {
+  var e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = this, d = f2.constructor;
+  if (t3 = new d(t3), !f2.d || !t3.d)
+    return f2.s && t3.s ? f2.d ? t3.s = -t3.s : t3 = new d(t3.d || f2.s !== t3.s ? f2 : NaN) : t3 = new d(NaN), t3;
   if (f2.s != t3.s)
     return t3.s = -t3.s, f2.plus(t3);
-  if (h = f2.d, p2 = t3.d, o2 = d2.precision, u2 = d2.rounding, !h[0] || !p2[0]) {
+  if (h = f2.d, p2 = t3.d, o2 = d.precision, u2 = d.rounding, !h[0] || !p2[0]) {
     if (p2[0])
       t3.s = -t3.s;
     else {
       if (!h[0])
-        return new d2(u2 === 3 ? -0 : 0);
-      t3 = new d2(f2);
+        return new d(u2 === 3 ? -0 : 0);
+      t3 = new d(f2);
     }
-    return Sn ? Hn(t3, o2, u2) : t3;
+    return An ? Yn(t3, o2, u2) : t3;
   }
-  if (r2 = On(t3.e / 7), c2 = On(f2.e / 7), h = h.slice(), s2 = c2 - r2) {
+  if (r2 = Dn(t3.e / 7), c2 = Dn(f2.e / 7), h = h.slice(), s2 = c2 - r2) {
     for ((l2 = s2 < 0) ? (e2 = h, s2 = -s2, a2 = p2.length) : (e2 = p2, r2 = c2, a2 = h.length), s2 > (n2 = Math.max(Math.ceil(o2 / 7), a2) + 2) && (s2 = n2, e2.length = 1), e2.reverse(), n2 = s2; n2--; )
       e2.push(0);
     e2.reverse();
@@ -2607,8 +2393,8 @@ Bn.absoluteValue = Bn.abs = function() {
   for (n2 = p2.length; n2 > s2; ) {
     if (h[--n2] < p2[n2]) {
       for (i2 = n2; i2 && h[--i2] === 0; )
-        h[i2] = kn - 1;
-      --h[i2], h[n2] += kn;
+        h[i2] = Pn - 1;
+      --h[i2], h[n2] += Pn;
     }
     h[n2] -= p2[n2];
   }
@@ -2616,165 +2402,165 @@ Bn.absoluteValue = Bn.abs = function() {
     h.pop();
   for (; h[0] === 0; h.shift())
     --r2;
-  return h[0] ? (t3.d = h, t3.e = $n(h, r2), Sn ? Hn(t3, o2, u2) : t3) : new d2(u2 === 3 ? -0 : 0);
-}, Bn.modulo = Bn.mod = function(t3) {
+  return h[0] ? (t3.d = h, t3.e = Xn(h, r2), An ? Yn(t3, o2, u2) : t3) : new d(u2 === 3 ? -0 : 0);
+}, qn.modulo = qn.mod = function(t3) {
   var e2, r2 = this, n2 = r2.constructor;
-  return t3 = new n2(t3), !r2.d || !t3.s || t3.d && !t3.d[0] ? new n2(NaN) : !t3.d || r2.d && !r2.d[0] ? Hn(new n2(r2), n2.precision, n2.rounding) : (Sn = false, n2.modulo == 9 ? (e2 = qn(r2, t3.abs(), 0, 3, 1)).s *= t3.s : e2 = qn(r2, t3, 0, n2.modulo, 1), e2 = e2.times(t3), Sn = true, r2.minus(e2));
-}, Bn.naturalExponential = Bn.exp = function() {
-  return Kn(this);
-}, Bn.naturalLogarithm = Bn.ln = function() {
-  return ti(this);
-}, Bn.negated = Bn.neg = function() {
+  return t3 = new n2(t3), !r2.d || !t3.s || t3.d && !t3.d[0] ? new n2(NaN) : !t3.d || r2.d && !r2.d[0] ? Yn(new n2(r2), n2.precision, n2.rounding) : (An = false, n2.modulo == 9 ? (e2 = Wn(r2, t3.abs(), 0, 3, 1)).s *= t3.s : e2 = Wn(r2, t3, 0, n2.modulo, 1), e2 = e2.times(t3), An = true, r2.minus(e2));
+}, qn.naturalExponential = qn.exp = function() {
+  return ii(this);
+}, qn.naturalLogarithm = qn.ln = function() {
+  return si(this);
+}, qn.negated = qn.neg = function() {
   var t3 = new this.constructor(this);
-  return t3.s = -t3.s, Hn(t3);
-}, Bn.plus = Bn.add = function(t3) {
+  return t3.s = -t3.s, Yn(t3);
+}, qn.plus = qn.add = function(t3) {
   var e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2 = this, p2 = l2.constructor;
   if (t3 = new p2(t3), !l2.d || !t3.d)
     return l2.s && t3.s ? l2.d || (t3 = new p2(t3.d || l2.s === t3.s ? l2 : NaN)) : t3 = new p2(NaN), t3;
   if (l2.s != t3.s)
     return t3.s = -t3.s, l2.minus(t3);
   if (h = l2.d, c2 = t3.d, o2 = p2.precision, u2 = p2.rounding, !h[0] || !c2[0])
-    return c2[0] || (t3 = new p2(l2)), Sn ? Hn(t3, o2, u2) : t3;
-  if (s2 = On(l2.e / 7), n2 = On(t3.e / 7), h = h.slice(), i2 = s2 - n2) {
+    return c2[0] || (t3 = new p2(l2)), An ? Yn(t3, o2, u2) : t3;
+  if (s2 = Dn(l2.e / 7), n2 = Dn(t3.e / 7), h = h.slice(), i2 = s2 - n2) {
     for (i2 < 0 ? (r2 = h, i2 = -i2, a2 = c2.length) : (r2 = c2, n2 = s2, a2 = h.length), i2 > (a2 = (s2 = Math.ceil(o2 / 7)) > a2 ? s2 + 1 : a2 + 1) && (i2 = a2, r2.length = 1), r2.reverse(); i2--; )
       r2.push(0);
     r2.reverse();
   }
   for ((a2 = h.length) - (i2 = c2.length) < 0 && (i2 = a2, r2 = c2, c2 = h, h = r2), e2 = 0; i2; )
-    e2 = (h[--i2] = h[i2] + c2[i2] + e2) / kn | 0, h[i2] %= kn;
+    e2 = (h[--i2] = h[i2] + c2[i2] + e2) / Pn | 0, h[i2] %= Pn;
   for (e2 && (h.unshift(e2), ++n2), a2 = h.length; h[--a2] == 0; )
     h.pop();
-  return t3.d = h, t3.e = $n(h, n2), Sn ? Hn(t3, o2, u2) : t3;
-}, Bn.precision = Bn.sd = function(t3) {
+  return t3.d = h, t3.e = Xn(h, n2), An ? Yn(t3, o2, u2) : t3;
+}, qn.precision = qn.sd = function(t3) {
   var e2, r2 = this;
   if (t3 !== void 0 && t3 !== !!t3 && t3 !== 1 && t3 !== 0)
-    throw Error(Tn + t3);
-  return r2.d ? (e2 = Yn(r2.d), t3 && r2.e + 1 > e2 && (e2 = r2.e + 1)) : e2 = NaN, e2;
-}, Bn.round = function() {
+    throw Error(Rn + t3);
+  return r2.d ? (e2 = Kn(r2.d), t3 && r2.e + 1 > e2 && (e2 = r2.e + 1)) : e2 = NaN, e2;
+}, qn.round = function() {
   var t3 = this, e2 = t3.constructor;
-  return Hn(new e2(t3), t3.e + 1, e2.rounding);
-}, Bn.sine = Bn.sin = function() {
+  return Yn(new e2(t3), t3.e + 1, e2.rounding);
+}, qn.sine = qn.sin = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
   return r2.isFinite() ? r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + Math.max(r2.e, r2.sd()) + 7, n2.rounding = 1, r2 = function(t4, e3) {
     var r3, n3 = e3.d.length;
     if (n3 < 3)
-      return ni(t4, 2, e3, e3);
-    r3 = (r3 = 1.4 * Math.sqrt(n3)) > 16 ? 16 : 0 | r3, e3 = e3.times(1 / ii(5, r3)), e3 = ni(t4, 2, e3, e3);
+      return ui(t4, 2, e3, e3);
+    r3 = (r3 = 1.4 * Math.sqrt(n3)) > 16 ? 16 : 0 | r3, e3 = e3.times(1 / hi(5, r3)), e3 = ui(t4, 2, e3, e3);
     for (var i2, s2 = new t4(5), a2 = new t4(16), o2 = new t4(20); r3--; )
       i2 = e3.times(e3), e3 = e3.times(s2.plus(i2.times(a2.times(i2).minus(o2))));
     return e3;
-  }(n2, si(n2, r2)), n2.precision = t3, n2.rounding = e2, Hn(xn > 2 ? r2.neg() : r2, t3, e2, true)) : new n2(NaN);
-}, Bn.squareRoot = Bn.sqrt = function() {
+  }(n2, ci(n2, r2)), n2.precision = t3, n2.rounding = e2, Yn(Nn > 2 ? r2.neg() : r2, t3, e2, true)) : new n2(NaN);
+}, qn.squareRoot = qn.sqrt = function() {
   var t3, e2, r2, n2, i2, s2, a2 = this, o2 = a2.d, u2 = a2.e, h = a2.s, c2 = a2.constructor;
   if (h !== 1 || !o2 || !o2[0])
     return new c2(!h || h < 0 && (!o2 || o2[0]) ? NaN : o2 ? a2 : 1 / 0);
-  for (Sn = false, (h = Math.sqrt(+a2)) == 0 || h == 1 / 0 ? (((e2 = Fn(o2)).length + u2) % 2 == 0 && (e2 += "0"), h = Math.sqrt(e2), u2 = On((u2 + 1) / 2) - (u2 < 0 || u2 % 2), n2 = new c2(e2 = h == 1 / 0 ? "5e" + u2 : (e2 = h.toExponential()).slice(0, e2.indexOf("e") + 1) + u2)) : n2 = new c2(h.toString()), r2 = (u2 = c2.precision) + 3; ; )
-    if (n2 = (s2 = n2).plus(qn(a2, s2, r2 + 2, 1)).times(0.5), Fn(s2.d).slice(0, r2) === (e2 = Fn(n2.d)).slice(0, r2)) {
+  for (An = false, (h = Math.sqrt(+a2)) == 0 || h == 1 / 0 ? (((e2 = Hn(o2)).length + u2) % 2 == 0 && (e2 += "0"), h = Math.sqrt(e2), u2 = Dn((u2 + 1) / 2) - (u2 < 0 || u2 % 2), n2 = new c2(e2 = h == 1 / 0 ? "5e" + u2 : (e2 = h.toExponential()).slice(0, e2.indexOf("e") + 1) + u2)) : n2 = new c2(h.toString()), r2 = (u2 = c2.precision) + 3; ; )
+    if (n2 = (s2 = n2).plus(Wn(a2, s2, r2 + 2, 1)).times(0.5), Hn(s2.d).slice(0, r2) === (e2 = Hn(n2.d)).slice(0, r2)) {
       if ((e2 = e2.slice(r2 - 3, r2 + 1)) != "9999" && (i2 || e2 != "4999")) {
-        +e2 && (+e2.slice(1) || e2.charAt(0) != "5") || (Hn(n2, u2 + 1, 1), t3 = !n2.times(n2).eq(a2));
+        +e2 && (+e2.slice(1) || e2.charAt(0) != "5") || (Yn(n2, u2 + 1, 1), t3 = !n2.times(n2).eq(a2));
         break;
       }
-      if (!i2 && (Hn(s2, u2 + 1, 0), s2.times(s2).eq(a2))) {
+      if (!i2 && (Yn(s2, u2 + 1, 0), s2.times(s2).eq(a2))) {
         n2 = s2;
         break;
       }
       r2 += 4, i2 = 1;
     }
-  return Sn = true, Hn(n2, u2, c2.rounding, t3);
-}, Bn.tangent = Bn.tan = function() {
+  return An = true, Yn(n2, u2, c2.rounding, t3);
+}, qn.tangent = qn.tan = function() {
   var t3, e2, r2 = this, n2 = r2.constructor;
-  return r2.isFinite() ? r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 10, n2.rounding = 1, (r2 = r2.sin()).s = 1, r2 = qn(r2, new n2(1).minus(r2.times(r2)).sqrt(), t3 + 10, 0), n2.precision = t3, n2.rounding = e2, Hn(xn == 2 || xn == 4 ? r2.neg() : r2, t3, e2, true)) : new n2(NaN);
-}, Bn.times = Bn.mul = function(t3) {
+  return r2.isFinite() ? r2.isZero() ? new n2(r2) : (t3 = n2.precision, e2 = n2.rounding, n2.precision = t3 + 10, n2.rounding = 1, (r2 = r2.sin()).s = 1, r2 = Wn(r2, new n2(1).minus(r2.times(r2)).sqrt(), t3 + 10, 0), n2.precision = t3, n2.rounding = e2, Yn(Nn == 2 || Nn == 4 ? r2.neg() : r2, t3, e2, true)) : new n2(NaN);
+}, qn.times = qn.mul = function(t3) {
   var e2, r2, n2, i2, s2, a2, o2, u2, h, c2 = this, l2 = c2.constructor, p2 = c2.d, f2 = (t3 = new l2(t3)).d;
   if (t3.s *= c2.s, !(p2 && p2[0] && f2 && f2[0]))
     return new l2(!t3.s || p2 && !p2[0] && !f2 || f2 && !f2[0] && !p2 ? NaN : p2 && f2 ? 0 * t3.s : t3.s / 0);
-  for (r2 = On(c2.e / 7) + On(t3.e / 7), (u2 = p2.length) < (h = f2.length) && (s2 = p2, p2 = f2, f2 = s2, a2 = u2, u2 = h, h = a2), s2 = [], n2 = a2 = u2 + h; n2--; )
+  for (r2 = Dn(c2.e / 7) + Dn(t3.e / 7), (u2 = p2.length) < (h = f2.length) && (s2 = p2, p2 = f2, f2 = s2, a2 = u2, u2 = h, h = a2), s2 = [], n2 = a2 = u2 + h; n2--; )
     s2.push(0);
   for (n2 = h; --n2 >= 0; ) {
     for (e2 = 0, i2 = u2 + n2; i2 > n2; )
-      o2 = s2[i2] + f2[n2] * p2[i2 - n2 - 1] + e2, s2[i2--] = o2 % kn | 0, e2 = o2 / kn | 0;
-    s2[i2] = (s2[i2] + e2) % kn | 0;
+      o2 = s2[i2] + f2[n2] * p2[i2 - n2 - 1] + e2, s2[i2--] = o2 % Pn | 0, e2 = o2 / Pn | 0;
+    s2[i2] = (s2[i2] + e2) % Pn | 0;
   }
   for (; !s2[--a2]; )
     s2.pop();
-  return e2 ? ++r2 : s2.shift(), t3.d = s2, t3.e = $n(s2, r2), Sn ? Hn(t3, l2.precision, l2.rounding) : t3;
-}, Bn.toBinary = function(t3, e2) {
-  return ai(this, 2, t3, e2);
-}, Bn.toDecimalPlaces = Bn.toDP = function(t3, e2) {
+  return e2 ? ++r2 : s2.shift(), t3.d = s2, t3.e = Xn(s2, r2), An ? Yn(t3, l2.precision, l2.rounding) : t3;
+}, qn.toBinary = function(t3, e2) {
+  return li(this, 2, t3, e2);
+}, qn.toDecimalPlaces = qn.toDP = function(t3, e2) {
   var r2 = this, n2 = r2.constructor;
-  return r2 = new n2(r2), t3 === void 0 ? r2 : (Pn(t3, 0, 1e9), e2 === void 0 ? e2 = n2.rounding : Pn(e2, 0, 8), Hn(r2, t3 + r2.e + 1, e2));
-}, Bn.toExponential = function(t3, e2) {
+  return r2 = new n2(r2), t3 === void 0 ? r2 : (Vn(t3, 0, 1e9), e2 === void 0 ? e2 = n2.rounding : Vn(e2, 0, 8), Yn(r2, t3 + r2.e + 1, e2));
+}, qn.toExponential = function(t3, e2) {
   var r2, n2 = this, i2 = n2.constructor;
-  return t3 === void 0 ? r2 = Vn(n2, true) : (Pn(t3, 0, 1e9), e2 === void 0 ? e2 = i2.rounding : Pn(e2, 0, 8), r2 = Vn(n2 = Hn(new i2(n2), t3 + 1, e2), true, t3 + 1)), n2.isNeg() && !n2.isZero() ? "-" + r2 : r2;
-}, Bn.toFixed = function(t3, e2) {
+  return t3 === void 0 ? r2 = Zn(n2, true) : (Vn(t3, 0, 1e9), e2 === void 0 ? e2 = i2.rounding : Vn(e2, 0, 8), r2 = Zn(n2 = Yn(new i2(n2), t3 + 1, e2), true, t3 + 1)), n2.isNeg() && !n2.isZero() ? "-" + r2 : r2;
+}, qn.toFixed = function(t3, e2) {
   var r2, n2, i2 = this, s2 = i2.constructor;
-  return t3 === void 0 ? r2 = Vn(i2) : (Pn(t3, 0, 1e9), e2 === void 0 ? e2 = s2.rounding : Pn(e2, 0, 8), r2 = Vn(n2 = Hn(new s2(i2), t3 + i2.e + 1, e2), false, t3 + n2.e + 1)), i2.isNeg() && !i2.isZero() ? "-" + r2 : r2;
-}, Bn.toFraction = function(t3) {
-  var e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = this, d2 = f2.d, m2 = f2.constructor;
-  if (!d2)
+  return t3 === void 0 ? r2 = Zn(i2) : (Vn(t3, 0, 1e9), e2 === void 0 ? e2 = s2.rounding : Vn(e2, 0, 8), r2 = Zn(n2 = Yn(new s2(i2), t3 + i2.e + 1, e2), false, t3 + n2.e + 1)), i2.isNeg() && !i2.isZero() ? "-" + r2 : r2;
+}, qn.toFraction = function(t3) {
+  var e2, r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = this, d = f2.d, m2 = f2.constructor;
+  if (!d)
     return new m2(f2);
-  if (h = r2 = new m2(1), n2 = u2 = new m2(0), a2 = (s2 = (e2 = new m2(n2)).e = Yn(d2) - f2.e - 1) % 7, e2.d[0] = zn(10, a2 < 0 ? 7 + a2 : a2), t3 == null)
+  if (h = r2 = new m2(1), n2 = u2 = new m2(0), a2 = (s2 = (e2 = new m2(n2)).e = Kn(d) - f2.e - 1) % 7, e2.d[0] = kn(10, a2 < 0 ? 7 + a2 : a2), t3 == null)
     t3 = s2 > 0 ? e2 : h;
   else {
     if (!(o2 = new m2(t3)).isInt() || o2.lt(h))
-      throw Error(Tn + o2);
+      throw Error(Rn + o2);
     t3 = o2.gt(e2) ? s2 > 0 ? e2 : h : o2;
   }
-  for (Sn = false, o2 = new m2(Fn(d2)), c2 = m2.precision, m2.precision = s2 = 7 * d2.length * 2; l2 = qn(o2, e2, 0, 1, 1), (i2 = r2.plus(l2.times(n2))).cmp(t3) != 1; )
+  for (An = false, o2 = new m2(Hn(d)), c2 = m2.precision, m2.precision = s2 = 7 * d.length * 2; l2 = Wn(o2, e2, 0, 1, 1), (i2 = r2.plus(l2.times(n2))).cmp(t3) != 1; )
     r2 = n2, n2 = i2, i2 = h, h = u2.plus(l2.times(i2)), u2 = i2, i2 = e2, e2 = o2.minus(l2.times(i2)), o2 = i2;
-  return i2 = qn(t3.minus(r2), n2, 0, 1, 1), u2 = u2.plus(i2.times(h)), r2 = r2.plus(i2.times(n2)), u2.s = h.s = f2.s, p2 = qn(h, n2, s2, 1).minus(f2).abs().cmp(qn(u2, r2, s2, 1).minus(f2).abs()) < 1 ? [h, n2] : [u2, r2], m2.precision = c2, Sn = true, p2;
-}, Bn.toHexadecimal = Bn.toHex = function(t3, e2) {
-  return ai(this, 16, t3, e2);
-}, Bn.toNearest = function(t3, e2) {
+  return i2 = Wn(t3.minus(r2), n2, 0, 1, 1), u2 = u2.plus(i2.times(h)), r2 = r2.plus(i2.times(n2)), u2.s = h.s = f2.s, p2 = Wn(h, n2, s2, 1).minus(f2).abs().cmp(Wn(u2, r2, s2, 1).minus(f2).abs()) < 1 ? [h, n2] : [u2, r2], m2.precision = c2, An = true, p2;
+}, qn.toHexadecimal = qn.toHex = function(t3, e2) {
+  return li(this, 16, t3, e2);
+}, qn.toNearest = function(t3, e2) {
   var r2 = this, n2 = r2.constructor;
   if (r2 = new n2(r2), t3 == null) {
     if (!r2.d)
       return r2;
     t3 = new n2(1), e2 = n2.rounding;
   } else {
-    if (t3 = new n2(t3), e2 === void 0 ? e2 = n2.rounding : Pn(e2, 0, 8), !r2.d)
+    if (t3 = new n2(t3), e2 === void 0 ? e2 = n2.rounding : Vn(e2, 0, 8), !r2.d)
       return t3.s ? r2 : t3;
     if (!t3.d)
       return t3.s && (t3.s = r2.s), t3;
   }
-  return t3.d[0] ? (Sn = false, r2 = qn(r2, t3, 0, e2, 1).times(t3), Sn = true, Hn(r2)) : (t3.s = r2.s, r2 = t3), r2;
-}, Bn.toNumber = function() {
+  return t3.d[0] ? (An = false, r2 = Wn(r2, t3, 0, e2, 1).times(t3), An = true, Yn(r2)) : (t3.s = r2.s, r2 = t3), r2;
+}, qn.toNumber = function() {
   return +this;
-}, Bn.toOctal = function(t3, e2) {
-  return ai(this, 8, t3, e2);
-}, Bn.toPower = Bn.pow = function(t3) {
+}, qn.toOctal = function(t3, e2) {
+  return li(this, 8, t3, e2);
+}, qn.toPower = qn.pow = function(t3) {
   var e2, r2, n2, i2, s2, a2, o2 = this, u2 = o2.constructor, h = +(t3 = new u2(t3));
   if (!(o2.d && t3.d && o2.d[0] && t3.d[0]))
-    return new u2(zn(+o2, h));
+    return new u2(kn(+o2, h));
   if ((o2 = new u2(o2)).eq(1))
     return o2;
   if (n2 = u2.precision, s2 = u2.rounding, t3.eq(1))
-    return Hn(o2, n2, s2);
-  if ((e2 = On(t3.e / 7)) >= t3.d.length - 1 && (r2 = h < 0 ? -h : h) <= 9007199254740991)
-    return i2 = Xn(u2, o2, r2, n2), t3.s < 0 ? new u2(1).div(i2) : Hn(i2, n2, s2);
+    return Yn(o2, n2, s2);
+  if ((e2 = Dn(t3.e / 7)) >= t3.d.length - 1 && (r2 = h < 0 ? -h : h) <= 9007199254740991)
+    return i2 = ei(u2, o2, r2, n2), t3.s < 0 ? new u2(1).div(i2) : Yn(i2, n2, s2);
   if ((a2 = o2.s) < 0) {
     if (e2 < t3.d.length - 1)
       return new u2(NaN);
     if ((1 & t3.d[e2]) == 0 && (a2 = 1), o2.e == 0 && o2.d[0] == 1 && o2.d.length == 1)
       return o2.s = a2, o2;
   }
-  return (e2 = (r2 = zn(+o2, h)) != 0 && isFinite(r2) ? new u2(r2 + "").e : On(h * (Math.log("0." + Fn(o2.d)) / Math.LN10 + o2.e + 1))) > u2.maxE + 1 || e2 < u2.minE - 1 ? new u2(e2 > 0 ? a2 / 0 : 0) : (Sn = false, u2.rounding = o2.s = 1, r2 = Math.min(12, (e2 + "").length), (i2 = Kn(t3.times(ti(o2, n2 + r2)), n2)).d && Un((i2 = Hn(i2, n2 + 5, 1)).d, n2, s2) && (e2 = n2 + 10, +Fn((i2 = Hn(Kn(t3.times(ti(o2, e2 + r2)), e2), e2 + 5, 1)).d).slice(n2 + 1, n2 + 15) + 1 == 1e14 && (i2 = Hn(i2, n2 + 1, 0))), i2.s = a2, Sn = true, u2.rounding = s2, Hn(i2, n2, s2));
-}, Bn.toPrecision = function(t3, e2) {
+  return (e2 = (r2 = kn(+o2, h)) != 0 && isFinite(r2) ? new u2(r2 + "").e : Dn(h * (Math.log("0." + Hn(o2.d)) / Math.LN10 + o2.e + 1))) > u2.maxE + 1 || e2 < u2.minE - 1 ? new u2(e2 > 0 ? a2 / 0 : 0) : (An = false, u2.rounding = o2.s = 1, r2 = Math.min(12, (e2 + "").length), (i2 = ii(t3.times(si(o2, n2 + r2)), n2)).d && $n((i2 = Yn(i2, n2 + 5, 1)).d, n2, s2) && (e2 = n2 + 10, +Hn((i2 = Yn(ii(t3.times(si(o2, e2 + r2)), e2), e2 + 5, 1)).d).slice(n2 + 1, n2 + 15) + 1 == 1e14 && (i2 = Yn(i2, n2 + 1, 0))), i2.s = a2, An = true, u2.rounding = s2, Yn(i2, n2, s2));
+}, qn.toPrecision = function(t3, e2) {
   var r2, n2 = this, i2 = n2.constructor;
-  return t3 === void 0 ? r2 = Vn(n2, n2.e <= i2.toExpNeg || n2.e >= i2.toExpPos) : (Pn(t3, 1, 1e9), e2 === void 0 ? e2 = i2.rounding : Pn(e2, 0, 8), r2 = Vn(n2 = Hn(new i2(n2), t3, e2), t3 <= n2.e || n2.e <= i2.toExpNeg, t3)), n2.isNeg() && !n2.isZero() ? "-" + r2 : r2;
-}, Bn.toSignificantDigits = Bn.toSD = function(t3, e2) {
+  return t3 === void 0 ? r2 = Zn(n2, n2.e <= i2.toExpNeg || n2.e >= i2.toExpPos) : (Vn(t3, 1, 1e9), e2 === void 0 ? e2 = i2.rounding : Vn(e2, 0, 8), r2 = Zn(n2 = Yn(new i2(n2), t3, e2), t3 <= n2.e || n2.e <= i2.toExpNeg, t3)), n2.isNeg() && !n2.isZero() ? "-" + r2 : r2;
+}, qn.toSignificantDigits = qn.toSD = function(t3, e2) {
   var r2 = this.constructor;
-  return t3 === void 0 ? (t3 = r2.precision, e2 = r2.rounding) : (Pn(t3, 1, 1e9), e2 === void 0 ? e2 = r2.rounding : Pn(e2, 0, 8)), Hn(new r2(this), t3, e2);
-}, Bn.toString = function() {
-  var t3 = this, e2 = t3.constructor, r2 = Vn(t3, t3.e <= e2.toExpNeg || t3.e >= e2.toExpPos);
+  return t3 === void 0 ? (t3 = r2.precision, e2 = r2.rounding) : (Vn(t3, 1, 1e9), e2 === void 0 ? e2 = r2.rounding : Vn(e2, 0, 8)), Yn(new r2(this), t3, e2);
+}, qn.toString = function() {
+  var t3 = this, e2 = t3.constructor, r2 = Zn(t3, t3.e <= e2.toExpNeg || t3.e >= e2.toExpPos);
   return t3.isNeg() && !t3.isZero() ? "-" + r2 : r2;
-}, Bn.truncated = Bn.trunc = function() {
-  return Hn(new this.constructor(this), this.e + 1, 1);
-}, Bn.valueOf = Bn.toJSON = function() {
-  var t3 = this, e2 = t3.constructor, r2 = Vn(t3, t3.e <= e2.toExpNeg || t3.e >= e2.toExpPos);
+}, qn.truncated = qn.trunc = function() {
+  return Yn(new this.constructor(this), this.e + 1, 1);
+}, qn.valueOf = qn.toJSON = function() {
+  var t3 = this, e2 = t3.constructor, r2 = Zn(t3, t3.e <= e2.toExpNeg || t3.e >= e2.toExpPos);
   return t3.isNeg() ? "-" + r2 : r2;
 };
-var qn = function() {
+var Wn = function() {
   function t3(t4, e3, r3) {
     var n2, i2 = 0, s2 = t4.length;
     for (t4 = t4.slice(); s2--; )
@@ -2800,40 +2586,40 @@ var qn = function() {
       t4.shift();
   }
   return function(n2, i2, s2, a2, o2, u2) {
-    var h, c2, l2, p2, f2, d2, m2, y2, g2, v, x, w, b, _, M, E, N, S, T, O2, z2 = n2.constructor, A2 = n2.s == i2.s ? 1 : -1, C2 = n2.d, R2 = i2.d;
-    if (!(C2 && C2[0] && R2 && R2[0]))
-      return new z2(n2.s && i2.s && (C2 ? !R2 || C2[0] != R2[0] : R2) ? C2 && C2[0] == 0 || !R2 ? 0 * A2 : A2 / 0 : NaN);
-    for (u2 ? (f2 = 1, c2 = n2.e - i2.e) : (u2 = kn, f2 = 7, c2 = On(n2.e / f2) - On(i2.e / f2)), T = R2.length, N = C2.length, v = (g2 = new z2(A2)).d = [], l2 = 0; R2[l2] == (C2[l2] || 0); l2++)
+    var h, c2, l2, p2, f2, d, m2, y2, g2, v2, x2, w2, b2, _2, M, N, E, S, T, O, z = n2.constructor, C = n2.s == i2.s ? 1 : -1, A = n2.d, R = i2.d;
+    if (!(A && A[0] && R && R[0]))
+      return new z(n2.s && i2.s && (A ? !R || A[0] != R[0] : R) ? A && A[0] == 0 || !R ? 0 * C : C / 0 : NaN);
+    for (u2 ? (f2 = 1, c2 = n2.e - i2.e) : (u2 = Pn, f2 = 7, c2 = Dn(n2.e / f2) - Dn(i2.e / f2)), T = R.length, E = A.length, v2 = (g2 = new z(C)).d = [], l2 = 0; R[l2] == (A[l2] || 0); l2++)
       ;
-    if (R2[l2] > (C2[l2] || 0) && c2--, s2 == null ? (_ = s2 = z2.precision, a2 = z2.rounding) : _ = o2 ? s2 + (n2.e - i2.e) + 1 : s2, _ < 0)
-      v.push(1), d2 = true;
+    if (R[l2] > (A[l2] || 0) && c2--, s2 == null ? (_2 = s2 = z.precision, a2 = z.rounding) : _2 = o2 ? s2 + (n2.e - i2.e) + 1 : s2, _2 < 0)
+      v2.push(1), d = true;
     else {
-      if (_ = _ / f2 + 2 | 0, l2 = 0, T == 1) {
-        for (p2 = 0, R2 = R2[0], _++; (l2 < N || p2) && _--; l2++)
-          M = p2 * u2 + (C2[l2] || 0), v[l2] = M / R2 | 0, p2 = M % R2 | 0;
-        d2 = p2 || l2 < N;
+      if (_2 = _2 / f2 + 2 | 0, l2 = 0, T == 1) {
+        for (p2 = 0, R = R[0], _2++; (l2 < E || p2) && _2--; l2++)
+          M = p2 * u2 + (A[l2] || 0), v2[l2] = M / R | 0, p2 = M % R | 0;
+        d = p2 || l2 < E;
       } else {
-        for ((p2 = u2 / (R2[0] + 1) | 0) > 1 && (R2 = t3(R2, p2, u2), C2 = t3(C2, p2, u2), T = R2.length, N = C2.length), E = T, w = (x = C2.slice(0, T)).length; w < T; )
-          x[w++] = 0;
-        (O2 = R2.slice()).unshift(0), S = R2[0], R2[1] >= u2 / 2 && ++S;
+        for ((p2 = u2 / (R[0] + 1) | 0) > 1 && (R = t3(R, p2, u2), A = t3(A, p2, u2), T = R.length, E = A.length), N = T, w2 = (x2 = A.slice(0, T)).length; w2 < T; )
+          x2[w2++] = 0;
+        (O = R.slice()).unshift(0), S = R[0], R[1] >= u2 / 2 && ++S;
         do {
-          p2 = 0, (h = e2(R2, x, T, w)) < 0 ? (b = x[0], T != w && (b = b * u2 + (x[1] || 0)), (p2 = b / S | 0) > 1 ? (p2 >= u2 && (p2 = u2 - 1), (h = e2(m2 = t3(R2, p2, u2), x, y2 = m2.length, w = x.length)) == 1 && (p2--, r2(m2, T < y2 ? O2 : R2, y2, u2))) : (p2 == 0 && (h = p2 = 1), m2 = R2.slice()), (y2 = m2.length) < w && m2.unshift(0), r2(x, m2, w, u2), h == -1 && (h = e2(R2, x, T, w = x.length)) < 1 && (p2++, r2(x, T < w ? O2 : R2, w, u2)), w = x.length) : h === 0 && (p2++, x = [0]), v[l2++] = p2, h && x[0] ? x[w++] = C2[E] || 0 : (x = [C2[E]], w = 1);
-        } while ((E++ < N || x[0] !== void 0) && _--);
-        d2 = x[0] !== void 0;
+          p2 = 0, (h = e2(R, x2, T, w2)) < 0 ? (b2 = x2[0], T != w2 && (b2 = b2 * u2 + (x2[1] || 0)), (p2 = b2 / S | 0) > 1 ? (p2 >= u2 && (p2 = u2 - 1), (h = e2(m2 = t3(R, p2, u2), x2, y2 = m2.length, w2 = x2.length)) == 1 && (p2--, r2(m2, T < y2 ? O : R, y2, u2))) : (p2 == 0 && (h = p2 = 1), m2 = R.slice()), (y2 = m2.length) < w2 && m2.unshift(0), r2(x2, m2, w2, u2), h == -1 && (h = e2(R, x2, T, w2 = x2.length)) < 1 && (p2++, r2(x2, T < w2 ? O : R, w2, u2)), w2 = x2.length) : h === 0 && (p2++, x2 = [0]), v2[l2++] = p2, h && x2[0] ? x2[w2++] = A[N] || 0 : (x2 = [A[N]], w2 = 1);
+        } while ((N++ < E || x2[0] !== void 0) && _2--);
+        d = x2[0] !== void 0;
       }
-      v[0] || v.shift();
+      v2[0] || v2.shift();
     }
     if (f2 == 1)
-      g2.e = c2, vn = d2;
+      g2.e = c2, Mn = d;
     else {
-      for (l2 = 1, p2 = v[0]; p2 >= 10; p2 /= 10)
+      for (l2 = 1, p2 = v2[0]; p2 >= 10; p2 /= 10)
         l2++;
-      g2.e = l2 + c2 * f2 - 1, Hn(g2, o2 ? s2 + g2.e + 1 : s2, a2, d2);
+      g2.e = l2 + c2 * f2 - 1, Yn(g2, o2 ? s2 + g2.e + 1 : s2, a2, d);
     }
     return g2;
   };
 }();
-function Hn(t3, e2, r2, n2) {
+function Yn(t3, e2, r2, n2) {
   var i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = t3.constructor;
   t:
     if (e2 != null) {
@@ -2842,7 +2628,7 @@ function Hn(t3, e2, r2, n2) {
       for (i2 = 1, o2 = l2[0]; o2 >= 10; o2 /= 10)
         i2++;
       if ((s2 = e2 - i2) < 0)
-        s2 += 7, a2 = e2, u2 = (c2 = l2[p2 = 0]) / zn(10, i2 - a2 - 1) % 10 | 0;
+        s2 += 7, a2 = e2, u2 = (c2 = l2[p2 = 0]) / kn(10, i2 - a2 - 1) % 10 | 0;
       else if ((p2 = Math.ceil((s2 + 1) / 7)) >= (o2 = l2.length)) {
         if (!n2)
           break t;
@@ -2852,52 +2638,52 @@ function Hn(t3, e2, r2, n2) {
       } else {
         for (c2 = o2 = l2[p2], i2 = 1; o2 >= 10; o2 /= 10)
           i2++;
-        u2 = (a2 = (s2 %= 7) - 7 + i2) < 0 ? 0 : c2 / zn(10, i2 - a2 - 1) % 10 | 0;
+        u2 = (a2 = (s2 %= 7) - 7 + i2) < 0 ? 0 : c2 / kn(10, i2 - a2 - 1) % 10 | 0;
       }
-      if (n2 = n2 || e2 < 0 || l2[p2 + 1] !== void 0 || (a2 < 0 ? c2 : c2 % zn(10, i2 - a2 - 1)), h = r2 < 4 ? (u2 || n2) && (r2 == 0 || r2 == (t3.s < 0 ? 3 : 2)) : u2 > 5 || u2 == 5 && (r2 == 4 || n2 || r2 == 6 && (s2 > 0 ? a2 > 0 ? c2 / zn(10, i2 - a2) : 0 : l2[p2 - 1]) % 10 & 1 || r2 == (t3.s < 0 ? 8 : 7)), e2 < 1 || !l2[0])
-        return l2.length = 0, h ? (e2 -= t3.e + 1, l2[0] = zn(10, (7 - e2 % 7) % 7), t3.e = -e2 || 0) : l2[0] = t3.e = 0, t3;
-      if (s2 == 0 ? (l2.length = p2, o2 = 1, p2--) : (l2.length = p2 + 1, o2 = zn(10, 7 - s2), l2[p2] = a2 > 0 ? (c2 / zn(10, i2 - a2) % zn(10, a2) | 0) * o2 : 0), h)
+      if (n2 = n2 || e2 < 0 || l2[p2 + 1] !== void 0 || (a2 < 0 ? c2 : c2 % kn(10, i2 - a2 - 1)), h = r2 < 4 ? (u2 || n2) && (r2 == 0 || r2 == (t3.s < 0 ? 3 : 2)) : u2 > 5 || u2 == 5 && (r2 == 4 || n2 || r2 == 6 && (s2 > 0 ? a2 > 0 ? c2 / kn(10, i2 - a2) : 0 : l2[p2 - 1]) % 10 & 1 || r2 == (t3.s < 0 ? 8 : 7)), e2 < 1 || !l2[0])
+        return l2.length = 0, h ? (e2 -= t3.e + 1, l2[0] = kn(10, (7 - e2 % 7) % 7), t3.e = -e2 || 0) : l2[0] = t3.e = 0, t3;
+      if (s2 == 0 ? (l2.length = p2, o2 = 1, p2--) : (l2.length = p2 + 1, o2 = kn(10, 7 - s2), l2[p2] = a2 > 0 ? (c2 / kn(10, i2 - a2) % kn(10, a2) | 0) * o2 : 0), h)
         for (; ; ) {
           if (p2 == 0) {
             for (s2 = 1, a2 = l2[0]; a2 >= 10; a2 /= 10)
               s2++;
             for (a2 = l2[0] += o2, o2 = 1; a2 >= 10; a2 /= 10)
               o2++;
-            s2 != o2 && (t3.e++, l2[0] == kn && (l2[0] = 1));
+            s2 != o2 && (t3.e++, l2[0] == Pn && (l2[0] = 1));
             break;
           }
-          if (l2[p2] += o2, l2[p2] != kn)
+          if (l2[p2] += o2, l2[p2] != Pn)
             break;
           l2[p2--] = 0, o2 = 1;
         }
       for (s2 = l2.length; l2[--s2] === 0; )
         l2.pop();
     }
-  return Sn && (t3.e > f2.maxE ? (t3.d = null, t3.e = NaN) : t3.e < f2.minE && (t3.e = 0, t3.d = [0])), t3;
+  return An && (t3.e > f2.maxE ? (t3.d = null, t3.e = NaN) : t3.e < f2.minE && (t3.e = 0, t3.d = [0])), t3;
 }
-function Vn(t3, e2, r2) {
+function Zn(t3, e2, r2) {
   if (!t3.isFinite())
-    return ei(t3);
-  var n2, i2 = t3.e, s2 = Fn(t3.d), a2 = s2.length;
-  return e2 ? (r2 && (n2 = r2 - a2) > 0 ? s2 = s2.charAt(0) + "." + s2.slice(1) + Zn(n2) : a2 > 1 && (s2 = s2.charAt(0) + "." + s2.slice(1)), s2 = s2 + (t3.e < 0 ? "e" : "e+") + t3.e) : i2 < 0 ? (s2 = "0." + Zn(-i2 - 1) + s2, r2 && (n2 = r2 - a2) > 0 && (s2 += Zn(n2))) : i2 >= a2 ? (s2 += Zn(i2 + 1 - a2), r2 && (n2 = r2 - i2 - 1) > 0 && (s2 = s2 + "." + Zn(n2))) : ((n2 = i2 + 1) < a2 && (s2 = s2.slice(0, n2) + "." + s2.slice(n2)), r2 && (n2 = r2 - a2) > 0 && (i2 + 1 === a2 && (s2 += "."), s2 += Zn(n2))), s2;
+    return ai(t3);
+  var n2, i2 = t3.e, s2 = Hn(t3.d), a2 = s2.length;
+  return e2 ? (r2 && (n2 = r2 - a2) > 0 ? s2 = s2.charAt(0) + "." + s2.slice(1) + ti(n2) : a2 > 1 && (s2 = s2.charAt(0) + "." + s2.slice(1)), s2 = s2 + (t3.e < 0 ? "e" : "e+") + t3.e) : i2 < 0 ? (s2 = "0." + ti(-i2 - 1) + s2, r2 && (n2 = r2 - a2) > 0 && (s2 += ti(n2))) : i2 >= a2 ? (s2 += ti(i2 + 1 - a2), r2 && (n2 = r2 - i2 - 1) > 0 && (s2 = s2 + "." + ti(n2))) : ((n2 = i2 + 1) < a2 && (s2 = s2.slice(0, n2) + "." + s2.slice(n2)), r2 && (n2 = r2 - a2) > 0 && (i2 + 1 === a2 && (s2 += "."), s2 += ti(n2))), s2;
 }
-function $n(t3, e2) {
+function Xn(t3, e2) {
   var r2 = t3[0];
   for (e2 *= 7; r2 >= 10; r2 /= 10)
     e2++;
   return e2;
 }
-function Gn(t3, e2, r2) {
-  if (e2 > In)
-    throw Sn = true, r2 && (t3.precision = r2), Error("[DecimalError] Precision limit exceeded");
-  return Hn(new t3(Mn), e2, 1, true);
+function Qn(t3, e2, r2) {
+  if (e2 > Un)
+    throw An = true, r2 && (t3.precision = r2), Error("[DecimalError] Precision limit exceeded");
+  return Yn(new t3(On), e2, 1, true);
 }
-function Wn(t3, e2, r2) {
-  if (e2 > Ln)
+function Jn(t3, e2, r2) {
+  if (e2 > jn)
     throw Error("[DecimalError] Precision limit exceeded");
-  return Hn(new t3(En), e2, r2, true);
+  return Yn(new t3(zn), e2, r2, true);
 }
-function Yn(t3) {
+function Kn(t3) {
   var e2 = t3.length - 1, r2 = 7 * e2 + 1;
   if (e2 = t3[e2]) {
     for (; e2 % 10 == 0; e2 /= 10)
@@ -2907,26 +2693,26 @@ function Yn(t3) {
   }
   return r2;
 }
-function Zn(t3) {
+function ti(t3) {
   for (var e2 = ""; t3--; )
     e2 += "0";
   return e2;
 }
-function Xn(t3, e2, r2, n2) {
+function ei(t3, e2, r2, n2) {
   var i2, s2 = new t3(1), a2 = Math.ceil(n2 / 7 + 4);
-  for (Sn = false; ; ) {
-    if (r2 % 2 && oi((s2 = s2.times(e2)).d, a2) && (i2 = true), (r2 = On(r2 / 2)) === 0) {
+  for (An = false; ; ) {
+    if (r2 % 2 && pi((s2 = s2.times(e2)).d, a2) && (i2 = true), (r2 = Dn(r2 / 2)) === 0) {
       r2 = s2.d.length - 1, i2 && s2.d[r2] === 0 && ++s2.d[r2];
       break;
     }
-    oi((e2 = e2.times(e2)).d, a2);
+    pi((e2 = e2.times(e2)).d, a2);
   }
-  return Sn = true, s2;
+  return An = true, s2;
 }
-function Qn(t3) {
+function ri(t3) {
   return 1 & t3.d[t3.d.length - 1];
 }
-function Jn(t3, e2, r2) {
+function ni(t3, e2, r2) {
   for (var n2, i2 = new t3(e2[0]), s2 = 0; ++s2 < e2.length; ) {
     if (!(n2 = new t3(e2[s2])).s) {
       i2 = n2;
@@ -2936,48 +2722,48 @@ function Jn(t3, e2, r2) {
   }
   return i2;
 }
-function Kn(t3, e2) {
-  var r2, n2, i2, s2, a2, o2, u2, h = 0, c2 = 0, l2 = 0, p2 = t3.constructor, f2 = p2.rounding, d2 = p2.precision;
+function ii(t3, e2) {
+  var r2, n2, i2, s2, a2, o2, u2, h = 0, c2 = 0, l2 = 0, p2 = t3.constructor, f2 = p2.rounding, d = p2.precision;
   if (!t3.d || !t3.d[0] || t3.e > 17)
     return new p2(t3.d ? t3.d[0] ? t3.s < 0 ? 0 : 1 / 0 : 1 : t3.s ? t3.s < 0 ? 0 : t3 : NaN);
-  for (e2 == null ? (Sn = false, u2 = d2) : u2 = e2, o2 = new p2(0.03125); t3.e > -2; )
+  for (e2 == null ? (An = false, u2 = d) : u2 = e2, o2 = new p2(0.03125); t3.e > -2; )
     t3 = t3.times(o2), l2 += 5;
-  for (u2 += n2 = Math.log(zn(2, l2)) / Math.LN10 * 2 + 5 | 0, r2 = s2 = a2 = new p2(1), p2.precision = u2; ; ) {
-    if (s2 = Hn(s2.times(t3), u2, 1), r2 = r2.times(++c2), Fn((o2 = a2.plus(qn(s2, r2, u2, 1))).d).slice(0, u2) === Fn(a2.d).slice(0, u2)) {
+  for (u2 += n2 = Math.log(kn(2, l2)) / Math.LN10 * 2 + 5 | 0, r2 = s2 = a2 = new p2(1), p2.precision = u2; ; ) {
+    if (s2 = Yn(s2.times(t3), u2, 1), r2 = r2.times(++c2), Hn((o2 = a2.plus(Wn(s2, r2, u2, 1))).d).slice(0, u2) === Hn(a2.d).slice(0, u2)) {
       for (i2 = l2; i2--; )
-        a2 = Hn(a2.times(a2), u2, 1);
+        a2 = Yn(a2.times(a2), u2, 1);
       if (e2 != null)
-        return p2.precision = d2, a2;
-      if (!(h < 3 && Un(a2.d, u2 - n2, f2, h)))
-        return Hn(a2, p2.precision = d2, f2, Sn = true);
+        return p2.precision = d, a2;
+      if (!(h < 3 && $n(a2.d, u2 - n2, f2, h)))
+        return Yn(a2, p2.precision = d, f2, An = true);
       p2.precision = u2 += 10, r2 = s2 = o2 = new p2(1), c2 = 0, h++;
     }
     a2 = o2;
   }
 }
-function ti(t3, e2) {
-  var r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = 1, d2 = t3, m2 = d2.d, y2 = d2.constructor, g2 = y2.rounding, v = y2.precision;
-  if (d2.s < 0 || !m2 || !m2[0] || !d2.e && m2[0] == 1 && m2.length == 1)
-    return new y2(m2 && !m2[0] ? -1 / 0 : d2.s != 1 ? NaN : m2 ? 0 : d2);
-  if (e2 == null ? (Sn = false, c2 = v) : c2 = e2, y2.precision = c2 += 10, n2 = (r2 = Fn(m2)).charAt(0), !(Math.abs(s2 = d2.e) < 15e14))
-    return h = Gn(y2, c2 + 2, v).times(s2 + ""), d2 = ti(new y2(n2 + "." + r2.slice(1)), c2 - 10).plus(h), y2.precision = v, e2 == null ? Hn(d2, v, g2, Sn = true) : d2;
+function si(t3, e2) {
+  var r2, n2, i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = 1, d = t3, m2 = d.d, y2 = d.constructor, g2 = y2.rounding, v2 = y2.precision;
+  if (d.s < 0 || !m2 || !m2[0] || !d.e && m2[0] == 1 && m2.length == 1)
+    return new y2(m2 && !m2[0] ? -1 / 0 : d.s != 1 ? NaN : m2 ? 0 : d);
+  if (e2 == null ? (An = false, c2 = v2) : c2 = e2, y2.precision = c2 += 10, n2 = (r2 = Hn(m2)).charAt(0), !(Math.abs(s2 = d.e) < 15e14))
+    return h = Qn(y2, c2 + 2, v2).times(s2 + ""), d = si(new y2(n2 + "." + r2.slice(1)), c2 - 10).plus(h), y2.precision = v2, e2 == null ? Yn(d, v2, g2, An = true) : d;
   for (; n2 < 7 && n2 != 1 || n2 == 1 && r2.charAt(1) > 3; )
-    n2 = (r2 = Fn((d2 = d2.times(t3)).d)).charAt(0), f2++;
-  for (s2 = d2.e, n2 > 1 ? (d2 = new y2("0." + r2), s2++) : d2 = new y2(n2 + "." + r2.slice(1)), l2 = d2, u2 = a2 = d2 = qn(d2.minus(1), d2.plus(1), c2, 1), p2 = Hn(d2.times(d2), c2, 1), i2 = 3; ; ) {
-    if (a2 = Hn(a2.times(p2), c2, 1), Fn((h = u2.plus(qn(a2, new y2(i2), c2, 1))).d).slice(0, c2) === Fn(u2.d).slice(0, c2)) {
-      if (u2 = u2.times(2), s2 !== 0 && (u2 = u2.plus(Gn(y2, c2 + 2, v).times(s2 + ""))), u2 = qn(u2, new y2(f2), c2, 1), e2 != null)
-        return y2.precision = v, u2;
-      if (!Un(u2.d, c2 - 10, g2, o2))
-        return Hn(u2, y2.precision = v, g2, Sn = true);
-      y2.precision = c2 += 10, h = a2 = d2 = qn(l2.minus(1), l2.plus(1), c2, 1), p2 = Hn(d2.times(d2), c2, 1), i2 = o2 = 1;
+    n2 = (r2 = Hn((d = d.times(t3)).d)).charAt(0), f2++;
+  for (s2 = d.e, n2 > 1 ? (d = new y2("0." + r2), s2++) : d = new y2(n2 + "." + r2.slice(1)), l2 = d, u2 = a2 = d = Wn(d.minus(1), d.plus(1), c2, 1), p2 = Yn(d.times(d), c2, 1), i2 = 3; ; ) {
+    if (a2 = Yn(a2.times(p2), c2, 1), Hn((h = u2.plus(Wn(a2, new y2(i2), c2, 1))).d).slice(0, c2) === Hn(u2.d).slice(0, c2)) {
+      if (u2 = u2.times(2), s2 !== 0 && (u2 = u2.plus(Qn(y2, c2 + 2, v2).times(s2 + ""))), u2 = Wn(u2, new y2(f2), c2, 1), e2 != null)
+        return y2.precision = v2, u2;
+      if (!$n(u2.d, c2 - 10, g2, o2))
+        return Yn(u2, y2.precision = v2, g2, An = true);
+      y2.precision = c2 += 10, h = a2 = d = Wn(l2.minus(1), l2.plus(1), c2, 1), p2 = Yn(d.times(d), c2, 1), i2 = o2 = 1;
     }
     u2 = h, i2 += 2;
   }
 }
-function ei(t3) {
+function ai(t3) {
   return String(t3.s * t3.s / 0);
 }
-function ri(t3, e2) {
+function oi(t3, e2) {
   var r2, n2, i2;
   for ((r2 = e2.indexOf(".")) > -1 && (e2 = e2.replace(".", "")), (n2 = e2.search(/e/i)) > 0 ? (r2 < 0 && (r2 = n2), r2 += +e2.slice(n2 + 1), e2 = e2.substring(0, n2)) : r2 < 0 && (r2 = e2.length), n2 = 0; e2.charCodeAt(n2) === 48; n2++)
     ;
@@ -2992,15 +2778,15 @@ function ri(t3, e2) {
       n2 -= i2;
     for (; n2--; )
       e2 += "0";
-    t3.d.push(+e2), Sn && (t3.e > t3.constructor.maxE ? (t3.d = null, t3.e = NaN) : t3.e < t3.constructor.minE && (t3.e = 0, t3.d = [0]));
+    t3.d.push(+e2), An && (t3.e > t3.constructor.maxE ? (t3.d = null, t3.e = NaN) : t3.e < t3.constructor.minE && (t3.e = 0, t3.d = [0]));
   } else
     t3.e = 0, t3.d = [0];
   return t3;
 }
-function ni(t3, e2, r2, n2, i2) {
+function ui(t3, e2, r2, n2, i2) {
   var s2, a2, o2, u2, h = t3.precision, c2 = Math.ceil(h / 7);
-  for (Sn = false, u2 = r2.times(r2), o2 = new t3(n2); ; ) {
-    if (a2 = qn(o2.times(u2), new t3(e2++ * e2++), h, 1), o2 = i2 ? n2.plus(a2) : n2.minus(a2), n2 = qn(a2.times(u2), new t3(e2++ * e2++), h, 1), (a2 = o2.plus(n2)).d[c2] !== void 0) {
+  for (An = false, u2 = r2.times(r2), o2 = new t3(n2); ; ) {
+    if (a2 = Wn(o2.times(u2), new t3(e2++ * e2++), h, 1), o2 = i2 ? n2.plus(a2) : n2.minus(a2), n2 = Wn(a2.times(u2), new t3(e2++ * e2++), h, 1), (a2 = o2.plus(n2)).d[c2] !== void 0) {
       for (s2 = c2; a2.d[s2] === o2.d[s2] && s2--; )
         ;
       if (s2 == -1)
@@ -3008,48 +2794,48 @@ function ni(t3, e2, r2, n2, i2) {
     }
     s2 = o2, o2 = n2, n2 = a2, a2 = s2;
   }
-  return Sn = true, a2.d.length = c2 + 1, a2;
+  return An = true, a2.d.length = c2 + 1, a2;
 }
-function ii(t3, e2) {
+function hi(t3, e2) {
   for (var r2 = t3; --e2; )
     r2 *= t3;
   return r2;
 }
-function si(t3, e2) {
-  var r2, n2 = e2.s < 0, i2 = Wn(t3, t3.precision, 1), s2 = i2.times(0.5);
+function ci(t3, e2) {
+  var r2, n2 = e2.s < 0, i2 = Jn(t3, t3.precision, 1), s2 = i2.times(0.5);
   if ((e2 = e2.abs()).lte(s2))
-    return xn = n2 ? 4 : 1, e2;
+    return Nn = n2 ? 4 : 1, e2;
   if ((r2 = e2.divToInt(i2)).isZero())
-    xn = n2 ? 3 : 2;
+    Nn = n2 ? 3 : 2;
   else {
     if ((e2 = e2.minus(r2.times(i2))).lte(s2))
-      return xn = Qn(r2) ? n2 ? 2 : 3 : n2 ? 4 : 1, e2;
-    xn = Qn(r2) ? n2 ? 1 : 4 : n2 ? 3 : 2;
+      return Nn = ri(r2) ? n2 ? 2 : 3 : n2 ? 4 : 1, e2;
+    Nn = ri(r2) ? n2 ? 1 : 4 : n2 ? 3 : 2;
   }
   return e2.minus(i2).abs();
 }
-function ai(t3, e2, r2, n2) {
-  var i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = t3.constructor, d2 = r2 !== void 0;
-  if (d2 ? (Pn(r2, 1, 1e9), n2 === void 0 ? n2 = f2.rounding : Pn(n2, 0, 8)) : (r2 = f2.precision, n2 = f2.rounding), t3.isFinite()) {
-    for (d2 ? (i2 = 2, e2 == 16 ? r2 = 4 * r2 - 3 : e2 == 8 && (r2 = 3 * r2 - 2)) : i2 = e2, (a2 = (c2 = Vn(t3)).indexOf(".")) >= 0 && (c2 = c2.replace(".", ""), (p2 = new f2(1)).e = c2.length - a2, p2.d = jn(Vn(p2), 10, i2), p2.e = p2.d.length), s2 = u2 = (l2 = jn(c2, 10, i2)).length; l2[--u2] == 0; )
+function li(t3, e2, r2, n2) {
+  var i2, s2, a2, o2, u2, h, c2, l2, p2, f2 = t3.constructor, d = r2 !== void 0;
+  if (d ? (Vn(r2, 1, 1e9), n2 === void 0 ? n2 = f2.rounding : Vn(n2, 0, 8)) : (r2 = f2.precision, n2 = f2.rounding), t3.isFinite()) {
+    for (d ? (i2 = 2, e2 == 16 ? r2 = 4 * r2 - 3 : e2 == 8 && (r2 = 3 * r2 - 2)) : i2 = e2, (a2 = (c2 = Zn(t3)).indexOf(".")) >= 0 && (c2 = c2.replace(".", ""), (p2 = new f2(1)).e = c2.length - a2, p2.d = Gn(Zn(p2), 10, i2), p2.e = p2.d.length), s2 = u2 = (l2 = Gn(c2, 10, i2)).length; l2[--u2] == 0; )
       l2.pop();
     if (l2[0]) {
-      if (a2 < 0 ? s2-- : ((t3 = new f2(t3)).d = l2, t3.e = s2, l2 = (t3 = qn(t3, p2, r2, n2, 0, i2)).d, s2 = t3.e, h = vn), a2 = l2[r2], o2 = i2 / 2, h = h || l2[r2 + 1] !== void 0, h = n2 < 4 ? (a2 !== void 0 || h) && (n2 === 0 || n2 === (t3.s < 0 ? 3 : 2)) : a2 > o2 || a2 === o2 && (n2 === 4 || h || n2 === 6 && 1 & l2[r2 - 1] || n2 === (t3.s < 0 ? 8 : 7)), l2.length = r2, h)
+      if (a2 < 0 ? s2-- : ((t3 = new f2(t3)).d = l2, t3.e = s2, l2 = (t3 = Wn(t3, p2, r2, n2, 0, i2)).d, s2 = t3.e, h = Mn), a2 = l2[r2], o2 = i2 / 2, h = h || l2[r2 + 1] !== void 0, h = n2 < 4 ? (a2 !== void 0 || h) && (n2 === 0 || n2 === (t3.s < 0 ? 3 : 2)) : a2 > o2 || a2 === o2 && (n2 === 4 || h || n2 === 6 && 1 & l2[r2 - 1] || n2 === (t3.s < 0 ? 8 : 7)), l2.length = r2, h)
         for (; ++l2[--r2] > i2 - 1; )
           l2[r2] = 0, r2 || (++s2, l2.unshift(1));
       for (u2 = l2.length; !l2[u2 - 1]; --u2)
         ;
       for (a2 = 0, c2 = ""; a2 < u2; a2++)
-        c2 += _n.charAt(l2[a2]);
-      if (d2) {
+        c2 += Tn.charAt(l2[a2]);
+      if (d) {
         if (u2 > 1)
           if (e2 == 16 || e2 == 8) {
             for (a2 = e2 == 16 ? 4 : 3, --u2; u2 % a2; u2++)
               c2 += "0";
-            for (u2 = (l2 = jn(c2, i2, e2)).length; !l2[u2 - 1]; --u2)
+            for (u2 = (l2 = Gn(c2, i2, e2)).length; !l2[u2 - 1]; --u2)
               ;
             for (a2 = 1, c2 = "1."; a2 < u2; a2++)
-              c2 += _n.charAt(l2[a2]);
+              c2 += Tn.charAt(l2[a2]);
           } else
             c2 = c2.charAt(0) + "." + c2.slice(1);
         c2 = c2 + (s2 < 0 ? "p" : "p+") + s2;
@@ -3063,64 +2849,64 @@ function ai(t3, e2, r2, n2) {
       else
         s2 < u2 && (c2 = c2.slice(0, s2) + "." + c2.slice(s2));
     } else
-      c2 = d2 ? "0p+0" : "0";
+      c2 = d ? "0p+0" : "0";
     c2 = (e2 == 16 ? "0x" : e2 == 2 ? "0b" : e2 == 8 ? "0o" : "") + c2;
   } else
-    c2 = ei(t3);
+    c2 = ai(t3);
   return t3.s < 0 ? "-" + c2 : c2;
 }
-function oi(t3, e2) {
+function pi(t3, e2) {
   if (t3.length > e2)
     return t3.length = e2, true;
 }
-function ui(t3) {
+function fi(t3) {
   return new this(t3).abs();
 }
-function hi(t3) {
+function di(t3) {
   return new this(t3).acos();
 }
-function ci(t3) {
+function mi(t3) {
   return new this(t3).acosh();
 }
-function li(t3, e2) {
+function yi(t3, e2) {
   return new this(t3).plus(e2);
 }
-function pi(t3) {
+function gi(t3) {
   return new this(t3).asin();
 }
-function fi(t3) {
+function vi(t3) {
   return new this(t3).asinh();
 }
-function di(t3) {
+function xi(t3) {
   return new this(t3).atan();
 }
-function mi(t3) {
+function wi(t3) {
   return new this(t3).atanh();
 }
-function yi(t3, e2) {
+function bi(t3, e2) {
   t3 = new this(t3), e2 = new this(e2);
   var r2, n2 = this.precision, i2 = this.rounding, s2 = n2 + 4;
-  return t3.s && e2.s ? t3.d || e2.d ? !e2.d || t3.isZero() ? (r2 = e2.s < 0 ? Wn(this, n2, i2) : new this(0)).s = t3.s : !t3.d || e2.isZero() ? (r2 = Wn(this, s2, 1).times(0.5)).s = t3.s : e2.s < 0 ? (this.precision = s2, this.rounding = 1, r2 = this.atan(qn(t3, e2, s2, 1)), e2 = Wn(this, s2, 1), this.precision = n2, this.rounding = i2, r2 = t3.s < 0 ? r2.minus(e2) : r2.plus(e2)) : r2 = this.atan(qn(t3, e2, s2, 1)) : (r2 = Wn(this, s2, 1).times(e2.s > 0 ? 0.25 : 0.75)).s = t3.s : r2 = new this(NaN), r2;
+  return t3.s && e2.s ? t3.d || e2.d ? !e2.d || t3.isZero() ? (r2 = e2.s < 0 ? Jn(this, n2, i2) : new this(0)).s = t3.s : !t3.d || e2.isZero() ? (r2 = Jn(this, s2, 1).times(0.5)).s = t3.s : e2.s < 0 ? (this.precision = s2, this.rounding = 1, r2 = this.atan(Wn(t3, e2, s2, 1)), e2 = Jn(this, s2, 1), this.precision = n2, this.rounding = i2, r2 = t3.s < 0 ? r2.minus(e2) : r2.plus(e2)) : r2 = this.atan(Wn(t3, e2, s2, 1)) : (r2 = Jn(this, s2, 1).times(e2.s > 0 ? 0.25 : 0.75)).s = t3.s : r2 = new this(NaN), r2;
 }
-function gi(t3) {
+function _i(t3) {
   return new this(t3).cbrt();
 }
-function vi(t3) {
-  return Hn(t3 = new this(t3), t3.e + 1, 2);
+function Mi(t3) {
+  return Yn(t3 = new this(t3), t3.e + 1, 2);
 }
-function xi(t3) {
+function Ni(t3) {
   if (!t3 || typeof t3 != "object")
     throw Error("[DecimalError] Object expected");
-  var e2, r2, n2, i2 = t3.defaults === true, s2 = ["precision", 1, 1e9, "rounding", 0, 8, "toExpNeg", -bn, 0, "toExpPos", 0, bn, "maxE", 0, bn, "minE", -bn, 0, "modulo", 0, 9];
+  var e2, r2, n2, i2 = t3.defaults === true, s2 = ["precision", 1, 1e9, "rounding", 0, 8, "toExpNeg", -Sn, 0, "toExpPos", 0, Sn, "maxE", 0, Sn, "minE", -Sn, 0, "modulo", 0, 9];
   for (e2 = 0; e2 < s2.length; e2 += 3)
-    if (r2 = s2[e2], i2 && (this[r2] = Nn[r2]), (n2 = t3[r2]) !== void 0) {
-      if (!(On(n2) === n2 && n2 >= s2[e2 + 1] && n2 <= s2[e2 + 2]))
-        throw Error(Tn + r2 + ": " + n2);
+    if (r2 = s2[e2], i2 && (this[r2] = Cn[r2]), (n2 = t3[r2]) !== void 0) {
+      if (!(Dn(n2) === n2 && n2 >= s2[e2 + 1] && n2 <= s2[e2 + 2]))
+        throw Error(Rn + r2 + ": " + n2);
       this[r2] = n2;
     }
-  if (r2 = "crypto", i2 && (this[r2] = Nn[r2]), (n2 = t3[r2]) !== void 0) {
+  if (r2 = "crypto", i2 && (this[r2] = Cn[r2]), (n2 = t3[r2]) !== void 0) {
     if (n2 !== true && n2 !== false && n2 !== 0 && n2 !== 1)
-      throw Error(Tn + r2 + ": " + n2);
+      throw Error(Rn + r2 + ": " + n2);
     if (n2) {
       if (typeof crypto == "undefined" || !crypto || !crypto.getRandomValues && !crypto.randomBytes)
         throw Error("[DecimalError] crypto unavailable");
@@ -3130,66 +2916,66 @@ function xi(t3) {
   }
   return this;
 }
-function wi(t3) {
+function Ei(t3) {
   return new this(t3).cos();
 }
-function bi(t3) {
+function Si(t3) {
   return new this(t3).cosh();
 }
-function _i(t3, e2) {
+function Ti(t3, e2) {
   return new this(t3).div(e2);
 }
-function Mi(t3) {
+function Oi(t3) {
   return new this(t3).exp();
 }
-function Ei(t3) {
-  return Hn(t3 = new this(t3), t3.e + 1, 3);
+function zi(t3) {
+  return Yn(t3 = new this(t3), t3.e + 1, 3);
 }
-function Ni() {
+function Ci() {
   var t3, e2, r2 = new this(0);
-  for (Sn = false, t3 = 0; t3 < arguments.length; )
+  for (An = false, t3 = 0; t3 < arguments.length; )
     if ((e2 = new this(arguments[t3++])).d)
       r2.d && (r2 = r2.plus(e2.times(e2)));
     else {
       if (e2.s)
-        return Sn = true, new this(1 / 0);
+        return An = true, new this(1 / 0);
       r2 = e2;
     }
-  return Sn = true, r2.sqrt();
-}
-function Si(t3) {
-  return t3 instanceof Gi || t3 && t3.name === "[object Decimal]" || false;
-}
-function Ti(t3) {
-  return new this(t3).ln();
-}
-function Oi(t3, e2) {
-  return new this(t3).log(e2);
-}
-function zi(t3) {
-  return new this(t3).log(2);
+  return An = true, r2.sqrt();
 }
 function Ai(t3) {
-  return new this(t3).log(10);
+  return t3 instanceof Qi || t3 && t3.name === "[object Decimal]" || false;
 }
-function Ci() {
-  return Jn(this, arguments, "lt");
-}
-function Ri() {
-  return Jn(this, arguments, "gt");
+function Ri(t3) {
+  return new this(t3).ln();
 }
 function Di(t3, e2) {
+  return new this(t3).log(e2);
+}
+function ki(t3) {
+  return new this(t3).log(2);
+}
+function Ii(t3) {
+  return new this(t3).log(10);
+}
+function Li() {
+  return ni(this, arguments, "lt");
+}
+function Bi() {
+  return ni(this, arguments, "gt");
+}
+function Fi(t3, e2) {
   return new this(t3).mod(e2);
 }
-function ki(t3, e2) {
+function Pi(t3, e2) {
   return new this(t3).mul(e2);
 }
-function Ii(t3, e2) {
+function Ui(t3, e2) {
   return new this(t3).pow(e2);
 }
-function Li(t3) {
+function ji(t3) {
   var e2, r2, n2, i2, s2 = 0, a2 = new this(1), o2 = [];
-  if (t3 === void 0 ? t3 = this.precision : Pn(t3, 1, 1e9), n2 = Math.ceil(t3 / 7), this.crypto)
+  if (t3 === void 0 ? t3 = this.precision : Vn(t3, 1, 1e9), n2 = Math.ceil(t3 / 7), this.crypto)
     if (crypto.getRandomValues)
       for (e2 = crypto.getRandomValues(new Uint32Array(n2)); s2 < n2; )
         (i2 = e2[s2]) >= 429e7 ? e2[s2] = crypto.getRandomValues(new Uint32Array(1))[0] : o2[s2++] = i2 % 1e7;
@@ -3203,7 +2989,7 @@ function Li(t3) {
   else
     for (; s2 < n2; )
       o2[s2++] = 1e7 * Math.random() | 0;
-  for (t3 %= 7, (n2 = o2[--s2]) && t3 && (i2 = zn(10, 7 - t3), o2[s2] = (n2 / i2 | 0) * i2); o2[s2] === 0; s2--)
+  for (t3 %= 7, (n2 = o2[--s2]) && t3 && (i2 = kn(10, 7 - t3), o2[s2] = (n2 / i2 | 0) * i2); o2[s2] === 0; s2--)
     o2.pop();
   if (s2 < 0)
     r2 = 0, o2 = [0];
@@ -3216,80 +3002,80 @@ function Li(t3) {
   }
   return a2.e = r2, a2.d = o2, a2;
 }
-function Bi(t3) {
-  return Hn(t3 = new this(t3), t3.e + 1, this.rounding);
-}
-function Fi(t3) {
-  return (t3 = new this(t3)).d ? t3.d[0] ? t3.s : 0 * t3.s : t3.s || NaN;
-}
-function Pi(t3) {
-  return new this(t3).sin();
-}
-function Ui(t3) {
-  return new this(t3).sinh();
-}
-function ji(t3) {
-  return new this(t3).sqrt();
-}
-function qi(t3, e2) {
-  return new this(t3).sub(e2);
+function qi(t3) {
+  return Yn(t3 = new this(t3), t3.e + 1, this.rounding);
 }
 function Hi(t3) {
-  return new this(t3).tan();
+  return (t3 = new this(t3)).d ? t3.d[0] ? t3.s : 0 * t3.s : t3.s || NaN;
 }
 function Vi(t3) {
-  return new this(t3).tanh();
+  return new this(t3).sin();
 }
 function $i(t3) {
-  return Hn(t3 = new this(t3), t3.e + 1, 1);
+  return new this(t3).sinh();
 }
-Bn[Symbol.for("nodejs.util.inspect.custom")] = Bn.toString, Bn[Symbol.toStringTag] = "Decimal";
-var Gi = function t2(e2) {
+function Gi(t3) {
+  return new this(t3).sqrt();
+}
+function Wi(t3, e2) {
+  return new this(t3).sub(e2);
+}
+function Yi(t3) {
+  return new this(t3).tan();
+}
+function Zi(t3) {
+  return new this(t3).tanh();
+}
+function Xi(t3) {
+  return Yn(t3 = new this(t3), t3.e + 1, 1);
+}
+qn[Symbol.for("nodejs.util.inspect.custom")] = qn.toString, qn[Symbol.toStringTag] = "Decimal";
+var Qi = function t2(e2) {
   var r2, n2, i2;
   function s2(t3) {
     var e3, r3, n3, i3 = this;
     if (!(i3 instanceof s2))
       return new s2(t3);
     if (i3.constructor = s2, t3 instanceof s2)
-      return i3.s = t3.s, void (Sn ? !t3.d || t3.e > s2.maxE ? (i3.e = NaN, i3.d = null) : t3.e < s2.minE ? (i3.e = 0, i3.d = [0]) : (i3.e = t3.e, i3.d = t3.d.slice()) : (i3.e = t3.e, i3.d = t3.d ? t3.d.slice() : t3.d));
+      return i3.s = t3.s, void (An ? !t3.d || t3.e > s2.maxE ? (i3.e = NaN, i3.d = null) : t3.e < s2.minE ? (i3.e = 0, i3.d = [0]) : (i3.e = t3.e, i3.d = t3.d.slice()) : (i3.e = t3.e, i3.d = t3.d ? t3.d.slice() : t3.d));
     if ((n3 = typeof t3) === "number") {
       if (t3 === 0)
         return i3.s = 1 / t3 < 0 ? -1 : 1, i3.e = 0, void (i3.d = [0]);
       if (t3 < 0 ? (t3 = -t3, i3.s = -1) : i3.s = 1, t3 === ~~t3 && t3 < 1e7) {
         for (e3 = 0, r3 = t3; r3 >= 10; r3 /= 10)
           e3++;
-        return void (Sn ? e3 > s2.maxE ? (i3.e = NaN, i3.d = null) : e3 < s2.minE ? (i3.e = 0, i3.d = [0]) : (i3.e = e3, i3.d = [t3]) : (i3.e = e3, i3.d = [t3]));
+        return void (An ? e3 > s2.maxE ? (i3.e = NaN, i3.d = null) : e3 < s2.minE ? (i3.e = 0, i3.d = [0]) : (i3.e = e3, i3.d = [t3]) : (i3.e = e3, i3.d = [t3]));
       }
-      return 0 * t3 != 0 ? (t3 || (i3.s = NaN), i3.e = NaN, void (i3.d = null)) : ri(i3, t3.toString());
+      return 0 * t3 != 0 ? (t3 || (i3.s = NaN), i3.e = NaN, void (i3.d = null)) : oi(i3, t3.toString());
     }
     if (n3 !== "string")
-      throw Error(Tn + t3);
-    return (r3 = t3.charCodeAt(0)) === 45 ? (t3 = t3.slice(1), i3.s = -1) : (r3 === 43 && (t3 = t3.slice(1)), i3.s = 1), Dn.test(t3) ? ri(i3, t3) : function(t4, e4) {
+      throw Error(Rn + t3);
+    return (r3 = t3.charCodeAt(0)) === 45 ? (t3 = t3.slice(1), i3.s = -1) : (r3 === 43 && (t3 = t3.slice(1)), i3.s = 1), Fn.test(t3) ? oi(i3, t3) : function(t4, e4) {
       var r4, n4, i4, s3, a2, o2, u2, h, c2;
       if (e4 === "Infinity" || e4 === "NaN")
         return +e4 || (t4.s = NaN), t4.e = NaN, t4.d = null, t4;
-      if (Cn.test(e4))
+      if (Ln.test(e4))
         r4 = 16, e4 = e4.toLowerCase();
-      else if (An.test(e4))
+      else if (In.test(e4))
         r4 = 2;
       else {
-        if (!Rn.test(e4))
-          throw Error(Tn + e4);
+        if (!Bn.test(e4))
+          throw Error(Rn + e4);
         r4 = 8;
       }
-      for ((s3 = e4.search(/p/i)) > 0 ? (u2 = +e4.slice(s3 + 1), e4 = e4.substring(2, s3)) : e4 = e4.slice(2), a2 = (s3 = e4.indexOf(".")) >= 0, n4 = t4.constructor, a2 && (s3 = (o2 = (e4 = e4.replace(".", "")).length) - s3, i4 = Xn(n4, new n4(r4), s3, 2 * s3)), s3 = c2 = (h = jn(e4, r4, kn)).length - 1; h[s3] === 0; --s3)
+      for ((s3 = e4.search(/p/i)) > 0 ? (u2 = +e4.slice(s3 + 1), e4 = e4.substring(2, s3)) : e4 = e4.slice(2), a2 = (s3 = e4.indexOf(".")) >= 0, n4 = t4.constructor, a2 && (s3 = (o2 = (e4 = e4.replace(".", "")).length) - s3, i4 = ei(n4, new n4(r4), s3, 2 * s3)), s3 = c2 = (h = Gn(e4, r4, Pn)).length - 1; h[s3] === 0; --s3)
         h.pop();
-      return s3 < 0 ? new n4(0 * t4.s) : (t4.e = $n(h, c2), t4.d = h, Sn = false, a2 && (t4 = qn(t4, i4, 4 * o2)), u2 && (t4 = t4.times(Math.abs(u2) < 54 ? zn(2, u2) : Gi.pow(2, u2))), Sn = true, t4);
+      return s3 < 0 ? new n4(0 * t4.s) : (t4.e = Xn(h, c2), t4.d = h, An = false, a2 && (t4 = Wn(t4, i4, 4 * o2)), u2 && (t4 = t4.times(Math.abs(u2) < 54 ? kn(2, u2) : Qi.pow(2, u2))), An = true, t4);
     }(i3, t3);
   }
-  if (s2.prototype = Bn, s2.ROUND_UP = 0, s2.ROUND_DOWN = 1, s2.ROUND_CEIL = 2, s2.ROUND_FLOOR = 3, s2.ROUND_HALF_UP = 4, s2.ROUND_HALF_DOWN = 5, s2.ROUND_HALF_EVEN = 6, s2.ROUND_HALF_CEIL = 7, s2.ROUND_HALF_FLOOR = 8, s2.EUCLID = 9, s2.config = s2.set = xi, s2.clone = t2, s2.isDecimal = Si, s2.abs = ui, s2.acos = hi, s2.acosh = ci, s2.add = li, s2.asin = pi, s2.asinh = fi, s2.atan = di, s2.atanh = mi, s2.atan2 = yi, s2.cbrt = gi, s2.ceil = vi, s2.cos = wi, s2.cosh = bi, s2.div = _i, s2.exp = Mi, s2.floor = Ei, s2.hypot = Ni, s2.ln = Ti, s2.log = Oi, s2.log10 = Ai, s2.log2 = zi, s2.max = Ci, s2.min = Ri, s2.mod = Di, s2.mul = ki, s2.pow = Ii, s2.random = Li, s2.round = Bi, s2.sign = Fi, s2.sin = Pi, s2.sinh = Ui, s2.sqrt = ji, s2.sub = qi, s2.tan = Hi, s2.tanh = Vi, s2.trunc = $i, e2 === void 0 && (e2 = {}), e2 && e2.defaults !== true)
+  if (s2.prototype = qn, s2.ROUND_UP = 0, s2.ROUND_DOWN = 1, s2.ROUND_CEIL = 2, s2.ROUND_FLOOR = 3, s2.ROUND_HALF_UP = 4, s2.ROUND_HALF_DOWN = 5, s2.ROUND_HALF_EVEN = 6, s2.ROUND_HALF_CEIL = 7, s2.ROUND_HALF_FLOOR = 8, s2.EUCLID = 9, s2.config = s2.set = Ni, s2.clone = t2, s2.isDecimal = Ai, s2.abs = fi, s2.acos = di, s2.acosh = mi, s2.add = yi, s2.asin = gi, s2.asinh = vi, s2.atan = xi, s2.atanh = wi, s2.atan2 = bi, s2.cbrt = _i, s2.ceil = Mi, s2.cos = Ei, s2.cosh = Si, s2.div = Ti, s2.exp = Oi, s2.floor = zi, s2.hypot = Ci, s2.ln = Ri, s2.log = Di, s2.log10 = Ii, s2.log2 = ki, s2.max = Li, s2.min = Bi, s2.mod = Fi, s2.mul = Pi, s2.pow = Ui, s2.random = ji, s2.round = qi, s2.sign = Hi, s2.sin = Vi, s2.sinh = $i, s2.sqrt = Gi, s2.sub = Wi, s2.tan = Yi, s2.tanh = Zi, s2.trunc = Xi, e2 === void 0 && (e2 = {}), e2 && e2.defaults !== true)
     for (i2 = ["precision", "rounding", "toExpNeg", "toExpPos", "maxE", "minE", "modulo", "crypto"], r2 = 0; r2 < i2.length; )
       e2.hasOwnProperty(n2 = i2[r2++]) || (e2[n2] = this[n2]);
   return s2.config(e2), s2;
-}(Nn);
-Mn = new Gi(Mn), En = new Gi(En);
-var Wi, Yi = cn("BigNumber", ["?on", "config"], (t3) => {
-  var {on: e2, config: r2} = t3, n2 = Gi.clone({precision: r2.precision, modulo: 9});
+}(Cn);
+On = new Qi(On), zn = new Qi(zn);
+var Ji, Ki = mn("BigNumber", ["?on", "config"], (t3) => {
+  var {on: e2, config: r2} = t3, n2 = Qi.clone({precision: r2.precision, modulo: 9});
   return n2.prototype.type = "BigNumber", n2.prototype.isBigNumber = true, n2.prototype.toJSON = function() {
     return {mathjs: "BigNumber", value: this.toString()};
   }, n2.fromJSON = function(t4) {
@@ -3297,14 +3083,14 @@ var Wi, Yi = cn("BigNumber", ["?on", "config"], (t3) => {
   }, e2 && e2("config", function(t4, e3) {
     t4.precision !== e3.precision && n2.config({precision: t4.precision});
   }), n2;
-}, {isClass: true}), Zi = {exports: {}};
+}, {isClass: true}), ts = {exports: {}};
 /**
  * @license Complex.js v2.0.13 12/05/2020
  *
  * Copyright (c) 2020, Robert Eisele (robert@xarg.org)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  **/
-Wi = Zi, function(t3) {
+Ji = ts, function(t3) {
   var e2 = function(t4) {
     return 0.5 * (Math.exp(t4) + Math.exp(-t4));
   }, r2 = function(t4) {
@@ -3577,44 +3363,44 @@ Wi = Zi, function(t3) {
     return isFinite(this.re) && isFinite(this.im);
   }, isInfinite: function() {
     return !(this.isNaN() || this.isFinite());
-  }}, s2.ZERO = new s2(0, 0), s2.ONE = new s2(1, 0), s2.I = new s2(0, 1), s2.PI = new s2(Math.PI, 0), s2.E = new s2(Math.E, 0), s2.INFINITY = new s2(1 / 0, 1 / 0), s2.NAN = new s2(NaN, NaN), s2.EPSILON = 1e-15, Object.defineProperty(s2, "__esModule", {value: true}), s2.default = s2, s2.Complex = s2, Wi.exports = s2;
+  }}, s2.ZERO = new s2(0, 0), s2.ONE = new s2(1, 0), s2.I = new s2(0, 1), s2.PI = new s2(Math.PI, 0), s2.E = new s2(Math.E, 0), s2.INFINITY = new s2(1 / 0, 1 / 0), s2.NAN = new s2(NaN, NaN), s2.EPSILON = 1e-15, Object.defineProperty(s2, "__esModule", {value: true}), s2.default = s2, s2.Complex = s2, Ji.exports = s2;
 }();
-var Xi = Tr(Zi.exports), Qi = cn("Complex", [], () => (Xi.prototype.type = "Complex", Xi.prototype.isComplex = true, Xi.prototype.toJSON = function() {
+var es = Rr(ts.exports), rs = mn("Complex", [], () => (es.prototype.type = "Complex", es.prototype.isComplex = true, es.prototype.toJSON = function() {
   return {mathjs: "Complex", re: this.re, im: this.im};
-}, Xi.prototype.toPolar = function() {
+}, es.prototype.toPolar = function() {
   return {r: this.abs(), phi: this.arg()};
-}, Xi.prototype.format = function(t3) {
-  var e2 = this.im, r2 = this.re, n2 = Rr(this.re, t3), i2 = Rr(this.im, t3), s2 = Te(t3) ? t3 : t3 ? t3.precision : null;
+}, es.prototype.format = function(t3) {
+  var e2 = this.im, r2 = this.re, n2 = Br(this.re, t3), i2 = Br(this.im, t3), s2 = Re(t3) ? t3 : t3 ? t3.precision : null;
   if (s2 !== null) {
     var a2 = Math.pow(10, -s2);
     Math.abs(r2 / e2) < a2 && (r2 = 0), Math.abs(e2 / r2) < a2 && (e2 = 0);
   }
   return e2 === 0 ? n2 : r2 === 0 ? e2 === 1 ? "i" : e2 === -1 ? "-i" : i2 + "i" : e2 < 0 ? e2 === -1 ? n2 + " - i" : n2 + " - " + i2.substring(1) + "i" : e2 === 1 ? n2 + " + i" : n2 + " + " + i2 + "i";
-}, Xi.fromPolar = function(t3) {
+}, es.fromPolar = function(t3) {
   switch (arguments.length) {
     case 1:
       var e2 = arguments[0];
       if (typeof e2 == "object")
-        return Xi(e2);
+        return es(e2);
       throw new TypeError("Input has to be an object with r and phi keys.");
     case 2:
       var r2 = arguments[0], n2 = arguments[1];
-      if (Te(r2)) {
-        if (Ce(n2) && n2.hasBase("ANGLE") && (n2 = n2.toNumber("rad")), Te(n2))
-          return new Xi({r: r2, phi: n2});
+      if (Re(r2)) {
+        if (Le(n2) && n2.hasBase("ANGLE") && (n2 = n2.toNumber("rad")), Re(n2))
+          return new es({r: r2, phi: n2});
         throw new TypeError("Phi is not a number nor an angle unit.");
       }
       throw new TypeError("Radius r is not a number.");
     default:
       throw new SyntaxError("Wrong number of arguments in function fromPolar");
   }
-}, Xi.prototype.valueOf = Xi.prototype.toString, Xi.fromJSON = function(t3) {
-  return new Xi(t3);
-}, Xi.compare = function(t3, e2) {
+}, es.prototype.valueOf = es.prototype.toString, es.fromJSON = function(t3) {
+  return new es(t3);
+}, es.compare = function(t3, e2) {
   return t3.re > e2.re ? 1 : t3.re < e2.re ? -1 : t3.im > e2.im ? 1 : t3.im < e2.im ? -1 : 0;
-}, Xi), {isClass: true}), Ji = {exports: {}};
+}, es), {isClass: true}), ns = {exports: {}};
 /**
- * @license Fraction.js v4.1.0 13/05/2021
+ * @license Fraction.js v4.1.1 23/05/2021
  * https://www.xarg.org/2014/03/rational-numbers-in-javascript/
  *
  * Copyright (c) 2021, Robert Eisele (robert@xarg.org)
@@ -3648,7 +3434,7 @@ var Xi = Tr(Zi.exports), Qi = cn("Complex", [], () => (Xi.prototype.type = "Comp
       return r3 !== t4 ? r3 > 1 && (e4[r3] = (e4[r3] || 0) + 1) : e4[t4] = (e4[t4] || 0) + 1, e4;
     }
     var h = function(t4, e4) {
-      var n3, s3 = 0, u3 = 1, h2 = 1, c3 = 0, l3 = 0, p2 = 0, f2 = 1, d2 = 1, m2 = 0, y2 = 1, g2 = 1, v = 1, x = 1e7;
+      var n3, s3 = 0, u3 = 1, h2 = 1, c3 = 0, l3 = 0, p2 = 0, f2 = 1, d = 1, m2 = 0, y2 = 1, g2 = 1, v2 = 1, x2 = 1e7;
       if (t4 == null)
         ;
       else if (e4 !== void 0)
@@ -3662,20 +3448,20 @@ var Xi = Tr(Zi.exports), Qi = cn("Complex", [], () => (Xi.prototype.type = "Comp
             if (t4 < 0 && (h2 = t4, t4 = -t4), t4 % 1 == 0)
               s3 = t4;
             else if (t4 > 0) {
-              for (t4 >= 1 && (t4 /= d2 = Math.pow(10, Math.floor(1 + Math.log(t4) / Math.LN10))); y2 <= x && v <= x; ) {
-                if (t4 === (n3 = (m2 + g2) / (y2 + v))) {
-                  y2 + v <= x ? (s3 = m2 + g2, u3 = y2 + v) : v > y2 ? (s3 = g2, u3 = v) : (s3 = m2, u3 = y2);
+              for (t4 >= 1 && (t4 /= d = Math.pow(10, Math.floor(1 + Math.log(t4) / Math.LN10))); y2 <= x2 && v2 <= x2; ) {
+                if (t4 === (n3 = (m2 + g2) / (y2 + v2))) {
+                  y2 + v2 <= x2 ? (s3 = m2 + g2, u3 = y2 + v2) : v2 > y2 ? (s3 = g2, u3 = v2) : (s3 = m2, u3 = y2);
                   break;
                 }
-                t4 > n3 ? (m2 += g2, y2 += v) : (g2 += m2, v += y2), y2 > x ? (s3 = g2, u3 = v) : (s3 = m2, u3 = y2);
+                t4 > n3 ? (m2 += g2, y2 += v2) : (g2 += m2, v2 += y2), y2 > x2 ? (s3 = g2, u3 = v2) : (s3 = m2, u3 = y2);
               }
-              s3 *= d2;
+              s3 *= d;
             } else
               (isNaN(t4) || isNaN(e4)) && (u3 = s3 = NaN);
             break;
           case "string":
-            if ((y2 = t4.match(/\d+|./g)) === null && o2(), y2[m2] === "-" ? (h2 = -1, m2++) : y2[m2] === "+" && m2++, y2.length === m2 + 1 ? l3 = a2(y2[m2++], h2) : y2[m2 + 1] === "." || y2[m2] === "." ? (y2[m2] !== "." && (c3 = a2(y2[m2++], h2)), (++m2 + 1 === y2.length || y2[m2 + 1] === "(" && y2[m2 + 3] === ")" || y2[m2 + 1] === "'" && y2[m2 + 3] === "'") && (l3 = a2(y2[m2], h2), f2 = Math.pow(10, y2[m2].length), m2++), (y2[m2] === "(" && y2[m2 + 2] === ")" || y2[m2] === "'" && y2[m2 + 2] === "'") && (p2 = a2(y2[m2 + 1], h2), d2 = Math.pow(10, y2[m2 + 1].length) - 1, m2 += 3)) : y2[m2 + 1] === "/" || y2[m2 + 1] === ":" ? (l3 = a2(y2[m2], h2), f2 = a2(y2[m2 + 2], 1), m2 += 3) : y2[m2 + 3] === "/" && y2[m2 + 1] === " " && (c3 = a2(y2[m2], h2), l3 = a2(y2[m2 + 2], h2), f2 = a2(y2[m2 + 4], 1), m2 += 5), y2.length <= m2) {
-              h2 = s3 = p2 + (u3 = f2 * d2) * c3 + d2 * l3;
+            if ((y2 = t4.match(/\d+|./g)) === null && o2(), y2[m2] === "-" ? (h2 = -1, m2++) : y2[m2] === "+" && m2++, y2.length === m2 + 1 ? l3 = a2(y2[m2++], h2) : y2[m2 + 1] === "." || y2[m2] === "." ? (y2[m2] !== "." && (c3 = a2(y2[m2++], h2)), (++m2 + 1 === y2.length || y2[m2 + 1] === "(" && y2[m2 + 3] === ")" || y2[m2 + 1] === "'" && y2[m2 + 3] === "'") && (l3 = a2(y2[m2], h2), f2 = Math.pow(10, y2[m2].length), m2++), (y2[m2] === "(" && y2[m2 + 2] === ")" || y2[m2] === "'" && y2[m2 + 2] === "'") && (p2 = a2(y2[m2 + 1], h2), d = Math.pow(10, y2[m2 + 1].length) - 1, m2 += 3)) : y2[m2 + 1] === "/" || y2[m2 + 1] === ":" ? (l3 = a2(y2[m2], h2), f2 = a2(y2[m2 + 2], 1), m2 += 3) : y2[m2 + 3] === "/" && y2[m2 + 1] === " " && (c3 = a2(y2[m2], h2), l3 = a2(y2[m2 + 2], h2), f2 = a2(y2[m2 + 4], 1), m2 += 5), y2.length <= m2) {
+              h2 = s3 = p2 + (u3 = f2 * d) * c3 + d * l3;
               break;
             }
           default:
@@ -3735,7 +3521,7 @@ var Xi = Tr(Zi.exports), Qi = cn("Complex", [], () => (Xi.prototype.type = "Comp
         return r2.s < 0 ? new l2(Math.pow(this.s * this.d, r2.n), Math.pow(this.n, r2.n)) : new l2(Math.pow(this.s * this.n, r2.n), Math.pow(this.d, r2.n));
       if (this.s < 0)
         return null;
-      var n3 = u2(this.n), i3 = u2(this.d), s3 = this.s, a3 = 1;
+      var n3 = u2(this.n), i3 = u2(this.d), s3 = 1, a3 = 1;
       for (var o3 in n3)
         if (o3 !== "1") {
           if (o3 === "0") {
@@ -3832,30 +3618,30 @@ var Xi = Tr(Zi.exports), Qi = cn("Complex", [], () => (Xi.prototype.type = "Comp
       return a3;
     }}, Object.defineProperty(l2, "__esModule", {value: true}), l2.default = l2, l2.Fraction = l2, t3.exports = l2;
   }();
-}(Ji);
-var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fraction", Ki.prototype.isFraction = true, Ki.prototype.toJSON = function() {
+}(ns);
+var is = Rr(ns.exports), ss = mn("Fraction", [], () => (is.prototype.type = "Fraction", is.prototype.isFraction = true, is.prototype.toJSON = function() {
   return {mathjs: "Fraction", n: this.s * this.n, d: this.d};
-}, Ki.fromJSON = function(t3) {
-  return new Ki(t3);
-}, Ki), {isClass: true}), es = cn("Range", [], () => {
+}, is.fromJSON = function(t3) {
+  return new is(t3);
+}, is), {isClass: true}), as = mn("Range", [], () => {
   function t3(e2, r2, n2) {
     if (!(this instanceof t3))
       throw new SyntaxError("Constructor must be called with the new operator");
     var i2 = e2 != null, s2 = r2 != null, a2 = n2 != null;
     if (i2) {
-      if (Oe(e2))
+      if (De(e2))
         e2 = e2.toNumber();
       else if (typeof e2 != "number")
         throw new TypeError("Parameter start must be a number");
     }
     if (s2) {
-      if (Oe(r2))
+      if (De(r2))
         r2 = r2.toNumber();
       else if (typeof r2 != "number")
         throw new TypeError("Parameter end must be a number");
     }
     if (a2) {
-      if (Oe(n2))
+      if (De(n2))
         n2 = n2.toNumber();
       else if (typeof n2 != "number")
         throw new TypeError("Parameter step must be a number");
@@ -3884,7 +3670,7 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
     return new t3(this.start, this.end, this.step);
   }, t3.prototype.size = function() {
     var t4 = 0, e2 = this.start, r2 = this.step, n2 = this.end - e2;
-    return Cr(r2) === Cr(n2) ? t4 = Math.ceil(n2 / r2) : n2 === 0 && (t4 = 0), isNaN(t4) && (t4 = 0), [t4];
+    return Lr(r2) === Lr(n2) ? t4 = Math.ceil(n2 / r2) : n2 === 0 && (t4 = 0), isNaN(t4) && (t4 = 0), [t4];
   }, t3.prototype.min = function() {
     var t4 = this.size()[0];
     return t4 > 0 ? this.step > 0 ? this.start : this.start + (t4 - 1) * this.step : void 0;
@@ -3912,8 +3698,8 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   }, t3.prototype.valueOf = function() {
     return this.toArray();
   }, t3.prototype.format = function(t4) {
-    var e2 = Rr(this.start, t4);
-    return this.step !== 1 && (e2 += ":" + Rr(this.step, t4)), e2 += ":" + Rr(this.end, t4);
+    var e2 = Br(this.start, t4);
+    return this.step !== 1 && (e2 += ":" + Br(this.step, t4)), e2 += ":" + Br(this.end, t4);
   }, t3.prototype.toString = function() {
     return this.format();
   }, t3.prototype.toJSON = function() {
@@ -3921,7 +3707,7 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   }, t3.fromJSON = function(e2) {
     return new t3(e2.start, e2.end, e2.step);
   }, t3;
-}, {isClass: true}), rs = cn("Matrix", [], () => {
+}, {isClass: true}), os = mn("Matrix", [], () => {
   function t3() {
     if (!(this instanceof t3))
       throw new SyntaxError("Constructor must be called with the new operator");
@@ -3959,65 +3745,65 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   }, t3.prototype.toString = function() {
     throw new Error("Cannot invoke toString on a Matrix interface");
   }, t3;
-}, {isClass: true}), ns = cn("DenseMatrix", ["Matrix"], (t3) => {
+}, {isClass: true}), us = mn("DenseMatrix", ["Matrix"], (t3) => {
   var {Matrix: e2} = t3;
   function r2(t4, e3) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (e3 && !Re(e3))
+    if (e3 && !Be(e3))
       throw new Error("Invalid datatype: " + e3);
-    if (ke(t4))
-      t4.type === "DenseMatrix" ? (this._data = pr(t4._data), this._size = pr(t4._size), this._datatype = e3 || t4._datatype) : (this._data = t4.toArray(), this._size = t4.size(), this._datatype = e3 || t4._datatype);
-    else if (t4 && De(t4.data) && De(t4.size))
-      this._data = t4.data, this._size = t4.size, Qr(this._data, this._size), this._datatype = e3 || t4.datatype;
-    else if (De(t4))
-      this._data = h(t4), this._size = Zr(this._data), Qr(this._data, this._size), this._datatype = e3;
+    if (Pe(t4))
+      t4.type === "DenseMatrix" ? (this._data = gr(t4._data), this._size = gr(t4._size), this._datatype = e3 || t4._datatype) : (this._data = t4.toArray(), this._size = t4.size(), this._datatype = e3 || t4._datatype);
+    else if (t4 && Fe(t4.data) && Fe(t4.size))
+      this._data = t4.data, this._size = t4.size, rn(this._data, this._size), this._datatype = e3 || t4.datatype;
+    else if (Fe(t4))
+      this._data = h(t4), this._size = tn(this._data), rn(this._data, this._size), this._datatype = e3;
     else {
       if (t4)
-        throw new TypeError("Unsupported type of data (" + lr(t4) + ")");
+        throw new TypeError("Unsupported type of data (" + yr(t4) + ")");
       this._data = [], this._size = [0], this._datatype = e3;
     }
   }
   function n2(t4, e3) {
-    if (!Pe(e3))
+    if (!Ve(e3))
       throw new TypeError("Invalid index");
     if (e3.isScalar())
       return t4.get(e3.min());
     var n3 = e3.size();
     if (n3.length !== t4._size.length)
-      throw new Wr(n3.length, t4._size.length);
+      throw new Jr(n3.length, t4._size.length);
     for (var s3 = e3.min(), a3 = e3.max(), o3 = 0, u3 = t4._size.length; o3 < u3; o3++)
-      Jr(s3[o3], t4._size[o3]), Jr(a3[o3], t4._size[o3]);
+      nn(s3[o3], t4._size[o3]), nn(a3[o3], t4._size[o3]);
     return new r2(i2(t4._data, e3, n3.length, 0), t4._datatype);
   }
   function i2(t4, e3, r3, n3) {
     var s3 = n3 === r3 - 1, a3 = e3.dimension(n3);
     return s3 ? a3.map(function(e4) {
-      return Jr(e4, t4.length), t4[e4];
+      return nn(e4, t4.length), t4[e4];
     }).valueOf() : a3.map(function(s4) {
-      return Jr(s4, t4.length), i2(t4[s4], e3, r3, n3 + 1);
+      return nn(s4, t4.length), i2(t4[s4], e3, r3, n3 + 1);
     }).valueOf();
   }
   function s2(t4, e3, r3, n3) {
     if (!e3 || e3.isIndex !== true)
       throw new TypeError("Invalid index");
     var i3, s3 = e3.size(), o3 = e3.isScalar();
-    if (ke(r3) ? (i3 = r3.size(), r3 = r3.valueOf()) : i3 = Zr(r3), o3) {
+    if (Pe(r3) ? (i3 = r3.size(), r3 = r3.valueOf()) : i3 = tn(r3), o3) {
       if (i3.length !== 0)
         throw new TypeError("Scalar expected");
       t4.set(e3.min(), r3, n3);
     } else {
       if (s3.length < t4._size.length)
-        throw new Wr(s3.length, t4._size.length, "<");
+        throw new Jr(s3.length, t4._size.length, "<");
       if (i3.length < s3.length) {
         for (var h2 = 0, c2 = 0; s3[h2] === 1 && i3[h2] === 1; )
           h2++;
         for (; s3[h2] === 1; )
           c2++, h2++;
-        r3 = rn(r3, s3.length, c2, i3);
+        r3 = un(r3, s3.length, c2, i3);
       }
-      if (!yr(s3, i3))
-        throw new Wr(s3, i3, ">");
+      if (!br(s3, i3))
+        throw new Jr(s3, i3, ">");
       u2(t4, e3.max().map(function(t5) {
         return t5 + 1;
       }), n3);
@@ -4029,18 +3815,18 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   function a2(t4, e3, r3, n3, i3) {
     var s3 = i3 === n3 - 1, o3 = e3.dimension(i3);
     s3 ? o3.forEach(function(e4, n4) {
-      Jr(e4), t4[e4] = r3[n4[0]];
+      nn(e4), t4[e4] = r3[n4[0]];
     }) : o3.forEach(function(s4, o4) {
-      Jr(s4), a2(t4[s4], e3, r3[o4[0]], n3, i3 + 1);
+      nn(s4), a2(t4[s4], e3, r3[o4[0]], n3, i3 + 1);
     });
   }
   function o2(t4, e3, r3) {
     if (e3.length === 0) {
-      for (var n3 = t4._data; De(n3); )
+      for (var n3 = t4._data; Fe(n3); )
         n3 = n3[0];
       return n3;
     }
-    return t4._size = e3.slice(0), t4._data = Kr(t4._data, t4._size, r3), t4;
+    return t4._size = e3.slice(0), t4._data = sn(t4._data, t4._size, r3), t4;
   }
   function u2(t4, e3, r3) {
     for (var n3 = t4._size.slice(0), i3 = false; n3.length < e3.length; )
@@ -4052,14 +3838,14 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   function h(t4) {
     for (var e3 = 0, r3 = t4.length; e3 < r3; e3++) {
       var n3 = t4[e3];
-      De(n3) ? t4[e3] = h(n3) : n3 && n3.isMatrix === true && (t4[e3] = h(n3.valueOf()));
+      Fe(n3) ? t4[e3] = h(n3) : n3 && n3.isMatrix === true && (t4[e3] = h(n3.valueOf()));
     }
     return t4;
   }
   return r2.prototype = new e2(), r2.prototype.createDenseMatrix = function(t4, e3) {
     return new r2(t4, e3);
   }, r2.prototype.type = "DenseMatrix", r2.prototype.isDenseMatrix = true, r2.prototype.getDataType = function() {
-    return un(this._data, lr);
+    return fn(this._data, yr);
   }, r2.prototype.storage = function() {
     return "dense";
   }, r2.prototype.datatype = function() {
@@ -4077,69 +3863,69 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
         throw new SyntaxError("Wrong number of arguments");
     }
   }, r2.prototype.get = function(t4) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected");
     if (t4.length !== this._size.length)
-      throw new Wr(t4.length, this._size.length);
+      throw new Jr(t4.length, this._size.length);
     for (var e3 = 0; e3 < t4.length; e3++)
-      Jr(t4[e3], this._size[e3]);
+      nn(t4[e3], this._size[e3]);
     for (var r3 = this._data, n3 = 0, i3 = t4.length; n3 < i3; n3++) {
       var s3 = t4[n3];
-      Jr(s3, r3.length), r3 = r3[s3];
+      nn(s3, r3.length), r3 = r3[s3];
     }
     return r3;
   }, r2.prototype.set = function(t4, e3, r3) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected");
     if (t4.length < this._size.length)
-      throw new Wr(t4.length, this._size.length, "<");
+      throw new Jr(t4.length, this._size.length, "<");
     var n3, i3, s3;
     u2(this, t4.map(function(t5) {
       return t5 + 1;
     }), r3);
     var a3 = this._data;
     for (n3 = 0, i3 = t4.length - 1; n3 < i3; n3++)
-      Jr(s3 = t4[n3], a3.length), a3 = a3[s3];
-    return Jr(s3 = t4[t4.length - 1], a3.length), a3[s3] = e3, this;
+      nn(s3 = t4[n3], a3.length), a3 = a3[s3];
+    return nn(s3 = t4[t4.length - 1], a3.length), a3[s3] = e3, this;
   }, r2.prototype.resize = function(t4, e3, r3) {
-    if (!Ie(t4))
+    if (!Ue(t4))
       throw new TypeError("Array or Matrix expected");
     var n3 = t4.valueOf().map((t5) => Array.isArray(t5) && t5.length === 1 ? t5[0] : t5);
     return o2(r3 ? this.clone() : this, n3, e3);
   }, r2.prototype.reshape = function(t4, e3) {
     var r3 = e3 ? this.clone() : this;
-    return r3._data = en(r3._data, t4), r3._size = t4.slice(0), r3;
+    return r3._data = on(r3._data, t4), r3._size = t4.slice(0), r3;
   }, r2.prototype.clone = function() {
-    return new r2({data: pr(this._data), size: pr(this._size), datatype: this._datatype});
+    return new r2({data: gr(this._data), size: gr(this._size), datatype: this._datatype});
   }, r2.prototype.size = function() {
     return this._size.slice(0);
   }, r2.prototype.map = function(t4) {
     var e3 = this, n3 = function r3(n4, i3) {
-      return De(n4) ? n4.map(function(t5, e4) {
+      return Fe(n4) ? n4.map(function(t5, e4) {
         return r3(t5, i3.concat(e4));
       }) : t4(n4, i3, e3);
     }(this._data, []);
-    return new r2(n3, this._datatype !== void 0 ? un(n3, lr) : void 0);
+    return new r2(n3, this._datatype !== void 0 ? fn(n3, yr) : void 0);
   }, r2.prototype.forEach = function(t4) {
     var e3 = this;
     !function r3(n3, i3) {
-      De(n3) ? n3.forEach(function(t5, e4) {
+      Fe(n3) ? n3.forEach(function(t5, e4) {
         r3(t5, i3.concat(e4));
       }) : t4(n3, i3, e3);
     }(this._data, []);
   }, r2.prototype.toArray = function() {
-    return pr(this._data);
+    return gr(this._data);
   }, r2.prototype.valueOf = function() {
     return this._data;
   }, r2.prototype.format = function(t4) {
-    return Hr(this._data, t4);
+    return Yr(this._data, t4);
   }, r2.prototype.toString = function() {
-    return Hr(this._data);
+    return Yr(this._data);
   }, r2.prototype.toJSON = function() {
     return {mathjs: "DenseMatrix", data: this._data, size: this._size, datatype: this._datatype};
   }, r2.prototype.diagonal = function(t4) {
     if (t4) {
-      if (Oe(t4) && (t4 = t4.toNumber()), !Te(t4) || !Ar(t4))
+      if (De(t4) && (t4 = t4.toNumber()), !Re(t4) || !Ir(t4))
         throw new TypeError("The parameter k must be an integer number");
     } else
       t4 = 0;
@@ -4147,27 +3933,27 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
       o3[u3] = this._data[u3 + n3][u3 + e3];
     return new r2({data: o3, size: [a3], datatype: this._datatype});
   }, r2.diagonal = function(t4, e3, n3, i3) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected, size parameter");
     if (t4.length !== 2)
       throw new Error("Only two dimensions matrix are supported");
     if (t4 = t4.map(function(t5) {
-      if (Oe(t5) && (t5 = t5.toNumber()), !Te(t5) || !Ar(t5) || t5 < 1)
+      if (De(t5) && (t5 = t5.toNumber()), !Re(t5) || !Ir(t5) || t5 < 1)
         throw new Error("Size values must be positive integers");
       return t5;
     }), n3) {
-      if (Oe(n3) && (n3 = n3.toNumber()), !Te(n3) || !Ar(n3))
+      if (De(n3) && (n3 = n3.toNumber()), !Re(n3) || !Ir(n3))
         throw new TypeError("The parameter k must be an integer number");
     } else
       n3 = 0;
     var s3, a3 = n3 > 0 ? n3 : 0, o3 = n3 < 0 ? -n3 : 0, u3 = t4[0], h2 = t4[1], c2 = Math.min(u3 - o3, h2 - a3);
-    if (De(e3)) {
+    if (Fe(e3)) {
       if (e3.length !== c2)
         throw new Error("Invalid value array length");
       s3 = function(t5) {
         return e3[t5];
       };
-    } else if (ke(e3)) {
+    } else if (Pe(e3)) {
       var l2 = e3.size();
       if (l2.length !== 1 || l2[0] !== c2)
         throw new Error("Invalid matrix length");
@@ -4178,10 +3964,10 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
       s3 = function() {
         return e3;
       };
-    i3 || (i3 = Oe(s3(0)) ? s3(0).mul(0) : 0);
+    i3 || (i3 = De(s3(0)) ? s3(0).mul(0) : 0);
     var p2 = [];
     if (t4.length > 0) {
-      p2 = Kr(p2, t4, i3);
+      p2 = sn(p2, t4, i3);
       for (var f2 = 0; f2 < c2; f2++)
         p2[f2 + o3][f2 + a3] = s3(f2);
     }
@@ -4189,63 +3975,63 @@ var Ki = Tr(Ji.exports), ts = cn("Fraction", [], () => (Ki.prototype.type = "Fra
   }, r2.fromJSON = function(t4) {
     return new r2(t4);
   }, r2.prototype.swapRows = function(t4, e3) {
-    if (!(Te(t4) && Ar(t4) && Te(e3) && Ar(e3)))
+    if (!(Re(t4) && Ir(t4) && Re(e3) && Ir(e3)))
       throw new Error("Row index must be positive integers");
     if (this._size.length !== 2)
       throw new Error("Only two dimensional matrix is supported");
-    return Jr(t4, this._size[0]), Jr(e3, this._size[0]), r2._swapRows(t4, e3, this._data), this;
+    return nn(t4, this._size[0]), nn(e3, this._size[0]), r2._swapRows(t4, e3, this._data), this;
   }, r2._swapRows = function(t4, e3, r3) {
     var n3 = r3[t4];
     r3[t4] = r3[e3], r3[e3] = n3;
   }, r2;
 }, {isClass: true});
-function is(t3, e2, r2) {
+function hs(t3, e2, r2) {
   return t3 && typeof t3.map == "function" ? t3.map(function(t4) {
-    return is(t4, e2);
+    return hs(t4, e2);
   }) : e2(t3);
 }
-var ss = "number", as = "number, number";
-function os(t3) {
+var cs = "number", ls = "number, number";
+function ps(t3) {
   return Math.abs(t3);
 }
-function us(t3, e2) {
+function fs(t3, e2) {
   return t3 + e2;
 }
-function hs(t3, e2) {
+function ds(t3, e2) {
   return t3 * e2;
 }
-function cs(t3) {
+function ms(t3) {
   return -t3;
 }
-function ls(t3) {
+function ys(t3) {
   return Math.ceil(t3);
 }
-function ps(t3, e2) {
+function gs(t3, e2) {
   if (e2 > 0)
     return t3 - e2 * Math.floor(t3 / e2);
   if (e2 === 0)
     return t3;
   throw new Error("Cannot calculate mod for a negative divisor");
 }
-function fs(t3, e2) {
+function vs(t3, e2) {
   return t3 * t3 < 1 && e2 === 1 / 0 || t3 * t3 > 1 && e2 === -1 / 0 ? 0 : Math.pow(t3, e2);
 }
-function ds(t3) {
+function xs(t3) {
   var e2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0;
-  return parseFloat(kr(t3, e2));
+  return parseFloat(Pr(t3, e2));
 }
-os.signature = ss, us.signature = as, hs.signature = as, cs.signature = ss, ls.signature = ss, ps.signature = as, fs.signature = as, ds.signature = as;
-var ms = cn("isNumeric", ["typed"], (t3) => {
+ps.signature = cs, fs.signature = ls, ds.signature = ls, ms.signature = cs, ys.signature = cs, gs.signature = ls, vs.signature = ls, xs.signature = ls;
+var ws = mn("isNumeric", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return e2("isNumeric", {"number | BigNumber | Fraction | boolean": function() {
     return true;
   }, "Complex | Unit | string | null | undefined | Node": function() {
     return false;
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
 });
-function ys(t3, e2, r2) {
+function bs(t3, e2, r2) {
   if (r2 == null)
     return t3.eq(e2);
   if (t3.eq(e2))
@@ -4261,19 +4047,19 @@ function ys(t3, e2, r2) {
   }
   return false;
 }
-var gs = "equalScalar", vs = cn(gs, ["typed", "config"], (t3) => {
+var _s = "equalScalar", Ms = mn(_s, ["typed", "config"], (t3) => {
   var {typed: e2, config: r2} = t3;
-  return e2(gs, {"boolean, boolean": function(t4, e3) {
+  return e2(_s, {"boolean, boolean": function(t4, e3) {
     return t4 === e3;
   }, "number, number": function(t4, e3) {
-    return Pr(t4, e3, r2.epsilon);
+    return Vr(t4, e3, r2.epsilon);
   }, "BigNumber, BigNumber": function(t4, e3) {
-    return t4.eq(e3) || ys(t4, e3, r2.epsilon);
+    return t4.eq(e3) || bs(t4, e3, r2.epsilon);
   }, "Fraction, Fraction": function(t4, e3) {
     return t4.equals(e3);
   }, "Complex, Complex": function(t4, e3) {
     return function(t5, e4, r3) {
-      return Pr(t5.re, e4.re, r3) && Pr(t5.im, e4.im, r3);
+      return Vr(t5.re, e4.re, r3) && Vr(t5.im, e4.im, r3);
     }(t4, e3, r2.epsilon);
   }, "Unit, Unit": function(t4, e3) {
     if (!t4.equalBase(e3))
@@ -4281,43 +4067,43 @@ var gs = "equalScalar", vs = cn(gs, ["typed", "config"], (t3) => {
     return this(t4.value, e3.value);
   }});
 });
-cn(gs, ["typed", "config"], (t3) => {
+mn(_s, ["typed", "config"], (t3) => {
   var {typed: e2, config: r2} = t3;
-  return e2(gs, {"number, number": function(t4, e3) {
-    return Pr(t4, e3, r2.epsilon);
+  return e2(_s, {"number, number": function(t4, e3) {
+    return Vr(t4, e3, r2.epsilon);
   }});
 });
-var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
+var Ns = mn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   var {typed: e2, equalScalar: r2, Matrix: n2} = t3;
   function i2(t4, e3) {
     if (!(this instanceof i2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (e3 && !Re(e3))
+    if (e3 && !Be(e3))
       throw new Error("Invalid datatype: " + e3);
-    if (ke(t4))
+    if (Pe(t4))
       !function(t5, e4, r3) {
-        e4.type === "SparseMatrix" ? (t5._values = e4._values ? pr(e4._values) : void 0, t5._index = pr(e4._index), t5._ptr = pr(e4._ptr), t5._size = pr(e4._size), t5._datatype = r3 || e4._datatype) : s2(t5, e4.valueOf(), r3 || e4._datatype);
+        e4.type === "SparseMatrix" ? (t5._values = e4._values ? gr(e4._values) : void 0, t5._index = gr(e4._index), t5._ptr = gr(e4._ptr), t5._size = gr(e4._size), t5._datatype = r3 || e4._datatype) : s2(t5, e4.valueOf(), r3 || e4._datatype);
       }(this, t4, e3);
-    else if (t4 && De(t4.index) && De(t4.ptr) && De(t4.size))
+    else if (t4 && Fe(t4.index) && Fe(t4.ptr) && Fe(t4.size))
       this._values = t4.values, this._index = t4.index, this._ptr = t4.ptr, this._size = t4.size, this._datatype = e3 || t4.datatype;
-    else if (De(t4))
+    else if (Fe(t4))
       s2(this, t4, e3);
     else {
       if (t4)
-        throw new TypeError("Unsupported type of data (" + lr(t4) + ")");
+        throw new TypeError("Unsupported type of data (" + yr(t4) + ")");
       this._values = [], this._index = [], this._ptr = [0], this._size = [0, 0], this._datatype = e3;
     }
   }
   function s2(t4, n3, i3) {
     t4._values = [], t4._index = [], t4._ptr = [], t4._datatype = i3;
     var s3 = n3.length, a3 = 0, o3 = r2, u3 = 0;
-    if (Re(i3) && (o3 = e2.find(r2, [i3, i3]) || r2, u3 = e2.convert(0, i3)), s3 > 0) {
+    if (Be(i3) && (o3 = e2.find(r2, [i3, i3]) || r2, u3 = e2.convert(0, i3)), s3 > 0) {
       var h2 = 0;
       do {
         t4._ptr.push(t4._index.length);
         for (var c3 = 0; c3 < s3; c3++) {
           var l3 = n3[c3];
-          if (De(l3)) {
+          if (Fe(l3)) {
             if (h2 === 0 && a3 < l3.length && (a3 = l3.length), h2 < l3.length) {
               var p2 = l3[h2];
               o3(p2, u3) || (t4._values.push(p2), t4._index.push(c3));
@@ -4331,50 +4117,50 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
     t4._ptr.push(t4._index.length), t4._size = [s3, a3];
   }
   function a2(t4, e3) {
-    if (!Pe(e3))
+    if (!Ve(e3))
       throw new TypeError("Invalid index");
     if (e3.isScalar())
       return t4.get(e3.min());
     var r3, n3, s3, a3, o3 = e3.size();
     if (o3.length !== t4._size.length)
-      throw new Wr(o3.length, t4._size.length);
+      throw new Jr(o3.length, t4._size.length);
     var u3 = e3.min(), h2 = e3.max();
     for (r3 = 0, n3 = t4._size.length; r3 < n3; r3++)
-      Jr(u3[r3], t4._size[r3]), Jr(h2[r3], t4._size[r3]);
-    var c3 = t4._values, l3 = t4._index, p2 = t4._ptr, f2 = e3.dimension(0), d2 = e3.dimension(1), m2 = [], y2 = [];
+      nn(u3[r3], t4._size[r3]), nn(h2[r3], t4._size[r3]);
+    var c3 = t4._values, l3 = t4._index, p2 = t4._ptr, f2 = e3.dimension(0), d = e3.dimension(1), m2 = [], y2 = [];
     f2.forEach(function(t5, e4) {
       y2[t5] = e4[0], m2[t5] = true;
     });
-    var g2 = c3 ? [] : void 0, v = [], x = [];
-    return d2.forEach(function(t5) {
-      for (x.push(v.length), s3 = p2[t5], a3 = p2[t5 + 1]; s3 < a3; s3++)
-        r3 = l3[s3], m2[r3] === true && (v.push(y2[r3]), g2 && g2.push(c3[s3]));
-    }), x.push(v.length), new i2({values: g2, index: v, ptr: x, size: o3, datatype: t4._datatype});
+    var g2 = c3 ? [] : void 0, v2 = [], x2 = [];
+    return d.forEach(function(t5) {
+      for (x2.push(v2.length), s3 = p2[t5], a3 = p2[t5 + 1]; s3 < a3; s3++)
+        r3 = l3[s3], m2[r3] === true && (v2.push(y2[r3]), g2 && g2.push(c3[s3]));
+    }), x2.push(v2.length), new i2({values: g2, index: v2, ptr: x2, size: o3, datatype: t4._datatype});
   }
   function o2(t4, e3, r3, n3) {
     if (!e3 || e3.isIndex !== true)
       throw new TypeError("Invalid index");
     var i3, s3 = e3.size(), a3 = e3.isScalar();
-    if (ke(r3) ? (i3 = r3.size(), r3 = r3.toArray()) : i3 = Zr(r3), a3) {
+    if (Pe(r3) ? (i3 = r3.size(), r3 = r3.toArray()) : i3 = tn(r3), a3) {
       if (i3.length !== 0)
         throw new TypeError("Scalar expected");
       t4.set(e3.min(), r3, n3);
     } else {
       if (s3.length !== 1 && s3.length !== 2)
-        throw new Wr(s3.length, t4._size.length, "<");
+        throw new Jr(s3.length, t4._size.length, "<");
       if (i3.length < s3.length) {
         for (var o3 = 0, u3 = 0; s3[o3] === 1 && i3[o3] === 1; )
           o3++;
         for (; s3[o3] === 1; )
           u3++, o3++;
-        r3 = rn(r3, s3.length, u3, i3);
+        r3 = un(r3, s3.length, u3, i3);
       }
-      if (!yr(s3, i3))
-        throw new Wr(s3, i3, ">");
+      if (!br(s3, i3))
+        throw new Jr(s3, i3, ">");
       for (var h2 = e3.min()[0], c3 = e3.min()[1], l3 = i3[0], p2 = i3[1], f2 = 0; f2 < l3; f2++)
-        for (var d2 = 0; d2 < p2; d2++) {
-          var m2 = r3[f2][d2];
-          t4.set([f2 + h2, d2 + c3], m2, n3);
+        for (var d = 0; d < p2; d++) {
+          var m2 = r3[f2][d];
+          t4.set([f2 + h2, d + c3], m2, n3);
         }
     }
     return t4;
@@ -4394,33 +4180,33 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }
   function c2(t4, n3, i3, s3) {
     var a3 = s3 || 0, o3 = r2, u3 = 0;
-    Re(t4._datatype) && (o3 = e2.find(r2, [t4._datatype, t4._datatype]) || r2, u3 = e2.convert(0, t4._datatype), a3 = e2.convert(a3, t4._datatype));
-    var h2, c3, l3, p2 = !o3(a3, u3), f2 = t4._size[0], d2 = t4._size[1];
-    if (i3 > d2) {
-      for (c3 = d2; c3 < i3; c3++)
+    Be(t4._datatype) && (o3 = e2.find(r2, [t4._datatype, t4._datatype]) || r2, u3 = e2.convert(0, t4._datatype), a3 = e2.convert(a3, t4._datatype));
+    var h2, c3, l3, p2 = !o3(a3, u3), f2 = t4._size[0], d = t4._size[1];
+    if (i3 > d) {
+      for (c3 = d; c3 < i3; c3++)
         if (t4._ptr[c3] = t4._values.length, p2)
           for (h2 = 0; h2 < f2; h2++)
             t4._values.push(a3), t4._index.push(h2);
       t4._ptr[i3] = t4._values.length;
     } else
-      i3 < d2 && (t4._ptr.splice(i3 + 1, d2 - i3), t4._values.splice(t4._ptr[i3], t4._values.length), t4._index.splice(t4._ptr[i3], t4._index.length));
-    if (d2 = i3, n3 > f2) {
+      i3 < d && (t4._ptr.splice(i3 + 1, d - i3), t4._values.splice(t4._ptr[i3], t4._values.length), t4._index.splice(t4._ptr[i3], t4._index.length));
+    if (d = i3, n3 > f2) {
       if (p2) {
         var m2 = 0;
-        for (c3 = 0; c3 < d2; c3++) {
+        for (c3 = 0; c3 < d; c3++) {
           t4._ptr[c3] = t4._ptr[c3] + m2, l3 = t4._ptr[c3 + 1] + m2;
           var y2 = 0;
           for (h2 = f2; h2 < n3; h2++, y2++)
             t4._values.splice(l3 + y2, 0, a3), t4._index.splice(l3 + y2, 0, h2), m2++;
         }
-        t4._ptr[d2] = t4._values.length;
+        t4._ptr[d] = t4._values.length;
       }
     } else if (n3 < f2) {
       var g2 = 0;
-      for (c3 = 0; c3 < d2; c3++) {
+      for (c3 = 0; c3 < d; c3++) {
         t4._ptr[c3] = t4._ptr[c3] - g2;
-        var v = t4._ptr[c3], x = t4._ptr[c3 + 1] - g2;
-        for (l3 = v; l3 < x; l3++)
+        var v2 = t4._ptr[c3], x2 = t4._ptr[c3 + 1] - g2;
+        for (l3 = v2; l3 < x2; l3++)
           (h2 = t4._index[l3]) > n3 - 1 && (t4._values.splice(l3, 1), t4._index.splice(l3, 1), g2++);
       }
       t4._ptr[c3] = t4._values.length;
@@ -4434,13 +4220,13 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
         h2[s3][a3] = 0;
     for (a3 = 0; a3 < u3; a3++)
       for (var c3 = r3[a3], l3 = r3[a3 + 1], p2 = c3; p2 < l3; p2++)
-        h2[s3 = e3[p2]][a3] = t4 ? i3 ? pr(t4[p2]) : t4[p2] : 1;
+        h2[s3 = e3[p2]][a3] = t4 ? i3 ? gr(t4[p2]) : t4[p2] : 1;
     return h2;
   }
   return i2.prototype = new n2(), i2.prototype.createSparseMatrix = function(t4, e3) {
     return new i2(t4, e3);
   }, i2.prototype.type = "SparseMatrix", i2.prototype.isSparseMatrix = true, i2.prototype.getDataType = function() {
-    return un(this._values, lr);
+    return fn(this._values, yr);
   }, i2.prototype.storage = function() {
     return "sparse";
   }, i2.prototype.datatype = function() {
@@ -4463,49 +4249,49 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
         throw new SyntaxError("Wrong number of arguments");
     }
   }, i2.prototype.get = function(t4) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected");
     if (t4.length !== this._size.length)
-      throw new Wr(t4.length, this._size.length);
+      throw new Jr(t4.length, this._size.length);
     if (!this._values)
       throw new Error("Cannot invoke get on a Pattern only matrix");
     var e3 = t4[0], r3 = t4[1];
-    Jr(e3, this._size[0]), Jr(r3, this._size[1]);
+    nn(e3, this._size[0]), nn(r3, this._size[1]);
     var n3 = u2(e3, this._ptr[r3], this._ptr[r3 + 1], this._index);
     return n3 < this._ptr[r3 + 1] && this._index[n3] === e3 ? this._values[n3] : 0;
   }, i2.prototype.set = function(t4, n3, i3) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected");
     if (t4.length !== this._size.length)
-      throw new Wr(t4.length, this._size.length);
+      throw new Jr(t4.length, this._size.length);
     if (!this._values)
       throw new Error("Cannot invoke set on a Pattern only matrix");
     var s3 = t4[0], a3 = t4[1], o3 = this._size[0], l3 = this._size[1], p2 = r2, f2 = 0;
-    Re(this._datatype) && (p2 = e2.find(r2, [this._datatype, this._datatype]) || r2, f2 = e2.convert(0, this._datatype)), (s3 > o3 - 1 || a3 > l3 - 1) && (c2(this, Math.max(s3 + 1, o3), Math.max(a3 + 1, l3), i3), o3 = this._size[0], l3 = this._size[1]), Jr(s3, o3), Jr(a3, l3);
-    var d2 = u2(s3, this._ptr[a3], this._ptr[a3 + 1], this._index);
-    return d2 < this._ptr[a3 + 1] && this._index[d2] === s3 ? p2(n3, f2) ? function(t5, e3, r3, n4, i4) {
+    Be(this._datatype) && (p2 = e2.find(r2, [this._datatype, this._datatype]) || r2, f2 = e2.convert(0, this._datatype)), (s3 > o3 - 1 || a3 > l3 - 1) && (c2(this, Math.max(s3 + 1, o3), Math.max(a3 + 1, l3), i3), o3 = this._size[0], l3 = this._size[1]), nn(s3, o3), nn(a3, l3);
+    var d = u2(s3, this._ptr[a3], this._ptr[a3 + 1], this._index);
+    return d < this._ptr[a3 + 1] && this._index[d] === s3 ? p2(n3, f2) ? function(t5, e3, r3, n4, i4) {
       r3.splice(t5, 1), n4.splice(t5, 1);
       for (var s4 = e3 + 1; s4 < i4.length; s4++)
         i4[s4]--;
-    }(d2, a3, this._values, this._index, this._ptr) : this._values[d2] = n3 : h(d2, s3, a3, n3, this._values, this._index, this._ptr), this;
+    }(d, a3, this._values, this._index, this._ptr) : this._values[d] = n3 : h(d, s3, a3, n3, this._values, this._index, this._ptr), this;
   }, i2.prototype.resize = function(t4, e3, r3) {
-    if (!Ie(t4))
+    if (!Ue(t4))
       throw new TypeError("Array or Matrix expected");
     var n3 = t4.valueOf().map((t5) => Array.isArray(t5) && t5.length === 1 ? t5[0] : t5);
     if (n3.length !== 2)
       throw new Error("Only two dimensions matrix are supported");
     return n3.forEach(function(t5) {
-      if (!Te(t5) || !Ar(t5) || t5 < 0)
-        throw new TypeError("Invalid size, must contain positive integers (size: " + Hr(n3) + ")");
+      if (!Re(t5) || !Ir(t5) || t5 < 0)
+        throw new TypeError("Invalid size, must contain positive integers (size: " + Yr(n3) + ")");
     }), c2(r3 ? this.clone() : this, n3[0], n3[1], e3);
   }, i2.prototype.reshape = function(t4, e3) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected");
     if (t4.length !== 2)
       throw new Error("Sparse matrices can only be reshaped in two dimensions");
     if (t4.forEach(function(e4) {
-      if (!Te(e4) || !Ar(e4) || e4 < 0)
-        throw new TypeError("Invalid size, must contain positive integers (size: " + Hr(t4) + ")");
+      if (!Re(e4) || !Ir(e4) || e4 < 0)
+        throw new TypeError("Invalid size, must contain positive integers (size: " + Yr(t4) + ")");
     }), this._size[0] * this._size[1] != t4[0] * t4[1])
       throw new Error("Reshaping sparse matrix will result in the wrong number of elements");
     var r3 = e3 ? this.clone() : this;
@@ -4519,15 +4305,15 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
       n3[c3] = f2 % t4[1], o3[c3] = Math.floor(f2 / t4[1]);
     }
     r3._values.length = 0, r3._index.length = 0, r3._ptr.length = t4[1] + 1, r3._size = t4.slice();
-    for (var d2 = 0; d2 < r3._ptr.length; d2++)
-      r3._ptr[d2] = 0;
+    for (var d = 0; d < r3._ptr.length; d++)
+      r3._ptr[d] = 0;
     for (var m2 = 0; m2 < a3.length; m2++) {
-      var y2 = o3[m2], g2 = n3[m2], v = a3[m2];
-      h(u2(y2, r3._ptr[g2], r3._ptr[g2 + 1], r3._index), y2, g2, v, r3._values, r3._index, r3._ptr);
+      var y2 = o3[m2], g2 = n3[m2], v2 = a3[m2];
+      h(u2(y2, r3._ptr[g2], r3._ptr[g2 + 1], r3._index), y2, g2, v2, r3._values, r3._index, r3._ptr);
     }
     return r3;
   }, i2.prototype.clone = function() {
-    return new i2({values: this._values ? pr(this._values) : void 0, index: pr(this._index), ptr: pr(this._ptr), size: pr(this._size), datatype: this._datatype});
+    return new i2({values: this._values ? gr(this._values) : void 0, index: gr(this._index), ptr: gr(this._ptr), size: gr(this._size), datatype: this._datatype});
   }, i2.prototype.size = function() {
     return this._size.slice(0);
   }, i2.prototype.map = function(t4, n3) {
@@ -4535,24 +4321,24 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
       throw new Error("Cannot invoke map on a Pattern only matrix");
     var s3 = this;
     return function(t5, n4, s4, a3, o3, u3, h2) {
-      var c3 = [], l3 = [], p2 = [], f2 = r2, d2 = 0;
-      Re(t5._datatype) && (f2 = e2.find(r2, [t5._datatype, t5._datatype]) || r2, d2 = e2.convert(0, t5._datatype));
+      var c3 = [], l3 = [], p2 = [], f2 = r2, d = 0;
+      Be(t5._datatype) && (f2 = e2.find(r2, [t5._datatype, t5._datatype]) || r2, d = e2.convert(0, t5._datatype));
       for (var m2 = function(t6, e3, r3) {
-        t6 = u3(t6, e3, r3), f2(t6, d2) || (c3.push(t6), l3.push(e3));
+        t6 = u3(t6, e3, r3), f2(t6, d) || (c3.push(t6), l3.push(e3));
       }, y2 = a3; y2 <= o3; y2++) {
         p2.push(c3.length);
-        var g2 = t5._ptr[y2], v = t5._ptr[y2 + 1];
+        var g2 = t5._ptr[y2], v2 = t5._ptr[y2 + 1];
         if (h2)
-          for (var x = g2; x < v; x++) {
-            var w = t5._index[x];
-            w >= n4 && w <= s4 && m2(t5._values[x], w - n4, y2 - a3);
+          for (var x2 = g2; x2 < v2; x2++) {
+            var w2 = t5._index[x2];
+            w2 >= n4 && w2 <= s4 && m2(t5._values[x2], w2 - n4, y2 - a3);
           }
         else {
-          for (var b = {}, _ = g2; _ < v; _++) {
-            b[t5._index[_]] = t5._values[_];
+          for (var b2 = {}, _2 = g2; _2 < v2; _2++) {
+            b2[t5._index[_2]] = t5._values[_2];
           }
           for (var M = n4; M <= s4; M++) {
-            m2(M in b ? b[M] : 0, M - n4, y2 - a3);
+            m2(M in b2 ? b2[M] : 0, M - n4, y2 - a3);
           }
         }
       }
@@ -4584,18 +4370,18 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, i2.prototype.valueOf = function() {
     return l2(this._values, this._index, this._ptr, this._size, false);
   }, i2.prototype.format = function(t4) {
-    for (var e3 = this._size[0], r3 = this._size[1], n3 = this.density(), i3 = "Sparse Matrix [" + Hr(e3, t4) + " x " + Hr(r3, t4) + "] density: " + Hr(n3, t4) + "\n", s3 = 0; s3 < r3; s3++)
+    for (var e3 = this._size[0], r3 = this._size[1], n3 = this.density(), i3 = "Sparse Matrix [" + Yr(e3, t4) + " x " + Yr(r3, t4) + "] density: " + Yr(n3, t4) + "\n", s3 = 0; s3 < r3; s3++)
       for (var a3 = this._ptr[s3], o3 = this._ptr[s3 + 1], u3 = a3; u3 < o3; u3++) {
-        i3 += "\n    (" + Hr(this._index[u3], t4) + ", " + Hr(s3, t4) + ") ==> " + (this._values ? Hr(this._values[u3], t4) : "X");
+        i3 += "\n    (" + Yr(this._index[u3], t4) + ", " + Yr(s3, t4) + ") ==> " + (this._values ? Yr(this._values[u3], t4) : "X");
       }
     return i3;
   }, i2.prototype.toString = function() {
-    return Hr(this.toArray());
+    return Yr(this.toArray());
   }, i2.prototype.toJSON = function() {
     return {mathjs: "SparseMatrix", values: this._values, index: this._index, ptr: this._ptr, size: this._size, datatype: this._datatype};
   }, i2.prototype.diagonal = function(t4) {
     if (t4) {
-      if (Oe(t4) && (t4 = t4.toNumber()), !Te(t4) || !Ar(t4))
+      if (De(t4) && (t4 = t4.toNumber()), !Re(t4) || !Ir(t4))
         throw new TypeError("The parameter k must be an integer number");
     } else
       t4 = 0;
@@ -4603,9 +4389,9 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
     h2[0] = 0;
     for (var c3 = e3; c3 < s3 && o3.length < a3; c3++)
       for (var l3 = this._ptr[c3], p2 = this._ptr[c3 + 1], f2 = l3; f2 < p2; f2++) {
-        var d2 = this._index[f2];
-        if (d2 === c3 - e3 + r3) {
-          o3.push(this._values[f2]), u3[o3.length - 1] = d2 - r3;
+        var d = this._index[f2];
+        if (d === c3 - e3 + r3) {
+          o3.push(this._values[f2]), u3[o3.length - 1] = d - r3;
           break;
         }
       }
@@ -4613,29 +4399,29 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, i2.fromJSON = function(t4) {
     return new i2(t4);
   }, i2.diagonal = function(t4, n3, s3, a3, o3) {
-    if (!De(t4))
+    if (!Fe(t4))
       throw new TypeError("Array expected, size parameter");
     if (t4.length !== 2)
       throw new Error("Only two dimensions matrix are supported");
     if (t4 = t4.map(function(t5) {
-      if (Oe(t5) && (t5 = t5.toNumber()), !Te(t5) || !Ar(t5) || t5 < 1)
+      if (De(t5) && (t5 = t5.toNumber()), !Re(t5) || !Ir(t5) || t5 < 1)
         throw new Error("Size values must be positive integers");
       return t5;
     }), s3) {
-      if (Oe(s3) && (s3 = s3.toNumber()), !Te(s3) || !Ar(s3))
+      if (De(s3) && (s3 = s3.toNumber()), !Re(s3) || !Ir(s3))
         throw new TypeError("The parameter k must be an integer number");
     } else
       s3 = 0;
     var u3 = r2, h2 = 0;
-    Re(o3) && (u3 = e2.find(r2, [o3, o3]) || r2, h2 = e2.convert(0, o3));
-    var c3, l3 = s3 > 0 ? s3 : 0, p2 = s3 < 0 ? -s3 : 0, f2 = t4[0], d2 = t4[1], m2 = Math.min(f2 - p2, d2 - l3);
-    if (De(n3)) {
+    Be(o3) && (u3 = e2.find(r2, [o3, o3]) || r2, h2 = e2.convert(0, o3));
+    var c3, l3 = s3 > 0 ? s3 : 0, p2 = s3 < 0 ? -s3 : 0, f2 = t4[0], d = t4[1], m2 = Math.min(f2 - p2, d - l3);
+    if (Fe(n3)) {
       if (n3.length !== m2)
         throw new Error("Invalid value array length");
       c3 = function(t5) {
         return n3[t5];
       };
-    } else if (ke(n3)) {
+    } else if (Pe(n3)) {
       var y2 = n3.size();
       if (y2.length !== 1 || y2[0] !== m2)
         throw new Error("Invalid matrix length");
@@ -4646,21 +4432,21 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
       c3 = function() {
         return n3;
       };
-    for (var g2 = [], v = [], x = [], w = 0; w < d2; w++) {
-      x.push(g2.length);
-      var b = w - l3;
-      if (b >= 0 && b < m2) {
-        var _ = c3(b);
-        u3(_, h2) || (v.push(b + p2), g2.push(_));
+    for (var g2 = [], v2 = [], x2 = [], w2 = 0; w2 < d; w2++) {
+      x2.push(g2.length);
+      var b2 = w2 - l3;
+      if (b2 >= 0 && b2 < m2) {
+        var _2 = c3(b2);
+        u3(_2, h2) || (v2.push(b2 + p2), g2.push(_2));
       }
     }
-    return x.push(g2.length), new i2({values: g2, index: v, ptr: x, size: [f2, d2]});
+    return x2.push(g2.length), new i2({values: g2, index: v2, ptr: x2, size: [f2, d]});
   }, i2.prototype.swapRows = function(t4, e3) {
-    if (!(Te(t4) && Ar(t4) && Te(e3) && Ar(e3)))
+    if (!(Re(t4) && Ir(t4) && Re(e3) && Ir(e3)))
       throw new Error("Row index must be positive integers");
     if (this._size.length !== 2)
       throw new Error("Only two dimensional matrix is supported");
-    return Jr(t4, this._size[0]), Jr(e3, this._size[0]), i2._swapRows(t4, e3, this._size[1], this._values, this._index, this._ptr), this;
+    return nn(t4, this._size[0]), nn(e3, this._size[0]), i2._swapRows(t4, e3, this._size[1], this._values, this._index, this._ptr), this;
   }, i2._forEachRow = function(t4, e3, r3, n3, i3) {
     for (var s3 = n3[t4], a3 = n3[t4 + 1], o3 = s3; o3 < a3; o3++)
       i3(r3[o3], e3[o3]);
@@ -4676,12 +4462,12 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
         var f2 = n3 ? n3[c3] : void 0;
         i3.splice(l3, 0, e3), n3 && n3.splice(l3, 0, f2), i3.splice(l3 <= c3 ? c3 + 1 : c3, 1), n3 && n3.splice(l3 <= c3 ? c3 + 1 : c3, 1);
       } else if (l3 < h2 && i3[l3] === e3 && (c3 >= h2 || i3[c3] !== t4)) {
-        var d2 = n3 ? n3[l3] : void 0;
-        i3.splice(c3, 0, t4), n3 && n3.splice(c3, 0, d2), i3.splice(c3 <= l3 ? l3 + 1 : l3, 1), n3 && n3.splice(c3 <= l3 ? l3 + 1 : l3, 1);
+        var d = n3 ? n3[l3] : void 0;
+        i3.splice(c3, 0, t4), n3 && n3.splice(c3, 0, d), i3.splice(c3 <= l3 ? l3 + 1 : l3, 1), n3 && n3.splice(c3 <= l3 ? l3 + 1 : l3, 1);
       }
     }
   }, i2;
-}, {isClass: true}), ws = cn("number", ["typed"], (t3) => {
+}, {isClass: true}), Es = mn("number", ["typed"], (t3) => {
   var {typed: e2} = t3, r2 = e2("number", {"": function() {
     return 0;
   }, number: function(t4) {
@@ -4709,12 +4495,12 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "Unit, string | Unit": function(t4, e3) {
     return t4.toNumber(e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
   return r2.fromJSON = function(t4) {
     return parseFloat(t4.value);
   }, r2;
-}), bs = cn("bignumber", ["typed", "BigNumber"], (t3) => {
+}), Ss = mn("bignumber", ["typed", "BigNumber"], (t3) => {
   var {typed: e2, BigNumber: r2} = t3;
   return e2("bignumber", {"": function() {
     return new r2(0);
@@ -4729,9 +4515,9 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, null: function(t4) {
     return new r2(0);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
-}), _s = cn("fraction", ["typed", "Fraction"], (t3) => {
+}), Ts = mn("fraction", ["typed", "Fraction"], (t3) => {
   var {typed: e2, Fraction: r2} = t3;
   return e2("fraction", {number: function(t4) {
     if (!isFinite(t4) || isNaN(t4))
@@ -4750,9 +4536,9 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, Object: function(t4) {
     return new r2(t4);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
-}), Ms = cn("matrix", ["typed", "Matrix", "DenseMatrix", "SparseMatrix"], (t3) => {
+}), Os = mn("matrix", ["typed", "Matrix", "DenseMatrix", "SparseMatrix"], (t3) => {
   var {typed: e2, Matrix: r2, DenseMatrix: n2, SparseMatrix: i2} = t3;
   return e2("matrix", {"": function() {
     return s2([]);
@@ -4772,9 +4558,9 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
       return new i2(t4, r3);
     throw new TypeError("Unknown matrix type " + JSON.stringify(e3) + ".");
   }
-}), Es = cn("unaryMinus", ["typed"], (t3) => {
+}), zs = mn("unaryMinus", ["typed"], (t3) => {
   var {typed: e2} = t3;
-  return e2("unaryMinus", {number: cs, Complex: function(t4) {
+  return e2("unaryMinus", {number: ms, Complex: function(t4) {
     return t4.neg();
   }, BigNumber: function(t4) {
     return t4.neg();
@@ -4784,24 +4570,24 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
     var e3 = t4.clone();
     return e3.value = this(t4.value), e3;
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
-}), Ns = cn("abs", ["typed"], (t3) => {
+}), Cs = mn("abs", ["typed"], (t3) => {
   var {typed: e2} = t3;
-  return e2("abs", {number: os, Complex: function(t4) {
+  return e2("abs", {number: ps, Complex: function(t4) {
     return t4.abs();
   }, BigNumber: function(t4) {
     return t4.abs();
   }, Fraction: function(t4) {
     return t4.abs();
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }, Unit: function(t4) {
     return t4.abs();
   }});
-}), Ss = cn("addScalar", ["typed"], (t3) => {
+}), As = mn("addScalar", ["typed"], (t3) => {
   var {typed: e2} = t3;
-  return e2("addScalar", {"number, number": us, "Complex, Complex": function(t4, e3) {
+  return e2("addScalar", {"number, number": fs, "Complex, Complex": function(t4, e3) {
     return t4.add(e3);
   }, "BigNumber, BigNumber": function(t4, e3) {
     return t4.plus(e3);
@@ -4817,30 +4603,30 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
     var r2 = t4.clone();
     return r2.value = this(r2.value, e3.value), r2.fixPrefix = false, r2;
   }});
-}), Ts = cn("algorithm11", ["typed", "equalScalar"], (t3) => {
+}), Rs = mn("algorithm11", ["typed", "equalScalar"], (t3) => {
   var {typed: e2, equalScalar: r2} = t3;
   return function(t4, n2, i2, s2) {
     var a2 = t4._values, o2 = t4._index, u2 = t4._ptr, h = t4._size, c2 = t4._datatype;
     if (!a2)
       throw new Error("Cannot perform operation on Pattern Sparse Matrix and Scalar value");
-    var l2, p2 = h[0], f2 = h[1], d2 = r2, m2 = 0, y2 = i2;
-    typeof c2 == "string" && (l2 = c2, d2 = e2.find(r2, [l2, l2]), m2 = e2.convert(0, l2), n2 = e2.convert(n2, l2), y2 = e2.find(i2, [l2, l2]));
-    for (var g2 = [], v = [], x = [], w = 0; w < f2; w++) {
-      x[w] = v.length;
-      for (var b = u2[w], _ = u2[w + 1], M = b; M < _; M++) {
-        var E = o2[M], N = s2 ? y2(n2, a2[M]) : y2(a2[M], n2);
-        d2(N, m2) || (v.push(E), g2.push(N));
+    var l2, p2 = h[0], f2 = h[1], d = r2, m2 = 0, y2 = i2;
+    typeof c2 == "string" && (l2 = c2, d = e2.find(r2, [l2, l2]), m2 = e2.convert(0, l2), n2 = e2.convert(n2, l2), y2 = e2.find(i2, [l2, l2]));
+    for (var g2 = [], v2 = [], x2 = [], w2 = 0; w2 < f2; w2++) {
+      x2[w2] = v2.length;
+      for (var b2 = u2[w2], _2 = u2[w2 + 1], M = b2; M < _2; M++) {
+        var N = o2[M], E = s2 ? y2(n2, a2[M]) : y2(a2[M], n2);
+        d(E, m2) || (v2.push(N), g2.push(E));
       }
     }
-    return x[f2] = v.length, t4.createSparseMatrix({values: g2, index: v, ptr: x, size: [p2, f2], datatype: l2});
+    return x2[f2] = v2.length, t4.createSparseMatrix({values: g2, index: v2, ptr: x2, size: [p2, f2], datatype: l2});
   };
-}), Os = cn("algorithm14", ["typed"], (t3) => {
+}), Ds = mn("algorithm14", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return function(t4, n2, i2, s2) {
     var a2, o2 = t4._data, u2 = t4._size, h = t4._datatype, c2 = i2;
     typeof h == "string" && (a2 = h, n2 = e2.convert(n2, a2), c2 = e2.find(i2, [a2, a2]));
     var l2 = u2.length > 0 ? r2(c2, 0, u2, u2[0], o2, n2, s2) : [];
-    return t4.createDenseMatrix({data: l2, size: pr(u2), datatype: a2});
+    return t4.createDenseMatrix({data: l2, size: gr(u2), datatype: a2});
   };
   function r2(t4, e3, n2, i2, s2, a2, o2) {
     var u2 = [];
@@ -4852,12 +4638,12 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
         u2[c2] = r2(t4, e3 + 1, n2, n2[e3 + 1], s2[c2], a2, o2);
     return u2;
   }
-}), zs = cn("ceil", ["typed", "config", "round", "matrix", "equalScalar"], (t3) => {
-  var {typed: e2, config: r2, round: n2, matrix: i2, equalScalar: s2} = t3, a2 = Ts({typed: e2, equalScalar: s2}), o2 = Os({typed: e2});
+}), ks = mn("ceil", ["typed", "config", "round", "matrix", "equalScalar"], (t3) => {
+  var {typed: e2, config: r2, round: n2, matrix: i2, equalScalar: s2} = t3, a2 = Rs({typed: e2, equalScalar: s2}), o2 = Ds({typed: e2});
   return e2("ceil", {number: function(t4) {
-    return Pr(t4, n2(t4), r2.epsilon) ? n2(t4) : ls(t4);
+    return Vr(t4, n2(t4), r2.epsilon) ? n2(t4) : ys(t4);
   }, "number, number": function(t4, e3) {
-    if (Pr(t4, n2(t4, e3), r2.epsilon))
+    if (Vr(t4, n2(t4, e3), r2.epsilon))
       return n2(t4, e3);
     var [i3, s3] = "".concat(t4, "e").split("e"), a3 = Math.ceil(Number("".concat(i3, "e").concat(Number(s3) + e3)));
     return [i3, s3] = "".concat(a3, "e").split("e"), Number("".concat(i3, "e").concat(Number(s3) - e3));
@@ -4866,17 +4652,17 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "Complex, number": function(t4, e3) {
     return t4.ceil(e3);
   }, BigNumber: function(t4) {
-    return ys(t4, n2(t4), r2.epsilon) ? n2(t4) : t4.ceil();
+    return bs(t4, n2(t4), r2.epsilon) ? n2(t4) : t4.ceil();
   }, "BigNumber, BigNumber": function(t4, e3) {
-    return ys(t4, n2(t4, e3), r2.epsilon) ? n2(t4, e3) : t4.toDecimalPlaces(e3.toNumber(), Gi.ROUND_CEIL);
+    return bs(t4, n2(t4, e3), r2.epsilon) ? n2(t4, e3) : t4.toDecimalPlaces(e3.toNumber(), Qi.ROUND_CEIL);
   }, Fraction: function(t4) {
     return t4.ceil();
   }, "Fraction, number": function(t4, e3) {
     return t4.ceil(e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }, "Array | Matrix, number": function(t4, e3) {
-    return is(t4, (t5) => this(t5, e3));
+    return hs(t4, (t5) => this(t5, e3));
   }, "SparseMatrix, number | BigNumber": function(t4, e3) {
     return a2(t4, e3, this, false);
   }, "DenseMatrix, number | BigNumber": function(t4, e3) {
@@ -4884,8 +4670,8 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "number | Complex | BigNumber, Array": function(t4, e3) {
     return o2(i2(e3), t4, this, true).valueOf();
   }});
-}), As = cn("fix", ["typed", "Complex", "matrix", "ceil", "floor"], (t3) => {
-  var {typed: e2, Complex: r2, matrix: n2, ceil: i2, floor: s2} = t3, a2 = Os({typed: e2});
+}), Is = mn("fix", ["typed", "Complex", "matrix", "ceil", "floor"], (t3) => {
+  var {typed: e2, Complex: r2, matrix: n2, ceil: i2, floor: s2} = t3, a2 = Ds({typed: e2});
   return e2("fix", {number: function(t4) {
     return t4 > 0 ? s2(t4) : i2(t4);
   }, "number, number | BigNumber": function(t4, e3) {
@@ -4903,18 +4689,18 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "Fraction, number | BigNumber": function(t4, e3) {
     return t4.s < 0 ? t4.ceil(e3) : t4.floor(e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }, "Array | Matrix, number | BigNumber": function(t4, e3) {
-    return is(t4, (t5) => this(t5, e3));
+    return hs(t4, (t5) => this(t5, e3));
   }, "number | Complex | BigNumber, Array": function(t4, e3) {
     return a2(n2(e3), t4, this, true).valueOf();
   }});
-}), Cs = cn("floor", ["typed", "config", "round", "matrix", "equalScalar"], (t3) => {
-  var {typed: e2, config: r2, round: n2, matrix: i2, equalScalar: s2} = t3, a2 = Ts({typed: e2, equalScalar: s2}), o2 = Os({typed: e2});
+}), Ls = mn("floor", ["typed", "config", "round", "matrix", "equalScalar"], (t3) => {
+  var {typed: e2, config: r2, round: n2, matrix: i2, equalScalar: s2} = t3, a2 = Rs({typed: e2, equalScalar: s2}), o2 = Ds({typed: e2});
   return e2("floor", {number: function(t4) {
-    return Pr(t4, n2(t4), r2.epsilon) ? n2(t4) : Math.floor(t4);
+    return Vr(t4, n2(t4), r2.epsilon) ? n2(t4) : Math.floor(t4);
   }, "number, number": function(t4, e3) {
-    if (Pr(t4, n2(t4, e3), r2.epsilon))
+    if (Vr(t4, n2(t4, e3), r2.epsilon))
       return n2(t4, e3);
     var [i3, s3] = "".concat(t4, "e").split("e"), a3 = Math.floor(Number("".concat(i3, "e").concat(Number(s3) + e3)));
     return [i3, s3] = "".concat(a3, "e").split("e"), Number("".concat(i3, "e").concat(Number(s3) - e3));
@@ -4923,17 +4709,17 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "Complex, number": function(t4, e3) {
     return t4.floor(e3);
   }, BigNumber: function(t4) {
-    return ys(t4, n2(t4), r2.epsilon) ? n2(t4) : t4.floor();
+    return bs(t4, n2(t4), r2.epsilon) ? n2(t4) : t4.floor();
   }, "BigNumber, BigNumber": function(t4, e3) {
-    return ys(t4, n2(t4, e3), r2.epsilon) ? n2(t4, e3) : t4.toDecimalPlaces(e3.toNumber(), Gi.ROUND_FLOOR);
+    return bs(t4, n2(t4, e3), r2.epsilon) ? n2(t4, e3) : t4.toDecimalPlaces(e3.toNumber(), Qi.ROUND_FLOOR);
   }, Fraction: function(t4) {
     return t4.floor();
   }, "Fraction, number": function(t4, e3) {
     return t4.floor(e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }, "Array | Matrix, number": function(t4, e3) {
-    return is(t4, (t5) => this(t5, e3));
+    return hs(t4, (t5) => this(t5, e3));
   }, "SparseMatrix, number | BigNumber": function(t4, e3) {
     return a2(t4, e3, this, false);
   }, "DenseMatrix, number | BigNumber": function(t4, e3) {
@@ -4941,90 +4727,90 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
   }, "number | Complex | BigNumber, Array": function(t4, e3) {
     return o2(i2(e3), t4, this, true).valueOf();
   }});
-}), Rs = cn("algorithm01", ["typed"], (t3) => {
+}), Bs = mn("algorithm01", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return function(t4, r2, n2, i2) {
     var s2 = t4._data, a2 = t4._size, o2 = t4._datatype, u2 = r2._values, h = r2._index, c2 = r2._ptr, l2 = r2._size, p2 = r2._datatype;
     if (a2.length !== l2.length)
-      throw new Wr(a2.length, l2.length);
+      throw new Jr(a2.length, l2.length);
     if (a2[0] !== l2[0] || a2[1] !== l2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + a2 + ") must match Matrix B (" + l2 + ")");
     if (!u2)
       throw new Error("Cannot perform operation on Dense Matrix and Pattern Sparse Matrix");
-    var f2, d2, m2 = a2[0], y2 = a2[1], g2 = typeof o2 == "string" && o2 === p2 ? o2 : void 0, v = g2 ? e2.find(n2, [g2, g2]) : n2, x = [];
+    var f2, d, m2 = a2[0], y2 = a2[1], g2 = typeof o2 == "string" && o2 === p2 ? o2 : void 0, v2 = g2 ? e2.find(n2, [g2, g2]) : n2, x2 = [];
     for (f2 = 0; f2 < m2; f2++)
-      x[f2] = [];
-    var w = [], b = [];
-    for (d2 = 0; d2 < y2; d2++) {
-      for (var _ = d2 + 1, M = c2[d2], E = c2[d2 + 1], N = M; N < E; N++)
-        w[f2 = h[N]] = i2 ? v(u2[N], s2[f2][d2]) : v(s2[f2][d2], u2[N]), b[f2] = _;
+      x2[f2] = [];
+    var w2 = [], b2 = [];
+    for (d = 0; d < y2; d++) {
+      for (var _2 = d + 1, M = c2[d], N = c2[d + 1], E = M; E < N; E++)
+        w2[f2 = h[E]] = i2 ? v2(u2[E], s2[f2][d]) : v2(s2[f2][d], u2[E]), b2[f2] = _2;
       for (f2 = 0; f2 < m2; f2++)
-        b[f2] === _ ? x[f2][d2] = w[f2] : x[f2][d2] = s2[f2][d2];
+        b2[f2] === _2 ? x2[f2][d] = w2[f2] : x2[f2][d] = s2[f2][d];
     }
-    return t4.createDenseMatrix({data: x, size: [m2, y2], datatype: g2});
+    return t4.createDenseMatrix({data: x2, size: [m2, y2], datatype: g2});
   };
-}), Ds = cn("algorithm04", ["typed", "equalScalar"], (t3) => {
+}), Fs = mn("algorithm04", ["typed", "equalScalar"], (t3) => {
   var {typed: e2, equalScalar: r2} = t3;
   return function(t4, n2, i2) {
-    var s2 = t4._values, a2 = t4._index, o2 = t4._ptr, u2 = t4._size, h = t4._datatype, c2 = n2._values, l2 = n2._index, p2 = n2._ptr, f2 = n2._size, d2 = n2._datatype;
+    var s2 = t4._values, a2 = t4._index, o2 = t4._ptr, u2 = t4._size, h = t4._datatype, c2 = n2._values, l2 = n2._index, p2 = n2._ptr, f2 = n2._size, d = n2._datatype;
     if (u2.length !== f2.length)
-      throw new Wr(u2.length, f2.length);
+      throw new Jr(u2.length, f2.length);
     if (u2[0] !== f2[0] || u2[1] !== f2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + u2 + ") must match Matrix B (" + f2 + ")");
-    var m2, y2 = u2[0], g2 = u2[1], v = r2, x = 0, w = i2;
-    typeof h == "string" && h === d2 && (m2 = h, v = e2.find(r2, [m2, m2]), x = e2.convert(0, m2), w = e2.find(i2, [m2, m2]));
-    var b, _, M, E, N, S = s2 && c2 ? [] : void 0, T = [], O2 = [], z2 = s2 && c2 ? [] : void 0, A2 = s2 && c2 ? [] : void 0, C2 = [], R2 = [];
-    for (_ = 0; _ < g2; _++) {
-      O2[_] = T.length;
-      var D2 = _ + 1;
-      for (E = o2[_], N = o2[_ + 1], M = E; M < N; M++)
-        b = a2[M], T.push(b), C2[b] = D2, z2 && (z2[b] = s2[M]);
-      for (E = p2[_], N = p2[_ + 1], M = E; M < N; M++)
-        if (C2[b = l2[M]] === D2) {
-          if (z2) {
-            var k2 = w(z2[b], c2[M]);
-            v(k2, x) ? C2[b] = null : z2[b] = k2;
+    var m2, y2 = u2[0], g2 = u2[1], v2 = r2, x2 = 0, w2 = i2;
+    typeof h == "string" && h === d && (m2 = h, v2 = e2.find(r2, [m2, m2]), x2 = e2.convert(0, m2), w2 = e2.find(i2, [m2, m2]));
+    var b2, _2, M, N, E, S = s2 && c2 ? [] : void 0, T = [], O = [], z = s2 && c2 ? [] : void 0, C = s2 && c2 ? [] : void 0, A = [], R = [];
+    for (_2 = 0; _2 < g2; _2++) {
+      O[_2] = T.length;
+      var D = _2 + 1;
+      for (N = o2[_2], E = o2[_2 + 1], M = N; M < E; M++)
+        b2 = a2[M], T.push(b2), A[b2] = D, z && (z[b2] = s2[M]);
+      for (N = p2[_2], E = p2[_2 + 1], M = N; M < E; M++)
+        if (A[b2 = l2[M]] === D) {
+          if (z) {
+            var k = w2(z[b2], c2[M]);
+            v2(k, x2) ? A[b2] = null : z[b2] = k;
           }
         } else
-          T.push(b), R2[b] = D2, A2 && (A2[b] = c2[M]);
-      if (z2 && A2)
-        for (M = O2[_]; M < T.length; )
-          C2[b = T[M]] === D2 ? (S[M] = z2[b], M++) : R2[b] === D2 ? (S[M] = A2[b], M++) : T.splice(M, 1);
+          T.push(b2), R[b2] = D, C && (C[b2] = c2[M]);
+      if (z && C)
+        for (M = O[_2]; M < T.length; )
+          A[b2 = T[M]] === D ? (S[M] = z[b2], M++) : R[b2] === D ? (S[M] = C[b2], M++) : T.splice(M, 1);
     }
-    return O2[g2] = T.length, t4.createSparseMatrix({values: S, index: T, ptr: O2, size: [y2, g2], datatype: m2});
+    return O[g2] = T.length, t4.createSparseMatrix({values: S, index: T, ptr: O, size: [y2, g2], datatype: m2});
   };
-}), ks = cn("algorithm10", ["typed", "DenseMatrix"], (t3) => {
+}), Ps = mn("algorithm10", ["typed", "DenseMatrix"], (t3) => {
   var {typed: e2, DenseMatrix: r2} = t3;
   return function(t4, n2, i2, s2) {
     var a2 = t4._values, o2 = t4._index, u2 = t4._ptr, h = t4._size, c2 = t4._datatype;
     if (!a2)
       throw new Error("Cannot perform operation on Pattern Sparse Matrix and Scalar value");
-    var l2, p2 = h[0], f2 = h[1], d2 = i2;
-    typeof c2 == "string" && (l2 = c2, n2 = e2.convert(n2, l2), d2 = e2.find(i2, [l2, l2]));
-    for (var m2 = [], y2 = [], g2 = [], v = 0; v < f2; v++) {
-      for (var x = v + 1, w = u2[v], b = u2[v + 1], _ = w; _ < b; _++) {
-        var M = o2[_];
-        y2[M] = a2[_], g2[M] = x;
+    var l2, p2 = h[0], f2 = h[1], d = i2;
+    typeof c2 == "string" && (l2 = c2, n2 = e2.convert(n2, l2), d = e2.find(i2, [l2, l2]));
+    for (var m2 = [], y2 = [], g2 = [], v2 = 0; v2 < f2; v2++) {
+      for (var x2 = v2 + 1, w2 = u2[v2], b2 = u2[v2 + 1], _2 = w2; _2 < b2; _2++) {
+        var M = o2[_2];
+        y2[M] = a2[_2], g2[M] = x2;
       }
-      for (var E = 0; E < p2; E++)
-        v === 0 && (m2[E] = []), g2[E] === x ? m2[E][v] = s2 ? d2(n2, y2[E]) : d2(y2[E], n2) : m2[E][v] = n2;
+      for (var N = 0; N < p2; N++)
+        v2 === 0 && (m2[N] = []), g2[N] === x2 ? m2[N][v2] = s2 ? d(n2, y2[N]) : d(y2[N], n2) : m2[N][v2] = n2;
     }
     return new r2({data: m2, size: [p2, f2], datatype: l2});
   };
-}), Is = cn("algorithm13", ["typed"], (t3) => {
+}), Us = mn("algorithm13", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return function(t4, n2, i2) {
     var s2, a2 = t4._data, o2 = t4._size, u2 = t4._datatype, h = n2._data, c2 = n2._size, l2 = n2._datatype, p2 = [];
     if (o2.length !== c2.length)
-      throw new Wr(o2.length, c2.length);
+      throw new Jr(o2.length, c2.length);
     for (var f2 = 0; f2 < o2.length; f2++) {
       if (o2[f2] !== c2[f2])
         throw new RangeError("Dimension mismatch. Matrix A (" + o2 + ") must match Matrix B (" + c2 + ")");
       p2[f2] = o2[f2];
     }
-    var d2 = i2;
-    typeof u2 == "string" && u2 === l2 && (s2 = u2, d2 = e2.find(i2, [s2, s2]));
-    var m2 = p2.length > 0 ? r2(d2, 0, p2, p2[0], a2, h) : [];
+    var d = i2;
+    typeof u2 == "string" && u2 === l2 && (s2 = u2, d = e2.find(i2, [s2, s2]));
+    var m2 = p2.length > 0 ? r2(d, 0, p2, p2[0], a2, h) : [];
     return t4.createDenseMatrix({data: m2, size: p2, datatype: s2});
   };
   function r2(t4, e3, n2, i2, s2, a2) {
@@ -5037,102 +4823,102 @@ var xs = cn("SparseMatrix", ["typed", "equalScalar", "Matrix"], (t3) => {
         o2[h] = r2(t4, e3 + 1, n2, n2[e3 + 1], s2[h], a2[h]);
     return o2;
   }
-}), Ls = cn("algorithm02", ["typed", "equalScalar"], (t3) => {
+}), js = mn("algorithm02", ["typed", "equalScalar"], (t3) => {
   var {typed: e2, equalScalar: r2} = t3;
   return function(t4, n2, i2, s2) {
     var a2 = t4._data, o2 = t4._size, u2 = t4._datatype, h = n2._values, c2 = n2._index, l2 = n2._ptr, p2 = n2._size, f2 = n2._datatype;
     if (o2.length !== p2.length)
-      throw new Wr(o2.length, p2.length);
+      throw new Jr(o2.length, p2.length);
     if (o2[0] !== p2[0] || o2[1] !== p2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + o2 + ") must match Matrix B (" + p2 + ")");
     if (!h)
       throw new Error("Cannot perform operation on Dense Matrix and Pattern Sparse Matrix");
-    var d2, m2 = o2[0], y2 = o2[1], g2 = r2, v = 0, x = i2;
-    typeof u2 == "string" && u2 === f2 && (d2 = u2, g2 = e2.find(r2, [d2, d2]), v = e2.convert(0, d2), x = e2.find(i2, [d2, d2]));
-    for (var w = [], b = [], _ = [], M = 0; M < y2; M++) {
-      _[M] = b.length;
-      for (var E = l2[M], N = l2[M + 1], S = E; S < N; S++) {
-        var T = c2[S], O2 = s2 ? x(h[S], a2[T][M]) : x(a2[T][M], h[S]);
-        g2(O2, v) || (b.push(T), w.push(O2));
+    var d, m2 = o2[0], y2 = o2[1], g2 = r2, v2 = 0, x2 = i2;
+    typeof u2 == "string" && u2 === f2 && (d = u2, g2 = e2.find(r2, [d, d]), v2 = e2.convert(0, d), x2 = e2.find(i2, [d, d]));
+    for (var w2 = [], b2 = [], _2 = [], M = 0; M < y2; M++) {
+      _2[M] = b2.length;
+      for (var N = l2[M], E = l2[M + 1], S = N; S < E; S++) {
+        var T = c2[S], O = s2 ? x2(h[S], a2[T][M]) : x2(a2[T][M], h[S]);
+        g2(O, v2) || (b2.push(T), w2.push(O));
       }
     }
-    return _[y2] = b.length, n2.createSparseMatrix({values: w, index: b, ptr: _, size: [m2, y2], datatype: d2});
+    return _2[y2] = b2.length, n2.createSparseMatrix({values: w2, index: b2, ptr: _2, size: [m2, y2], datatype: d});
   };
-}), Bs = cn("algorithm03", ["typed"], (t3) => {
+}), qs = mn("algorithm03", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return function(t4, r2, n2, i2) {
     var s2 = t4._data, a2 = t4._size, o2 = t4._datatype, u2 = r2._values, h = r2._index, c2 = r2._ptr, l2 = r2._size, p2 = r2._datatype;
     if (a2.length !== l2.length)
-      throw new Wr(a2.length, l2.length);
+      throw new Jr(a2.length, l2.length);
     if (a2[0] !== l2[0] || a2[1] !== l2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + a2 + ") must match Matrix B (" + l2 + ")");
     if (!u2)
       throw new Error("Cannot perform operation on Dense Matrix and Pattern Sparse Matrix");
-    var f2, d2 = a2[0], m2 = a2[1], y2 = 0, g2 = n2;
+    var f2, d = a2[0], m2 = a2[1], y2 = 0, g2 = n2;
     typeof o2 == "string" && o2 === p2 && (f2 = o2, y2 = e2.convert(0, f2), g2 = e2.find(n2, [f2, f2]));
-    for (var v = [], x = 0; x < d2; x++)
-      v[x] = [];
-    for (var w = [], b = [], _ = 0; _ < m2; _++) {
-      for (var M = _ + 1, E = c2[_], N = c2[_ + 1], S = E; S < N; S++) {
+    for (var v2 = [], x2 = 0; x2 < d; x2++)
+      v2[x2] = [];
+    for (var w2 = [], b2 = [], _2 = 0; _2 < m2; _2++) {
+      for (var M = _2 + 1, N = c2[_2], E = c2[_2 + 1], S = N; S < E; S++) {
         var T = h[S];
-        w[T] = i2 ? g2(u2[S], s2[T][_]) : g2(s2[T][_], u2[S]), b[T] = M;
+        w2[T] = i2 ? g2(u2[S], s2[T][_2]) : g2(s2[T][_2], u2[S]), b2[T] = M;
       }
-      for (var O2 = 0; O2 < d2; O2++)
-        b[O2] === M ? v[O2][_] = w[O2] : v[O2][_] = i2 ? g2(y2, s2[O2][_]) : g2(s2[O2][_], y2);
+      for (var O = 0; O < d; O++)
+        b2[O] === M ? v2[O][_2] = w2[O] : v2[O][_2] = i2 ? g2(y2, s2[O][_2]) : g2(s2[O][_2], y2);
     }
-    return t4.createDenseMatrix({data: v, size: [d2, m2], datatype: f2});
+    return t4.createDenseMatrix({data: v2, size: [d, m2], datatype: f2});
   };
-}), Fs = cn("algorithm05", ["typed", "equalScalar"], (t3) => {
+}), Hs = mn("algorithm05", ["typed", "equalScalar"], (t3) => {
   var {typed: e2, equalScalar: r2} = t3;
   return function(t4, n2, i2) {
-    var s2 = t4._values, a2 = t4._index, o2 = t4._ptr, u2 = t4._size, h = t4._datatype, c2 = n2._values, l2 = n2._index, p2 = n2._ptr, f2 = n2._size, d2 = n2._datatype;
+    var s2 = t4._values, a2 = t4._index, o2 = t4._ptr, u2 = t4._size, h = t4._datatype, c2 = n2._values, l2 = n2._index, p2 = n2._ptr, f2 = n2._size, d = n2._datatype;
     if (u2.length !== f2.length)
-      throw new Wr(u2.length, f2.length);
+      throw new Jr(u2.length, f2.length);
     if (u2[0] !== f2[0] || u2[1] !== f2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + u2 + ") must match Matrix B (" + f2 + ")");
-    var m2, y2 = u2[0], g2 = u2[1], v = r2, x = 0, w = i2;
-    typeof h == "string" && h === d2 && (m2 = h, v = e2.find(r2, [m2, m2]), x = e2.convert(0, m2), w = e2.find(i2, [m2, m2]));
-    var b, _, M, E, N = s2 && c2 ? [] : void 0, S = [], T = [], O2 = N ? [] : void 0, z2 = N ? [] : void 0, A2 = [], C2 = [];
-    for (_ = 0; _ < g2; _++) {
-      T[_] = S.length;
-      var R2 = _ + 1;
-      for (M = o2[_], E = o2[_ + 1]; M < E; M++)
-        b = a2[M], S.push(b), A2[b] = R2, O2 && (O2[b] = s2[M]);
-      for (M = p2[_], E = p2[_ + 1]; M < E; M++)
-        A2[b = l2[M]] !== R2 && S.push(b), C2[b] = R2, z2 && (z2[b] = c2[M]);
-      if (N)
-        for (M = T[_]; M < S.length; ) {
-          var D2 = A2[b = S[M]], k2 = C2[b];
-          if (D2 === R2 || k2 === R2) {
-            var I2 = w(D2 === R2 ? O2[b] : x, k2 === R2 ? z2[b] : x);
-            v(I2, x) ? S.splice(M, 1) : (N.push(I2), M++);
+    var m2, y2 = u2[0], g2 = u2[1], v2 = r2, x2 = 0, w2 = i2;
+    typeof h == "string" && h === d && (m2 = h, v2 = e2.find(r2, [m2, m2]), x2 = e2.convert(0, m2), w2 = e2.find(i2, [m2, m2]));
+    var b2, _2, M, N, E = s2 && c2 ? [] : void 0, S = [], T = [], O = E ? [] : void 0, z = E ? [] : void 0, C = [], A = [];
+    for (_2 = 0; _2 < g2; _2++) {
+      T[_2] = S.length;
+      var R = _2 + 1;
+      for (M = o2[_2], N = o2[_2 + 1]; M < N; M++)
+        b2 = a2[M], S.push(b2), C[b2] = R, O && (O[b2] = s2[M]);
+      for (M = p2[_2], N = p2[_2 + 1]; M < N; M++)
+        C[b2 = l2[M]] !== R && S.push(b2), A[b2] = R, z && (z[b2] = c2[M]);
+      if (E)
+        for (M = T[_2]; M < S.length; ) {
+          var D = C[b2 = S[M]], k = A[b2];
+          if (D === R || k === R) {
+            var I = w2(D === R ? O[b2] : x2, k === R ? z[b2] : x2);
+            v2(I, x2) ? S.splice(M, 1) : (E.push(I), M++);
           }
         }
     }
-    return T[g2] = S.length, t4.createSparseMatrix({values: N, index: S, ptr: T, size: [y2, g2], datatype: m2});
+    return T[g2] = S.length, t4.createSparseMatrix({values: E, index: S, ptr: T, size: [y2, g2], datatype: m2});
   };
-}), Ps = cn("algorithm12", ["typed", "DenseMatrix"], (t3) => {
+}), Vs = mn("algorithm12", ["typed", "DenseMatrix"], (t3) => {
   var {typed: e2, DenseMatrix: r2} = t3;
   return function(t4, n2, i2, s2) {
     var a2 = t4._values, o2 = t4._index, u2 = t4._ptr, h = t4._size, c2 = t4._datatype;
     if (!a2)
       throw new Error("Cannot perform operation on Pattern Sparse Matrix and Scalar value");
-    var l2, p2 = h[0], f2 = h[1], d2 = i2;
-    typeof c2 == "string" && (l2 = c2, n2 = e2.convert(n2, l2), d2 = e2.find(i2, [l2, l2]));
-    for (var m2 = [], y2 = [], g2 = [], v = 0; v < f2; v++) {
-      for (var x = v + 1, w = u2[v], b = u2[v + 1], _ = w; _ < b; _++) {
-        var M = o2[_];
-        y2[M] = a2[_], g2[M] = x;
+    var l2, p2 = h[0], f2 = h[1], d = i2;
+    typeof c2 == "string" && (l2 = c2, n2 = e2.convert(n2, l2), d = e2.find(i2, [l2, l2]));
+    for (var m2 = [], y2 = [], g2 = [], v2 = 0; v2 < f2; v2++) {
+      for (var x2 = v2 + 1, w2 = u2[v2], b2 = u2[v2 + 1], _2 = w2; _2 < b2; _2++) {
+        var M = o2[_2];
+        y2[M] = a2[_2], g2[M] = x2;
       }
-      for (var E = 0; E < p2; E++)
-        v === 0 && (m2[E] = []), g2[E] === x ? m2[E][v] = s2 ? d2(n2, y2[E]) : d2(y2[E], n2) : m2[E][v] = s2 ? d2(n2, 0) : d2(0, n2);
+      for (var N = 0; N < p2; N++)
+        v2 === 0 && (m2[N] = []), g2[N] === x2 ? m2[N][v2] = s2 ? d(n2, y2[N]) : d(y2[N], n2) : m2[N][v2] = s2 ? d(n2, 0) : d(0, n2);
     }
     return new r2({data: m2, size: [p2, f2], datatype: l2});
   };
 });
-cn("mod", ["typed", "matrix", "equalScalar", "DenseMatrix"], (t3) => {
-  var {typed: e2, matrix: r2, equalScalar: n2, DenseMatrix: i2} = t3, s2 = Ls({typed: e2, equalScalar: n2}), a2 = Bs({typed: e2}), o2 = Fs({typed: e2, equalScalar: n2}), u2 = Ts({typed: e2, equalScalar: n2}), h = Ps({typed: e2, DenseMatrix: i2}), c2 = Is({typed: e2}), l2 = Os({typed: e2});
-  return e2("mod", {"number, number": ps, "BigNumber, BigNumber": function(t4, e3) {
+mn("mod", ["typed", "matrix", "equalScalar", "DenseMatrix"], (t3) => {
+  var {typed: e2, matrix: r2, equalScalar: n2, DenseMatrix: i2} = t3, s2 = js({typed: e2, equalScalar: n2}), a2 = qs({typed: e2}), o2 = Hs({typed: e2, equalScalar: n2}), u2 = Rs({typed: e2, equalScalar: n2}), h = Vs({typed: e2, DenseMatrix: i2}), c2 = Us({typed: e2}), l2 = Ds({typed: e2});
+  return e2("mod", {"number, number": gs, "BigNumber, BigNumber": function(t4, e3) {
     if (e3.isNeg())
       throw new Error("Cannot calculate mod for a negative divisor");
     return e3.isZero() ? t4 : t4.mod(e3);
@@ -5168,9 +4954,9 @@ cn("mod", ["typed", "matrix", "equalScalar", "DenseMatrix"], (t3) => {
     return l2(r2(e3), t4, this, true).valueOf();
   }});
 });
-var js = cn("multiplyScalar", ["typed"], (t3) => {
+var Gs = mn("multiplyScalar", ["typed"], (t3) => {
   var {typed: e2} = t3;
-  return e2("multiplyScalar", {"number, number": hs, "Complex, Complex": function(t4, e3) {
+  return e2("multiplyScalar", {"number, number": ds, "Complex, Complex": function(t4, e3) {
     return t4.mul(e3);
   }, "BigNumber, BigNumber": function(t4, e3) {
     return t4.times(e3);
@@ -5185,8 +4971,8 @@ var js = cn("multiplyScalar", ["typed"], (t3) => {
   }, "Unit, Unit": function(t4, e3) {
     return t4.multiply(e3);
   }});
-}), qs = cn("multiply", ["typed", "matrix", "addScalar", "multiplyScalar", "equalScalar", "dot"], (t3) => {
-  var {typed: e2, matrix: r2, addScalar: n2, multiplyScalar: i2, equalScalar: s2, dot: a2} = t3, o2 = Ts({typed: e2, equalScalar: s2}), u2 = Os({typed: e2});
+}), Ws = mn("multiply", ["typed", "matrix", "addScalar", "multiplyScalar", "equalScalar", "dot"], (t3) => {
+  var {typed: e2, matrix: r2, addScalar: n2, multiplyScalar: i2, equalScalar: s2, dot: a2} = t3, o2 = Rs({typed: e2, equalScalar: s2}), u2 = Ds({typed: e2});
   function h(t4, e3) {
     switch (t4.length) {
       case 1:
@@ -5225,125 +5011,125 @@ var js = cn("multiplyScalar", ["typed"], (t3) => {
     if (r3.storage() !== "dense")
       throw new Error("Support for SparseMatrix not implemented");
     return function(t5, r4) {
-      var s3, a3 = t5._data, o3 = t5._size, u3 = t5._datatype, h2 = r4._data, c3 = r4._size, l3 = r4._datatype, p3 = o3[0], f2 = c3[1], d2 = n2, m2 = i2;
-      u3 && l3 && u3 === l3 && typeof u3 == "string" && (s3 = u3, d2 = e2.find(n2, [s3, s3]), m2 = e2.find(i2, [s3, s3]));
+      var s3, a3 = t5._data, o3 = t5._size, u3 = t5._datatype, h2 = r4._data, c3 = r4._size, l3 = r4._datatype, p3 = o3[0], f2 = c3[1], d = n2, m2 = i2;
+      u3 && l3 && u3 === l3 && typeof u3 == "string" && (s3 = u3, d = e2.find(n2, [s3, s3]), m2 = e2.find(i2, [s3, s3]));
       for (var y2 = [], g2 = 0; g2 < f2; g2++) {
-        for (var v = m2(a3[0], h2[0][g2]), x = 1; x < p3; x++)
-          v = d2(v, m2(a3[x], h2[x][g2]));
-        y2[g2] = v;
+        for (var v2 = m2(a3[0], h2[0][g2]), x2 = 1; x2 < p3; x2++)
+          v2 = d(v2, m2(a3[x2], h2[x2][g2]));
+        y2[g2] = v2;
       }
       return t5.createDenseMatrix({data: y2, size: [f2], datatype: s3});
     }(t4, r3);
   }
   var l2 = e2("_multiplyMatrixVector", {"DenseMatrix, any": function(t4, r3) {
-    var s3, a3 = t4._data, o3 = t4._size, u3 = t4._datatype, h2 = r3._data, c3 = r3._datatype, l3 = o3[0], p3 = o3[1], f2 = n2, d2 = i2;
-    u3 && c3 && u3 === c3 && typeof u3 == "string" && (s3 = u3, f2 = e2.find(n2, [s3, s3]), d2 = e2.find(i2, [s3, s3]));
+    var s3, a3 = t4._data, o3 = t4._size, u3 = t4._datatype, h2 = r3._data, c3 = r3._datatype, l3 = o3[0], p3 = o3[1], f2 = n2, d = i2;
+    u3 && c3 && u3 === c3 && typeof u3 == "string" && (s3 = u3, f2 = e2.find(n2, [s3, s3]), d = e2.find(i2, [s3, s3]));
     for (var m2 = [], y2 = 0; y2 < l3; y2++) {
-      for (var g2 = a3[y2], v = d2(g2[0], h2[0]), x = 1; x < p3; x++)
-        v = f2(v, d2(g2[x], h2[x]));
-      m2[y2] = v;
+      for (var g2 = a3[y2], v2 = d(g2[0], h2[0]), x2 = 1; x2 < p3; x2++)
+        v2 = f2(v2, d(g2[x2], h2[x2]));
+      m2[y2] = v2;
     }
     return t4.createDenseMatrix({data: m2, size: [l3], datatype: s3});
   }, "SparseMatrix, any": function(t4, r3) {
     var a3 = t4._values, o3 = t4._index, u3 = t4._ptr, h2 = t4._datatype;
     if (!a3)
       throw new Error("Cannot multiply Pattern only Matrix times Dense Matrix");
-    var c3, l3 = r3._data, p3 = r3._datatype, f2 = t4._size[0], d2 = r3._size[0], m2 = [], y2 = [], g2 = [], v = n2, x = i2, w = s2, b = 0;
-    h2 && p3 && h2 === p3 && typeof h2 == "string" && (c3 = h2, v = e2.find(n2, [c3, c3]), x = e2.find(i2, [c3, c3]), w = e2.find(s2, [c3, c3]), b = e2.convert(0, c3));
-    var _ = [], M = [];
+    var c3, l3 = r3._data, p3 = r3._datatype, f2 = t4._size[0], d = r3._size[0], m2 = [], y2 = [], g2 = [], v2 = n2, x2 = i2, w2 = s2, b2 = 0;
+    h2 && p3 && h2 === p3 && typeof h2 == "string" && (c3 = h2, v2 = e2.find(n2, [c3, c3]), x2 = e2.find(i2, [c3, c3]), w2 = e2.find(s2, [c3, c3]), b2 = e2.convert(0, c3));
+    var _2 = [], M = [];
     g2[0] = 0;
-    for (var E = 0; E < d2; E++) {
-      var N = l3[E];
-      if (!w(N, b))
-        for (var S = u3[E], T = u3[E + 1], O2 = S; O2 < T; O2++) {
-          var z2 = o3[O2];
-          M[z2] ? _[z2] = v(_[z2], x(N, a3[O2])) : (M[z2] = true, y2.push(z2), _[z2] = x(N, a3[O2]));
+    for (var N = 0; N < d; N++) {
+      var E = l3[N];
+      if (!w2(E, b2))
+        for (var S = u3[N], T = u3[N + 1], O = S; O < T; O++) {
+          var z = o3[O];
+          M[z] ? _2[z] = v2(_2[z], x2(E, a3[O])) : (M[z] = true, y2.push(z), _2[z] = x2(E, a3[O]));
         }
     }
-    for (var A2 = y2.length, C2 = 0; C2 < A2; C2++) {
-      var R2 = y2[C2];
-      m2[C2] = _[R2];
+    for (var C = y2.length, A = 0; A < C; A++) {
+      var R = y2[A];
+      m2[A] = _2[R];
     }
     return g2[1] = y2.length, t4.createSparseMatrix({values: m2, index: y2, ptr: g2, size: [f2, 1], datatype: c3});
   }}), p2 = e2("_multiplyMatrixMatrix", {"DenseMatrix, DenseMatrix": function(t4, r3) {
-    var s3, a3 = t4._data, o3 = t4._size, u3 = t4._datatype, h2 = r3._data, c3 = r3._size, l3 = r3._datatype, p3 = o3[0], f2 = o3[1], d2 = c3[1], m2 = n2, y2 = i2;
+    var s3, a3 = t4._data, o3 = t4._size, u3 = t4._datatype, h2 = r3._data, c3 = r3._size, l3 = r3._datatype, p3 = o3[0], f2 = o3[1], d = c3[1], m2 = n2, y2 = i2;
     u3 && l3 && u3 === l3 && typeof u3 == "string" && (s3 = u3, m2 = e2.find(n2, [s3, s3]), y2 = e2.find(i2, [s3, s3]));
-    for (var g2 = [], v = 0; v < p3; v++) {
-      var x = a3[v];
-      g2[v] = [];
-      for (var w = 0; w < d2; w++) {
-        for (var b = y2(x[0], h2[0][w]), _ = 1; _ < f2; _++)
-          b = m2(b, y2(x[_], h2[_][w]));
-        g2[v][w] = b;
+    for (var g2 = [], v2 = 0; v2 < p3; v2++) {
+      var x2 = a3[v2];
+      g2[v2] = [];
+      for (var w2 = 0; w2 < d; w2++) {
+        for (var b2 = y2(x2[0], h2[0][w2]), _2 = 1; _2 < f2; _2++)
+          b2 = m2(b2, y2(x2[_2], h2[_2][w2]));
+        g2[v2][w2] = b2;
       }
     }
-    return t4.createDenseMatrix({data: g2, size: [p3, d2], datatype: s3});
+    return t4.createDenseMatrix({data: g2, size: [p3, d], datatype: s3});
   }, "DenseMatrix, SparseMatrix": function(t4, r3) {
     var a3 = t4._data, o3 = t4._size, u3 = t4._datatype, h2 = r3._values, c3 = r3._index, l3 = r3._ptr, p3 = r3._size, f2 = r3._datatype;
     if (!h2)
       throw new Error("Cannot multiply Dense Matrix times Pattern only Matrix");
-    var d2, m2 = o3[0], y2 = p3[1], g2 = n2, v = i2, x = s2, w = 0;
-    u3 && f2 && u3 === f2 && typeof u3 == "string" && (d2 = u3, g2 = e2.find(n2, [d2, d2]), v = e2.find(i2, [d2, d2]), x = e2.find(s2, [d2, d2]), w = e2.convert(0, d2));
-    for (var b = [], _ = [], M = [], E = r3.createSparseMatrix({values: b, index: _, ptr: M, size: [m2, y2], datatype: d2}), N = 0; N < y2; N++) {
-      M[N] = _.length;
-      var S = l3[N], T = l3[N + 1];
+    var d, m2 = o3[0], y2 = p3[1], g2 = n2, v2 = i2, x2 = s2, w2 = 0;
+    u3 && f2 && u3 === f2 && typeof u3 == "string" && (d = u3, g2 = e2.find(n2, [d, d]), v2 = e2.find(i2, [d, d]), x2 = e2.find(s2, [d, d]), w2 = e2.convert(0, d));
+    for (var b2 = [], _2 = [], M = [], N = r3.createSparseMatrix({values: b2, index: _2, ptr: M, size: [m2, y2], datatype: d}), E = 0; E < y2; E++) {
+      M[E] = _2.length;
+      var S = l3[E], T = l3[E + 1];
       if (T > S)
-        for (var O2 = 0, z2 = 0; z2 < m2; z2++) {
-          for (var A2 = z2 + 1, C2 = void 0, R2 = S; R2 < T; R2++) {
-            var D2 = c3[R2];
-            O2 !== A2 ? (C2 = v(a3[z2][D2], h2[R2]), O2 = A2) : C2 = g2(C2, v(a3[z2][D2], h2[R2]));
+        for (var O = 0, z = 0; z < m2; z++) {
+          for (var C = z + 1, A = void 0, R = S; R < T; R++) {
+            var D = c3[R];
+            O !== C ? (A = v2(a3[z][D], h2[R]), O = C) : A = g2(A, v2(a3[z][D], h2[R]));
           }
-          O2 !== A2 || x(C2, w) || (_.push(z2), b.push(C2));
+          O !== C || x2(A, w2) || (_2.push(z), b2.push(A));
         }
     }
-    return M[y2] = _.length, E;
+    return M[y2] = _2.length, N;
   }, "SparseMatrix, DenseMatrix": function(t4, r3) {
     var a3 = t4._values, o3 = t4._index, u3 = t4._ptr, h2 = t4._datatype;
     if (!a3)
       throw new Error("Cannot multiply Pattern only Matrix times Dense Matrix");
-    var c3, l3 = r3._data, p3 = r3._datatype, f2 = t4._size[0], d2 = r3._size[0], m2 = r3._size[1], y2 = n2, g2 = i2, v = s2, x = 0;
-    h2 && p3 && h2 === p3 && typeof h2 == "string" && (c3 = h2, y2 = e2.find(n2, [c3, c3]), g2 = e2.find(i2, [c3, c3]), v = e2.find(s2, [c3, c3]), x = e2.convert(0, c3));
-    for (var w = [], b = [], _ = [], M = t4.createSparseMatrix({values: w, index: b, ptr: _, size: [f2, m2], datatype: c3}), E = [], N = [], S = 0; S < m2; S++) {
-      _[S] = b.length;
-      for (var T = S + 1, O2 = 0; O2 < d2; O2++) {
-        var z2 = l3[O2][S];
-        if (!v(z2, x))
-          for (var A2 = u3[O2], C2 = u3[O2 + 1], R2 = A2; R2 < C2; R2++) {
-            var D2 = o3[R2];
-            N[D2] !== T ? (N[D2] = T, b.push(D2), E[D2] = g2(z2, a3[R2])) : E[D2] = y2(E[D2], g2(z2, a3[R2]));
+    var c3, l3 = r3._data, p3 = r3._datatype, f2 = t4._size[0], d = r3._size[0], m2 = r3._size[1], y2 = n2, g2 = i2, v2 = s2, x2 = 0;
+    h2 && p3 && h2 === p3 && typeof h2 == "string" && (c3 = h2, y2 = e2.find(n2, [c3, c3]), g2 = e2.find(i2, [c3, c3]), v2 = e2.find(s2, [c3, c3]), x2 = e2.convert(0, c3));
+    for (var w2 = [], b2 = [], _2 = [], M = t4.createSparseMatrix({values: w2, index: b2, ptr: _2, size: [f2, m2], datatype: c3}), N = [], E = [], S = 0; S < m2; S++) {
+      _2[S] = b2.length;
+      for (var T = S + 1, O = 0; O < d; O++) {
+        var z = l3[O][S];
+        if (!v2(z, x2))
+          for (var C = u3[O], A = u3[O + 1], R = C; R < A; R++) {
+            var D = o3[R];
+            E[D] !== T ? (E[D] = T, b2.push(D), N[D] = g2(z, a3[R])) : N[D] = y2(N[D], g2(z, a3[R]));
           }
       }
-      for (var k2 = _[S], I2 = b.length, L2 = k2; L2 < I2; L2++) {
-        var B2 = b[L2];
-        w[L2] = E[B2];
+      for (var k = _2[S], I = b2.length, L = k; L < I; L++) {
+        var B = b2[L];
+        w2[L] = N[B];
       }
     }
-    return _[m2] = b.length, M;
+    return _2[m2] = b2.length, M;
   }, "SparseMatrix, SparseMatrix": function(t4, r3) {
-    var s3, a3 = t4._values, o3 = t4._index, u3 = t4._ptr, h2 = t4._datatype, c3 = r3._values, l3 = r3._index, p3 = r3._ptr, f2 = r3._datatype, d2 = t4._size[0], m2 = r3._size[1], y2 = a3 && c3, g2 = n2, v = i2;
-    h2 && f2 && h2 === f2 && typeof h2 == "string" && (s3 = h2, g2 = e2.find(n2, [s3, s3]), v = e2.find(i2, [s3, s3]));
-    for (var x, w, b, _, M, E, N, S, T = y2 ? [] : void 0, O2 = [], z2 = [], A2 = t4.createSparseMatrix({values: T, index: O2, ptr: z2, size: [d2, m2], datatype: s3}), C2 = y2 ? [] : void 0, R2 = [], D2 = 0; D2 < m2; D2++) {
-      z2[D2] = O2.length;
-      var k2 = D2 + 1;
-      for (M = p3[D2], E = p3[D2 + 1], _ = M; _ < E; _++)
-        if (S = l3[_], y2)
-          for (w = u3[S], b = u3[S + 1], x = w; x < b; x++)
-            N = o3[x], R2[N] !== k2 ? (R2[N] = k2, O2.push(N), C2[N] = v(c3[_], a3[x])) : C2[N] = g2(C2[N], v(c3[_], a3[x]));
+    var s3, a3 = t4._values, o3 = t4._index, u3 = t4._ptr, h2 = t4._datatype, c3 = r3._values, l3 = r3._index, p3 = r3._ptr, f2 = r3._datatype, d = t4._size[0], m2 = r3._size[1], y2 = a3 && c3, g2 = n2, v2 = i2;
+    h2 && f2 && h2 === f2 && typeof h2 == "string" && (s3 = h2, g2 = e2.find(n2, [s3, s3]), v2 = e2.find(i2, [s3, s3]));
+    for (var x2, w2, b2, _2, M, N, E, S, T = y2 ? [] : void 0, O = [], z = [], C = t4.createSparseMatrix({values: T, index: O, ptr: z, size: [d, m2], datatype: s3}), A = y2 ? [] : void 0, R = [], D = 0; D < m2; D++) {
+      z[D] = O.length;
+      var k = D + 1;
+      for (M = p3[D], N = p3[D + 1], _2 = M; _2 < N; _2++)
+        if (S = l3[_2], y2)
+          for (w2 = u3[S], b2 = u3[S + 1], x2 = w2; x2 < b2; x2++)
+            E = o3[x2], R[E] !== k ? (R[E] = k, O.push(E), A[E] = v2(c3[_2], a3[x2])) : A[E] = g2(A[E], v2(c3[_2], a3[x2]));
         else
-          for (w = u3[S], b = u3[S + 1], x = w; x < b; x++)
-            N = o3[x], R2[N] !== k2 && (R2[N] = k2, O2.push(N));
+          for (w2 = u3[S], b2 = u3[S + 1], x2 = w2; x2 < b2; x2++)
+            E = o3[x2], R[E] !== k && (R[E] = k, O.push(E));
       if (y2)
-        for (var I2 = z2[D2], L2 = O2.length, B2 = I2; B2 < L2; B2++) {
-          var F2 = O2[B2];
-          T[B2] = C2[F2];
+        for (var I = z[D], L = O.length, B = I; B < L; B++) {
+          var F = O[B];
+          T[B] = A[F];
         }
     }
-    return z2[m2] = O2.length, A2;
+    return z[m2] = O.length, C;
   }});
-  return e2("multiply", dr({"Array, Array": function(t4, e3) {
-    h(Zr(t4), Zr(e3));
+  return e2("multiply", xr({"Array, Array": function(t4, e3) {
+    h(tn(t4), tn(e3));
     var n3 = this(r2(t4), r2(e3));
-    return ke(n3) ? n3.valueOf() : n3;
+    return Pe(n3) ? n3.valueOf() : n3;
   }, "Matrix, Matrix": function(t4, e3) {
     var r3 = t4.size(), n3 = e3.size();
     return h(r3, n3), r3.length === 1 ? n3.length === 1 ? function(t5, e4, r4) {
@@ -5372,8 +5158,8 @@ var js = cn("multiplyScalar", ["typed"], (t3) => {
       n3 = this(n3, r3[i3]);
     return n3;
   }}, i2.signatures));
-}), Hs = cn("subtract", ["typed", "matrix", "equalScalar", "addScalar", "unaryMinus", "DenseMatrix"], (t3) => {
-  var {typed: e2, matrix: r2, equalScalar: n2, addScalar: i2, unaryMinus: s2, DenseMatrix: a2} = t3, o2 = Rs({typed: e2}), u2 = Bs({typed: e2}), h = Fs({typed: e2, equalScalar: n2}), c2 = ks({typed: e2, DenseMatrix: a2}), l2 = Is({typed: e2}), p2 = Os({typed: e2});
+}), Ys = mn("subtract", ["typed", "matrix", "equalScalar", "addScalar", "unaryMinus", "DenseMatrix"], (t3) => {
+  var {typed: e2, matrix: r2, equalScalar: n2, addScalar: i2, unaryMinus: s2, DenseMatrix: a2} = t3, o2 = Bs({typed: e2}), u2 = qs({typed: e2}), h = Hs({typed: e2, equalScalar: n2}), c2 = Ps({typed: e2, DenseMatrix: a2}), l2 = Us({typed: e2}), p2 = Ds({typed: e2});
   return e2("subtract", {"number, number": function(t4, e3) {
     return t4 - e3;
   }, "Complex, Complex": function(t4, e3) {
@@ -5392,13 +5178,13 @@ var js = cn("multiplyScalar", ["typed"], (t3) => {
     var r3 = t4.clone();
     return r3.value = this(r3.value, e3.value), r3.fixPrefix = false, r3;
   }, "SparseMatrix, SparseMatrix": function(t4, e3) {
-    return Vs(t4, e3), h(t4, e3, this);
+    return Zs(t4, e3), h(t4, e3, this);
   }, "SparseMatrix, DenseMatrix": function(t4, e3) {
-    return Vs(t4, e3), u2(e3, t4, this, true);
+    return Zs(t4, e3), u2(e3, t4, this, true);
   }, "DenseMatrix, SparseMatrix": function(t4, e3) {
-    return Vs(t4, e3), o2(t4, e3, this, false);
+    return Zs(t4, e3), o2(t4, e3, this, false);
   }, "DenseMatrix, DenseMatrix": function(t4, e3) {
-    return Vs(t4, e3), l2(t4, e3, this);
+    return Zs(t4, e3), l2(t4, e3, this);
   }, "Array, Array": function(t4, e3) {
     return this(r2(t4), r2(e3)).valueOf();
   }, "Array, Matrix": function(t4, e3) {
@@ -5419,33 +5205,33 @@ var js = cn("multiplyScalar", ["typed"], (t3) => {
     return p2(r2(e3), t4, this, true).valueOf();
   }});
 });
-function Vs(t3, e2) {
+function Zs(t3, e2) {
   var r2 = t3.size(), n2 = e2.size();
   if (r2.length !== n2.length)
-    throw new Wr(r2.length, n2.length);
+    throw new Jr(r2.length, n2.length);
 }
-var $s = cn("algorithm07", ["typed", "DenseMatrix"], (t3) => {
+var Xs = mn("algorithm07", ["typed", "DenseMatrix"], (t3) => {
   var {typed: e2, DenseMatrix: r2} = t3;
   return function(t4, i2, s2) {
     var a2 = t4._size, o2 = t4._datatype, u2 = i2._size, h = i2._datatype;
     if (a2.length !== u2.length)
-      throw new Wr(a2.length, u2.length);
+      throw new Jr(a2.length, u2.length);
     if (a2[0] !== u2[0] || a2[1] !== u2[1])
       throw new RangeError("Dimension mismatch. Matrix A (" + a2 + ") must match Matrix B (" + u2 + ")");
-    var c2, l2, p2, f2 = a2[0], d2 = a2[1], m2 = 0, y2 = s2;
+    var c2, l2, p2, f2 = a2[0], d = a2[1], m2 = 0, y2 = s2;
     typeof o2 == "string" && o2 === h && (c2 = o2, m2 = e2.convert(0, c2), y2 = e2.find(s2, [c2, c2]));
     var g2 = [];
     for (l2 = 0; l2 < f2; l2++)
       g2[l2] = [];
-    var v = [], x = [], w = [], b = [];
-    for (p2 = 0; p2 < d2; p2++) {
-      var _ = p2 + 1;
-      for (n2(t4, p2, w, v, _), n2(i2, p2, b, x, _), l2 = 0; l2 < f2; l2++) {
-        var M = w[l2] === _ ? v[l2] : m2, E = b[l2] === _ ? x[l2] : m2;
-        g2[l2][p2] = y2(M, E);
+    var v2 = [], x2 = [], w2 = [], b2 = [];
+    for (p2 = 0; p2 < d; p2++) {
+      var _2 = p2 + 1;
+      for (n2(t4, p2, w2, v2, _2), n2(i2, p2, b2, x2, _2), l2 = 0; l2 < f2; l2++) {
+        var M = w2[l2] === _2 ? v2[l2] : m2, N = b2[l2] === _2 ? x2[l2] : m2;
+        g2[l2][p2] = y2(M, N);
       }
     }
-    return new r2({data: g2, size: [f2, d2], datatype: c2});
+    return new r2({data: g2, size: [f2, d], datatype: c2});
   };
   function n2(t4, e3, r3, n3, i2) {
     for (var s2 = t4._values, a2 = t4._index, o2 = t4._ptr, u2 = o2[e3], h = o2[e3 + 1]; u2 < h; u2++) {
@@ -5453,7 +5239,7 @@ var $s = cn("algorithm07", ["typed", "DenseMatrix"], (t3) => {
       r3[c2] = i2, n3[c2] = s2[u2];
     }
   }
-}), Gs = cn("conj", ["typed"], (t3) => {
+}), Qs = mn("conj", ["typed"], (t3) => {
   var {typed: e2} = t3;
   return e2("conj", {number: function(t4) {
     return t4;
@@ -5462,10 +5248,10 @@ var $s = cn("algorithm07", ["typed", "DenseMatrix"], (t3) => {
   }, Complex: function(t4) {
     return t4.conjugate();
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
 });
-function Ws(t3) {
+function Js(t3) {
   var e2 = 0, r2 = 1, n2 = Object.create(null), i2 = Object.create(null), s2 = 0, a2 = function(t4) {
     var a3 = i2[t4];
     if (a3 && (delete n2[a3], delete i2[t4], --e2, r2 === a3)) {
@@ -5489,10 +5275,10 @@ function Ws(t3) {
     e2 = s2 = 0, r2 = 1, n2 = Object.create(null), i2 = Object.create(null);
   }};
 }
-function Ys(t3) {
+function Ks(t3) {
   var {hasher: e2, limit: r2} = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   return r2 = r2 == null ? Number.POSITIVE_INFINITY : r2, e2 = e2 == null ? JSON.stringify : e2, function n2() {
-    typeof n2.cache != "object" && (n2.cache = {values: new Map(), lru: Ws(r2 || Number.POSITIVE_INFINITY)});
+    typeof n2.cache != "object" && (n2.cache = {values: new Map(), lru: Js(r2 || Number.POSITIVE_INFINITY)});
     for (var i2 = [], s2 = 0; s2 < arguments.length; s2++)
       i2[s2] = arguments[s2];
     var a2 = e2(i2);
@@ -5502,7 +5288,7 @@ function Ys(t3) {
     return n2.cache.values.set(a2, o2), n2.cache.values.delete(n2.cache.lru.hit(a2)), o2;
   };
 }
-var Zs = cn("identity", ["typed", "config", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix"], (t3) => {
+var ta = mn("identity", ["typed", "config", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix"], (t3) => {
   var {typed: e2, config: r2, matrix: n2, BigNumber: i2, DenseMatrix: s2, SparseMatrix: a2} = t3;
   return e2("identity", {"": function() {
     return r2.matrix === "Matrix" ? n2([]) : [];
@@ -5538,10 +5324,10 @@ var Zs = cn("identity", ["typed", "config", "matrix", "BigNumber", "DenseMatrix"
     }
   }
   function u2(t4, e3, r3) {
-    var n3 = Oe(t4) || Oe(e3) ? i2 : null;
-    if (Oe(t4) && (t4 = t4.toNumber()), Oe(e3) && (e3 = e3.toNumber()), !Ar(t4) || t4 < 1)
+    var n3 = De(t4) || De(e3) ? i2 : null;
+    if (De(t4) && (t4 = t4.toNumber()), De(e3) && (e3 = e3.toNumber()), !Ir(t4) || t4 < 1)
       throw new Error("Parameters in function identity must be positive integers");
-    if (!Ar(e3) || e3 < 1)
+    if (!Ir(e3) || e3 < 1)
       throw new Error("Parameters in function identity must be positive integers");
     var o3 = n3 ? new i2(1) : 1, u3 = n3 ? new n3(0) : 0, h = [t4, e3];
     if (r3) {
@@ -5551,28 +5337,28 @@ var Zs = cn("identity", ["typed", "config", "matrix", "BigNumber", "DenseMatrix"
         return s2.diagonal(h, o3, 0, u3);
       throw new TypeError('Unknown matrix type "'.concat(r3, '"'));
     }
-    for (var c2 = Kr([], h, u3), l2 = t4 < e3 ? t4 : e3, p2 = 0; p2 < l2; p2++)
+    for (var c2 = sn([], h, u3), l2 = t4 < e3 ? t4 : e3, p2 = 0; p2 < l2; p2++)
       c2[p2][p2] = o3;
     return c2;
   }
 });
-function Xs() {
+function ea() {
   throw new Error('No "bignumber" implementation available');
 }
-function Qs() {
+function ra() {
   throw new Error('No "fraction" implementation available');
 }
-function Js(t3, e2, r2, n2) {
-  if (!(this instanceof Js))
+function na(t3, e2, r2, n2) {
+  if (!(this instanceof na))
     throw new SyntaxError("Constructor must be called with the new operator");
   this.fn = t3, this.count = e2, this.min = r2, this.max = n2, this.message = "Wrong number of arguments in function " + t3 + " (" + e2 + " provided, " + r2 + (n2 != null ? "-" + n2 : "") + " expected)", this.stack = new Error().stack;
 }
-Js.prototype = new Error(), Js.prototype.constructor = Error, Js.prototype.name = "ArgumentsError", Js.prototype.isArgumentsError = true;
-var Ks = cn("size", ["typed", "config", "?matrix"], (t3) => {
+na.prototype = new Error(), na.prototype.constructor = Error, na.prototype.name = "ArgumentsError", na.prototype.isArgumentsError = true;
+var ia = mn("size", ["typed", "config", "?matrix"], (t3) => {
   var {typed: e2, config: r2, matrix: n2} = t3;
   return e2("size", {Matrix: function(t4) {
     return t4.create(t4.size());
-  }, Array: Zr, string: function(t4) {
+  }, Array: tn, string: function(t4) {
     return r2.matrix === "Array" ? [t4.length] : n2([t4.length]);
   }, "number | Complex | BigNumber | Unit | boolean | null": function(t4) {
     return r2.matrix === "Array" ? [] : n2 ? n2([]) : function() {
@@ -5580,61 +5366,61 @@ var Ks = cn("size", ["typed", "config", "?matrix"], (t3) => {
     }();
   }});
 });
-function ta(t3, e2) {
-  if (ia(t3) && ra(t3, e2))
+function sa(t3, e2) {
+  if (ha(t3) && oa(t3, e2))
     return t3[e2];
-  if (typeof t3[e2] == "function" && na(t3, e2))
+  if (typeof t3[e2] == "function" && ua(t3, e2))
     throw new Error('Cannot access method "' + e2 + '" as a property');
   throw new Error('No access to property "' + e2 + '"');
 }
-function ea(t3, e2, r2) {
-  if (ia(t3) && ra(t3, e2))
+function aa(t3, e2, r2) {
+  if (ha(t3) && oa(t3, e2))
     return t3[e2] = r2, r2;
   throw new Error('No access to property "' + e2 + '"');
 }
-function ra(t3, e2) {
-  return !(!t3 || typeof t3 != "object") && (!!wr(sa, e2) || !(e2 in Object.prototype) && !(e2 in Function.prototype));
+function oa(t3, e2) {
+  return !(!t3 || typeof t3 != "object") && (!!Er(ca, e2) || !(e2 in Object.prototype) && !(e2 in Function.prototype));
 }
-function na(t3, e2) {
-  return t3 != null && typeof t3[e2] == "function" && (!(wr(t3, e2) && Object.getPrototypeOf && e2 in Object.getPrototypeOf(t3)) && (!!wr(aa, e2) || !(e2 in Object.prototype) && !(e2 in Function.prototype)));
+function ua(t3, e2) {
+  return t3 != null && typeof t3[e2] == "function" && (!(Er(t3, e2) && Object.getPrototypeOf && e2 in Object.getPrototypeOf(t3)) && (!!Er(la, e2) || !(e2 in Object.prototype) && !(e2 in Function.prototype)));
 }
-function ia(t3) {
+function ha(t3) {
   return typeof t3 == "object" && t3 && t3.constructor === Object;
 }
-var sa = {length: true, name: true}, aa = {toString: true, valueOf: true, toLocaleString: true}, oa = cn("subset", ["typed", "matrix"], (t3) => {
+var ca = {length: true, name: true}, la = {toString: true, valueOf: true, toLocaleString: true}, pa = mn("subset", ["typed", "matrix"], (t3) => {
   var {typed: e2, matrix: r2} = t3;
   return e2("subset", {"Array, Index": function(t4, e3) {
     var n2 = r2(t4).subset(e3);
     return e3.isScalar() ? n2 : n2.valueOf();
   }, "Matrix, Index": function(t4, e3) {
     return t4.subset(e3);
-  }, "Object, Index": ca, "string, Index": ua, "Array, Index, any": function(t4, e3, n2) {
-    return r2(pr(t4)).subset(e3, n2, void 0).valueOf();
+  }, "Object, Index": ma, "string, Index": fa, "Array, Index, any": function(t4, e3, n2) {
+    return r2(gr(t4)).subset(e3, n2, void 0).valueOf();
   }, "Array, Index, any, any": function(t4, e3, n2, i2) {
-    return r2(pr(t4)).subset(e3, n2, i2).valueOf();
+    return r2(gr(t4)).subset(e3, n2, i2).valueOf();
   }, "Matrix, Index, any": function(t4, e3, r3) {
     return t4.clone().subset(e3, r3);
   }, "Matrix, Index, any, any": function(t4, e3, r3, n2) {
     return t4.clone().subset(e3, r3, n2);
-  }, "string, Index, string": ha, "string, Index, string, string": ha, "Object, Index, any": la});
+  }, "string, Index, string": da, "string, Index, string, string": da, "Object, Index, any": ya});
 });
-function ua(t3, e2) {
-  if (!Pe(e2))
+function fa(t3, e2) {
+  if (!Ve(e2))
     throw new TypeError("Index expected");
   if (e2.size().length !== 1)
-    throw new Wr(e2.size().length, 1);
+    throw new Jr(e2.size().length, 1);
   var r2 = t3.length;
-  Jr(e2.min()[0], r2), Jr(e2.max()[0], r2);
+  nn(e2.min()[0], r2), nn(e2.max()[0], r2);
   var n2 = e2.dimension(0), i2 = "";
   return n2.forEach(function(e3) {
     i2 += t3.charAt(e3);
   }), i2;
 }
-function ha(t3, e2, r2, n2) {
+function da(t3, e2, r2, n2) {
   if (!e2 || e2.isIndex !== true)
     throw new TypeError("Index expected");
   if (e2.size().length !== 1)
-    throw new Wr(e2.size().length, 1);
+    throw new Jr(e2.size().length, 1);
   if (n2 !== void 0) {
     if (typeof n2 != "string" || n2.length !== 1)
       throw new TypeError("Single character expected as defaultValue");
@@ -5642,9 +5428,9 @@ function ha(t3, e2, r2, n2) {
     n2 = " ";
   var i2 = e2.dimension(0);
   if (i2.size()[0] !== r2.length)
-    throw new Wr(i2.size()[0], r2.length);
+    throw new Jr(i2.size()[0], r2.length);
   var s2 = t3.length;
-  Jr(e2.min()[0]), Jr(e2.max()[0]);
+  nn(e2.min()[0]), nn(e2.max()[0]);
   for (var a2 = [], o2 = 0; o2 < s2; o2++)
     a2[o2] = t3.charAt(o2);
   if (i2.forEach(function(t4, e3) {
@@ -5654,24 +5440,24 @@ function ha(t3, e2, r2, n2) {
       a2[u2] || (a2[u2] = n2);
   return a2.join("");
 }
-function ca(t3, e2) {
+function ma(t3, e2) {
   if (e2.size().length !== 1)
-    throw new Wr(e2.size(), 1);
+    throw new Jr(e2.size(), 1);
   var r2 = e2.dimension(0);
   if (typeof r2 != "string")
     throw new TypeError("String expected as index to retrieve an object property");
-  return ta(t3, r2);
+  return sa(t3, r2);
 }
-function la(t3, e2, r2) {
+function ya(t3, e2, r2) {
   if (e2.size().length !== 1)
-    throw new Wr(e2.size(), 1);
+    throw new Jr(e2.size(), 1);
   var n2 = e2.dimension(0);
   if (typeof n2 != "string")
     throw new TypeError("String expected as index to retrieve an object property");
-  var i2 = pr(t3);
-  return ea(i2, n2, r2), i2;
+  var i2 = gr(t3);
+  return aa(i2, n2, r2), i2;
 }
-var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
+var ga = mn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
   var {typed: e2, config: r2, matrix: n2, BigNumber: i2} = t3;
   return e2("zeros", {"": function() {
     return r2.matrix === "Array" ? s2([]) : s2([], "default");
@@ -5691,12 +5477,12 @@ var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
     var r3 = function(t5) {
       var e4 = false;
       return t5.forEach(function(t6, r4, n3) {
-        Oe(t6) && (e4 = true, n3[r4] = t6.toNumber());
+        De(t6) && (e4 = true, n3[r4] = t6.toNumber());
       }), e4;
     }(t4) ? new i2(0) : 0;
     if (function(t5) {
       t5.forEach(function(t6) {
-        if (typeof t6 != "number" || !Ar(t6) || t6 < 0)
+        if (typeof t6 != "number" || !Ir(t6) || t6 < 0)
           throw new Error("Parameters in function zeros must be positive integers");
       });
     }(t4), e3) {
@@ -5704,22 +5490,22 @@ var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
       return t4.length > 0 ? s3.resize(t4, r3) : s3;
     }
     var a2 = [];
-    return t4.length > 0 ? Kr(a2, t4, r3) : a2;
+    return t4.length > 0 ? sn(a2, t4, r3) : a2;
   }
-}), fa = cn("format", ["typed"], (t3) => {
+}), va = mn("format", ["typed"], (t3) => {
   var {typed: e2} = t3;
-  return e2("format", {any: Hr, "any, Object | function | number": Hr});
-}), da = cn("numeric", ["number", "?bignumber", "?fraction"], (t3) => {
-  var {number: e2, bignumber: r2, fraction: n2} = t3, i2 = {string: true, number: true, BigNumber: true, Fraction: true}, s2 = {number: (t4) => e2(t4), BigNumber: r2 ? (t4) => r2(t4) : Xs, Fraction: n2 ? (t4) => n2(t4) : Qs};
+  return e2("format", {any: Yr, "any, Object | function | number": Yr});
+}), xa = mn("numeric", ["number", "?bignumber", "?fraction"], (t3) => {
+  var {number: e2, bignumber: r2, fraction: n2} = t3, i2 = {string: true, number: true, BigNumber: true, Fraction: true}, s2 = {number: (t4) => e2(t4), BigNumber: r2 ? (t4) => r2(t4) : ea, Fraction: n2 ? (t4) => n2(t4) : ra};
   return function(t4, e3) {
-    var r3 = lr(t4);
+    var r3 = yr(t4);
     if (!(r3 in i2))
       throw new TypeError("Cannot convert " + t4 + ' of type "' + r3 + '"; valid input types are ' + Object.keys(i2).join(", "));
     if (!(e3 in s2))
       throw new TypeError("Cannot convert " + t4 + ' to type "' + e3 + '"; valid output types are ' + Object.keys(s2).join(", "));
     return e3 === r3 ? t4 : s2[e3](t4);
   };
-}), ma = cn("divideScalar", ["typed", "numeric"], (t3) => {
+}), wa = mn("divideScalar", ["typed", "numeric"], (t3) => {
   var {typed: e2, numeric: r2} = t3;
   return e2("divideScalar", {"number, number": function(t4, e3) {
     return t4 / e3;
@@ -5730,17 +5516,17 @@ var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
   }, "Fraction, Fraction": function(t4, e3) {
     return t4.div(e3);
   }, "Unit, number | Fraction | BigNumber": function(t4, e3) {
-    var n2 = t4.clone(), i2 = r2(1, lr(e3));
+    var n2 = t4.clone(), i2 = r2(1, yr(e3));
     return n2.value = this(n2.value === null ? n2._normalize(i2) : n2.value, e3), n2;
   }, "number | Fraction | BigNumber, Unit": function(t4, e3) {
     var n2 = e3.clone();
     n2 = n2.pow(-1);
-    var i2 = r2(1, lr(t4));
+    var i2 = r2(1, yr(t4));
     return n2.value = this(t4, e3.value === null ? e3._normalize(i2) : e3.value), n2;
   }, "Unit, Unit": function(t4, e3) {
     return t4.divide(e3);
   }});
-}), ya = cn("pow", ["typed", "config", "identity", "multiply", "matrix", "fraction", "number", "Complex"], (t3) => {
+}), ba = mn("pow", ["typed", "config", "identity", "multiply", "matrix", "fraction", "number", "Complex"], (t3) => {
   var {typed: e2, config: r2, identity: n2, multiply: i2, matrix: s2, number: a2, fraction: o2, Complex: u2} = t3;
   return e2("pow", {"number, number": h, "Complex, Complex": function(t4, e3) {
     return t4.pow(e3);
@@ -5761,19 +5547,19 @@ var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
     return t4.pow(e3);
   }});
   function h(t4, e3) {
-    if (r2.predictable && !Ar(e3) && t4 < 0)
+    if (r2.predictable && !Ir(e3) && t4 < 0)
       try {
         var n3 = o2(e3), i3 = a2(n3);
         if ((e3 === i3 || Math.abs((e3 - i3) / e3) < 1e-14) && n3.d % 2 == 1)
           return (n3.n % 2 == 0 ? 1 : -1) * Math.pow(-t4, e3);
       } catch (s3) {
       }
-    return r2.predictable && (t4 < -1 && e3 === 1 / 0 || t4 > -1 && t4 < 0 && e3 === -1 / 0) ? NaN : Ar(e3) || t4 >= 0 || r2.predictable ? fs(t4, e3) : t4 * t4 < 1 && e3 === 1 / 0 || t4 * t4 > 1 && e3 === -1 / 0 ? 0 : new u2(t4, 0).pow(e3, 0);
+    return r2.predictable && (t4 < -1 && e3 === 1 / 0 || t4 > -1 && t4 < 0 && e3 === -1 / 0) ? NaN : Ir(e3) || t4 >= 0 || r2.predictable ? vs(t4, e3) : t4 * t4 < 1 && e3 === 1 / 0 || t4 * t4 > 1 && e3 === -1 / 0 ? 0 : new u2(t4, 0).pow(e3, 0);
   }
   function c2(t4, e3) {
-    if (!Ar(e3) || e3 < 0)
+    if (!Ir(e3) || e3 < 0)
       throw new TypeError("For A^b, b must be a positive integer (value is " + e3 + ")");
-    var r3 = Zr(t4);
+    var r3 = tn(t4);
     if (r3.length !== 2)
       throw new Error("For A^b, A must be 2 dimensional (A has " + r3.length + " dimensions)");
     if (r3[0] !== r3[1])
@@ -5786,7 +5572,7 @@ var pa = cn("zeros", ["typed", "config", "matrix", "BigNumber"], (t3) => {
     return s2(c2(t4.valueOf(), e3));
   }
 });
-function ga(t3, e2) {
+function _a(t3, e2) {
   var r2 = Object.keys(t3);
   if (Object.getOwnPropertySymbols) {
     var n2 = Object.getOwnPropertySymbols(t3);
@@ -5796,51 +5582,51 @@ function ga(t3, e2) {
   }
   return r2;
 }
-function va(t3) {
+function Ma(t3) {
   for (var e2 = 1; e2 < arguments.length; e2++) {
     var r2 = arguments[e2] != null ? arguments[e2] : {};
-    e2 % 2 ? ga(Object(r2), true).forEach(function(e3) {
-      xa(t3, e3, r2[e3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t3, Object.getOwnPropertyDescriptors(r2)) : ga(Object(r2)).forEach(function(e3) {
+    e2 % 2 ? _a(Object(r2), true).forEach(function(e3) {
+      Na(t3, e3, r2[e3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t3, Object.getOwnPropertyDescriptors(r2)) : _a(Object(r2)).forEach(function(e3) {
       Object.defineProperty(t3, e3, Object.getOwnPropertyDescriptor(r2, e3));
     });
   }
   return t3;
 }
-function xa(t3, e2, r2) {
+function Na(t3, e2, r2) {
   return e2 in t3 ? Object.defineProperty(t3, e2, {value: r2, enumerable: true, configurable: true, writable: true}) : t3[e2] = r2, t3;
 }
-var wa = "Number of decimals in function round must be an integer", ba = cn("round", ["typed", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix"], (t3) => {
-  var {typed: e2, matrix: r2, equalScalar: n2, zeros: i2, BigNumber: s2, DenseMatrix: a2} = t3, o2 = Ts({typed: e2, equalScalar: n2}), u2 = Ps({typed: e2, DenseMatrix: a2}), h = Os({typed: e2});
-  return e2("round", va(va({}, _a), {}, {Complex: function(t4) {
+var Ea = "Number of decimals in function round must be an integer", Sa = mn("round", ["typed", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix"], (t3) => {
+  var {typed: e2, matrix: r2, equalScalar: n2, zeros: i2, BigNumber: s2, DenseMatrix: a2} = t3, o2 = Rs({typed: e2, equalScalar: n2}), u2 = Vs({typed: e2, DenseMatrix: a2}), h = Ds({typed: e2});
+  return e2("round", Ma(Ma({}, Ta), {}, {Complex: function(t4) {
     return t4.round();
   }, "Complex, number": function(t4, e3) {
     if (e3 % 1)
-      throw new TypeError(wa);
+      throw new TypeError(Ea);
     return t4.round(e3);
   }, "Complex, BigNumber": function(t4, e3) {
     if (!e3.isInteger())
-      throw new TypeError(wa);
+      throw new TypeError(Ea);
     var r3 = e3.toNumber();
     return t4.round(r3);
   }, "number, BigNumber": function(t4, e3) {
     if (!e3.isInteger())
-      throw new TypeError(wa);
+      throw new TypeError(Ea);
     return new s2(t4).toDecimalPlaces(e3.toNumber());
   }, BigNumber: function(t4) {
     return t4.toDecimalPlaces(0);
   }, "BigNumber, BigNumber": function(t4, e3) {
     if (!e3.isInteger())
-      throw new TypeError(wa);
+      throw new TypeError(Ea);
     return t4.toDecimalPlaces(e3.toNumber());
   }, Fraction: function(t4) {
     return t4.round();
   }, "Fraction, number": function(t4, e3) {
     if (e3 % 1)
-      throw new TypeError(wa);
+      throw new TypeError(Ea);
     return t4.round(e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }, "SparseMatrix, number | BigNumber": function(t4, e3) {
     return o2(t4, e3, this, false);
   }, "DenseMatrix, number | BigNumber": function(t4, e3) {
@@ -5854,14 +5640,14 @@ var wa = "Number of decimals in function round must be an integer", ba = cn("rou
   }, "number | Complex | BigNumber, Array": function(t4, e3) {
     return h(r2(e3), t4, this, true).valueOf();
   }}));
-}), _a = {number: ds, "number, number": function(t3, e2) {
-  if (!Ar(e2))
-    throw new TypeError(wa);
+}), Ta = {number: xs, "number, number": function(t3, e2) {
+  if (!Ir(e2))
+    throw new TypeError(Ea);
   if (e2 < 0 || e2 > 15)
     throw new Error("Number of decimals in function round must be in te range of 0-15");
-  return ds(t3, e2);
-}}, Ma = cn("equal", ["typed", "matrix", "equalScalar", "DenseMatrix"], (t3) => {
-  var {typed: e2, matrix: r2, equalScalar: n2, DenseMatrix: i2} = t3, s2 = Bs({typed: e2}), a2 = $s({typed: e2, DenseMatrix: i2}), o2 = Ps({typed: e2, DenseMatrix: i2}), u2 = Is({typed: e2}), h = Os({typed: e2});
+  return xs(t3, e2);
+}}, Oa = mn("equal", ["typed", "matrix", "equalScalar", "DenseMatrix"], (t3) => {
+  var {typed: e2, matrix: r2, equalScalar: n2, DenseMatrix: i2} = t3, s2 = qs({typed: e2}), a2 = Xs({typed: e2, DenseMatrix: i2}), o2 = Vs({typed: e2, DenseMatrix: i2}), u2 = Us({typed: e2}), h = Ds({typed: e2});
   return e2("equal", {"any, any": function(t4, e3) {
     return t4 === null ? e3 === null : e3 === null ? t4 === null : t4 === void 0 ? e3 === void 0 : e3 === void 0 ? t4 === void 0 : n2(t4, e3);
   }, "SparseMatrix, SparseMatrix": function(t4, e3) {
@@ -5892,20 +5678,20 @@ var wa = "Number of decimals in function round must be an integer", ba = cn("rou
     return h(r2(e3), t4, n2, true).valueOf();
   }});
 });
-cn("equal", ["typed", "equalScalar"], (t3) => {
+mn("equal", ["typed", "equalScalar"], (t3) => {
   var {typed: e2, equalScalar: r2} = t3;
   return e2("equal", {"any, any": function(t4, e3) {
     return t4 === null ? e3 === null : e3 === null ? t4 === null : t4 === void 0 ? e3 === void 0 : e3 === void 0 ? t4 === void 0 : r2(t4, e3);
   }});
 });
-var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
-  var {typed: e2, config: r2, matrix: n2, DenseMatrix: i2} = t3, s2 = Bs({typed: e2}), a2 = $s({typed: e2, DenseMatrix: i2}), o2 = Ps({typed: e2, DenseMatrix: i2}), u2 = Is({typed: e2}), h = Os({typed: e2});
+var za = mn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
+  var {typed: e2, config: r2, matrix: n2, DenseMatrix: i2} = t3, s2 = qs({typed: e2}), a2 = Xs({typed: e2, DenseMatrix: i2}), o2 = Vs({typed: e2, DenseMatrix: i2}), u2 = Us({typed: e2}), h = Ds({typed: e2});
   return e2("smaller", {"boolean, boolean": function(t4, e3) {
     return t4 < e3;
   }, "number, number": function(t4, e3) {
-    return t4 < e3 && !Pr(t4, e3, r2.epsilon);
+    return t4 < e3 && !Vr(t4, e3, r2.epsilon);
   }, "BigNumber, BigNumber": function(t4, e3) {
-    return t4.lt(e3) && !ys(t4, e3, r2.epsilon);
+    return t4.lt(e3) && !bs(t4, e3, r2.epsilon);
   }, "Fraction, Fraction": function(t4, e3) {
     return t4.compare(e3) === -1;
   }, "Complex, Complex": function(t4, e3) {
@@ -5941,14 +5727,14 @@ var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
   }, "any, Array": function(t4, e3) {
     return h(n2(e3), t4, this, true).valueOf();
   }});
-}), Na = cn("larger", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
-  var {typed: e2, config: r2, matrix: n2, DenseMatrix: i2} = t3, s2 = Bs({typed: e2}), a2 = $s({typed: e2, DenseMatrix: i2}), o2 = Ps({typed: e2, DenseMatrix: i2}), u2 = Is({typed: e2}), h = Os({typed: e2});
+}), Ca = mn("larger", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
+  var {typed: e2, config: r2, matrix: n2, DenseMatrix: i2} = t3, s2 = qs({typed: e2}), a2 = Xs({typed: e2, DenseMatrix: i2}), o2 = Vs({typed: e2, DenseMatrix: i2}), u2 = Us({typed: e2}), h = Ds({typed: e2});
   return e2("larger", {"boolean, boolean": function(t4, e3) {
     return t4 > e3;
   }, "number, number": function(t4, e3) {
-    return t4 > e3 && !Pr(t4, e3, r2.epsilon);
+    return t4 > e3 && !Vr(t4, e3, r2.epsilon);
   }, "BigNumber, BigNumber": function(t4, e3) {
-    return t4.gt(e3) && !ys(t4, e3, r2.epsilon);
+    return t4.gt(e3) && !bs(t4, e3, r2.epsilon);
   }, "Fraction, Fraction": function(t4, e3) {
     return t4.compare(e3) === 1;
   }, "Complex, Complex": function() {
@@ -5984,7 +5770,7 @@ var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
   }, "any, Array": function(t4, e3) {
     return h(n2(e3), t4, this, true).valueOf();
   }});
-}), Sa = cn("FibonacciHeap", ["smaller", "larger"], (t3) => {
+}), Aa = mn("FibonacciHeap", ["smaller", "larger"], (t3) => {
   var {smaller: e2, larger: r2} = t3, n2 = 1 / Math.log((1 + Math.sqrt(5)) / 2);
   function i2() {
     if (!(this instanceof i2))
@@ -6036,8 +5822,8 @@ var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
         u3[l2] = c2, c2 = p2, h--;
       }
       t5 = null;
-      for (var d2 = 0; d2 < a4; d2++)
-        (s4 = u3[d2]) && (t5 ? (s4.left.right = s4.right, s4.right.left = s4.left, s4.left = t5, s4.right = t5.right, t5.right = s4, s4.right.left = s4, e2(s4.key, t5.key) && (t5 = s4)) : t5 = s4);
+      for (var d = 0; d < a4; d++)
+        (s4 = u3[d]) && (t5 ? (s4.left.right = s4.right, s4.right.left = s4.left, s4.left = t5, s4.right = t5.right, t5.right = s4, s4.right.left = s4, e2(s4.key, t5.key) && (t5 = s4)) : t5 = s4);
       return t5;
     }(i3 = t4.right, this._size), this._size--, this._minimum = i3, t4;
   }, i2.prototype.remove = function(t4) {
@@ -6053,7 +5839,7 @@ var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
     t4.left.right = t4.right, t4.right.left = t4.left, t4.parent = e3, e3.child ? (t4.left = e3.child, t4.right = e3.child.right, e3.child.right = t4, t4.right.left = t4) : (e3.child = t4, t4.right = t4, t4.left = t4), e3.degree++, t4.mark = false;
   };
   return i2;
-}, {isClass: true}), Ta = cn("Spa", ["addScalar", "equalScalar", "FibonacciHeap"], (t3) => {
+}, {isClass: true}), Ra = mn("Spa", ["addScalar", "equalScalar", "FibonacciHeap"], (t3) => {
   var {addScalar: e2, equalScalar: r2, FibonacciHeap: n2} = t3;
   function i2() {
     if (!(this instanceof i2))
@@ -6093,19 +5879,19 @@ var Ea = cn("smaller", ["typed", "config", "matrix", "DenseMatrix"], (t3) => {
     }
   }, i2;
 }, {isClass: true});
-Ys(function(t3) {
+Ks(function(t3) {
   return new t3(1).exp();
-}, {hasher: za}), Ys(function(t3) {
+}, {hasher: ka}), Ks(function(t3) {
   return new t3(1).plus(new t3(5).sqrt()).div(2);
-}, {hasher: za});
-var Oa = Ys(function(t3) {
+}, {hasher: ka});
+var Da = Ks(function(t3) {
   return t3.acos(-1);
-}, {hasher: za});
-function za(t3) {
+}, {hasher: ka});
+function ka(t3) {
   return t3[0].precision;
 }
-function Aa() {
-  return (Aa = Object.assign || function(t3) {
+function Ia() {
+  return (Ia = Object.assign || function(t3) {
     for (var e2 = 1; e2 < arguments.length; e2++) {
       var r2 = arguments[e2];
       for (var n2 in r2)
@@ -6114,7 +5900,7 @@ function Aa() {
     return t3;
   }).apply(this, arguments);
 }
-function Ca(t3, e2) {
+function La(t3, e2) {
   var r2 = Object.keys(t3);
   if (Object.getOwnPropertySymbols) {
     var n2 = Object.getOwnPropertySymbols(t3);
@@ -6124,50 +5910,50 @@ function Ca(t3, e2) {
   }
   return r2;
 }
-function Ra(t3) {
+function Ba(t3) {
   for (var e2 = 1; e2 < arguments.length; e2++) {
     var r2 = arguments[e2] != null ? arguments[e2] : {};
-    e2 % 2 ? Ca(Object(r2), true).forEach(function(e3) {
-      Da(t3, e3, r2[e3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t3, Object.getOwnPropertyDescriptors(r2)) : Ca(Object(r2)).forEach(function(e3) {
+    e2 % 2 ? La(Object(r2), true).forEach(function(e3) {
+      Fa(t3, e3, r2[e3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(t3, Object.getOwnPropertyDescriptors(r2)) : La(Object(r2)).forEach(function(e3) {
       Object.defineProperty(t3, e3, Object.getOwnPropertyDescriptor(r2, e3));
     });
   }
   return t3;
 }
-function Da(t3, e2, r2) {
+function Fa(t3, e2, r2) {
   return e2 in t3 ? Object.defineProperty(t3, e2, {value: r2, enumerable: true, configurable: true, writable: true}) : t3[e2] = r2, t3;
 }
-Ys(function(t3) {
-  return Oa(t3).times(2);
-}, {hasher: za});
-var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar", "divideScalar", "pow", "abs", "fix", "round", "equal", "isNumeric", "format", "number", "Complex", "BigNumber", "Fraction"], (t3) => {
-  var e2, r2, n2, {on: i2, config: s2, addScalar: a2, subtract: o2, multiplyScalar: u2, divideScalar: h, pow: c2, abs: l2, fix: p2, round: f2, equal: d2, isNumeric: m2, format: y2, number: g2, Complex: v, BigNumber: x, Fraction: w} = t3, b = g2;
-  function _(t4, e3) {
-    if (!(this instanceof _))
+Ks(function(t3) {
+  return Da(t3).times(2);
+}, {hasher: ka});
+var Pa = mn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar", "divideScalar", "pow", "abs", "fix", "round", "equal", "isNumeric", "format", "number", "Complex", "BigNumber", "Fraction"], (t3) => {
+  var e2, r2, n2, {on: i2, config: s2, addScalar: a2, subtract: o2, multiplyScalar: u2, divideScalar: h, pow: c2, abs: l2, fix: p2, round: f2, equal: d, isNumeric: m2, format: y2, number: g2, Complex: v2, BigNumber: x2, Fraction: w2} = t3, b2 = g2;
+  function _2(t4, e3) {
+    if (!(this instanceof _2))
       throw new Error("Constructor must be called with the new operator");
-    if (t4 != null && !m2(t4) && !ze(t4))
+    if (t4 != null && !m2(t4) && !ke(t4))
       throw new TypeError("First parameter in Unit constructor must be number, BigNumber, Fraction, Complex, or undefined");
     if (e3 !== void 0 && (typeof e3 != "string" || e3 === ""))
       throw new TypeError("Second parameter in Unit constructor must be a string");
     if (e3 !== void 0) {
-      var r3 = _.parse(e3);
+      var r3 = _2.parse(e3);
       this.units = r3.units, this.dimensions = r3.dimensions;
     } else {
-      this.units = [{unit: L2, prefix: R2.NONE, power: 0}], this.dimensions = [];
-      for (var n3 = 0; n3 < D2.length; n3++)
+      this.units = [{unit: L, prefix: R.NONE, power: 0}], this.dimensions = [];
+      for (var n3 = 0; n3 < D.length; n3++)
         this.dimensions[n3] = 0;
     }
     this.value = t4 != null ? this._normalize(t4) : null, this.fixPrefix = false, this.skipAutomaticSimplification = true;
   }
   function M() {
     for (; n2 === " " || n2 === "	"; )
-      N();
+      E();
   }
-  function E(t4) {
+  function N(t4) {
     return t4 >= "0" && t4 <= "9";
   }
-  function N() {
+  function E() {
     r2++, n2 = e2.charAt(r2);
   }
   function S(t4) {
@@ -6175,71 +5961,71 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
   }
   function T() {
     var t4, e3 = "", i3 = r2;
-    if (n2 === "+" ? N() : n2 === "-" && (e3 += n2, N()), !((t4 = n2) >= "0" && t4 <= "9" || t4 === "."))
+    if (n2 === "+" ? E() : n2 === "-" && (e3 += n2, E()), !((t4 = n2) >= "0" && t4 <= "9" || t4 === "."))
       return S(i3), null;
     if (n2 === ".") {
-      if (e3 += n2, N(), !E(n2))
+      if (e3 += n2, E(), !N(n2))
         return S(i3), null;
     } else {
-      for (; E(n2); )
-        e3 += n2, N();
-      n2 === "." && (e3 += n2, N());
+      for (; N(n2); )
+        e3 += n2, E();
+      n2 === "." && (e3 += n2, E());
     }
-    for (; E(n2); )
-      e3 += n2, N();
+    for (; N(n2); )
+      e3 += n2, E();
     if (n2 === "E" || n2 === "e") {
       var s3 = "", a3 = r2;
-      if (s3 += n2, N(), n2 !== "+" && n2 !== "-" || (s3 += n2, N()), !E(n2))
+      if (s3 += n2, E(), n2 !== "+" && n2 !== "-" || (s3 += n2, E()), !N(n2))
         return S(a3), e3;
-      for (e3 += s3; E(n2); )
-        e3 += n2, N();
+      for (e3 += s3; N(n2); )
+        e3 += n2, E();
     }
     return e3;
   }
-  function O2() {
-    for (var t4 = ""; E(n2) || _.isValidAlpha(n2); )
-      t4 += n2, N();
+  function O() {
+    for (var t4 = ""; N(n2) || _2.isValidAlpha(n2); )
+      t4 += n2, E();
     var e3 = t4.charAt(0);
-    return _.isValidAlpha(e3) ? t4 : null;
+    return _2.isValidAlpha(e3) ? t4 : null;
   }
-  function z2(t4) {
-    return n2 === t4 ? (N(), t4) : null;
+  function z(t4) {
+    return n2 === t4 ? (E(), t4) : null;
   }
-  _.prototype.type = "Unit", _.prototype.isUnit = true, _.parse = function(t4, i3) {
+  _2.prototype.type = "Unit", _2.prototype.isUnit = true, _2.parse = function(t4, i3) {
     if (i3 = i3 || {}, r2 = -1, n2 = "", typeof (e2 = t4) != "string")
       throw new TypeError("Invalid argument in Unit.parse, string expected");
-    var a3 = new _();
+    var a3 = new _2();
     a3.units = [];
     var o3 = 1, u3 = false;
-    N(), M();
+    E(), M();
     var h2 = T(), c3 = null;
     if (h2) {
       if (s2.number === "BigNumber")
-        c3 = new x(h2);
+        c3 = new x2(h2);
       else if (s2.number === "Fraction")
         try {
-          c3 = new w(h2);
-        } catch (E2) {
+          c3 = new w2(h2);
+        } catch (N2) {
           c3 = parseFloat(h2);
         }
       else
         c3 = parseFloat(h2);
-      M(), z2("*") ? (o3 = 1, u3 = true) : z2("/") && (o3 = -1, u3 = true);
+      M(), z("*") ? (o3 = 1, u3 = true) : z("/") && (o3 = -1, u3 = true);
     }
     for (var l3 = [], p3 = 1; ; ) {
       for (M(); n2 === "("; )
-        l3.push(o3), p3 *= o3, o3 = 1, N(), M();
+        l3.push(o3), p3 *= o3, o3 = 1, E(), M();
       var f3 = void 0;
       if (!n2)
         break;
-      var d3 = n2;
-      if ((f3 = O2()) === null)
-        throw new SyntaxError('Unexpected "' + d3 + '" in "' + e2 + '" at index ' + r2.toString());
-      var m3 = A2(f3);
+      var d2 = n2;
+      if ((f3 = O()) === null)
+        throw new SyntaxError('Unexpected "' + d2 + '" in "' + e2 + '" at index ' + r2.toString());
+      var m3 = C(f3);
       if (m3 === null)
         throw new SyntaxError('Unit "' + f3 + '" not found.');
       var y3 = o3 * p3;
-      if (M(), z2("^")) {
+      if (M(), z("^")) {
         M();
         var g3 = T();
         if (g3 === null)
@@ -6247,16 +6033,16 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
         y3 *= g3;
       }
       a3.units.push({unit: m3.unit, prefix: m3.prefix, power: y3});
-      for (var v2 = 0; v2 < D2.length; v2++)
-        a3.dimensions[v2] += (m3.unit.dimensions[v2] || 0) * y3;
+      for (var v3 = 0; v3 < D.length; v3++)
+        a3.dimensions[v3] += (m3.unit.dimensions[v3] || 0) * y3;
       for (M(); n2 === ")"; ) {
         if (l3.length === 0)
           throw new SyntaxError('Unmatched ")" in "' + e2 + '" at index ' + r2.toString());
-        p3 /= l3.pop(), N(), M();
+        p3 /= l3.pop(), E(), M();
       }
-      if (u3 = false, z2("*") ? (o3 = 1, u3 = true) : z2("/") ? (o3 = -1, u3 = true) : o3 = 1, m3.unit.base) {
-        var b2 = m3.unit.base.key;
-        U2.auto[b2] = {unit: m3.unit, prefix: m3.prefix};
+      if (u3 = false, z("*") ? (o3 = 1, u3 = true) : z("/") ? (o3 = -1, u3 = true) : o3 = 1, m3.unit.base) {
+        var b3 = m3.unit.base.key;
+        U.auto[b3] = {unit: m3.unit, prefix: m3.prefix};
       }
     }
     if (M(), n2)
@@ -6268,77 +6054,77 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
     if (a3.units.length === 0 && !i3.allowNoUnits)
       throw new SyntaxError('"' + t4 + '" contains no units');
     return a3.value = c3 !== void 0 ? a3._normalize(c3) : null, a3;
-  }, _.prototype.clone = function() {
-    var t4 = new _();
-    t4.fixPrefix = this.fixPrefix, t4.skipAutomaticSimplification = this.skipAutomaticSimplification, t4.value = pr(this.value), t4.dimensions = this.dimensions.slice(0), t4.units = [];
+  }, _2.prototype.clone = function() {
+    var t4 = new _2();
+    t4.fixPrefix = this.fixPrefix, t4.skipAutomaticSimplification = this.skipAutomaticSimplification, t4.value = gr(this.value), t4.dimensions = this.dimensions.slice(0), t4.units = [];
     for (var e3 = 0; e3 < this.units.length; e3++)
       for (var r3 in t4.units[e3] = {}, this.units[e3])
-        wr(this.units[e3], r3) && (t4.units[e3][r3] = this.units[e3][r3]);
+        Er(this.units[e3], r3) && (t4.units[e3][r3] = this.units[e3][r3]);
     return t4;
-  }, _.prototype._isDerived = function() {
+  }, _2.prototype._isDerived = function() {
     return this.units.length !== 0 && (this.units.length > 1 || Math.abs(this.units[0].power - 1) > 1e-15);
-  }, _.prototype._normalize = function(t4) {
+  }, _2.prototype._normalize = function(t4) {
     var e3, r3, n3, i3, s3;
     if (t4 == null || this.units.length === 0)
       return t4;
     if (this._isDerived()) {
       var o3 = t4;
-      s3 = _._getNumberConverter(lr(t4));
+      s3 = _2._getNumberConverter(yr(t4));
       for (var h2 = 0; h2 < this.units.length; h2++)
         e3 = s3(this.units[h2].unit.value), i3 = s3(this.units[h2].prefix.value), n3 = s3(this.units[h2].power), o3 = u2(o3, c2(u2(e3, i3), n3));
       return o3;
     }
-    return e3 = (s3 = _._getNumberConverter(lr(t4)))(this.units[0].unit.value), r3 = s3(this.units[0].unit.offset), i3 = s3(this.units[0].prefix.value), u2(a2(t4, r3), u2(e3, i3));
-  }, _.prototype._denormalize = function(t4, e3) {
+    return e3 = (s3 = _2._getNumberConverter(yr(t4)))(this.units[0].unit.value), r3 = s3(this.units[0].unit.offset), i3 = s3(this.units[0].prefix.value), u2(a2(t4, r3), u2(e3, i3));
+  }, _2.prototype._denormalize = function(t4, e3) {
     var r3, n3, i3, s3, a3;
     if (t4 == null || this.units.length === 0)
       return t4;
     if (this._isDerived()) {
       var l3 = t4;
-      a3 = _._getNumberConverter(lr(t4));
+      a3 = _2._getNumberConverter(yr(t4));
       for (var p3 = 0; p3 < this.units.length; p3++)
         r3 = a3(this.units[p3].unit.value), s3 = a3(this.units[p3].prefix.value), i3 = a3(this.units[p3].power), l3 = h(l3, c2(u2(r3, s3), i3));
       return l3;
     }
-    return r3 = (a3 = _._getNumberConverter(lr(t4)))(this.units[0].unit.value), s3 = a3(this.units[0].prefix.value), n3 = a3(this.units[0].unit.offset), o2(h(h(t4, r3), e3 == null ? s3 : e3), n3);
+    return r3 = (a3 = _2._getNumberConverter(yr(t4)))(this.units[0].unit.value), s3 = a3(this.units[0].prefix.value), n3 = a3(this.units[0].unit.offset), o2(h(h(t4, r3), e3 == null ? s3 : e3), n3);
   };
-  var A2 = Ys((t4) => {
-    if (wr(B2, t4)) {
-      var e3 = B2[t4];
+  var C = Ks((t4) => {
+    if (Er(B, t4)) {
+      var e3 = B[t4];
       return {unit: e3, prefix: e3.prefixes[""]};
     }
-    for (var r3 in B2)
-      if (wr(B2, r3) && qr(t4, r3)) {
-        var n3 = B2[r3], i3 = t4.length - r3.length, s3 = t4.substring(0, i3), a3 = wr(n3.prefixes, s3) ? n3.prefixes[s3] : void 0;
+    for (var r3 in B)
+      if (Er(B, r3) && Wr(t4, r3)) {
+        var n3 = B[r3], i3 = t4.length - r3.length, s3 = t4.substring(0, i3), a3 = Er(n3.prefixes, s3) ? n3.prefixes[s3] : void 0;
         if (a3 !== void 0)
           return {unit: n3, prefix: a3};
       }
     return null;
   }, {hasher: (t4) => t4[0], limit: 100});
-  function C2(t4) {
-    return t4.equalBase(k2.NONE) && t4.value !== null && !s2.predictable ? t4.value : t4;
+  function A(t4) {
+    return t4.equalBase(k.NONE) && t4.value !== null && !s2.predictable ? t4.value : t4;
   }
-  _.isValuelessUnit = function(t4) {
-    return A2(t4) !== null;
-  }, _.prototype.hasBase = function(t4) {
-    if (typeof t4 == "string" && (t4 = k2[t4]), !t4)
+  _2.isValuelessUnit = function(t4) {
+    return C(t4) !== null;
+  }, _2.prototype.hasBase = function(t4) {
+    if (typeof t4 == "string" && (t4 = k[t4]), !t4)
       return false;
-    for (var e3 = 0; e3 < D2.length; e3++)
+    for (var e3 = 0; e3 < D.length; e3++)
       if (Math.abs((this.dimensions[e3] || 0) - (t4.dimensions[e3] || 0)) > 1e-12)
         return false;
     return true;
-  }, _.prototype.equalBase = function(t4) {
-    for (var e3 = 0; e3 < D2.length; e3++)
+  }, _2.prototype.equalBase = function(t4) {
+    for (var e3 = 0; e3 < D.length; e3++)
       if (Math.abs((this.dimensions[e3] || 0) - (t4.dimensions[e3] || 0)) > 1e-12)
         return false;
     return true;
-  }, _.prototype.equals = function(t4) {
-    return this.equalBase(t4) && d2(this.value, t4.value);
-  }, _.prototype.multiply = function(t4) {
-    for (var e3 = this.clone(), r3 = 0; r3 < D2.length; r3++)
+  }, _2.prototype.equals = function(t4) {
+    return this.equalBase(t4) && d(this.value, t4.value);
+  }, _2.prototype.multiply = function(t4) {
+    for (var e3 = this.clone(), r3 = 0; r3 < D.length; r3++)
       e3.dimensions[r3] = (this.dimensions[r3] || 0) + (t4.dimensions[r3] || 0);
     for (var n3 = 0; n3 < t4.units.length; n3++) {
-      var i3 = Ra({}, t4.units[n3]);
+      var i3 = Ba({}, t4.units[n3]);
       e3.units.push(i3);
     }
     if (this.value !== null || t4.value !== null) {
@@ -6346,12 +6132,12 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
       e3.value = u2(s3, a3);
     } else
       e3.value = null;
-    return e3.skipAutomaticSimplification = false, C2(e3);
-  }, _.prototype.divide = function(t4) {
-    for (var e3 = this.clone(), r3 = 0; r3 < D2.length; r3++)
+    return e3.skipAutomaticSimplification = false, A(e3);
+  }, _2.prototype.divide = function(t4) {
+    for (var e3 = this.clone(), r3 = 0; r3 < D.length; r3++)
       e3.dimensions[r3] = (this.dimensions[r3] || 0) - (t4.dimensions[r3] || 0);
     for (var n3 = 0; n3 < t4.units.length; n3++) {
-      var i3 = Ra(Ra({}, t4.units[n3]), {}, {power: -t4.units[n3].power});
+      var i3 = Ba(Ba({}, t4.units[n3]), {}, {power: -t4.units[n3].power});
       e3.units.push(i3);
     }
     if (this.value !== null || t4.value !== null) {
@@ -6359,77 +6145,77 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
       e3.value = h(s3, a3);
     } else
       e3.value = null;
-    return e3.skipAutomaticSimplification = false, C2(e3);
-  }, _.prototype.pow = function(t4) {
-    for (var e3 = this.clone(), r3 = 0; r3 < D2.length; r3++)
+    return e3.skipAutomaticSimplification = false, A(e3);
+  }, _2.prototype.pow = function(t4) {
+    for (var e3 = this.clone(), r3 = 0; r3 < D.length; r3++)
       e3.dimensions[r3] = (this.dimensions[r3] || 0) * t4;
     for (var n3 = 0; n3 < e3.units.length; n3++)
       e3.units[n3].power *= t4;
-    return e3.value !== null ? e3.value = c2(e3.value, t4) : e3.value = null, e3.skipAutomaticSimplification = false, C2(e3);
-  }, _.prototype.abs = function() {
+    return e3.value !== null ? e3.value = c2(e3.value, t4) : e3.value = null, e3.skipAutomaticSimplification = false, A(e3);
+  }, _2.prototype.abs = function() {
     var t4 = this.clone();
     for (var e3 in t4.value = t4.value !== null ? l2(t4.value) : null, t4.units)
-      t4.units[e3].unit.name !== "VA" && t4.units[e3].unit.name !== "VAR" || (t4.units[e3].unit = B2.W);
+      t4.units[e3].unit.name !== "VA" && t4.units[e3].unit.name !== "VAR" || (t4.units[e3].unit = B.W);
     return t4;
-  }, _.prototype.to = function(t4) {
+  }, _2.prototype.to = function(t4) {
     var e3, r3 = this.value === null ? this._normalize(1) : this.value;
     if (typeof t4 == "string") {
-      if (e3 = _.parse(t4), !this.equalBase(e3))
+      if (e3 = _2.parse(t4), !this.equalBase(e3))
         throw new Error("Units do not match ('".concat(e3.toString(), "' != '").concat(this.toString(), "')"));
       if (e3.value !== null)
         throw new Error("Cannot convert to a unit with a value");
-      return e3.value = pr(r3), e3.fixPrefix = true, e3.skipAutomaticSimplification = true, e3;
+      return e3.value = gr(r3), e3.fixPrefix = true, e3.skipAutomaticSimplification = true, e3;
     }
-    if (Ce(t4)) {
+    if (Le(t4)) {
       if (!this.equalBase(t4))
         throw new Error("Units do not match ('".concat(t4.toString(), "' != '").concat(this.toString(), "')"));
       if (t4.value !== null)
         throw new Error("Cannot convert to a unit with a value");
-      return (e3 = t4.clone()).value = pr(r3), e3.fixPrefix = true, e3.skipAutomaticSimplification = true, e3;
+      return (e3 = t4.clone()).value = gr(r3), e3.fixPrefix = true, e3.skipAutomaticSimplification = true, e3;
     }
     throw new Error("String or Unit expected as parameter");
-  }, _.prototype.toNumber = function(t4) {
-    return b(this.toNumeric(t4));
-  }, _.prototype.toNumeric = function(t4) {
+  }, _2.prototype.toNumber = function(t4) {
+    return b2(this.toNumeric(t4));
+  }, _2.prototype.toNumeric = function(t4) {
     var e3;
     return (e3 = t4 ? this.to(t4) : this.clone())._isDerived() || e3.units.length === 0 ? e3._denormalize(e3.value) : e3._denormalize(e3.value, e3.units[0].prefix.value);
-  }, _.prototype.toString = function() {
+  }, _2.prototype.toString = function() {
     return this.format();
-  }, _.prototype.toJSON = function() {
+  }, _2.prototype.toJSON = function() {
     return {mathjs: "Unit", value: this._denormalize(this.value), unit: this.formatUnits(), fixPrefix: this.fixPrefix};
-  }, _.fromJSON = function(t4) {
-    var e3 = new _(t4.value, t4.unit);
+  }, _2.fromJSON = function(t4) {
+    var e3 = new _2(t4.value, t4.unit);
     return e3.fixPrefix = t4.fixPrefix || false, e3;
-  }, _.prototype.valueOf = _.prototype.toString, _.prototype.simplify = function() {
+  }, _2.prototype.valueOf = _2.prototype.toString, _2.prototype.simplify = function() {
     var t4, e3, r3 = this.clone(), n3 = [];
-    for (var i3 in j2)
-      if (wr(j2, i3) && r3.hasBase(k2[i3])) {
+    for (var i3 in j)
+      if (Er(j, i3) && r3.hasBase(k[i3])) {
         t4 = i3;
         break;
       }
     if (t4 === "NONE")
       r3.units = [];
-    else if (t4 && wr(j2, t4) && (e3 = j2[t4]), e3)
+    else if (t4 && Er(j, t4) && (e3 = j[t4]), e3)
       r3.units = [{unit: e3.unit, prefix: e3.prefix, power: 1}];
     else {
-      for (var s3 = false, a3 = 0; a3 < D2.length; a3++) {
-        var o3 = D2[a3];
-        Math.abs(r3.dimensions[a3] || 0) > 1e-12 && (wr(j2, o3) ? n3.push({unit: j2[o3].unit, prefix: j2[o3].prefix, power: r3.dimensions[a3] || 0}) : s3 = true);
+      for (var s3 = false, a3 = 0; a3 < D.length; a3++) {
+        var o3 = D[a3];
+        Math.abs(r3.dimensions[a3] || 0) > 1e-12 && (Er(j, o3) ? n3.push({unit: j[o3].unit, prefix: j[o3].prefix, power: r3.dimensions[a3] || 0}) : s3 = true);
       }
       n3.length < r3.units.length && !s3 && (r3.units = n3);
     }
     return r3;
-  }, _.prototype.toSI = function() {
-    for (var t4 = this.clone(), e3 = [], r3 = 0; r3 < D2.length; r3++) {
-      var n3 = D2[r3];
+  }, _2.prototype.toSI = function() {
+    for (var t4 = this.clone(), e3 = [], r3 = 0; r3 < D.length; r3++) {
+      var n3 = D[r3];
       if (Math.abs(t4.dimensions[r3] || 0) > 1e-12) {
-        if (!wr(U2.si, n3))
+        if (!Er(U.si, n3))
           throw new Error("Cannot express custom unit " + n3 + " in SI units");
-        e3.push({unit: U2.si[n3].unit, prefix: U2.si[n3].prefix, power: t4.dimensions[r3] || 0});
+        e3.push({unit: U.si[n3].unit, prefix: U.si[n3].prefix, power: t4.dimensions[r3] || 0});
       }
     }
     return t4.units = e3, t4.fixPrefix = true, t4.skipAutomaticSimplification = true, t4;
-  }, _.prototype.formatUnits = function() {
+  }, _2.prototype.formatUnits = function() {
     for (var t4 = "", e3 = "", r3 = 0, n3 = 0, i3 = 0; i3 < this.units.length; i3++)
       this.units[i3].power > 0 ? (r3++, t4 += " " + this.units[i3].prefix.name + this.units[i3].unit.name, Math.abs(this.units[i3].power - 1) > 1e-15 && (t4 += "^" + this.units[i3].power)) : this.units[i3].power < 0 && n3++;
     if (n3 > 0)
@@ -6438,14 +6224,14 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
     t4 = t4.substr(1), e3 = e3.substr(1), r3 > 1 && n3 > 0 && (t4 = "(" + t4 + ")"), n3 > 1 && r3 > 0 && (e3 = "(" + e3 + ")");
     var a3 = t4;
     return r3 > 0 && n3 > 0 && (a3 += " / "), a3 += e3;
-  }, _.prototype.format = function(t4) {
+  }, _2.prototype.format = function(t4) {
     var e3 = this.skipAutomaticSimplification || this.value === null ? this.clone() : this.simplify(), r3 = false;
-    for (var n3 in e3.value !== void 0 && e3.value !== null && ze(e3.value) && (r3 = Math.abs(e3.value.re) < 1e-14), e3.units)
-      wr(e3.units, n3) && e3.units[n3].unit && (e3.units[n3].unit.name === "VA" && r3 ? e3.units[n3].unit = B2.VAR : e3.units[n3].unit.name !== "VAR" || r3 || (e3.units[n3].unit = B2.VA));
+    for (var n3 in e3.value !== void 0 && e3.value !== null && ke(e3.value) && (r3 = Math.abs(e3.value.re) < 1e-14), e3.units)
+      Er(e3.units, n3) && e3.units[n3].unit && (e3.units[n3].unit.name === "VA" && r3 ? e3.units[n3].unit = B.VAR : e3.units[n3].unit.name !== "VAR" || r3 || (e3.units[n3].unit = B.VA));
     e3.units.length !== 1 || e3.fixPrefix || Math.abs(e3.units[0].power - Math.round(e3.units[0].power)) < 1e-14 && (e3.units[0].prefix = e3._bestPrefix());
     var i3 = e3._denormalize(e3.value), s3 = e3.value !== null ? y2(i3, t4 || {}) : "", a3 = e3.formatUnits();
-    return e3.value && ze(e3.value) && (s3 = "(" + s3 + ")"), a3.length > 0 && s3.length > 0 && (s3 += " "), s3 += a3;
-  }, _.prototype._bestPrefix = function() {
+    return e3.value && ke(e3.value) && (s3 = "(" + s3 + ")"), a3.length > 0 && s3.length > 0 && (s3 += " "), s3 += a3;
+  }, _2.prototype._bestPrefix = function() {
     if (this.units.length !== 1)
       throw new Error("Can only compute the best prefix for single units with integer powers, like kg, s^2, N^-1, and so forth!");
     if (Math.abs(this.units[0].power - Math.round(this.units[0].power)) >= 1e-14)
@@ -6459,7 +6245,7 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
     i3 = Math.abs(i3);
     var s3 = this.units[0].unit.prefixes;
     for (var a3 in s3)
-      if (wr(s3, a3)) {
+      if (Er(s3, a3)) {
         var o3 = s3[a3];
         if (o3.scientific) {
           var u3 = Math.abs(Math.log(t4 / Math.pow(o3.value * e3, n3)) / Math.LN10 - 1.2);
@@ -6467,92 +6253,92 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
         }
       }
     return r3;
-  }, _.prototype.splitUnit = function(t4) {
+  }, _2.prototype.splitUnit = function(t4) {
     for (var e3 = this.clone(), r3 = [], n3 = 0; n3 < t4.length && (e3 = e3.to(t4[n3]), n3 !== t4.length - 1); n3++) {
-      var i3 = e3.toNumeric(), s3 = f2(i3), u3 = new _(d2(s3, i3) ? s3 : p2(e3.toNumeric()), t4[n3].toString());
+      var i3 = e3.toNumeric(), s3 = f2(i3), u3 = new _2(d(s3, i3) ? s3 : p2(e3.toNumeric()), t4[n3].toString());
       r3.push(u3), e3 = o2(e3, u3);
     }
     for (var h2 = 0, c3 = 0; c3 < r3.length; c3++)
       h2 = a2(h2, r3[c3].value);
-    return d2(h2, this.value) && (e3.value = 0), r3.push(e3), r3;
+    return d(h2, this.value) && (e3.value = 0), r3.push(e3), r3;
   };
-  var R2 = {NONE: {"": {name: "", value: 1, scientific: true}}, SHORT: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 10, scientific: false}, h: {name: "h", value: 100, scientific: false}, k: {name: "k", value: 1e3, scientific: true}, M: {name: "M", value: 1e6, scientific: true}, G: {name: "G", value: 1e9, scientific: true}, T: {name: "T", value: 1e12, scientific: true}, P: {name: "P", value: 1e15, scientific: true}, E: {name: "E", value: 1e18, scientific: true}, Z: {name: "Z", value: 1e21, scientific: true}, Y: {name: "Y", value: 1e24, scientific: true}, d: {name: "d", value: 0.1, scientific: false}, c: {name: "c", value: 0.01, scientific: false}, m: {name: "m", value: 1e-3, scientific: true}, u: {name: "u", value: 1e-6, scientific: true}, n: {name: "n", value: 1e-9, scientific: true}, p: {name: "p", value: 1e-12, scientific: true}, f: {name: "f", value: 1e-15, scientific: true}, a: {name: "a", value: 1e-18, scientific: true}, z: {name: "z", value: 1e-21, scientific: true}, y: {name: "y", value: 1e-24, scientific: true}}, LONG: {"": {name: "", value: 1, scientific: true}, deca: {name: "deca", value: 10, scientific: false}, hecto: {name: "hecto", value: 100, scientific: false}, kilo: {name: "kilo", value: 1e3, scientific: true}, mega: {name: "mega", value: 1e6, scientific: true}, giga: {name: "giga", value: 1e9, scientific: true}, tera: {name: "tera", value: 1e12, scientific: true}, peta: {name: "peta", value: 1e15, scientific: true}, exa: {name: "exa", value: 1e18, scientific: true}, zetta: {name: "zetta", value: 1e21, scientific: true}, yotta: {name: "yotta", value: 1e24, scientific: true}, deci: {name: "deci", value: 0.1, scientific: false}, centi: {name: "centi", value: 0.01, scientific: false}, milli: {name: "milli", value: 1e-3, scientific: true}, micro: {name: "micro", value: 1e-6, scientific: true}, nano: {name: "nano", value: 1e-9, scientific: true}, pico: {name: "pico", value: 1e-12, scientific: true}, femto: {name: "femto", value: 1e-15, scientific: true}, atto: {name: "atto", value: 1e-18, scientific: true}, zepto: {name: "zepto", value: 1e-21, scientific: true}, yocto: {name: "yocto", value: 1e-24, scientific: true}}, SQUARED: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 100, scientific: false}, h: {name: "h", value: 1e4, scientific: false}, k: {name: "k", value: 1e6, scientific: true}, M: {name: "M", value: 1e12, scientific: true}, G: {name: "G", value: 1e18, scientific: true}, T: {name: "T", value: 1e24, scientific: true}, P: {name: "P", value: 1e30, scientific: true}, E: {name: "E", value: 1e36, scientific: true}, Z: {name: "Z", value: 1e42, scientific: true}, Y: {name: "Y", value: 1e48, scientific: true}, d: {name: "d", value: 0.01, scientific: false}, c: {name: "c", value: 1e-4, scientific: false}, m: {name: "m", value: 1e-6, scientific: true}, u: {name: "u", value: 1e-12, scientific: true}, n: {name: "n", value: 1e-18, scientific: true}, p: {name: "p", value: 1e-24, scientific: true}, f: {name: "f", value: 1e-30, scientific: true}, a: {name: "a", value: 1e-36, scientific: true}, z: {name: "z", value: 1e-42, scientific: true}, y: {name: "y", value: 1e-48, scientific: true}}, CUBIC: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 1e3, scientific: false}, h: {name: "h", value: 1e6, scientific: false}, k: {name: "k", value: 1e9, scientific: true}, M: {name: "M", value: 1e18, scientific: true}, G: {name: "G", value: 1e27, scientific: true}, T: {name: "T", value: 1e36, scientific: true}, P: {name: "P", value: 1e45, scientific: true}, E: {name: "E", value: 1e54, scientific: true}, Z: {name: "Z", value: 1e63, scientific: true}, Y: {name: "Y", value: 1e72, scientific: true}, d: {name: "d", value: 1e-3, scientific: false}, c: {name: "c", value: 1e-6, scientific: false}, m: {name: "m", value: 1e-9, scientific: true}, u: {name: "u", value: 1e-18, scientific: true}, n: {name: "n", value: 1e-27, scientific: true}, p: {name: "p", value: 1e-36, scientific: true}, f: {name: "f", value: 1e-45, scientific: true}, a: {name: "a", value: 1e-54, scientific: true}, z: {name: "z", value: 1e-63, scientific: true}, y: {name: "y", value: 1e-72, scientific: true}}, BINARY_SHORT_SI: {"": {name: "", value: 1, scientific: true}, k: {name: "k", value: 1e3, scientific: true}, M: {name: "M", value: 1e6, scientific: true}, G: {name: "G", value: 1e9, scientific: true}, T: {name: "T", value: 1e12, scientific: true}, P: {name: "P", value: 1e15, scientific: true}, E: {name: "E", value: 1e18, scientific: true}, Z: {name: "Z", value: 1e21, scientific: true}, Y: {name: "Y", value: 1e24, scientific: true}}, BINARY_SHORT_IEC: {"": {name: "", value: 1, scientific: true}, Ki: {name: "Ki", value: 1024, scientific: true}, Mi: {name: "Mi", value: Math.pow(1024, 2), scientific: true}, Gi: {name: "Gi", value: Math.pow(1024, 3), scientific: true}, Ti: {name: "Ti", value: Math.pow(1024, 4), scientific: true}, Pi: {name: "Pi", value: Math.pow(1024, 5), scientific: true}, Ei: {name: "Ei", value: Math.pow(1024, 6), scientific: true}, Zi: {name: "Zi", value: Math.pow(1024, 7), scientific: true}, Yi: {name: "Yi", value: Math.pow(1024, 8), scientific: true}}, BINARY_LONG_SI: {"": {name: "", value: 1, scientific: true}, kilo: {name: "kilo", value: 1e3, scientific: true}, mega: {name: "mega", value: 1e6, scientific: true}, giga: {name: "giga", value: 1e9, scientific: true}, tera: {name: "tera", value: 1e12, scientific: true}, peta: {name: "peta", value: 1e15, scientific: true}, exa: {name: "exa", value: 1e18, scientific: true}, zetta: {name: "zetta", value: 1e21, scientific: true}, yotta: {name: "yotta", value: 1e24, scientific: true}}, BINARY_LONG_IEC: {"": {name: "", value: 1, scientific: true}, kibi: {name: "kibi", value: 1024, scientific: true}, mebi: {name: "mebi", value: Math.pow(1024, 2), scientific: true}, gibi: {name: "gibi", value: Math.pow(1024, 3), scientific: true}, tebi: {name: "tebi", value: Math.pow(1024, 4), scientific: true}, pebi: {name: "pebi", value: Math.pow(1024, 5), scientific: true}, exi: {name: "exi", value: Math.pow(1024, 6), scientific: true}, zebi: {name: "zebi", value: Math.pow(1024, 7), scientific: true}, yobi: {name: "yobi", value: Math.pow(1024, 8), scientific: true}}, BTU: {"": {name: "", value: 1, scientific: true}, MM: {name: "MM", value: 1e6, scientific: true}}};
-  R2.SHORTLONG = Aa({}, R2.SHORT, R2.LONG), R2.BINARY_SHORT = Aa({}, R2.BINARY_SHORT_SI, R2.BINARY_SHORT_IEC), R2.BINARY_LONG = Aa({}, R2.BINARY_LONG_SI, R2.BINARY_LONG_IEC);
-  var D2 = ["MASS", "LENGTH", "TIME", "CURRENT", "TEMPERATURE", "LUMINOUS_INTENSITY", "AMOUNT_OF_SUBSTANCE", "ANGLE", "BIT"], k2 = {NONE: {dimensions: [0, 0, 0, 0, 0, 0, 0, 0, 0]}, MASS: {dimensions: [1, 0, 0, 0, 0, 0, 0, 0, 0]}, LENGTH: {dimensions: [0, 1, 0, 0, 0, 0, 0, 0, 0]}, TIME: {dimensions: [0, 0, 1, 0, 0, 0, 0, 0, 0]}, CURRENT: {dimensions: [0, 0, 0, 1, 0, 0, 0, 0, 0]}, TEMPERATURE: {dimensions: [0, 0, 0, 0, 1, 0, 0, 0, 0]}, LUMINOUS_INTENSITY: {dimensions: [0, 0, 0, 0, 0, 1, 0, 0, 0]}, AMOUNT_OF_SUBSTANCE: {dimensions: [0, 0, 0, 0, 0, 0, 1, 0, 0]}, FORCE: {dimensions: [1, 1, -2, 0, 0, 0, 0, 0, 0]}, SURFACE: {dimensions: [0, 2, 0, 0, 0, 0, 0, 0, 0]}, VOLUME: {dimensions: [0, 3, 0, 0, 0, 0, 0, 0, 0]}, ENERGY: {dimensions: [1, 2, -2, 0, 0, 0, 0, 0, 0]}, POWER: {dimensions: [1, 2, -3, 0, 0, 0, 0, 0, 0]}, PRESSURE: {dimensions: [1, -1, -2, 0, 0, 0, 0, 0, 0]}, ELECTRIC_CHARGE: {dimensions: [0, 0, 1, 1, 0, 0, 0, 0, 0]}, ELECTRIC_CAPACITANCE: {dimensions: [-1, -2, 4, 2, 0, 0, 0, 0, 0]}, ELECTRIC_POTENTIAL: {dimensions: [1, 2, -3, -1, 0, 0, 0, 0, 0]}, ELECTRIC_RESISTANCE: {dimensions: [1, 2, -3, -2, 0, 0, 0, 0, 0]}, ELECTRIC_INDUCTANCE: {dimensions: [1, 2, -2, -2, 0, 0, 0, 0, 0]}, ELECTRIC_CONDUCTANCE: {dimensions: [-1, -2, 3, 2, 0, 0, 0, 0, 0]}, MAGNETIC_FLUX: {dimensions: [1, 2, -2, -1, 0, 0, 0, 0, 0]}, MAGNETIC_FLUX_DENSITY: {dimensions: [1, 0, -2, -1, 0, 0, 0, 0, 0]}, FREQUENCY: {dimensions: [0, 0, -1, 0, 0, 0, 0, 0, 0]}, ANGLE: {dimensions: [0, 0, 0, 0, 0, 0, 0, 1, 0]}, BIT: {dimensions: [0, 0, 0, 0, 0, 0, 0, 0, 1]}};
-  for (var I2 in k2)
-    wr(k2, I2) && (k2[I2].key = I2);
-  var L2 = {name: "", base: {}, value: 1, offset: 0, dimensions: D2.map((t4) => 0)}, B2 = {meter: {name: "meter", base: k2.LENGTH, prefixes: R2.LONG, value: 1, offset: 0}, inch: {name: "inch", base: k2.LENGTH, prefixes: R2.NONE, value: 0.0254, offset: 0}, foot: {name: "foot", base: k2.LENGTH, prefixes: R2.NONE, value: 0.3048, offset: 0}, yard: {name: "yard", base: k2.LENGTH, prefixes: R2.NONE, value: 0.9144, offset: 0}, mile: {name: "mile", base: k2.LENGTH, prefixes: R2.NONE, value: 1609.344, offset: 0}, link: {name: "link", base: k2.LENGTH, prefixes: R2.NONE, value: 0.201168, offset: 0}, rod: {name: "rod", base: k2.LENGTH, prefixes: R2.NONE, value: 5.0292, offset: 0}, chain: {name: "chain", base: k2.LENGTH, prefixes: R2.NONE, value: 20.1168, offset: 0}, angstrom: {name: "angstrom", base: k2.LENGTH, prefixes: R2.NONE, value: 1e-10, offset: 0}, m: {name: "m", base: k2.LENGTH, prefixes: R2.SHORT, value: 1, offset: 0}, in: {name: "in", base: k2.LENGTH, prefixes: R2.NONE, value: 0.0254, offset: 0}, ft: {name: "ft", base: k2.LENGTH, prefixes: R2.NONE, value: 0.3048, offset: 0}, yd: {name: "yd", base: k2.LENGTH, prefixes: R2.NONE, value: 0.9144, offset: 0}, mi: {name: "mi", base: k2.LENGTH, prefixes: R2.NONE, value: 1609.344, offset: 0}, li: {name: "li", base: k2.LENGTH, prefixes: R2.NONE, value: 0.201168, offset: 0}, rd: {name: "rd", base: k2.LENGTH, prefixes: R2.NONE, value: 5.02921, offset: 0}, ch: {name: "ch", base: k2.LENGTH, prefixes: R2.NONE, value: 20.1168, offset: 0}, mil: {name: "mil", base: k2.LENGTH, prefixes: R2.NONE, value: 254e-7, offset: 0}, m2: {name: "m2", base: k2.SURFACE, prefixes: R2.SQUARED, value: 1, offset: 0}, sqin: {name: "sqin", base: k2.SURFACE, prefixes: R2.NONE, value: 64516e-8, offset: 0}, sqft: {name: "sqft", base: k2.SURFACE, prefixes: R2.NONE, value: 0.09290304, offset: 0}, sqyd: {name: "sqyd", base: k2.SURFACE, prefixes: R2.NONE, value: 0.83612736, offset: 0}, sqmi: {name: "sqmi", base: k2.SURFACE, prefixes: R2.NONE, value: 2589988110336e-6, offset: 0}, sqrd: {name: "sqrd", base: k2.SURFACE, prefixes: R2.NONE, value: 25.29295, offset: 0}, sqch: {name: "sqch", base: k2.SURFACE, prefixes: R2.NONE, value: 404.6873, offset: 0}, sqmil: {name: "sqmil", base: k2.SURFACE, prefixes: R2.NONE, value: 64516e-14, offset: 0}, acre: {name: "acre", base: k2.SURFACE, prefixes: R2.NONE, value: 4046.86, offset: 0}, hectare: {name: "hectare", base: k2.SURFACE, prefixes: R2.NONE, value: 1e4, offset: 0}, m3: {name: "m3", base: k2.VOLUME, prefixes: R2.CUBIC, value: 1, offset: 0}, L: {name: "L", base: k2.VOLUME, prefixes: R2.SHORT, value: 1e-3, offset: 0}, l: {name: "l", base: k2.VOLUME, prefixes: R2.SHORT, value: 1e-3, offset: 0}, litre: {name: "litre", base: k2.VOLUME, prefixes: R2.LONG, value: 1e-3, offset: 0}, cuin: {name: "cuin", base: k2.VOLUME, prefixes: R2.NONE, value: 16387064e-12, offset: 0}, cuft: {name: "cuft", base: k2.VOLUME, prefixes: R2.NONE, value: 0.028316846592, offset: 0}, cuyd: {name: "cuyd", base: k2.VOLUME, prefixes: R2.NONE, value: 0.764554857984, offset: 0}, teaspoon: {name: "teaspoon", base: k2.VOLUME, prefixes: R2.NONE, value: 5e-6, offset: 0}, tablespoon: {name: "tablespoon", base: k2.VOLUME, prefixes: R2.NONE, value: 15e-6, offset: 0}, drop: {name: "drop", base: k2.VOLUME, prefixes: R2.NONE, value: 5e-8, offset: 0}, gtt: {name: "gtt", base: k2.VOLUME, prefixes: R2.NONE, value: 5e-8, offset: 0}, minim: {name: "minim", base: k2.VOLUME, prefixes: R2.NONE, value: 6161152e-14, offset: 0}, fluiddram: {name: "fluiddram", base: k2.VOLUME, prefixes: R2.NONE, value: 36966911e-13, offset: 0}, fluidounce: {name: "fluidounce", base: k2.VOLUME, prefixes: R2.NONE, value: 2957353e-11, offset: 0}, gill: {name: "gill", base: k2.VOLUME, prefixes: R2.NONE, value: 1182941e-10, offset: 0}, cc: {name: "cc", base: k2.VOLUME, prefixes: R2.NONE, value: 1e-6, offset: 0}, cup: {name: "cup", base: k2.VOLUME, prefixes: R2.NONE, value: 2365882e-10, offset: 0}, pint: {name: "pint", base: k2.VOLUME, prefixes: R2.NONE, value: 4731765e-10, offset: 0}, quart: {name: "quart", base: k2.VOLUME, prefixes: R2.NONE, value: 9463529e-10, offset: 0}, gallon: {name: "gallon", base: k2.VOLUME, prefixes: R2.NONE, value: 3785412e-9, offset: 0}, beerbarrel: {name: "beerbarrel", base: k2.VOLUME, prefixes: R2.NONE, value: 0.1173478, offset: 0}, oilbarrel: {name: "oilbarrel", base: k2.VOLUME, prefixes: R2.NONE, value: 0.1589873, offset: 0}, hogshead: {name: "hogshead", base: k2.VOLUME, prefixes: R2.NONE, value: 0.238481, offset: 0}, fldr: {name: "fldr", base: k2.VOLUME, prefixes: R2.NONE, value: 36966911e-13, offset: 0}, floz: {name: "floz", base: k2.VOLUME, prefixes: R2.NONE, value: 2957353e-11, offset: 0}, gi: {name: "gi", base: k2.VOLUME, prefixes: R2.NONE, value: 1182941e-10, offset: 0}, cp: {name: "cp", base: k2.VOLUME, prefixes: R2.NONE, value: 2365882e-10, offset: 0}, pt: {name: "pt", base: k2.VOLUME, prefixes: R2.NONE, value: 4731765e-10, offset: 0}, qt: {name: "qt", base: k2.VOLUME, prefixes: R2.NONE, value: 9463529e-10, offset: 0}, gal: {name: "gal", base: k2.VOLUME, prefixes: R2.NONE, value: 3785412e-9, offset: 0}, bbl: {name: "bbl", base: k2.VOLUME, prefixes: R2.NONE, value: 0.1173478, offset: 0}, obl: {name: "obl", base: k2.VOLUME, prefixes: R2.NONE, value: 0.1589873, offset: 0}, g: {name: "g", base: k2.MASS, prefixes: R2.SHORT, value: 1e-3, offset: 0}, gram: {name: "gram", base: k2.MASS, prefixes: R2.LONG, value: 1e-3, offset: 0}, ton: {name: "ton", base: k2.MASS, prefixes: R2.SHORT, value: 907.18474, offset: 0}, t: {name: "t", base: k2.MASS, prefixes: R2.SHORT, value: 1e3, offset: 0}, tonne: {name: "tonne", base: k2.MASS, prefixes: R2.LONG, value: 1e3, offset: 0}, grain: {name: "grain", base: k2.MASS, prefixes: R2.NONE, value: 6479891e-11, offset: 0}, dram: {name: "dram", base: k2.MASS, prefixes: R2.NONE, value: 0.0017718451953125, offset: 0}, ounce: {name: "ounce", base: k2.MASS, prefixes: R2.NONE, value: 0.028349523125, offset: 0}, poundmass: {name: "poundmass", base: k2.MASS, prefixes: R2.NONE, value: 0.45359237, offset: 0}, hundredweight: {name: "hundredweight", base: k2.MASS, prefixes: R2.NONE, value: 45.359237, offset: 0}, stick: {name: "stick", base: k2.MASS, prefixes: R2.NONE, value: 0.115, offset: 0}, stone: {name: "stone", base: k2.MASS, prefixes: R2.NONE, value: 6.35029318, offset: 0}, gr: {name: "gr", base: k2.MASS, prefixes: R2.NONE, value: 6479891e-11, offset: 0}, dr: {name: "dr", base: k2.MASS, prefixes: R2.NONE, value: 0.0017718451953125, offset: 0}, oz: {name: "oz", base: k2.MASS, prefixes: R2.NONE, value: 0.028349523125, offset: 0}, lbm: {name: "lbm", base: k2.MASS, prefixes: R2.NONE, value: 0.45359237, offset: 0}, cwt: {name: "cwt", base: k2.MASS, prefixes: R2.NONE, value: 45.359237, offset: 0}, s: {name: "s", base: k2.TIME, prefixes: R2.SHORT, value: 1, offset: 0}, min: {name: "min", base: k2.TIME, prefixes: R2.NONE, value: 60, offset: 0}, h: {name: "h", base: k2.TIME, prefixes: R2.NONE, value: 3600, offset: 0}, second: {name: "second", base: k2.TIME, prefixes: R2.LONG, value: 1, offset: 0}, sec: {name: "sec", base: k2.TIME, prefixes: R2.LONG, value: 1, offset: 0}, minute: {name: "minute", base: k2.TIME, prefixes: R2.NONE, value: 60, offset: 0}, hour: {name: "hour", base: k2.TIME, prefixes: R2.NONE, value: 3600, offset: 0}, day: {name: "day", base: k2.TIME, prefixes: R2.NONE, value: 86400, offset: 0}, week: {name: "week", base: k2.TIME, prefixes: R2.NONE, value: 604800, offset: 0}, month: {name: "month", base: k2.TIME, prefixes: R2.NONE, value: 2629800, offset: 0}, year: {name: "year", base: k2.TIME, prefixes: R2.NONE, value: 31557600, offset: 0}, decade: {name: "decade", base: k2.TIME, prefixes: R2.NONE, value: 315576e3, offset: 0}, century: {name: "century", base: k2.TIME, prefixes: R2.NONE, value: 315576e4, offset: 0}, millennium: {name: "millennium", base: k2.TIME, prefixes: R2.NONE, value: 315576e5, offset: 0}, hertz: {name: "Hertz", base: k2.FREQUENCY, prefixes: R2.LONG, value: 1, offset: 0, reciprocal: true}, Hz: {name: "Hz", base: k2.FREQUENCY, prefixes: R2.SHORT, value: 1, offset: 0, reciprocal: true}, rad: {name: "rad", base: k2.ANGLE, prefixes: R2.SHORT, value: 1, offset: 0}, radian: {name: "radian", base: k2.ANGLE, prefixes: R2.LONG, value: 1, offset: 0}, deg: {name: "deg", base: k2.ANGLE, prefixes: R2.SHORT, value: null, offset: 0}, degree: {name: "degree", base: k2.ANGLE, prefixes: R2.LONG, value: null, offset: 0}, grad: {name: "grad", base: k2.ANGLE, prefixes: R2.SHORT, value: null, offset: 0}, gradian: {name: "gradian", base: k2.ANGLE, prefixes: R2.LONG, value: null, offset: 0}, cycle: {name: "cycle", base: k2.ANGLE, prefixes: R2.NONE, value: null, offset: 0}, arcsec: {name: "arcsec", base: k2.ANGLE, prefixes: R2.NONE, value: null, offset: 0}, arcmin: {name: "arcmin", base: k2.ANGLE, prefixes: R2.NONE, value: null, offset: 0}, A: {name: "A", base: k2.CURRENT, prefixes: R2.SHORT, value: 1, offset: 0}, ampere: {name: "ampere", base: k2.CURRENT, prefixes: R2.LONG, value: 1, offset: 0}, K: {name: "K", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1, offset: 0}, degC: {name: "degC", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1, offset: 273.15}, degF: {name: "degF", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1 / 1.8, offset: 459.67}, degR: {name: "degR", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1 / 1.8, offset: 0}, kelvin: {name: "kelvin", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1, offset: 0}, celsius: {name: "celsius", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1, offset: 273.15}, fahrenheit: {name: "fahrenheit", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1 / 1.8, offset: 459.67}, rankine: {name: "rankine", base: k2.TEMPERATURE, prefixes: R2.NONE, value: 1 / 1.8, offset: 0}, mol: {name: "mol", base: k2.AMOUNT_OF_SUBSTANCE, prefixes: R2.SHORT, value: 1, offset: 0}, mole: {name: "mole", base: k2.AMOUNT_OF_SUBSTANCE, prefixes: R2.LONG, value: 1, offset: 0}, cd: {name: "cd", base: k2.LUMINOUS_INTENSITY, prefixes: R2.SHORT, value: 1, offset: 0}, candela: {name: "candela", base: k2.LUMINOUS_INTENSITY, prefixes: R2.LONG, value: 1, offset: 0}, N: {name: "N", base: k2.FORCE, prefixes: R2.SHORT, value: 1, offset: 0}, newton: {name: "newton", base: k2.FORCE, prefixes: R2.LONG, value: 1, offset: 0}, dyn: {name: "dyn", base: k2.FORCE, prefixes: R2.SHORT, value: 1e-5, offset: 0}, dyne: {name: "dyne", base: k2.FORCE, prefixes: R2.LONG, value: 1e-5, offset: 0}, lbf: {name: "lbf", base: k2.FORCE, prefixes: R2.NONE, value: 4.4482216152605, offset: 0}, poundforce: {name: "poundforce", base: k2.FORCE, prefixes: R2.NONE, value: 4.4482216152605, offset: 0}, kip: {name: "kip", base: k2.FORCE, prefixes: R2.LONG, value: 4448.2216, offset: 0}, kilogramforce: {name: "kilogramforce", base: k2.FORCE, prefixes: R2.NONE, value: 9.80665, offset: 0}, J: {name: "J", base: k2.ENERGY, prefixes: R2.SHORT, value: 1, offset: 0}, joule: {name: "joule", base: k2.ENERGY, prefixes: R2.SHORT, value: 1, offset: 0}, erg: {name: "erg", base: k2.ENERGY, prefixes: R2.NONE, value: 1e-7, offset: 0}, Wh: {name: "Wh", base: k2.ENERGY, prefixes: R2.SHORT, value: 3600, offset: 0}, BTU: {name: "BTU", base: k2.ENERGY, prefixes: R2.BTU, value: 1055.05585262, offset: 0}, eV: {name: "eV", base: k2.ENERGY, prefixes: R2.SHORT, value: 1602176565e-28, offset: 0}, electronvolt: {name: "electronvolt", base: k2.ENERGY, prefixes: R2.LONG, value: 1602176565e-28, offset: 0}, W: {name: "W", base: k2.POWER, prefixes: R2.SHORT, value: 1, offset: 0}, watt: {name: "watt", base: k2.POWER, prefixes: R2.LONG, value: 1, offset: 0}, hp: {name: "hp", base: k2.POWER, prefixes: R2.NONE, value: 745.6998715386, offset: 0}, VAR: {name: "VAR", base: k2.POWER, prefixes: R2.SHORT, value: v.I, offset: 0}, VA: {name: "VA", base: k2.POWER, prefixes: R2.SHORT, value: 1, offset: 0}, Pa: {name: "Pa", base: k2.PRESSURE, prefixes: R2.SHORT, value: 1, offset: 0}, psi: {name: "psi", base: k2.PRESSURE, prefixes: R2.NONE, value: 6894.75729276459, offset: 0}, atm: {name: "atm", base: k2.PRESSURE, prefixes: R2.NONE, value: 101325, offset: 0}, bar: {name: "bar", base: k2.PRESSURE, prefixes: R2.SHORTLONG, value: 1e5, offset: 0}, torr: {name: "torr", base: k2.PRESSURE, prefixes: R2.NONE, value: 133.322, offset: 0}, mmHg: {name: "mmHg", base: k2.PRESSURE, prefixes: R2.NONE, value: 133.322, offset: 0}, mmH2O: {name: "mmH2O", base: k2.PRESSURE, prefixes: R2.NONE, value: 9.80665, offset: 0}, cmH2O: {name: "cmH2O", base: k2.PRESSURE, prefixes: R2.NONE, value: 98.0665, offset: 0}, coulomb: {name: "coulomb", base: k2.ELECTRIC_CHARGE, prefixes: R2.LONG, value: 1, offset: 0}, C: {name: "C", base: k2.ELECTRIC_CHARGE, prefixes: R2.SHORT, value: 1, offset: 0}, farad: {name: "farad", base: k2.ELECTRIC_CAPACITANCE, prefixes: R2.LONG, value: 1, offset: 0}, F: {name: "F", base: k2.ELECTRIC_CAPACITANCE, prefixes: R2.SHORT, value: 1, offset: 0}, volt: {name: "volt", base: k2.ELECTRIC_POTENTIAL, prefixes: R2.LONG, value: 1, offset: 0}, V: {name: "V", base: k2.ELECTRIC_POTENTIAL, prefixes: R2.SHORT, value: 1, offset: 0}, ohm: {name: "ohm", base: k2.ELECTRIC_RESISTANCE, prefixes: R2.SHORTLONG, value: 1, offset: 0}, henry: {name: "henry", base: k2.ELECTRIC_INDUCTANCE, prefixes: R2.LONG, value: 1, offset: 0}, H: {name: "H", base: k2.ELECTRIC_INDUCTANCE, prefixes: R2.SHORT, value: 1, offset: 0}, siemens: {name: "siemens", base: k2.ELECTRIC_CONDUCTANCE, prefixes: R2.LONG, value: 1, offset: 0}, S: {name: "S", base: k2.ELECTRIC_CONDUCTANCE, prefixes: R2.SHORT, value: 1, offset: 0}, weber: {name: "weber", base: k2.MAGNETIC_FLUX, prefixes: R2.LONG, value: 1, offset: 0}, Wb: {name: "Wb", base: k2.MAGNETIC_FLUX, prefixes: R2.SHORT, value: 1, offset: 0}, tesla: {name: "tesla", base: k2.MAGNETIC_FLUX_DENSITY, prefixes: R2.LONG, value: 1, offset: 0}, T: {name: "T", base: k2.MAGNETIC_FLUX_DENSITY, prefixes: R2.SHORT, value: 1, offset: 0}, b: {name: "b", base: k2.BIT, prefixes: R2.BINARY_SHORT, value: 1, offset: 0}, bits: {name: "bits", base: k2.BIT, prefixes: R2.BINARY_LONG, value: 1, offset: 0}, B: {name: "B", base: k2.BIT, prefixes: R2.BINARY_SHORT, value: 8, offset: 0}, bytes: {name: "bytes", base: k2.BIT, prefixes: R2.BINARY_LONG, value: 8, offset: 0}}, F2 = {meters: "meter", inches: "inch", feet: "foot", yards: "yard", miles: "mile", links: "link", rods: "rod", chains: "chain", angstroms: "angstrom", lt: "l", litres: "litre", liter: "litre", liters: "litre", teaspoons: "teaspoon", tablespoons: "tablespoon", minims: "minim", fluiddrams: "fluiddram", fluidounces: "fluidounce", gills: "gill", cups: "cup", pints: "pint", quarts: "quart", gallons: "gallon", beerbarrels: "beerbarrel", oilbarrels: "oilbarrel", hogsheads: "hogshead", gtts: "gtt", grams: "gram", tons: "ton", tonnes: "tonne", grains: "grain", drams: "dram", ounces: "ounce", poundmasses: "poundmass", hundredweights: "hundredweight", sticks: "stick", lb: "lbm", lbs: "lbm", kips: "kip", kgf: "kilogramforce", acres: "acre", hectares: "hectare", sqfeet: "sqft", sqyard: "sqyd", sqmile: "sqmi", sqmiles: "sqmi", mmhg: "mmHg", mmh2o: "mmH2O", cmh2o: "cmH2O", seconds: "second", secs: "second", minutes: "minute", mins: "minute", hours: "hour", hr: "hour", hrs: "hour", days: "day", weeks: "week", months: "month", years: "year", decades: "decade", centuries: "century", millennia: "millennium", hertz: "hertz", radians: "radian", degrees: "degree", gradians: "gradian", cycles: "cycle", arcsecond: "arcsec", arcseconds: "arcsec", arcminute: "arcmin", arcminutes: "arcmin", BTUs: "BTU", watts: "watt", joules: "joule", amperes: "ampere", coulombs: "coulomb", volts: "volt", ohms: "ohm", farads: "farad", webers: "weber", teslas: "tesla", electronvolts: "electronvolt", moles: "mole", bit: "bits", byte: "bytes"};
-  function P2(t4) {
+  var R = {NONE: {"": {name: "", value: 1, scientific: true}}, SHORT: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 10, scientific: false}, h: {name: "h", value: 100, scientific: false}, k: {name: "k", value: 1e3, scientific: true}, M: {name: "M", value: 1e6, scientific: true}, G: {name: "G", value: 1e9, scientific: true}, T: {name: "T", value: 1e12, scientific: true}, P: {name: "P", value: 1e15, scientific: true}, E: {name: "E", value: 1e18, scientific: true}, Z: {name: "Z", value: 1e21, scientific: true}, Y: {name: "Y", value: 1e24, scientific: true}, d: {name: "d", value: 0.1, scientific: false}, c: {name: "c", value: 0.01, scientific: false}, m: {name: "m", value: 1e-3, scientific: true}, u: {name: "u", value: 1e-6, scientific: true}, n: {name: "n", value: 1e-9, scientific: true}, p: {name: "p", value: 1e-12, scientific: true}, f: {name: "f", value: 1e-15, scientific: true}, a: {name: "a", value: 1e-18, scientific: true}, z: {name: "z", value: 1e-21, scientific: true}, y: {name: "y", value: 1e-24, scientific: true}}, LONG: {"": {name: "", value: 1, scientific: true}, deca: {name: "deca", value: 10, scientific: false}, hecto: {name: "hecto", value: 100, scientific: false}, kilo: {name: "kilo", value: 1e3, scientific: true}, mega: {name: "mega", value: 1e6, scientific: true}, giga: {name: "giga", value: 1e9, scientific: true}, tera: {name: "tera", value: 1e12, scientific: true}, peta: {name: "peta", value: 1e15, scientific: true}, exa: {name: "exa", value: 1e18, scientific: true}, zetta: {name: "zetta", value: 1e21, scientific: true}, yotta: {name: "yotta", value: 1e24, scientific: true}, deci: {name: "deci", value: 0.1, scientific: false}, centi: {name: "centi", value: 0.01, scientific: false}, milli: {name: "milli", value: 1e-3, scientific: true}, micro: {name: "micro", value: 1e-6, scientific: true}, nano: {name: "nano", value: 1e-9, scientific: true}, pico: {name: "pico", value: 1e-12, scientific: true}, femto: {name: "femto", value: 1e-15, scientific: true}, atto: {name: "atto", value: 1e-18, scientific: true}, zepto: {name: "zepto", value: 1e-21, scientific: true}, yocto: {name: "yocto", value: 1e-24, scientific: true}}, SQUARED: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 100, scientific: false}, h: {name: "h", value: 1e4, scientific: false}, k: {name: "k", value: 1e6, scientific: true}, M: {name: "M", value: 1e12, scientific: true}, G: {name: "G", value: 1e18, scientific: true}, T: {name: "T", value: 1e24, scientific: true}, P: {name: "P", value: 1e30, scientific: true}, E: {name: "E", value: 1e36, scientific: true}, Z: {name: "Z", value: 1e42, scientific: true}, Y: {name: "Y", value: 1e48, scientific: true}, d: {name: "d", value: 0.01, scientific: false}, c: {name: "c", value: 1e-4, scientific: false}, m: {name: "m", value: 1e-6, scientific: true}, u: {name: "u", value: 1e-12, scientific: true}, n: {name: "n", value: 1e-18, scientific: true}, p: {name: "p", value: 1e-24, scientific: true}, f: {name: "f", value: 1e-30, scientific: true}, a: {name: "a", value: 1e-36, scientific: true}, z: {name: "z", value: 1e-42, scientific: true}, y: {name: "y", value: 1e-48, scientific: true}}, CUBIC: {"": {name: "", value: 1, scientific: true}, da: {name: "da", value: 1e3, scientific: false}, h: {name: "h", value: 1e6, scientific: false}, k: {name: "k", value: 1e9, scientific: true}, M: {name: "M", value: 1e18, scientific: true}, G: {name: "G", value: 1e27, scientific: true}, T: {name: "T", value: 1e36, scientific: true}, P: {name: "P", value: 1e45, scientific: true}, E: {name: "E", value: 1e54, scientific: true}, Z: {name: "Z", value: 1e63, scientific: true}, Y: {name: "Y", value: 1e72, scientific: true}, d: {name: "d", value: 1e-3, scientific: false}, c: {name: "c", value: 1e-6, scientific: false}, m: {name: "m", value: 1e-9, scientific: true}, u: {name: "u", value: 1e-18, scientific: true}, n: {name: "n", value: 1e-27, scientific: true}, p: {name: "p", value: 1e-36, scientific: true}, f: {name: "f", value: 1e-45, scientific: true}, a: {name: "a", value: 1e-54, scientific: true}, z: {name: "z", value: 1e-63, scientific: true}, y: {name: "y", value: 1e-72, scientific: true}}, BINARY_SHORT_SI: {"": {name: "", value: 1, scientific: true}, k: {name: "k", value: 1e3, scientific: true}, M: {name: "M", value: 1e6, scientific: true}, G: {name: "G", value: 1e9, scientific: true}, T: {name: "T", value: 1e12, scientific: true}, P: {name: "P", value: 1e15, scientific: true}, E: {name: "E", value: 1e18, scientific: true}, Z: {name: "Z", value: 1e21, scientific: true}, Y: {name: "Y", value: 1e24, scientific: true}}, BINARY_SHORT_IEC: {"": {name: "", value: 1, scientific: true}, Ki: {name: "Ki", value: 1024, scientific: true}, Mi: {name: "Mi", value: Math.pow(1024, 2), scientific: true}, Gi: {name: "Gi", value: Math.pow(1024, 3), scientific: true}, Ti: {name: "Ti", value: Math.pow(1024, 4), scientific: true}, Pi: {name: "Pi", value: Math.pow(1024, 5), scientific: true}, Ei: {name: "Ei", value: Math.pow(1024, 6), scientific: true}, Zi: {name: "Zi", value: Math.pow(1024, 7), scientific: true}, Yi: {name: "Yi", value: Math.pow(1024, 8), scientific: true}}, BINARY_LONG_SI: {"": {name: "", value: 1, scientific: true}, kilo: {name: "kilo", value: 1e3, scientific: true}, mega: {name: "mega", value: 1e6, scientific: true}, giga: {name: "giga", value: 1e9, scientific: true}, tera: {name: "tera", value: 1e12, scientific: true}, peta: {name: "peta", value: 1e15, scientific: true}, exa: {name: "exa", value: 1e18, scientific: true}, zetta: {name: "zetta", value: 1e21, scientific: true}, yotta: {name: "yotta", value: 1e24, scientific: true}}, BINARY_LONG_IEC: {"": {name: "", value: 1, scientific: true}, kibi: {name: "kibi", value: 1024, scientific: true}, mebi: {name: "mebi", value: Math.pow(1024, 2), scientific: true}, gibi: {name: "gibi", value: Math.pow(1024, 3), scientific: true}, tebi: {name: "tebi", value: Math.pow(1024, 4), scientific: true}, pebi: {name: "pebi", value: Math.pow(1024, 5), scientific: true}, exi: {name: "exi", value: Math.pow(1024, 6), scientific: true}, zebi: {name: "zebi", value: Math.pow(1024, 7), scientific: true}, yobi: {name: "yobi", value: Math.pow(1024, 8), scientific: true}}, BTU: {"": {name: "", value: 1, scientific: true}, MM: {name: "MM", value: 1e6, scientific: true}}};
+  R.SHORTLONG = Ia({}, R.SHORT, R.LONG), R.BINARY_SHORT = Ia({}, R.BINARY_SHORT_SI, R.BINARY_SHORT_IEC), R.BINARY_LONG = Ia({}, R.BINARY_LONG_SI, R.BINARY_LONG_IEC);
+  var D = ["MASS", "LENGTH", "TIME", "CURRENT", "TEMPERATURE", "LUMINOUS_INTENSITY", "AMOUNT_OF_SUBSTANCE", "ANGLE", "BIT"], k = {NONE: {dimensions: [0, 0, 0, 0, 0, 0, 0, 0, 0]}, MASS: {dimensions: [1, 0, 0, 0, 0, 0, 0, 0, 0]}, LENGTH: {dimensions: [0, 1, 0, 0, 0, 0, 0, 0, 0]}, TIME: {dimensions: [0, 0, 1, 0, 0, 0, 0, 0, 0]}, CURRENT: {dimensions: [0, 0, 0, 1, 0, 0, 0, 0, 0]}, TEMPERATURE: {dimensions: [0, 0, 0, 0, 1, 0, 0, 0, 0]}, LUMINOUS_INTENSITY: {dimensions: [0, 0, 0, 0, 0, 1, 0, 0, 0]}, AMOUNT_OF_SUBSTANCE: {dimensions: [0, 0, 0, 0, 0, 0, 1, 0, 0]}, FORCE: {dimensions: [1, 1, -2, 0, 0, 0, 0, 0, 0]}, SURFACE: {dimensions: [0, 2, 0, 0, 0, 0, 0, 0, 0]}, VOLUME: {dimensions: [0, 3, 0, 0, 0, 0, 0, 0, 0]}, ENERGY: {dimensions: [1, 2, -2, 0, 0, 0, 0, 0, 0]}, POWER: {dimensions: [1, 2, -3, 0, 0, 0, 0, 0, 0]}, PRESSURE: {dimensions: [1, -1, -2, 0, 0, 0, 0, 0, 0]}, ELECTRIC_CHARGE: {dimensions: [0, 0, 1, 1, 0, 0, 0, 0, 0]}, ELECTRIC_CAPACITANCE: {dimensions: [-1, -2, 4, 2, 0, 0, 0, 0, 0]}, ELECTRIC_POTENTIAL: {dimensions: [1, 2, -3, -1, 0, 0, 0, 0, 0]}, ELECTRIC_RESISTANCE: {dimensions: [1, 2, -3, -2, 0, 0, 0, 0, 0]}, ELECTRIC_INDUCTANCE: {dimensions: [1, 2, -2, -2, 0, 0, 0, 0, 0]}, ELECTRIC_CONDUCTANCE: {dimensions: [-1, -2, 3, 2, 0, 0, 0, 0, 0]}, MAGNETIC_FLUX: {dimensions: [1, 2, -2, -1, 0, 0, 0, 0, 0]}, MAGNETIC_FLUX_DENSITY: {dimensions: [1, 0, -2, -1, 0, 0, 0, 0, 0]}, FREQUENCY: {dimensions: [0, 0, -1, 0, 0, 0, 0, 0, 0]}, ANGLE: {dimensions: [0, 0, 0, 0, 0, 0, 0, 1, 0]}, BIT: {dimensions: [0, 0, 0, 0, 0, 0, 0, 0, 1]}};
+  for (var I in k)
+    Er(k, I) && (k[I].key = I);
+  var L = {name: "", base: {}, value: 1, offset: 0, dimensions: D.map((t4) => 0)}, B = {meter: {name: "meter", base: k.LENGTH, prefixes: R.LONG, value: 1, offset: 0}, inch: {name: "inch", base: k.LENGTH, prefixes: R.NONE, value: 0.0254, offset: 0}, foot: {name: "foot", base: k.LENGTH, prefixes: R.NONE, value: 0.3048, offset: 0}, yard: {name: "yard", base: k.LENGTH, prefixes: R.NONE, value: 0.9144, offset: 0}, mile: {name: "mile", base: k.LENGTH, prefixes: R.NONE, value: 1609.344, offset: 0}, link: {name: "link", base: k.LENGTH, prefixes: R.NONE, value: 0.201168, offset: 0}, rod: {name: "rod", base: k.LENGTH, prefixes: R.NONE, value: 5.0292, offset: 0}, chain: {name: "chain", base: k.LENGTH, prefixes: R.NONE, value: 20.1168, offset: 0}, angstrom: {name: "angstrom", base: k.LENGTH, prefixes: R.NONE, value: 1e-10, offset: 0}, m: {name: "m", base: k.LENGTH, prefixes: R.SHORT, value: 1, offset: 0}, in: {name: "in", base: k.LENGTH, prefixes: R.NONE, value: 0.0254, offset: 0}, ft: {name: "ft", base: k.LENGTH, prefixes: R.NONE, value: 0.3048, offset: 0}, yd: {name: "yd", base: k.LENGTH, prefixes: R.NONE, value: 0.9144, offset: 0}, mi: {name: "mi", base: k.LENGTH, prefixes: R.NONE, value: 1609.344, offset: 0}, li: {name: "li", base: k.LENGTH, prefixes: R.NONE, value: 0.201168, offset: 0}, rd: {name: "rd", base: k.LENGTH, prefixes: R.NONE, value: 5.02921, offset: 0}, ch: {name: "ch", base: k.LENGTH, prefixes: R.NONE, value: 20.1168, offset: 0}, mil: {name: "mil", base: k.LENGTH, prefixes: R.NONE, value: 254e-7, offset: 0}, m2: {name: "m2", base: k.SURFACE, prefixes: R.SQUARED, value: 1, offset: 0}, sqin: {name: "sqin", base: k.SURFACE, prefixes: R.NONE, value: 64516e-8, offset: 0}, sqft: {name: "sqft", base: k.SURFACE, prefixes: R.NONE, value: 0.09290304, offset: 0}, sqyd: {name: "sqyd", base: k.SURFACE, prefixes: R.NONE, value: 0.83612736, offset: 0}, sqmi: {name: "sqmi", base: k.SURFACE, prefixes: R.NONE, value: 2589988110336e-6, offset: 0}, sqrd: {name: "sqrd", base: k.SURFACE, prefixes: R.NONE, value: 25.29295, offset: 0}, sqch: {name: "sqch", base: k.SURFACE, prefixes: R.NONE, value: 404.6873, offset: 0}, sqmil: {name: "sqmil", base: k.SURFACE, prefixes: R.NONE, value: 64516e-14, offset: 0}, acre: {name: "acre", base: k.SURFACE, prefixes: R.NONE, value: 4046.86, offset: 0}, hectare: {name: "hectare", base: k.SURFACE, prefixes: R.NONE, value: 1e4, offset: 0}, m3: {name: "m3", base: k.VOLUME, prefixes: R.CUBIC, value: 1, offset: 0}, L: {name: "L", base: k.VOLUME, prefixes: R.SHORT, value: 1e-3, offset: 0}, l: {name: "l", base: k.VOLUME, prefixes: R.SHORT, value: 1e-3, offset: 0}, litre: {name: "litre", base: k.VOLUME, prefixes: R.LONG, value: 1e-3, offset: 0}, cuin: {name: "cuin", base: k.VOLUME, prefixes: R.NONE, value: 16387064e-12, offset: 0}, cuft: {name: "cuft", base: k.VOLUME, prefixes: R.NONE, value: 0.028316846592, offset: 0}, cuyd: {name: "cuyd", base: k.VOLUME, prefixes: R.NONE, value: 0.764554857984, offset: 0}, teaspoon: {name: "teaspoon", base: k.VOLUME, prefixes: R.NONE, value: 5e-6, offset: 0}, tablespoon: {name: "tablespoon", base: k.VOLUME, prefixes: R.NONE, value: 15e-6, offset: 0}, drop: {name: "drop", base: k.VOLUME, prefixes: R.NONE, value: 5e-8, offset: 0}, gtt: {name: "gtt", base: k.VOLUME, prefixes: R.NONE, value: 5e-8, offset: 0}, minim: {name: "minim", base: k.VOLUME, prefixes: R.NONE, value: 6161152e-14, offset: 0}, fluiddram: {name: "fluiddram", base: k.VOLUME, prefixes: R.NONE, value: 36966911e-13, offset: 0}, fluidounce: {name: "fluidounce", base: k.VOLUME, prefixes: R.NONE, value: 2957353e-11, offset: 0}, gill: {name: "gill", base: k.VOLUME, prefixes: R.NONE, value: 1182941e-10, offset: 0}, cc: {name: "cc", base: k.VOLUME, prefixes: R.NONE, value: 1e-6, offset: 0}, cup: {name: "cup", base: k.VOLUME, prefixes: R.NONE, value: 2365882e-10, offset: 0}, pint: {name: "pint", base: k.VOLUME, prefixes: R.NONE, value: 4731765e-10, offset: 0}, quart: {name: "quart", base: k.VOLUME, prefixes: R.NONE, value: 9463529e-10, offset: 0}, gallon: {name: "gallon", base: k.VOLUME, prefixes: R.NONE, value: 3785412e-9, offset: 0}, beerbarrel: {name: "beerbarrel", base: k.VOLUME, prefixes: R.NONE, value: 0.1173478, offset: 0}, oilbarrel: {name: "oilbarrel", base: k.VOLUME, prefixes: R.NONE, value: 0.1589873, offset: 0}, hogshead: {name: "hogshead", base: k.VOLUME, prefixes: R.NONE, value: 0.238481, offset: 0}, fldr: {name: "fldr", base: k.VOLUME, prefixes: R.NONE, value: 36966911e-13, offset: 0}, floz: {name: "floz", base: k.VOLUME, prefixes: R.NONE, value: 2957353e-11, offset: 0}, gi: {name: "gi", base: k.VOLUME, prefixes: R.NONE, value: 1182941e-10, offset: 0}, cp: {name: "cp", base: k.VOLUME, prefixes: R.NONE, value: 2365882e-10, offset: 0}, pt: {name: "pt", base: k.VOLUME, prefixes: R.NONE, value: 4731765e-10, offset: 0}, qt: {name: "qt", base: k.VOLUME, prefixes: R.NONE, value: 9463529e-10, offset: 0}, gal: {name: "gal", base: k.VOLUME, prefixes: R.NONE, value: 3785412e-9, offset: 0}, bbl: {name: "bbl", base: k.VOLUME, prefixes: R.NONE, value: 0.1173478, offset: 0}, obl: {name: "obl", base: k.VOLUME, prefixes: R.NONE, value: 0.1589873, offset: 0}, g: {name: "g", base: k.MASS, prefixes: R.SHORT, value: 1e-3, offset: 0}, gram: {name: "gram", base: k.MASS, prefixes: R.LONG, value: 1e-3, offset: 0}, ton: {name: "ton", base: k.MASS, prefixes: R.SHORT, value: 907.18474, offset: 0}, t: {name: "t", base: k.MASS, prefixes: R.SHORT, value: 1e3, offset: 0}, tonne: {name: "tonne", base: k.MASS, prefixes: R.LONG, value: 1e3, offset: 0}, grain: {name: "grain", base: k.MASS, prefixes: R.NONE, value: 6479891e-11, offset: 0}, dram: {name: "dram", base: k.MASS, prefixes: R.NONE, value: 0.0017718451953125, offset: 0}, ounce: {name: "ounce", base: k.MASS, prefixes: R.NONE, value: 0.028349523125, offset: 0}, poundmass: {name: "poundmass", base: k.MASS, prefixes: R.NONE, value: 0.45359237, offset: 0}, hundredweight: {name: "hundredweight", base: k.MASS, prefixes: R.NONE, value: 45.359237, offset: 0}, stick: {name: "stick", base: k.MASS, prefixes: R.NONE, value: 0.115, offset: 0}, stone: {name: "stone", base: k.MASS, prefixes: R.NONE, value: 6.35029318, offset: 0}, gr: {name: "gr", base: k.MASS, prefixes: R.NONE, value: 6479891e-11, offset: 0}, dr: {name: "dr", base: k.MASS, prefixes: R.NONE, value: 0.0017718451953125, offset: 0}, oz: {name: "oz", base: k.MASS, prefixes: R.NONE, value: 0.028349523125, offset: 0}, lbm: {name: "lbm", base: k.MASS, prefixes: R.NONE, value: 0.45359237, offset: 0}, cwt: {name: "cwt", base: k.MASS, prefixes: R.NONE, value: 45.359237, offset: 0}, s: {name: "s", base: k.TIME, prefixes: R.SHORT, value: 1, offset: 0}, min: {name: "min", base: k.TIME, prefixes: R.NONE, value: 60, offset: 0}, h: {name: "h", base: k.TIME, prefixes: R.NONE, value: 3600, offset: 0}, second: {name: "second", base: k.TIME, prefixes: R.LONG, value: 1, offset: 0}, sec: {name: "sec", base: k.TIME, prefixes: R.LONG, value: 1, offset: 0}, minute: {name: "minute", base: k.TIME, prefixes: R.NONE, value: 60, offset: 0}, hour: {name: "hour", base: k.TIME, prefixes: R.NONE, value: 3600, offset: 0}, day: {name: "day", base: k.TIME, prefixes: R.NONE, value: 86400, offset: 0}, week: {name: "week", base: k.TIME, prefixes: R.NONE, value: 604800, offset: 0}, month: {name: "month", base: k.TIME, prefixes: R.NONE, value: 2629800, offset: 0}, year: {name: "year", base: k.TIME, prefixes: R.NONE, value: 31557600, offset: 0}, decade: {name: "decade", base: k.TIME, prefixes: R.NONE, value: 315576e3, offset: 0}, century: {name: "century", base: k.TIME, prefixes: R.NONE, value: 315576e4, offset: 0}, millennium: {name: "millennium", base: k.TIME, prefixes: R.NONE, value: 315576e5, offset: 0}, hertz: {name: "Hertz", base: k.FREQUENCY, prefixes: R.LONG, value: 1, offset: 0, reciprocal: true}, Hz: {name: "Hz", base: k.FREQUENCY, prefixes: R.SHORT, value: 1, offset: 0, reciprocal: true}, rad: {name: "rad", base: k.ANGLE, prefixes: R.SHORT, value: 1, offset: 0}, radian: {name: "radian", base: k.ANGLE, prefixes: R.LONG, value: 1, offset: 0}, deg: {name: "deg", base: k.ANGLE, prefixes: R.SHORT, value: null, offset: 0}, degree: {name: "degree", base: k.ANGLE, prefixes: R.LONG, value: null, offset: 0}, grad: {name: "grad", base: k.ANGLE, prefixes: R.SHORT, value: null, offset: 0}, gradian: {name: "gradian", base: k.ANGLE, prefixes: R.LONG, value: null, offset: 0}, cycle: {name: "cycle", base: k.ANGLE, prefixes: R.NONE, value: null, offset: 0}, arcsec: {name: "arcsec", base: k.ANGLE, prefixes: R.NONE, value: null, offset: 0}, arcmin: {name: "arcmin", base: k.ANGLE, prefixes: R.NONE, value: null, offset: 0}, A: {name: "A", base: k.CURRENT, prefixes: R.SHORT, value: 1, offset: 0}, ampere: {name: "ampere", base: k.CURRENT, prefixes: R.LONG, value: 1, offset: 0}, K: {name: "K", base: k.TEMPERATURE, prefixes: R.NONE, value: 1, offset: 0}, degC: {name: "degC", base: k.TEMPERATURE, prefixes: R.NONE, value: 1, offset: 273.15}, degF: {name: "degF", base: k.TEMPERATURE, prefixes: R.NONE, value: 1 / 1.8, offset: 459.67}, degR: {name: "degR", base: k.TEMPERATURE, prefixes: R.NONE, value: 1 / 1.8, offset: 0}, kelvin: {name: "kelvin", base: k.TEMPERATURE, prefixes: R.NONE, value: 1, offset: 0}, celsius: {name: "celsius", base: k.TEMPERATURE, prefixes: R.NONE, value: 1, offset: 273.15}, fahrenheit: {name: "fahrenheit", base: k.TEMPERATURE, prefixes: R.NONE, value: 1 / 1.8, offset: 459.67}, rankine: {name: "rankine", base: k.TEMPERATURE, prefixes: R.NONE, value: 1 / 1.8, offset: 0}, mol: {name: "mol", base: k.AMOUNT_OF_SUBSTANCE, prefixes: R.SHORT, value: 1, offset: 0}, mole: {name: "mole", base: k.AMOUNT_OF_SUBSTANCE, prefixes: R.LONG, value: 1, offset: 0}, cd: {name: "cd", base: k.LUMINOUS_INTENSITY, prefixes: R.SHORT, value: 1, offset: 0}, candela: {name: "candela", base: k.LUMINOUS_INTENSITY, prefixes: R.LONG, value: 1, offset: 0}, N: {name: "N", base: k.FORCE, prefixes: R.SHORT, value: 1, offset: 0}, newton: {name: "newton", base: k.FORCE, prefixes: R.LONG, value: 1, offset: 0}, dyn: {name: "dyn", base: k.FORCE, prefixes: R.SHORT, value: 1e-5, offset: 0}, dyne: {name: "dyne", base: k.FORCE, prefixes: R.LONG, value: 1e-5, offset: 0}, lbf: {name: "lbf", base: k.FORCE, prefixes: R.NONE, value: 4.4482216152605, offset: 0}, poundforce: {name: "poundforce", base: k.FORCE, prefixes: R.NONE, value: 4.4482216152605, offset: 0}, kip: {name: "kip", base: k.FORCE, prefixes: R.LONG, value: 4448.2216, offset: 0}, kilogramforce: {name: "kilogramforce", base: k.FORCE, prefixes: R.NONE, value: 9.80665, offset: 0}, J: {name: "J", base: k.ENERGY, prefixes: R.SHORT, value: 1, offset: 0}, joule: {name: "joule", base: k.ENERGY, prefixes: R.SHORT, value: 1, offset: 0}, erg: {name: "erg", base: k.ENERGY, prefixes: R.NONE, value: 1e-7, offset: 0}, Wh: {name: "Wh", base: k.ENERGY, prefixes: R.SHORT, value: 3600, offset: 0}, BTU: {name: "BTU", base: k.ENERGY, prefixes: R.BTU, value: 1055.05585262, offset: 0}, eV: {name: "eV", base: k.ENERGY, prefixes: R.SHORT, value: 1602176565e-28, offset: 0}, electronvolt: {name: "electronvolt", base: k.ENERGY, prefixes: R.LONG, value: 1602176565e-28, offset: 0}, W: {name: "W", base: k.POWER, prefixes: R.SHORT, value: 1, offset: 0}, watt: {name: "watt", base: k.POWER, prefixes: R.LONG, value: 1, offset: 0}, hp: {name: "hp", base: k.POWER, prefixes: R.NONE, value: 745.6998715386, offset: 0}, VAR: {name: "VAR", base: k.POWER, prefixes: R.SHORT, value: v2.I, offset: 0}, VA: {name: "VA", base: k.POWER, prefixes: R.SHORT, value: 1, offset: 0}, Pa: {name: "Pa", base: k.PRESSURE, prefixes: R.SHORT, value: 1, offset: 0}, psi: {name: "psi", base: k.PRESSURE, prefixes: R.NONE, value: 6894.75729276459, offset: 0}, atm: {name: "atm", base: k.PRESSURE, prefixes: R.NONE, value: 101325, offset: 0}, bar: {name: "bar", base: k.PRESSURE, prefixes: R.SHORTLONG, value: 1e5, offset: 0}, torr: {name: "torr", base: k.PRESSURE, prefixes: R.NONE, value: 133.322, offset: 0}, mmHg: {name: "mmHg", base: k.PRESSURE, prefixes: R.NONE, value: 133.322, offset: 0}, mmH2O: {name: "mmH2O", base: k.PRESSURE, prefixes: R.NONE, value: 9.80665, offset: 0}, cmH2O: {name: "cmH2O", base: k.PRESSURE, prefixes: R.NONE, value: 98.0665, offset: 0}, coulomb: {name: "coulomb", base: k.ELECTRIC_CHARGE, prefixes: R.LONG, value: 1, offset: 0}, C: {name: "C", base: k.ELECTRIC_CHARGE, prefixes: R.SHORT, value: 1, offset: 0}, farad: {name: "farad", base: k.ELECTRIC_CAPACITANCE, prefixes: R.LONG, value: 1, offset: 0}, F: {name: "F", base: k.ELECTRIC_CAPACITANCE, prefixes: R.SHORT, value: 1, offset: 0}, volt: {name: "volt", base: k.ELECTRIC_POTENTIAL, prefixes: R.LONG, value: 1, offset: 0}, V: {name: "V", base: k.ELECTRIC_POTENTIAL, prefixes: R.SHORT, value: 1, offset: 0}, ohm: {name: "ohm", base: k.ELECTRIC_RESISTANCE, prefixes: R.SHORTLONG, value: 1, offset: 0}, henry: {name: "henry", base: k.ELECTRIC_INDUCTANCE, prefixes: R.LONG, value: 1, offset: 0}, H: {name: "H", base: k.ELECTRIC_INDUCTANCE, prefixes: R.SHORT, value: 1, offset: 0}, siemens: {name: "siemens", base: k.ELECTRIC_CONDUCTANCE, prefixes: R.LONG, value: 1, offset: 0}, S: {name: "S", base: k.ELECTRIC_CONDUCTANCE, prefixes: R.SHORT, value: 1, offset: 0}, weber: {name: "weber", base: k.MAGNETIC_FLUX, prefixes: R.LONG, value: 1, offset: 0}, Wb: {name: "Wb", base: k.MAGNETIC_FLUX, prefixes: R.SHORT, value: 1, offset: 0}, tesla: {name: "tesla", base: k.MAGNETIC_FLUX_DENSITY, prefixes: R.LONG, value: 1, offset: 0}, T: {name: "T", base: k.MAGNETIC_FLUX_DENSITY, prefixes: R.SHORT, value: 1, offset: 0}, b: {name: "b", base: k.BIT, prefixes: R.BINARY_SHORT, value: 1, offset: 0}, bits: {name: "bits", base: k.BIT, prefixes: R.BINARY_LONG, value: 1, offset: 0}, B: {name: "B", base: k.BIT, prefixes: R.BINARY_SHORT, value: 8, offset: 0}, bytes: {name: "bytes", base: k.BIT, prefixes: R.BINARY_LONG, value: 8, offset: 0}}, F = {meters: "meter", inches: "inch", feet: "foot", yards: "yard", miles: "mile", links: "link", rods: "rod", chains: "chain", angstroms: "angstrom", lt: "l", litres: "litre", liter: "litre", liters: "litre", teaspoons: "teaspoon", tablespoons: "tablespoon", minims: "minim", fluiddrams: "fluiddram", fluidounces: "fluidounce", gills: "gill", cups: "cup", pints: "pint", quarts: "quart", gallons: "gallon", beerbarrels: "beerbarrel", oilbarrels: "oilbarrel", hogsheads: "hogshead", gtts: "gtt", grams: "gram", tons: "ton", tonnes: "tonne", grains: "grain", drams: "dram", ounces: "ounce", poundmasses: "poundmass", hundredweights: "hundredweight", sticks: "stick", lb: "lbm", lbs: "lbm", kips: "kip", kgf: "kilogramforce", acres: "acre", hectares: "hectare", sqfeet: "sqft", sqyard: "sqyd", sqmile: "sqmi", sqmiles: "sqmi", mmhg: "mmHg", mmh2o: "mmH2O", cmh2o: "cmH2O", seconds: "second", secs: "second", minutes: "minute", mins: "minute", hours: "hour", hr: "hour", hrs: "hour", days: "day", weeks: "week", months: "month", years: "year", decades: "decade", centuries: "century", millennia: "millennium", hertz: "hertz", radians: "radian", degrees: "degree", gradians: "gradian", cycles: "cycle", arcsecond: "arcsec", arcseconds: "arcsec", arcminute: "arcmin", arcminutes: "arcmin", BTUs: "BTU", watts: "watt", joules: "joule", amperes: "ampere", coulombs: "coulomb", volts: "volt", ohms: "ohm", farads: "farad", webers: "weber", teslas: "tesla", electronvolts: "electronvolt", moles: "mole", bit: "bits", byte: "bytes"};
+  function P(t4) {
     if (t4.number === "BigNumber") {
-      var e3 = Oa(x);
-      B2.rad.value = new x(1), B2.deg.value = e3.div(180), B2.grad.value = e3.div(200), B2.cycle.value = e3.times(2), B2.arcsec.value = e3.div(648e3), B2.arcmin.value = e3.div(10800);
+      var e3 = Da(x2);
+      B.rad.value = new x2(1), B.deg.value = e3.div(180), B.grad.value = e3.div(200), B.cycle.value = e3.times(2), B.arcsec.value = e3.div(648e3), B.arcmin.value = e3.div(10800);
     } else
-      B2.rad.value = 1, B2.deg.value = Math.PI / 180, B2.grad.value = Math.PI / 200, B2.cycle.value = 2 * Math.PI, B2.arcsec.value = Math.PI / 648e3, B2.arcmin.value = Math.PI / 10800;
-    B2.radian.value = B2.rad.value, B2.degree.value = B2.deg.value, B2.gradian.value = B2.grad.value;
+      B.rad.value = 1, B.deg.value = Math.PI / 180, B.grad.value = Math.PI / 200, B.cycle.value = 2 * Math.PI, B.arcsec.value = Math.PI / 648e3, B.arcmin.value = Math.PI / 10800;
+    B.radian.value = B.rad.value, B.degree.value = B.deg.value, B.gradian.value = B.grad.value;
   }
-  P2(s2), i2 && i2("config", function(t4, e3) {
-    t4.number !== e3.number && P2(t4);
+  P(s2), i2 && i2("config", function(t4, e3) {
+    t4.number !== e3.number && P(t4);
   });
-  var U2 = {si: {NONE: {unit: L2, prefix: R2.NONE[""]}, LENGTH: {unit: B2.m, prefix: R2.SHORT[""]}, MASS: {unit: B2.g, prefix: R2.SHORT.k}, TIME: {unit: B2.s, prefix: R2.SHORT[""]}, CURRENT: {unit: B2.A, prefix: R2.SHORT[""]}, TEMPERATURE: {unit: B2.K, prefix: R2.SHORT[""]}, LUMINOUS_INTENSITY: {unit: B2.cd, prefix: R2.SHORT[""]}, AMOUNT_OF_SUBSTANCE: {unit: B2.mol, prefix: R2.SHORT[""]}, ANGLE: {unit: B2.rad, prefix: R2.SHORT[""]}, BIT: {unit: B2.bits, prefix: R2.SHORT[""]}, FORCE: {unit: B2.N, prefix: R2.SHORT[""]}, ENERGY: {unit: B2.J, prefix: R2.SHORT[""]}, POWER: {unit: B2.W, prefix: R2.SHORT[""]}, PRESSURE: {unit: B2.Pa, prefix: R2.SHORT[""]}, ELECTRIC_CHARGE: {unit: B2.C, prefix: R2.SHORT[""]}, ELECTRIC_CAPACITANCE: {unit: B2.F, prefix: R2.SHORT[""]}, ELECTRIC_POTENTIAL: {unit: B2.V, prefix: R2.SHORT[""]}, ELECTRIC_RESISTANCE: {unit: B2.ohm, prefix: R2.SHORT[""]}, ELECTRIC_INDUCTANCE: {unit: B2.H, prefix: R2.SHORT[""]}, ELECTRIC_CONDUCTANCE: {unit: B2.S, prefix: R2.SHORT[""]}, MAGNETIC_FLUX: {unit: B2.Wb, prefix: R2.SHORT[""]}, MAGNETIC_FLUX_DENSITY: {unit: B2.T, prefix: R2.SHORT[""]}, FREQUENCY: {unit: B2.Hz, prefix: R2.SHORT[""]}}};
-  U2.cgs = JSON.parse(JSON.stringify(U2.si)), U2.cgs.LENGTH = {unit: B2.m, prefix: R2.SHORT.c}, U2.cgs.MASS = {unit: B2.g, prefix: R2.SHORT[""]}, U2.cgs.FORCE = {unit: B2.dyn, prefix: R2.SHORT[""]}, U2.cgs.ENERGY = {unit: B2.erg, prefix: R2.NONE[""]}, U2.us = JSON.parse(JSON.stringify(U2.si)), U2.us.LENGTH = {unit: B2.ft, prefix: R2.NONE[""]}, U2.us.MASS = {unit: B2.lbm, prefix: R2.NONE[""]}, U2.us.TEMPERATURE = {unit: B2.degF, prefix: R2.NONE[""]}, U2.us.FORCE = {unit: B2.lbf, prefix: R2.NONE[""]}, U2.us.ENERGY = {unit: B2.BTU, prefix: R2.BTU[""]}, U2.us.POWER = {unit: B2.hp, prefix: R2.NONE[""]}, U2.us.PRESSURE = {unit: B2.psi, prefix: R2.NONE[""]}, U2.auto = JSON.parse(JSON.stringify(U2.si));
-  var j2 = U2.auto;
-  for (var q2 in _.setUnitSystem = function(t4) {
-    if (!wr(U2, t4))
-      throw new Error("Unit system " + t4 + " does not exist. Choices are: " + Object.keys(U2).join(", "));
-    j2 = U2[t4];
-  }, _.getUnitSystem = function() {
-    for (var t4 in U2)
-      if (wr(U2, t4) && U2[t4] === j2)
+  var U = {si: {NONE: {unit: L, prefix: R.NONE[""]}, LENGTH: {unit: B.m, prefix: R.SHORT[""]}, MASS: {unit: B.g, prefix: R.SHORT.k}, TIME: {unit: B.s, prefix: R.SHORT[""]}, CURRENT: {unit: B.A, prefix: R.SHORT[""]}, TEMPERATURE: {unit: B.K, prefix: R.SHORT[""]}, LUMINOUS_INTENSITY: {unit: B.cd, prefix: R.SHORT[""]}, AMOUNT_OF_SUBSTANCE: {unit: B.mol, prefix: R.SHORT[""]}, ANGLE: {unit: B.rad, prefix: R.SHORT[""]}, BIT: {unit: B.bits, prefix: R.SHORT[""]}, FORCE: {unit: B.N, prefix: R.SHORT[""]}, ENERGY: {unit: B.J, prefix: R.SHORT[""]}, POWER: {unit: B.W, prefix: R.SHORT[""]}, PRESSURE: {unit: B.Pa, prefix: R.SHORT[""]}, ELECTRIC_CHARGE: {unit: B.C, prefix: R.SHORT[""]}, ELECTRIC_CAPACITANCE: {unit: B.F, prefix: R.SHORT[""]}, ELECTRIC_POTENTIAL: {unit: B.V, prefix: R.SHORT[""]}, ELECTRIC_RESISTANCE: {unit: B.ohm, prefix: R.SHORT[""]}, ELECTRIC_INDUCTANCE: {unit: B.H, prefix: R.SHORT[""]}, ELECTRIC_CONDUCTANCE: {unit: B.S, prefix: R.SHORT[""]}, MAGNETIC_FLUX: {unit: B.Wb, prefix: R.SHORT[""]}, MAGNETIC_FLUX_DENSITY: {unit: B.T, prefix: R.SHORT[""]}, FREQUENCY: {unit: B.Hz, prefix: R.SHORT[""]}}};
+  U.cgs = JSON.parse(JSON.stringify(U.si)), U.cgs.LENGTH = {unit: B.m, prefix: R.SHORT.c}, U.cgs.MASS = {unit: B.g, prefix: R.SHORT[""]}, U.cgs.FORCE = {unit: B.dyn, prefix: R.SHORT[""]}, U.cgs.ENERGY = {unit: B.erg, prefix: R.NONE[""]}, U.us = JSON.parse(JSON.stringify(U.si)), U.us.LENGTH = {unit: B.ft, prefix: R.NONE[""]}, U.us.MASS = {unit: B.lbm, prefix: R.NONE[""]}, U.us.TEMPERATURE = {unit: B.degF, prefix: R.NONE[""]}, U.us.FORCE = {unit: B.lbf, prefix: R.NONE[""]}, U.us.ENERGY = {unit: B.BTU, prefix: R.BTU[""]}, U.us.POWER = {unit: B.hp, prefix: R.NONE[""]}, U.us.PRESSURE = {unit: B.psi, prefix: R.NONE[""]}, U.auto = JSON.parse(JSON.stringify(U.si));
+  var j = U.auto;
+  for (var q in _2.setUnitSystem = function(t4) {
+    if (!Er(U, t4))
+      throw new Error("Unit system " + t4 + " does not exist. Choices are: " + Object.keys(U).join(", "));
+    j = U[t4];
+  }, _2.getUnitSystem = function() {
+    for (var t4 in U)
+      if (Er(U, t4) && U[t4] === j)
         return t4;
-  }, _.typeConverters = {BigNumber: function(t4) {
-    return new x(t4 + "");
+  }, _2.typeConverters = {BigNumber: function(t4) {
+    return new x2(t4 + "");
   }, Fraction: function(t4) {
-    return new w(t4);
+    return new w2(t4);
   }, Complex: function(t4) {
     return t4;
   }, number: function(t4) {
     return t4;
-  }}, _._getNumberConverter = function(t4) {
-    if (!_.typeConverters[t4])
+  }}, _2._getNumberConverter = function(t4) {
+    if (!_2.typeConverters[t4])
       throw new TypeError('Unsupported type "' + t4 + '"');
-    return _.typeConverters[t4];
-  }, B2)
-    if (wr(B2, q2)) {
-      var H2 = B2[q2];
-      H2.dimensions = H2.base.dimensions;
+    return _2.typeConverters[t4];
+  }, B)
+    if (Er(B, q)) {
+      var H = B[q];
+      H.dimensions = H.base.dimensions;
     }
-  for (var V2 in F2)
-    if (wr(F2, V2)) {
-      var $ = B2[F2[V2]], G = {};
+  for (var V in F)
+    if (Er(F, V)) {
+      var $ = B[F[V]], G = {};
       for (var W in $)
-        wr($, W) && (G[W] = $[W]);
-      G.name = V2, B2[V2] = G;
+        Er($, W) && (G[W] = $[W]);
+      G.name = V, B[V] = G;
     }
-  return _.isValidAlpha = function(t4) {
+  return _2.isValidAlpha = function(t4) {
     return /^[a-zA-Z]$/.test(t4);
-  }, _.createUnit = function(t4, e3) {
+  }, _2.createUnit = function(t4, e3) {
     if (typeof t4 != "object")
       throw new TypeError("createUnit expects first parameter to be of type 'Object'");
     if (e3 && e3.override) {
       for (var r3 in t4)
-        if (wr(t4, r3) && _.deleteUnit(r3), t4[r3].aliases)
+        if (Er(t4, r3) && _2.deleteUnit(r3), t4[r3].aliases)
           for (var n3 = 0; n3 < t4[r3].aliases.length; n3++)
-            _.deleteUnit(t4[r3].aliases[n3]);
+            _2.deleteUnit(t4[r3].aliases[n3]);
     }
     var i3;
     for (var s3 in t4)
-      wr(t4, s3) && (i3 = _.createUnitSingle(s3, t4[s3]));
+      Er(t4, s3) && (i3 = _2.createUnitSingle(s3, t4[s3]));
     return i3;
-  }, _.createUnitSingle = function(t4, e3, r3) {
+  }, _2.createUnitSingle = function(t4, e3, r3) {
     if (e3 == null && (e3 = {}), typeof t4 != "string")
       throw new TypeError("createUnitSingle expects first parameter to be of type 'string'");
-    if (wr(B2, t4))
+    if (Er(B, t4))
       throw new Error('Cannot create unit "' + t4 + '": a unit with that name already exists');
     !function(t5) {
       for (var e4 = 0; e4 < t5.length; e4++) {
-        if (n2 = t5.charAt(e4), e4 === 0 && !_.isValidAlpha(n2))
+        if (n2 = t5.charAt(e4), e4 === 0 && !_2.isValidAlpha(n2))
           throw new Error('Invalid unit name (must begin with alpha character): "' + t5 + '"');
-        if (e4 > 0 && !_.isValidAlpha(n2) && !E(n2))
+        if (e4 > 0 && !_2.isValidAlpha(n2) && !N(n2))
           throw new Error('Invalid unit name (only alphanumeric characters are allowed): "' + t5 + '"');
       }
     }(t4);
@@ -6568,61 +6354,61 @@ var ka = cn("Unit", ["?on", "config", "addScalar", "subtract", "multiplyScalar",
     }
     if (u3) {
       for (var c3 = 0; c3 < u3.length; c3++)
-        if (wr(B2, u3[c3]))
+        if (Er(B, u3[c3]))
           throw new Error('Cannot create alias "' + u3[c3] + '": a unit with that name already exists');
     }
     if (i3 && typeof i3 == "string" && !o3)
       try {
-        o3 = _.parse(i3, {allowNoUnits: true});
+        o3 = _2.parse(i3, {allowNoUnits: true});
       } catch (S2) {
         throw S2.message = 'Could not create unit "' + t4 + '" from "' + i3 + '": ' + S2.message, S2;
       }
     else
       i3 && i3.type === "Unit" && (o3 = i3.clone());
-    u3 = u3 || [], h2 = h2 || 0, s3 = s3 && s3.toUpperCase && R2[s3.toUpperCase()] || R2.NONE;
+    u3 = u3 || [], h2 = h2 || 0, s3 = s3 && s3.toUpperCase && R[s3.toUpperCase()] || R.NONE;
     var l3 = {};
     if (o3) {
       l3 = {name: t4, value: o3.value, dimensions: o3.dimensions.slice(0), prefixes: s3, offset: h2};
       var p3 = false;
-      for (var f3 in k2)
-        if (wr(k2, f3)) {
-          for (var d3 = true, m3 = 0; m3 < D2.length; m3++)
-            if (Math.abs((l3.dimensions[m3] || 0) - (k2[f3].dimensions[m3] || 0)) > 1e-12) {
-              d3 = false;
+      for (var f3 in k)
+        if (Er(k, f3)) {
+          for (var d2 = true, m3 = 0; m3 < D.length; m3++)
+            if (Math.abs((l3.dimensions[m3] || 0) - (k[f3].dimensions[m3] || 0)) > 1e-12) {
+              d2 = false;
               break;
             }
-          if (d3) {
-            p3 = true, l3.base = k2[f3];
+          if (d2) {
+            p3 = true, l3.base = k[f3];
             break;
           }
         }
       if (!p3) {
         a3 = a3 || t4 + "_STUFF";
         var y3 = {dimensions: o3.dimensions.slice(0)};
-        y3.key = a3, k2[a3] = y3, j2[a3] = {unit: l3, prefix: R2.NONE[""]}, l3.base = k2[a3];
+        y3.key = a3, k[a3] = y3, j[a3] = {unit: l3, prefix: R.NONE[""]}, l3.base = k[a3];
       }
     } else {
-      if (a3 = a3 || t4 + "_STUFF", D2.indexOf(a3) >= 0)
+      if (a3 = a3 || t4 + "_STUFF", D.indexOf(a3) >= 0)
         throw new Error('Cannot create new base unit "' + t4 + '": a base unit with that name already exists (and cannot be overridden)');
-      for (var g3 in D2.push(a3), k2)
-        wr(k2, g3) && (k2[g3].dimensions[D2.length - 1] = 0);
-      for (var v2 = {dimensions: []}, x2 = 0; x2 < D2.length; x2++)
-        v2.dimensions[x2] = 0;
-      v2.dimensions[D2.length - 1] = 1, v2.key = a3, k2[a3] = v2, l3 = {name: t4, value: 1, dimensions: k2[a3].dimensions.slice(0), prefixes: s3, offset: h2, base: k2[a3]}, j2[a3] = {unit: l3, prefix: R2.NONE[""]};
+      for (var g3 in D.push(a3), k)
+        Er(k, g3) && (k[g3].dimensions[D.length - 1] = 0);
+      for (var v3 = {dimensions: []}, x3 = 0; x3 < D.length; x3++)
+        v3.dimensions[x3] = 0;
+      v3.dimensions[D.length - 1] = 1, v3.key = a3, k[a3] = v3, l3 = {name: t4, value: 1, dimensions: k[a3].dimensions.slice(0), prefixes: s3, offset: h2, base: k[a3]}, j[a3] = {unit: l3, prefix: R.NONE[""]};
     }
-    _.UNITS[t4] = l3;
-    for (var w2 = 0; w2 < u3.length; w2++) {
-      var b2 = u3[w2], M2 = {};
-      for (var N2 in l3)
-        wr(l3, N2) && (M2[N2] = l3[N2]);
-      M2.name = b2, _.UNITS[b2] = M2;
+    _2.UNITS[t4] = l3;
+    for (var w3 = 0; w3 < u3.length; w3++) {
+      var b3 = u3[w3], M2 = {};
+      for (var E2 in l3)
+        Er(l3, E2) && (M2[E2] = l3[E2]);
+      M2.name = b3, _2.UNITS[b3] = M2;
     }
-    return delete A2.cache, new _(null, t4);
-  }, _.deleteUnit = function(t4) {
-    delete _.UNITS[t4];
-  }, _.PREFIXES = R2, _.BASE_DIMENSIONS = D2, _.BASE_UNITS = k2, _.UNIT_SYSTEMS = U2, _.UNITS = B2, _;
+    return delete C.cache, new _2(null, t4);
+  }, _2.deleteUnit = function(t4) {
+    delete _2.UNITS[t4];
+  }, _2.PREFIXES = R, _2.BASE_DIMENSIONS = D, _2.BASE_UNITS = k, _2.UNIT_SYSTEMS = U, _2.UNITS = B, _2;
 }, {isClass: true});
-cn("unit", ["typed", "Unit"], (t3) => {
+mn("unit", ["typed", "Unit"], (t3) => {
   var {typed: e2, Unit: r2} = t3;
   return e2("unit", {Unit: function(t4) {
     return t4.clone();
@@ -6631,10 +6417,10 @@ cn("unit", ["typed", "Unit"], (t3) => {
   }, "number | BigNumber | Fraction | Complex, string": function(t4, e3) {
     return new r2(t4, e3);
   }, "Array | Matrix": function(t4) {
-    return is(t4, this);
+    return hs(t4, this);
   }});
 });
-cn("createUnit", ["typed", "Unit"], (t3) => {
+mn("createUnit", ["typed", "Unit"], (t3) => {
   var {typed: e2, Unit: r2} = t3;
   return e2("createUnit", {"Object, Object": function(t4, e3) {
     return r2.createUnit(t4, e3);
@@ -6651,9 +6437,9 @@ cn("createUnit", ["typed", "Unit"], (t3) => {
     return e3[t4] = {}, r2.createUnit(e3, {});
   }});
 });
-cn("add", ["typed", "matrix", "addScalar", "equalScalar", "DenseMatrix", "SparseMatrix"], (t3) => {
-  var {typed: e2, matrix: r2, addScalar: n2, equalScalar: i2, DenseMatrix: s2, SparseMatrix: a2} = t3, o2 = Rs({typed: e2}), u2 = Ds({typed: e2, equalScalar: i2}), h = ks({typed: e2, DenseMatrix: s2}), c2 = Is({typed: e2}), l2 = Os({typed: e2});
-  return e2("add", dr({"DenseMatrix, DenseMatrix": function(t4, e3) {
+mn("add", ["typed", "matrix", "addScalar", "equalScalar", "DenseMatrix", "SparseMatrix"], (t3) => {
+  var {typed: e2, matrix: r2, addScalar: n2, equalScalar: i2, DenseMatrix: s2, SparseMatrix: a2} = t3, o2 = Bs({typed: e2}), u2 = Fs({typed: e2, equalScalar: i2}), h = Ps({typed: e2, DenseMatrix: s2}), c2 = Us({typed: e2}), l2 = Ds({typed: e2});
+  return e2("add", xr({"DenseMatrix, DenseMatrix": function(t4, e3) {
     return c2(t4, e3, n2);
   }, "DenseMatrix, SparseMatrix": function(t4, e3) {
     return o2(t4, e3, n2, false);
@@ -6685,40 +6471,40 @@ cn("add", ["typed", "matrix", "addScalar", "equalScalar", "DenseMatrix", "Sparse
     return n3;
   }}, n2.signatures));
 });
-var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3) => {
+var Ha = mn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3) => {
   var {typed: e2, addScalar: r2, multiplyScalar: n2, conj: i2, size: s2} = t3;
   return e2("dot", {"Array | DenseMatrix, Array | DenseMatrix": function(t4, s3) {
-    var u2 = a2(t4, s3), h = ke(t4) ? t4._data : t4, c2 = ke(t4) ? t4._datatype : void 0, l2 = ke(s3) ? s3._data : s3, p2 = ke(s3) ? s3._datatype : void 0, f2 = o2(t4).length === 2, d2 = o2(s3).length === 2, m2 = r2, y2 = n2;
+    var u2 = a2(t4, s3), h = Pe(t4) ? t4._data : t4, c2 = Pe(t4) ? t4._datatype : void 0, l2 = Pe(s3) ? s3._data : s3, p2 = Pe(s3) ? s3._datatype : void 0, f2 = o2(t4).length === 2, d = o2(s3).length === 2, m2 = r2, y2 = n2;
     if (c2 && p2 && c2 === p2 && typeof c2 == "string") {
       var g2 = c2;
       m2 = e2.find(r2, [g2, g2]), y2 = e2.find(n2, [g2, g2]);
     }
-    if (!f2 && !d2) {
-      for (var v = y2(i2(h[0]), l2[0]), x = 1; x < u2; x++)
-        v = m2(v, y2(i2(h[x]), l2[x]));
-      return v;
+    if (!f2 && !d) {
+      for (var v2 = y2(i2(h[0]), l2[0]), x2 = 1; x2 < u2; x2++)
+        v2 = m2(v2, y2(i2(h[x2]), l2[x2]));
+      return v2;
     }
-    if (!f2 && d2) {
-      for (var w = y2(i2(h[0]), l2[0][0]), b = 1; b < u2; b++)
-        w = m2(w, y2(i2(h[b]), l2[b][0]));
-      return w;
+    if (!f2 && d) {
+      for (var w2 = y2(i2(h[0]), l2[0][0]), b2 = 1; b2 < u2; b2++)
+        w2 = m2(w2, y2(i2(h[b2]), l2[b2][0]));
+      return w2;
     }
-    if (f2 && !d2) {
-      for (var _ = y2(i2(h[0][0]), l2[0]), M = 1; M < u2; M++)
-        _ = m2(_, y2(i2(h[M][0]), l2[M]));
-      return _;
+    if (f2 && !d) {
+      for (var _2 = y2(i2(h[0][0]), l2[0]), M = 1; M < u2; M++)
+        _2 = m2(_2, y2(i2(h[M][0]), l2[M]));
+      return _2;
     }
-    if (f2 && d2) {
-      for (var E = y2(i2(h[0][0]), l2[0][0]), N = 1; N < u2; N++)
-        E = m2(E, y2(i2(h[N][0]), l2[N][0]));
-      return E;
+    if (f2 && d) {
+      for (var N = y2(i2(h[0][0]), l2[0][0]), E = 1; E < u2; E++)
+        N = m2(N, y2(i2(h[E][0]), l2[E][0]));
+      return N;
     }
   }, "SparseMatrix, SparseMatrix": function(t4, e3) {
     a2(t4, e3);
     var i3 = t4._index, s3 = t4._values, o3 = e3._index, u2 = e3._values, h = 0, c2 = r2, l2 = n2, p2 = 0, f2 = 0;
     for (; p2 < i3.length && f2 < o3.length; ) {
-      var d2 = i3[p2], m2 = o3[f2];
-      d2 < m2 ? p2++ : d2 > m2 ? f2++ : d2 === m2 && (h = c2(h, l2(s3[p2], u2[f2])), p2++, f2++);
+      var d = i3[p2], m2 = o3[f2];
+      d < m2 ? p2++ : d > m2 ? f2++ : d === m2 && (h = c2(h, l2(s3[p2], u2[f2])), p2++, f2++);
     }
     return h;
   }});
@@ -6745,9 +6531,9 @@ var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3
     return r3;
   }
   function o2(t4) {
-    return ke(t4) ? t4.size() : s2(t4);
+    return Pe(t4) ? t4.size() : s2(t4);
   }
-}), Pa = {end: true}, Ua = cn("Node", ["mathWithTransform"], (t3) => {
+}), Va = {end: true}, $a = mn("Node", ["mathWithTransform"], (t3) => {
   var {mathWithTransform: e2} = t3;
   function r2() {
     if (!(this instanceof r2))
@@ -6761,7 +6547,7 @@ var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3
       var n2 = e3 || {};
       return function(t5) {
         for (var e4 in t5)
-          if (wr(t5, e4) && e4 in Pa)
+          if (Er(t5, e4) && e4 in Va)
             throw new Error('Scope contains an illegal symbol, "' + e4 + '" is a reserved keyword');
       }(n2), t4(n2, r3, null);
     }};
@@ -6772,7 +6558,7 @@ var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3
   }, r2.prototype.map = function(t4) {
     throw new Error("Cannot run map on a Node interface");
   }, r2.prototype._ifNode = function(t4) {
-    if (!ir(t4))
+    if (!hr(t4))
       throw new TypeError("Callback function must return a Node");
     return t4;
   }, r2.prototype.traverse = function(t4) {
@@ -6798,7 +6584,7 @@ var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3
       return t4.cloneDeep();
     });
   }, r2.prototype.equals = function(t4) {
-    return !!t4 && yr(this, t4);
+    return !!t4 && br(this, t4);
   }, r2.prototype.toString = function(t4) {
     var e3;
     if (t4 && typeof t4 == "object")
@@ -6853,10 +6639,10 @@ var Fa = cn("dot", ["typed", "addScalar", "multiplyScalar", "conj", "size"], (t3
     return this;
   }, r2;
 }, {isClass: true, isNode: true});
-function ja(t3) {
-  return t3 && t3.isIndexError ? new Yr(t3.index + 1, t3.min + 1, t3.max !== void 0 ? t3.max + 1 : void 0) : t3;
+function Ga(t3) {
+  return t3 && t3.isIndexError ? new Kr(t3.index + 1, t3.min + 1, t3.max !== void 0 ? t3.max + 1 : void 0) : t3;
 }
-function qa(t3) {
+function Wa(t3) {
   var {subset: e2} = t3;
   return function(t4, r2) {
     try {
@@ -6869,22 +6655,22 @@ function qa(t3) {
       if (typeof t4 == "object") {
         if (!r2.isObjectProperty())
           throw new TypeError("Cannot apply a numeric index as object property");
-        return ta(t4, r2.getObjectProperty());
+        return sa(t4, r2.getObjectProperty());
       }
       throw new TypeError("Cannot apply index: unsupported type of object");
     } catch (n2) {
-      throw ja(n2);
+      throw Ga(n2);
     }
   };
 }
-var Ha = cn("AccessorNode", ["subset", "Node"], (t3) => {
-  var {subset: e2, Node: r2} = t3, n2 = qa({subset: e2});
+var Ya = mn("AccessorNode", ["subset", "Node"], (t3) => {
+  var {subset: e2, Node: r2} = t3, n2 = Wa({subset: e2});
   function i2(t4, e3) {
     if (!(this instanceof i2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (!ir(t4))
+    if (!hr(t4))
       throw new TypeError('Node expected for parameter "object"');
-    if (!nr(e3))
+    if (!ur(e3))
       throw new TypeError('IndexNode expected for parameter "index"');
     this.object = t4 || null, this.index = e3, Object.defineProperty(this, "name", {get: function() {
       return this.index ? this.index.isObjectProperty() ? this.index.getObjectProperty() : "" : this.object.name || "";
@@ -6893,14 +6679,14 @@ var Ha = cn("AccessorNode", ["subset", "Node"], (t3) => {
     }});
   }
   function s2(t4) {
-    return !(Ze(t4) || Xe(t4) || tr(t4) || rr(t4) || sr(t4) || or(t4) || hr(t4));
+    return !(tr(t4) || er(t4) || sr(t4) || or(t4) || cr(t4) || pr(t4) || dr(t4));
   }
   return i2.prototype = new r2(), i2.prototype.type = "AccessorNode", i2.prototype.isAccessorNode = true, i2.prototype._compile = function(t4, e3) {
     var r3 = this.object._compile(t4, e3), i3 = this.index._compile(t4, e3);
     if (this.index.isObjectProperty()) {
       var s3 = this.index.getObjectProperty();
       return function(t5, e4, n3) {
-        return ta(r3(t5, e4, n3), s3);
+        return sa(r3(t5, e4, n3), s3);
       };
     }
     return function(t5, e4, s4) {
@@ -6927,28 +6713,28 @@ var Ha = cn("AccessorNode", ["subset", "Node"], (t3) => {
   }, i2.fromJSON = function(t4) {
     return new i2(t4.object, t4.index);
   }, i2;
-}, {isClass: true, isNode: true}), Va = cn("ArrayNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), Za = mn("ArrayNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (this.items = t4 || [], !Array.isArray(this.items) || !this.items.every(ir))
+    if (this.items = t4 || [], !Array.isArray(this.items) || !this.items.every(hr))
       throw new TypeError("Array containing Nodes expected");
   }
   return r2.prototype = new e2(), r2.prototype.type = "ArrayNode", r2.prototype.isArrayNode = true, r2.prototype._compile = function(t4, e3) {
-    var r3 = sn(this.items, function(r4) {
+    var r3 = cn(this.items, function(r4) {
       return r4._compile(t4, e3);
     });
     if (t4.config.matrix !== "Array") {
       var n2 = t4.matrix;
       return function(t5, e4, i2) {
-        return n2(sn(r3, function(r4) {
+        return n2(cn(r3, function(r4) {
           return r4(t5, e4, i2);
         }));
       };
     }
     return function(t5, e4, n3) {
-      return sn(r3, function(r4) {
+      return cn(r3, function(r4) {
         return r4(t5, e4, n3);
       });
     };
@@ -6983,23 +6769,23 @@ var Ha = cn("AccessorNode", ["subset", "Node"], (t3) => {
     }), e3 += "\\end{bmatrix}";
   }, r2;
 }, {isClass: true, isNode: true});
-var $a = [{AssignmentNode: {}, FunctionAssignmentNode: {}}, {ConditionalNode: {latexLeftParens: false, latexRightParens: false, latexParens: false}}, {"OperatorNode:or": {associativity: "left", associativeWith: []}}, {"OperatorNode:xor": {associativity: "left", associativeWith: []}}, {"OperatorNode:and": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitOr": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitXor": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitAnd": {associativity: "left", associativeWith: []}}, {"OperatorNode:equal": {associativity: "left", associativeWith: []}, "OperatorNode:unequal": {associativity: "left", associativeWith: []}, "OperatorNode:smaller": {associativity: "left", associativeWith: []}, "OperatorNode:larger": {associativity: "left", associativeWith: []}, "OperatorNode:smallerEq": {associativity: "left", associativeWith: []}, "OperatorNode:largerEq": {associativity: "left", associativeWith: []}, RelationalNode: {associativity: "left", associativeWith: []}}, {"OperatorNode:leftShift": {associativity: "left", associativeWith: []}, "OperatorNode:rightArithShift": {associativity: "left", associativeWith: []}, "OperatorNode:rightLogShift": {associativity: "left", associativeWith: []}}, {"OperatorNode:to": {associativity: "left", associativeWith: []}}, {RangeNode: {}}, {"OperatorNode:add": {associativity: "left", associativeWith: ["OperatorNode:add", "OperatorNode:subtract"]}, "OperatorNode:subtract": {associativity: "left", associativeWith: []}}, {"OperatorNode:multiply": {associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "Operator:dotMultiply", "Operator:dotDivide"]}, "OperatorNode:divide": {associativity: "left", associativeWith: [], latexLeftParens: false, latexRightParens: false, latexParens: false}, "OperatorNode:dotMultiply": {associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "OperatorNode:dotMultiply", "OperatorNode:doDivide"]}, "OperatorNode:dotDivide": {associativity: "left", associativeWith: []}, "OperatorNode:mod": {associativity: "left", associativeWith: []}}, {"OperatorNode:unaryPlus": {associativity: "right"}, "OperatorNode:unaryMinus": {associativity: "right"}, "OperatorNode:bitNot": {associativity: "right"}, "OperatorNode:not": {associativity: "right"}}, {"OperatorNode:pow": {associativity: "right", associativeWith: [], latexRightParens: false}, "OperatorNode:dotPow": {associativity: "right", associativeWith: []}}, {"OperatorNode:factorial": {associativity: "left"}}, {"OperatorNode:transpose": {associativity: "left"}}];
-function Ga(t3, e2) {
+var Xa = [{AssignmentNode: {}, FunctionAssignmentNode: {}}, {ConditionalNode: {latexLeftParens: false, latexRightParens: false, latexParens: false}}, {"OperatorNode:or": {associativity: "left", associativeWith: []}}, {"OperatorNode:xor": {associativity: "left", associativeWith: []}}, {"OperatorNode:and": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitOr": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitXor": {associativity: "left", associativeWith: []}}, {"OperatorNode:bitAnd": {associativity: "left", associativeWith: []}}, {"OperatorNode:equal": {associativity: "left", associativeWith: []}, "OperatorNode:unequal": {associativity: "left", associativeWith: []}, "OperatorNode:smaller": {associativity: "left", associativeWith: []}, "OperatorNode:larger": {associativity: "left", associativeWith: []}, "OperatorNode:smallerEq": {associativity: "left", associativeWith: []}, "OperatorNode:largerEq": {associativity: "left", associativeWith: []}, RelationalNode: {associativity: "left", associativeWith: []}}, {"OperatorNode:leftShift": {associativity: "left", associativeWith: []}, "OperatorNode:rightArithShift": {associativity: "left", associativeWith: []}, "OperatorNode:rightLogShift": {associativity: "left", associativeWith: []}}, {"OperatorNode:to": {associativity: "left", associativeWith: []}}, {RangeNode: {}}, {"OperatorNode:add": {associativity: "left", associativeWith: ["OperatorNode:add", "OperatorNode:subtract"]}, "OperatorNode:subtract": {associativity: "left", associativeWith: []}}, {"OperatorNode:multiply": {associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "Operator:dotMultiply", "Operator:dotDivide"]}, "OperatorNode:divide": {associativity: "left", associativeWith: [], latexLeftParens: false, latexRightParens: false, latexParens: false}, "OperatorNode:dotMultiply": {associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "OperatorNode:dotMultiply", "OperatorNode:doDivide"]}, "OperatorNode:dotDivide": {associativity: "left", associativeWith: []}, "OperatorNode:mod": {associativity: "left", associativeWith: []}}, {"OperatorNode:unaryPlus": {associativity: "right"}, "OperatorNode:unaryMinus": {associativity: "right"}, "OperatorNode:bitNot": {associativity: "right"}, "OperatorNode:not": {associativity: "right"}}, {"OperatorNode:pow": {associativity: "right", associativeWith: [], latexRightParens: false}, "OperatorNode:dotPow": {associativity: "right", associativeWith: []}}, {"OperatorNode:factorial": {associativity: "left"}}, {"OperatorNode:transpose": {associativity: "left"}}];
+function Qa(t3, e2) {
   var r2 = t3;
   e2 !== "keep" && (r2 = t3.getContent());
-  for (var n2 = r2.getIdentifier(), i2 = 0; i2 < $a.length; i2++)
-    if (n2 in $a[i2])
+  for (var n2 = r2.getIdentifier(), i2 = 0; i2 < Xa.length; i2++)
+    if (n2 in Xa[i2])
       return i2;
   return null;
 }
-function Wa(t3, e2) {
+function Ja(t3, e2) {
   var r2 = t3;
   e2 !== "keep" && (r2 = t3.getContent());
-  var n2 = r2.getIdentifier(), i2 = Ga(r2, e2);
+  var n2 = r2.getIdentifier(), i2 = Qa(r2, e2);
   if (i2 === null)
     return null;
-  var s2 = $a[i2][n2];
-  if (wr(s2, "associativity")) {
+  var s2 = Xa[i2][n2];
+  if (Er(s2, "associativity")) {
     if (s2.associativity === "left")
       return "left";
     if (s2.associativity === "right")
@@ -7008,12 +6794,12 @@ function Wa(t3, e2) {
   }
   return null;
 }
-function Ya(t3, e2, r2) {
-  var n2 = r2 !== "keep" ? t3.getContent() : t3, i2 = r2 !== "keep" ? t3.getContent() : e2, s2 = n2.getIdentifier(), a2 = i2.getIdentifier(), o2 = Ga(n2, r2);
+function Ka(t3, e2, r2) {
+  var n2 = r2 !== "keep" ? t3.getContent() : t3, i2 = r2 !== "keep" ? t3.getContent() : e2, s2 = n2.getIdentifier(), a2 = i2.getIdentifier(), o2 = Qa(n2, r2);
   if (o2 === null)
     return null;
-  var u2 = $a[o2][s2];
-  if (wr(u2, "associativeWith") && u2.associativeWith instanceof Array) {
+  var u2 = Xa[o2][s2];
+  if (Er(u2, "associativeWith") && u2.associativeWith instanceof Array) {
     for (var h = 0; h < u2.associativeWith.length; h++)
       if (u2.associativeWith[h] === a2)
         return true;
@@ -7021,8 +6807,8 @@ function Ya(t3, e2, r2) {
   }
   return null;
 }
-var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
-  var {subset: e2, matrix: r2, Node: n2} = t3, i2 = qa({subset: e2}), s2 = function(t4) {
+var to = mn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
+  var {subset: e2, matrix: r2, Node: n2} = t3, i2 = Wa({subset: e2}), s2 = function(t4) {
     var {subset: e3, matrix: r3} = t4;
     return function(t5, n3, i3) {
       try {
@@ -7035,24 +6821,24 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
         if (typeof t5 == "object") {
           if (!n3.isObjectProperty())
             throw TypeError("Cannot apply a numeric index as object property");
-          return ea(t5, n3.getObjectProperty(), i3), t5;
+          return aa(t5, n3.getObjectProperty(), i3), t5;
         }
         throw new TypeError("Cannot apply index: unsupported type of object");
       } catch (s3) {
-        throw ja(s3);
+        throw Ga(s3);
       }
     };
   }({subset: e2, matrix: r2});
   function a2(t4, e3, r3) {
     if (!(this instanceof a2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (this.object = t4, this.index = r3 ? e3 : null, this.value = r3 || e3, !hr(t4) && !Ze(t4))
+    if (this.object = t4, this.index = r3 ? e3 : null, this.value = r3 || e3, !dr(t4) && !tr(t4))
       throw new TypeError('SymbolNode or AccessorNode expected as "object"');
-    if (hr(t4) && t4.name === "end")
+    if (dr(t4) && t4.name === "end")
       throw new Error('Cannot assign to symbol "end"');
-    if (this.index && !nr(this.index))
+    if (this.index && !ur(this.index))
       throw new TypeError('IndexNode expected as "index"');
-    if (!ir(this.value))
+    if (!hr(this.value))
       throw new TypeError('Node expected as "value"');
     Object.defineProperty(this, "name", {get: function() {
       return this.index ? this.index.isObjectProperty() ? this.index.getObjectProperty() : "" : this.object.name || "";
@@ -7062,7 +6848,7 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
   }
   function o2(t4, e3) {
     e3 || (e3 = "keep");
-    var r3 = Ga(t4, e3), n3 = Ga(t4.value, e3);
+    var r3 = Qa(t4, e3), n3 = Qa(t4.value, e3);
     return e3 === "all" || n3 !== null && n3 <= r3;
   }
   return a2.prototype = new n2(), a2.prototype.type = "AssignmentNode", a2.prototype.isAssignmentNode = true, a2.prototype._compile = function(t4, e3) {
@@ -7072,20 +6858,20 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
         var u2 = this.index.getObjectProperty();
         return function(t5, e4, n4) {
           var i3 = r3(t5, e4, n4), s3 = a3(t5, e4, n4);
-          return ea(i3, u2, s3);
+          return aa(i3, u2, s3);
         };
       }
-      if (hr(this.object))
+      if (dr(this.object))
         return function(t5, e4, i3) {
           var u3 = r3(t5, e4, i3), h2 = a3(t5, e4, i3), c3 = n3(t5, e4, u3);
-          return ea(t5, o3, s2(u3, c3, h2)), h2;
+          return aa(t5, o3, s2(u3, c3, h2)), h2;
         };
       var h = this.object.object._compile(t4, e3);
       if (this.object.index.isObjectProperty()) {
         var c2 = this.object.index.getObjectProperty();
         return function(t5, e4, r4) {
-          var i3 = h(t5, e4, r4), o4 = ta(i3, c2), u3 = n3(t5, e4, o4), l3 = a3(t5, e4, r4);
-          return ea(i3, c2, s2(o4, u3, l3)), l3;
+          var i3 = h(t5, e4, r4), o4 = sa(i3, c2), u3 = n3(t5, e4, o4), l3 = a3(t5, e4, r4);
+          return aa(i3, c2, s2(o4, u3, l3)), l3;
         };
       }
       var l2 = this.object.index._compile(t4, e3);
@@ -7094,10 +6880,10 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
         return s2(o4, u3, s2(c3, p2, f2)), f2;
       };
     }
-    if (!hr(this.object))
+    if (!dr(this.object))
       throw new TypeError("SymbolNode expected as object");
     return function(t5, e4, r4) {
-      return ea(t5, o3, a3(t5, e4, r4));
+      return aa(t5, o3, a3(t5, e4, r4));
     };
   }, a2.prototype.forEach = function(t4) {
     t4(this.object, "object", this), this.index && t4(this.index, "index", this), t4(this.value, "value", this);
@@ -7119,7 +6905,7 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
     var e3 = this.object.toTex(t4), r3 = this.index ? this.index.toTex(t4) : "", n3 = this.value.toTex(t4);
     return o2(this, t4 && t4.parenthesis) && (n3 = "\\left(".concat(n3, "\\right)")), e3 + r3 + ":=" + n3;
   }, a2;
-}, {isClass: true, isNode: true}), Xa = cn("BlockNode", ["ResultSet", "Node"], (t3) => {
+}, {isClass: true, isNode: true}), eo = mn("BlockNode", ["ResultSet", "Node"], (t3) => {
   var {ResultSet: e2, Node: r2} = t3;
   function n2(t4) {
     if (!(this instanceof n2))
@@ -7128,7 +6914,7 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
       throw new Error("Array expected");
     this.blocks = t4.map(function(t5) {
       var e3 = t5 && t5.node, r3 = !t5 || t5.visible === void 0 || t5.visible;
-      if (!ir(e3))
+      if (!hr(e3))
         throw new TypeError('Property "node" must be a Node');
       if (typeof r3 != "boolean")
         throw new TypeError('Property "visible" must be a boolean');
@@ -7136,12 +6922,12 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
     });
   }
   return n2.prototype = new r2(), n2.prototype.type = "BlockNode", n2.prototype.isBlockNode = true, n2.prototype._compile = function(t4, r3) {
-    var n3 = sn(this.blocks, function(e3) {
+    var n3 = cn(this.blocks, function(e3) {
       return {evaluate: e3.node._compile(t4, r3), visible: e3.visible};
     });
     return function(t5, r4, i2) {
       var s2 = [];
-      return an(n3, function(e3) {
+      return ln(n3, function(e3) {
         var n4 = e3.evaluate(t5, r4, i2);
         e3.visible && s2.push(n4);
       }), new e2(s2);
@@ -7176,16 +6962,16 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
       return e3.node.toTex(t4) + (e3.visible ? "" : ";");
     }).join("\\;\\;\n");
   }, n2;
-}, {isClass: true, isNode: true}), Qa = cn("ConditionalNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), ro = mn("ConditionalNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4, e3, n2) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (!ir(t4))
+    if (!hr(t4))
       throw new TypeError("Parameter condition must be a Node");
-    if (!ir(e3))
+    if (!hr(e3))
       throw new TypeError("Parameter trueExpr must be a Node");
-    if (!ir(n2))
+    if (!hr(n2))
       throw new TypeError("Parameter falseExpr must be a Node");
     this.condition = t4, this.trueExpr = e3, this.falseExpr = n2;
   }
@@ -7196,16 +6982,16 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
         if (typeof t6 == "number" || typeof t6 == "boolean" || typeof t6 == "string")
           return !!t6;
         if (t6) {
-          if (Oe(t6))
+          if (De(t6))
             return !t6.isZero();
-          if (ze(t6))
+          if (ke(t6))
             return !(!t6.re && !t6.im);
-          if (Ce(t6))
+          if (Le(t6))
             return !!t6.value;
         }
         if (t6 == null)
           return false;
-        throw new TypeError('Unsupported type of condition "' + lr(t6) + '"');
+        throw new TypeError('Unsupported type of condition "' + yr(t6) + '"');
       }(r3(t5, e4, s2)) ? n2(t5, e4, s2) : i2(t5, e4, s2);
     };
   }, r2.prototype.forEach = function(t4) {
@@ -7215,41 +7001,41 @@ var Za = cn("AssignmentNode", ["subset", "?matrix", "Node"], (t3) => {
   }, r2.prototype.clone = function() {
     return new r2(this.condition, this.trueExpr, this.falseExpr);
   }, r2.prototype._toString = function(t4) {
-    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Ga(this, e3), n2 = this.condition.toString(t4), i2 = Ga(this.condition, e3);
+    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Qa(this, e3), n2 = this.condition.toString(t4), i2 = Qa(this.condition, e3);
     (e3 === "all" || this.condition.type === "OperatorNode" || i2 !== null && i2 <= r3) && (n2 = "(" + n2 + ")");
-    var s2 = this.trueExpr.toString(t4), a2 = Ga(this.trueExpr, e3);
+    var s2 = this.trueExpr.toString(t4), a2 = Qa(this.trueExpr, e3);
     (e3 === "all" || this.trueExpr.type === "OperatorNode" || a2 !== null && a2 <= r3) && (s2 = "(" + s2 + ")");
-    var o2 = this.falseExpr.toString(t4), u2 = Ga(this.falseExpr, e3);
+    var o2 = this.falseExpr.toString(t4), u2 = Qa(this.falseExpr, e3);
     return (e3 === "all" || this.falseExpr.type === "OperatorNode" || u2 !== null && u2 <= r3) && (o2 = "(" + o2 + ")"), n2 + " ? " + s2 + " : " + o2;
   }, r2.prototype.toJSON = function() {
     return {mathjs: "ConditionalNode", condition: this.condition, trueExpr: this.trueExpr, falseExpr: this.falseExpr};
   }, r2.fromJSON = function(t4) {
     return new r2(t4.condition, t4.trueExpr, t4.falseExpr);
   }, r2.prototype.toHTML = function(t4) {
-    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Ga(this, e3), n2 = this.condition.toHTML(t4), i2 = Ga(this.condition, e3);
+    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Qa(this, e3), n2 = this.condition.toHTML(t4), i2 = Qa(this.condition, e3);
     (e3 === "all" || this.condition.type === "OperatorNode" || i2 !== null && i2 <= r3) && (n2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + n2 + '<span class="math-parenthesis math-round-parenthesis">)</span>');
-    var s2 = this.trueExpr.toHTML(t4), a2 = Ga(this.trueExpr, e3);
+    var s2 = this.trueExpr.toHTML(t4), a2 = Qa(this.trueExpr, e3);
     (e3 === "all" || this.trueExpr.type === "OperatorNode" || a2 !== null && a2 <= r3) && (s2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + s2 + '<span class="math-parenthesis math-round-parenthesis">)</span>');
-    var o2 = this.falseExpr.toHTML(t4), u2 = Ga(this.falseExpr, e3);
+    var o2 = this.falseExpr.toHTML(t4), u2 = Qa(this.falseExpr, e3);
     return (e3 === "all" || this.falseExpr.type === "OperatorNode" || u2 !== null && u2 <= r3) && (o2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + o2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), n2 + '<span class="math-operator math-conditional-operator">?</span>' + s2 + '<span class="math-operator math-conditional-operator">:</span>' + o2;
   }, r2.prototype._toTex = function(t4) {
     return "\\begin{cases} {" + this.trueExpr.toTex(t4) + "}, &\\quad{\\text{if }\\;" + this.condition.toTex(t4) + "}\\\\{" + this.falseExpr.toTex(t4) + "}, &\\quad{\\text{otherwise}}\\end{cases}";
   }, r2;
-}, {isClass: true, isNode: true}), Ja = Object.assign || function(t3) {
+}, {isClass: true, isNode: true}), no = Object.assign || function(t3) {
   for (var e2 = 1; e2 < arguments.length; e2++) {
     var r2 = arguments[e2];
     for (var n2 in r2)
       Object.prototype.hasOwnProperty.call(r2, n2) && (t3[n2] = r2[n2]);
   }
   return t3;
-}, Ka = {"{": "\\{", "}": "\\}", "\\": "\\textbackslash{}", "#": "\\#", $: "\\$", "%": "\\%", "&": "\\&", "^": "\\textasciicircum{}", _: "\\_", "~": "\\textasciitilde{}"}, to = {"\u2013": "\\--", "\u2014": "\\---", " ": "~", "	": "\\qquad{}", "\r\n": "\\newline{}", "\n": "\\newline{}"}, eo = function(t3, e2) {
-  return Ja({}, t3, e2);
-}, ro = {Alpha: "A", alpha: "\\alpha", Beta: "B", beta: "\\beta", Gamma: "\\Gamma", gamma: "\\gamma", Delta: "\\Delta", delta: "\\delta", Epsilon: "E", epsilon: "\\epsilon", varepsilon: "\\varepsilon", Zeta: "Z", zeta: "\\zeta", Eta: "H", eta: "\\eta", Theta: "\\Theta", theta: "\\theta", vartheta: "\\vartheta", Iota: "I", iota: "\\iota", Kappa: "K", kappa: "\\kappa", varkappa: "\\varkappa", Lambda: "\\Lambda", lambda: "\\lambda", Mu: "M", mu: "\\mu", Nu: "N", nu: "\\nu", Xi: "\\Xi", xi: "\\xi", Omicron: "O", omicron: "o", Pi: "\\Pi", pi: "\\pi", varpi: "\\varpi", Rho: "P", rho: "\\rho", varrho: "\\varrho", Sigma: "\\Sigma", sigma: "\\sigma", varsigma: "\\varsigma", Tau: "T", tau: "\\tau", Upsilon: "\\Upsilon", upsilon: "\\upsilon", Phi: "\\Phi", phi: "\\phi", varphi: "\\varphi", Chi: "X", chi: "\\chi", Psi: "\\Psi", psi: "\\psi", Omega: "\\Omega", omega: "\\omega", true: "\\mathrm{True}", false: "\\mathrm{False}", i: "i", inf: "\\infty", Inf: "\\infty", infinity: "\\infty", Infinity: "\\infty", oo: "\\infty", lim: "\\lim", undefined: "\\mathbf{?}"}, no = {transpose: "^\\top", ctranspose: "^H", factorial: "!", pow: "^", dotPow: ".^\\wedge", unaryPlus: "+", unaryMinus: "-", bitNot: "\\~", not: "\\neg", multiply: "\\cdot", divide: "\\frac", dotMultiply: ".\\cdot", dotDivide: ".:", mod: "\\mod", add: "+", subtract: "-", to: "\\rightarrow", leftShift: "<<", rightArithShift: ">>", rightLogShift: ">>>", equal: "=", unequal: "\\neq", smaller: "<", larger: ">", smallerEq: "\\leq", largerEq: "\\geq", bitAnd: "\\&", bitXor: "\\underline{|}", bitOr: "|", and: "\\wedge", xor: "\\veebar", or: "\\vee"}, io = {abs: {1: "\\left|${args[0]}\\right|"}, add: {2: "\\left(${args[0]}".concat(no.add, "${args[1]}\\right)")}, cbrt: {1: "\\sqrt[3]{${args[0]}}"}, ceil: {1: "\\left\\lceil${args[0]}\\right\\rceil"}, cube: {1: "\\left(${args[0]}\\right)^3"}, divide: {2: "\\frac{${args[0]}}{${args[1]}}"}, dotDivide: {2: "\\left(${args[0]}".concat(no.dotDivide, "${args[1]}\\right)")}, dotMultiply: {2: "\\left(${args[0]}".concat(no.dotMultiply, "${args[1]}\\right)")}, dotPow: {2: "\\left(${args[0]}".concat(no.dotPow, "${args[1]}\\right)")}, exp: {1: "\\exp\\left(${args[0]}\\right)"}, expm1: "\\left(e".concat(no.pow, "{${args[0]}}-1\\right)"), fix: {1: "\\mathrm{${name}}\\left(${args[0]}\\right)"}, floor: {1: "\\left\\lfloor${args[0]}\\right\\rfloor"}, gcd: "\\gcd\\left(${args}\\right)", hypot: "\\hypot\\left(${args}\\right)", log: {1: "\\ln\\left(${args[0]}\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}\\right)"}, log10: {1: "\\log_{10}\\left(${args[0]}\\right)"}, log1p: {1: "\\ln\\left(${args[0]}+1\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}+1\\right)"}, log2: "\\log_{2}\\left(${args[0]}\\right)", mod: {2: "\\left(${args[0]}".concat(no.mod, "${args[1]}\\right)")}, multiply: {2: "\\left(${args[0]}".concat(no.multiply, "${args[1]}\\right)")}, norm: {1: "\\left\\|${args[0]}\\right\\|", 2: void 0}, nthRoot: {2: "\\sqrt[${args[1]}]{${args[0]}}"}, nthRoots: {2: "\\{y : $y^{args[1]} = {${args[0]}}\\}"}, pow: {2: "\\left(${args[0]}\\right)".concat(no.pow, "{${args[1]}}")}, round: {1: "\\left\\lfloor${args[0]}\\right\\rceil", 2: void 0}, sign: {1: "\\mathrm{${name}}\\left(${args[0]}\\right)"}, sqrt: {1: "\\sqrt{${args[0]}}"}, square: {1: "\\left(${args[0]}\\right)^2"}, subtract: {2: "\\left(${args[0]}".concat(no.subtract, "${args[1]}\\right)")}, unaryMinus: {1: "".concat(no.unaryMinus, "\\left(${args[0]}\\right)")}, unaryPlus: {1: "".concat(no.unaryPlus, "\\left(${args[0]}\\right)")}, bitAnd: {2: "\\left(${args[0]}".concat(no.bitAnd, "${args[1]}\\right)")}, bitNot: {1: no.bitNot + "\\left(${args[0]}\\right)"}, bitOr: {2: "\\left(${args[0]}".concat(no.bitOr, "${args[1]}\\right)")}, bitXor: {2: "\\left(${args[0]}".concat(no.bitXor, "${args[1]}\\right)")}, leftShift: {2: "\\left(${args[0]}".concat(no.leftShift, "${args[1]}\\right)")}, rightArithShift: {2: "\\left(${args[0]}".concat(no.rightArithShift, "${args[1]}\\right)")}, rightLogShift: {2: "\\left(${args[0]}".concat(no.rightLogShift, "${args[1]}\\right)")}, bellNumbers: {1: "\\mathrm{B}_{${args[0]}}"}, catalan: {1: "\\mathrm{C}_{${args[0]}}"}, stirlingS2: {2: "\\mathrm{S}\\left(${args}\\right)"}, arg: {1: "\\arg\\left(${args[0]}\\right)"}, conj: {1: "\\left(${args[0]}\\right)^*"}, im: {1: "\\Im\\left\\lbrace${args[0]}\\right\\rbrace"}, re: {1: "\\Re\\left\\lbrace${args[0]}\\right\\rbrace"}, and: {2: "\\left(${args[0]}".concat(no.and, "${args[1]}\\right)")}, not: {1: no.not + "\\left(${args[0]}\\right)"}, or: {2: "\\left(${args[0]}".concat(no.or, "${args[1]}\\right)")}, xor: {2: "\\left(${args[0]}".concat(no.xor, "${args[1]}\\right)")}, cross: {2: "\\left(${args[0]}\\right)\\times\\left(${args[1]}\\right)"}, ctranspose: {1: "\\left(${args[0]}\\right)".concat(no.ctranspose)}, det: {1: "\\det\\left(${args[0]}\\right)"}, dot: {2: "\\left(${args[0]}\\cdot${args[1]}\\right)"}, expm: {1: "\\exp\\left(${args[0]}\\right)"}, inv: {1: "\\left(${args[0]}\\right)^{-1}"}, sqrtm: {1: "{${args[0]}}".concat(no.pow, "{\\frac{1}{2}}")}, trace: {1: "\\mathrm{tr}\\left(${args[0]}\\right)"}, transpose: {1: "\\left(${args[0]}\\right)".concat(no.transpose)}, combinations: {2: "\\binom{${args[0]}}{${args[1]}}"}, combinationsWithRep: {2: "\\left(\\!\\!{\\binom{${args[0]}}{${args[1]}}}\\!\\!\\right)"}, factorial: {1: "\\left(${args[0]}\\right)".concat(no.factorial)}, gamma: {1: "\\Gamma\\left(${args[0]}\\right)"}, equal: {2: "\\left(${args[0]}".concat(no.equal, "${args[1]}\\right)")}, larger: {2: "\\left(${args[0]}".concat(no.larger, "${args[1]}\\right)")}, largerEq: {2: "\\left(${args[0]}".concat(no.largerEq, "${args[1]}\\right)")}, smaller: {2: "\\left(${args[0]}".concat(no.smaller, "${args[1]}\\right)")}, smallerEq: {2: "\\left(${args[0]}".concat(no.smallerEq, "${args[1]}\\right)")}, unequal: {2: "\\left(${args[0]}".concat(no.unequal, "${args[1]}\\right)")}, erf: {1: "erf\\left(${args[0]}\\right)"}, max: "\\max\\left(${args}\\right)", min: "\\min\\left(${args}\\right)", variance: "\\mathrm{Var}\\left(${args}\\right)", acos: {1: "\\cos^{-1}\\left(${args[0]}\\right)"}, acosh: {1: "\\cosh^{-1}\\left(${args[0]}\\right)"}, acot: {1: "\\cot^{-1}\\left(${args[0]}\\right)"}, acoth: {1: "\\coth^{-1}\\left(${args[0]}\\right)"}, acsc: {1: "\\csc^{-1}\\left(${args[0]}\\right)"}, acsch: {1: "\\mathrm{csch}^{-1}\\left(${args[0]}\\right)"}, asec: {1: "\\sec^{-1}\\left(${args[0]}\\right)"}, asech: {1: "\\mathrm{sech}^{-1}\\left(${args[0]}\\right)"}, asin: {1: "\\sin^{-1}\\left(${args[0]}\\right)"}, asinh: {1: "\\sinh^{-1}\\left(${args[0]}\\right)"}, atan: {1: "\\tan^{-1}\\left(${args[0]}\\right)"}, atan2: {2: "\\mathrm{atan2}\\left(${args}\\right)"}, atanh: {1: "\\tanh^{-1}\\left(${args[0]}\\right)"}, cos: {1: "\\cos\\left(${args[0]}\\right)"}, cosh: {1: "\\cosh\\left(${args[0]}\\right)"}, cot: {1: "\\cot\\left(${args[0]}\\right)"}, coth: {1: "\\coth\\left(${args[0]}\\right)"}, csc: {1: "\\csc\\left(${args[0]}\\right)"}, csch: {1: "\\mathrm{csch}\\left(${args[0]}\\right)"}, sec: {1: "\\sec\\left(${args[0]}\\right)"}, sech: {1: "\\mathrm{sech}\\left(${args[0]}\\right)"}, sin: {1: "\\sin\\left(${args[0]}\\right)"}, sinh: {1: "\\sinh\\left(${args[0]}\\right)"}, tan: {1: "\\tan\\left(${args[0]}\\right)"}, tanh: {1: "\\tanh\\left(${args[0]}\\right)"}, to: {2: "\\left(${args[0]}".concat(no.to, "${args[1]}\\right)")}, numeric: function(t3, e2) {
+}, io = {"{": "\\{", "}": "\\}", "\\": "\\textbackslash{}", "#": "\\#", $: "\\$", "%": "\\%", "&": "\\&", "^": "\\textasciicircum{}", _: "\\_", "~": "\\textasciitilde{}"}, so = {"\u2013": "\\--", "\u2014": "\\---", " ": "~", "	": "\\qquad{}", "\r\n": "\\newline{}", "\n": "\\newline{}"}, ao = function(t3, e2) {
+  return no({}, t3, e2);
+}, oo = {Alpha: "A", alpha: "\\alpha", Beta: "B", beta: "\\beta", Gamma: "\\Gamma", gamma: "\\gamma", Delta: "\\Delta", delta: "\\delta", Epsilon: "E", epsilon: "\\epsilon", varepsilon: "\\varepsilon", Zeta: "Z", zeta: "\\zeta", Eta: "H", eta: "\\eta", Theta: "\\Theta", theta: "\\theta", vartheta: "\\vartheta", Iota: "I", iota: "\\iota", Kappa: "K", kappa: "\\kappa", varkappa: "\\varkappa", Lambda: "\\Lambda", lambda: "\\lambda", Mu: "M", mu: "\\mu", Nu: "N", nu: "\\nu", Xi: "\\Xi", xi: "\\xi", Omicron: "O", omicron: "o", Pi: "\\Pi", pi: "\\pi", varpi: "\\varpi", Rho: "P", rho: "\\rho", varrho: "\\varrho", Sigma: "\\Sigma", sigma: "\\sigma", varsigma: "\\varsigma", Tau: "T", tau: "\\tau", Upsilon: "\\Upsilon", upsilon: "\\upsilon", Phi: "\\Phi", phi: "\\phi", varphi: "\\varphi", Chi: "X", chi: "\\chi", Psi: "\\Psi", psi: "\\psi", Omega: "\\Omega", omega: "\\omega", true: "\\mathrm{True}", false: "\\mathrm{False}", i: "i", inf: "\\infty", Inf: "\\infty", infinity: "\\infty", Infinity: "\\infty", oo: "\\infty", lim: "\\lim", undefined: "\\mathbf{?}"}, uo = {transpose: "^\\top", ctranspose: "^H", factorial: "!", pow: "^", dotPow: ".^\\wedge", unaryPlus: "+", unaryMinus: "-", bitNot: "\\~", not: "\\neg", multiply: "\\cdot", divide: "\\frac", dotMultiply: ".\\cdot", dotDivide: ".:", mod: "\\mod", add: "+", subtract: "-", to: "\\rightarrow", leftShift: "<<", rightArithShift: ">>", rightLogShift: ">>>", equal: "=", unequal: "\\neq", smaller: "<", larger: ">", smallerEq: "\\leq", largerEq: "\\geq", bitAnd: "\\&", bitXor: "\\underline{|}", bitOr: "|", and: "\\wedge", xor: "\\veebar", or: "\\vee"}, ho = {abs: {1: "\\left|${args[0]}\\right|"}, add: {2: "\\left(${args[0]}".concat(uo.add, "${args[1]}\\right)")}, cbrt: {1: "\\sqrt[3]{${args[0]}}"}, ceil: {1: "\\left\\lceil${args[0]}\\right\\rceil"}, cube: {1: "\\left(${args[0]}\\right)^3"}, divide: {2: "\\frac{${args[0]}}{${args[1]}}"}, dotDivide: {2: "\\left(${args[0]}".concat(uo.dotDivide, "${args[1]}\\right)")}, dotMultiply: {2: "\\left(${args[0]}".concat(uo.dotMultiply, "${args[1]}\\right)")}, dotPow: {2: "\\left(${args[0]}".concat(uo.dotPow, "${args[1]}\\right)")}, exp: {1: "\\exp\\left(${args[0]}\\right)"}, expm1: "\\left(e".concat(uo.pow, "{${args[0]}}-1\\right)"), fix: {1: "\\mathrm{${name}}\\left(${args[0]}\\right)"}, floor: {1: "\\left\\lfloor${args[0]}\\right\\rfloor"}, gcd: "\\gcd\\left(${args}\\right)", hypot: "\\hypot\\left(${args}\\right)", log: {1: "\\ln\\left(${args[0]}\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}\\right)"}, log10: {1: "\\log_{10}\\left(${args[0]}\\right)"}, log1p: {1: "\\ln\\left(${args[0]}+1\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}+1\\right)"}, log2: "\\log_{2}\\left(${args[0]}\\right)", mod: {2: "\\left(${args[0]}".concat(uo.mod, "${args[1]}\\right)")}, multiply: {2: "\\left(${args[0]}".concat(uo.multiply, "${args[1]}\\right)")}, norm: {1: "\\left\\|${args[0]}\\right\\|", 2: void 0}, nthRoot: {2: "\\sqrt[${args[1]}]{${args[0]}}"}, nthRoots: {2: "\\{y : $y^{args[1]} = {${args[0]}}\\}"}, pow: {2: "\\left(${args[0]}\\right)".concat(uo.pow, "{${args[1]}}")}, round: {1: "\\left\\lfloor${args[0]}\\right\\rceil", 2: void 0}, sign: {1: "\\mathrm{${name}}\\left(${args[0]}\\right)"}, sqrt: {1: "\\sqrt{${args[0]}}"}, square: {1: "\\left(${args[0]}\\right)^2"}, subtract: {2: "\\left(${args[0]}".concat(uo.subtract, "${args[1]}\\right)")}, unaryMinus: {1: "".concat(uo.unaryMinus, "\\left(${args[0]}\\right)")}, unaryPlus: {1: "".concat(uo.unaryPlus, "\\left(${args[0]}\\right)")}, bitAnd: {2: "\\left(${args[0]}".concat(uo.bitAnd, "${args[1]}\\right)")}, bitNot: {1: uo.bitNot + "\\left(${args[0]}\\right)"}, bitOr: {2: "\\left(${args[0]}".concat(uo.bitOr, "${args[1]}\\right)")}, bitXor: {2: "\\left(${args[0]}".concat(uo.bitXor, "${args[1]}\\right)")}, leftShift: {2: "\\left(${args[0]}".concat(uo.leftShift, "${args[1]}\\right)")}, rightArithShift: {2: "\\left(${args[0]}".concat(uo.rightArithShift, "${args[1]}\\right)")}, rightLogShift: {2: "\\left(${args[0]}".concat(uo.rightLogShift, "${args[1]}\\right)")}, bellNumbers: {1: "\\mathrm{B}_{${args[0]}}"}, catalan: {1: "\\mathrm{C}_{${args[0]}}"}, stirlingS2: {2: "\\mathrm{S}\\left(${args}\\right)"}, arg: {1: "\\arg\\left(${args[0]}\\right)"}, conj: {1: "\\left(${args[0]}\\right)^*"}, im: {1: "\\Im\\left\\lbrace${args[0]}\\right\\rbrace"}, re: {1: "\\Re\\left\\lbrace${args[0]}\\right\\rbrace"}, and: {2: "\\left(${args[0]}".concat(uo.and, "${args[1]}\\right)")}, not: {1: uo.not + "\\left(${args[0]}\\right)"}, or: {2: "\\left(${args[0]}".concat(uo.or, "${args[1]}\\right)")}, xor: {2: "\\left(${args[0]}".concat(uo.xor, "${args[1]}\\right)")}, cross: {2: "\\left(${args[0]}\\right)\\times\\left(${args[1]}\\right)"}, ctranspose: {1: "\\left(${args[0]}\\right)".concat(uo.ctranspose)}, det: {1: "\\det\\left(${args[0]}\\right)"}, dot: {2: "\\left(${args[0]}\\cdot${args[1]}\\right)"}, expm: {1: "\\exp\\left(${args[0]}\\right)"}, inv: {1: "\\left(${args[0]}\\right)^{-1}"}, sqrtm: {1: "{${args[0]}}".concat(uo.pow, "{\\frac{1}{2}}")}, trace: {1: "\\mathrm{tr}\\left(${args[0]}\\right)"}, transpose: {1: "\\left(${args[0]}\\right)".concat(uo.transpose)}, combinations: {2: "\\binom{${args[0]}}{${args[1]}}"}, combinationsWithRep: {2: "\\left(\\!\\!{\\binom{${args[0]}}{${args[1]}}}\\!\\!\\right)"}, factorial: {1: "\\left(${args[0]}\\right)".concat(uo.factorial)}, gamma: {1: "\\Gamma\\left(${args[0]}\\right)"}, equal: {2: "\\left(${args[0]}".concat(uo.equal, "${args[1]}\\right)")}, larger: {2: "\\left(${args[0]}".concat(uo.larger, "${args[1]}\\right)")}, largerEq: {2: "\\left(${args[0]}".concat(uo.largerEq, "${args[1]}\\right)")}, smaller: {2: "\\left(${args[0]}".concat(uo.smaller, "${args[1]}\\right)")}, smallerEq: {2: "\\left(${args[0]}".concat(uo.smallerEq, "${args[1]}\\right)")}, unequal: {2: "\\left(${args[0]}".concat(uo.unequal, "${args[1]}\\right)")}, erf: {1: "erf\\left(${args[0]}\\right)"}, max: "\\max\\left(${args}\\right)", min: "\\min\\left(${args}\\right)", variance: "\\mathrm{Var}\\left(${args}\\right)", acos: {1: "\\cos^{-1}\\left(${args[0]}\\right)"}, acosh: {1: "\\cosh^{-1}\\left(${args[0]}\\right)"}, acot: {1: "\\cot^{-1}\\left(${args[0]}\\right)"}, acoth: {1: "\\coth^{-1}\\left(${args[0]}\\right)"}, acsc: {1: "\\csc^{-1}\\left(${args[0]}\\right)"}, acsch: {1: "\\mathrm{csch}^{-1}\\left(${args[0]}\\right)"}, asec: {1: "\\sec^{-1}\\left(${args[0]}\\right)"}, asech: {1: "\\mathrm{sech}^{-1}\\left(${args[0]}\\right)"}, asin: {1: "\\sin^{-1}\\left(${args[0]}\\right)"}, asinh: {1: "\\sinh^{-1}\\left(${args[0]}\\right)"}, atan: {1: "\\tan^{-1}\\left(${args[0]}\\right)"}, atan2: {2: "\\mathrm{atan2}\\left(${args}\\right)"}, atanh: {1: "\\tanh^{-1}\\left(${args[0]}\\right)"}, cos: {1: "\\cos\\left(${args[0]}\\right)"}, cosh: {1: "\\cosh\\left(${args[0]}\\right)"}, cot: {1: "\\cot\\left(${args[0]}\\right)"}, coth: {1: "\\coth\\left(${args[0]}\\right)"}, csc: {1: "\\csc\\left(${args[0]}\\right)"}, csch: {1: "\\mathrm{csch}\\left(${args[0]}\\right)"}, sec: {1: "\\sec\\left(${args[0]}\\right)"}, sech: {1: "\\mathrm{sech}\\left(${args[0]}\\right)"}, sin: {1: "\\sin\\left(${args[0]}\\right)"}, sinh: {1: "\\sinh\\left(${args[0]}\\right)"}, tan: {1: "\\tan\\left(${args[0]}\\right)"}, tanh: {1: "\\tanh\\left(${args[0]}\\right)"}, to: {2: "\\left(${args[0]}".concat(uo.to, "${args[1]}\\right)")}, numeric: function(t3, e2) {
   return t3.args[0].toTex();
-}, number: {0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)"}, string: {0: '\\mathtt{""}', 1: "\\mathrm{string}\\left(${args[0]}\\right)"}, bignumber: {0: "0", 1: "\\left(${args[0]}\\right)"}, complex: {0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)+".concat(ro.i, "\\cdot\\left(${args[1]}\\right)\\right)")}, matrix: {0: "\\begin{bmatrix}\\end{bmatrix}", 1: "\\left(${args[0]}\\right)", 2: "\\left(${args[0]}\\right)"}, sparse: {0: "\\begin{bsparse}\\end{bsparse}", 1: "\\left(${args[0]}\\right)"}, unit: {1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)"}}, so = {deg: "^\\circ"};
-function ao(t3) {
+}, number: {0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)"}, string: {0: '\\mathtt{""}', 1: "\\mathrm{string}\\left(${args[0]}\\right)"}, bignumber: {0: "0", 1: "\\left(${args[0]}\\right)"}, complex: {0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)+".concat(oo.i, "\\cdot\\left(${args[1]}\\right)\\right)")}, matrix: {0: "\\begin{bmatrix}\\end{bmatrix}", 1: "\\left(${args[0]}\\right)", 2: "\\left(${args[0]}\\right)"}, sparse: {0: "\\begin{bsparse}\\end{bsparse}", 1: "\\left(${args[0]}\\right)"}, unit: {1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)"}}, co = {deg: "^\\circ"};
+function lo(t3) {
   return function(t4) {
-    for (var e2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, r2 = e2.preserveFormatting, n2 = r2 !== void 0 && r2, i2 = e2.escapeMapFn, s2 = i2 === void 0 ? eo : i2, a2 = String(t4), o2 = "", u2 = s2(Ja({}, Ka), n2 ? Ja({}, to) : {}), h = Object.keys(u2), c2 = function() {
+    for (var e2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, r2 = e2.preserveFormatting, n2 = r2 !== void 0 && r2, i2 = e2.escapeMapFn, s2 = i2 === void 0 ? ao : i2, a2 = String(t4), o2 = "", u2 = s2(no({}, io), n2 ? no({}, so) : {}), h = Object.keys(u2), c2 = function() {
       var t5 = false;
       h.forEach(function(e3, r3) {
         t5 || a2.length >= e3.length && a2.slice(0, e3.length) === e3 && (o2 += u2[h[r3]], a2 = a2.slice(e3.length, a2.length), t5 = true);
@@ -7259,10 +7045,10 @@ function ao(t3) {
     return o2;
   }(t3, {preserveFormatting: true});
 }
-function oo(t3, e2) {
-  return (e2 = e2 !== void 0 && e2) ? wr(so, t3) ? so[t3] : "\\mathrm{" + ao(t3) + "}" : wr(ro, t3) ? ro[t3] : ao(t3);
+function po(t3, e2) {
+  return (e2 = e2 !== void 0 && e2) ? Er(co, t3) ? co[t3] : "\\mathrm{" + lo(t3) + "}" : Er(oo, t3) ? oo[t3] : lo(t3);
 }
-var uo = cn("ConstantNode", ["Node"], (t3) => {
+var fo = mn("ConstantNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4) {
     if (!(this instanceof r2))
@@ -7280,10 +7066,10 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype.clone = function() {
     return new r2(this.value);
   }, r2.prototype._toString = function(t4) {
-    return Hr(this.value, t4);
+    return Yr(this.value, t4);
   }, r2.prototype.toHTML = function(t4) {
     var e3 = this._toString(t4);
-    switch (lr(this.value)) {
+    switch (yr(this.value)) {
       case "number":
       case "BigNumber":
       case "Fraction":
@@ -7305,9 +7091,9 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     return new r2(t4.value);
   }, r2.prototype._toTex = function(t4) {
     var e3 = this._toString(t4);
-    switch (lr(this.value)) {
+    switch (yr(this.value)) {
       case "string":
-        return "\\mathtt{" + ao(e3) + "}";
+        return "\\mathtt{" + lo(e3) + "}";
       case "number":
       case "BigNumber":
         if (!isFinite(this.value))
@@ -7320,7 +7106,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
         return e3;
     }
   }, r2;
-}, {isClass: true, isNode: true}), ho = cn("FunctionAssignmentNode", ["typed", "Node"], (t3) => {
+}, {isClass: true, isNode: true}), mo = mn("FunctionAssignmentNode", ["typed", "Node"], (t3) => {
   var {typed: e2, Node: r2} = t3;
   function n2(t4, e3, r3) {
     if (!(this instanceof n2))
@@ -7329,9 +7115,9 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
       throw new TypeError('String expected for parameter "name"');
     if (!Array.isArray(e3))
       throw new TypeError('Array containing strings or objects expected for parameter "params"');
-    if (!ir(r3))
+    if (!hr(r3))
       throw new TypeError('Node expected for parameter "expr"');
-    if (t4 in Pa)
+    if (t4 in Va)
       throw new Error('Illegal function name, "' + t4 + '" is a reserved keyword');
     this.name = t4, this.params = e3.map(function(t5) {
       return t5 && t5.name || t5;
@@ -7340,15 +7126,15 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     }), this.expr = r3;
   }
   function i2(t4, e3) {
-    var r3 = Ga(t4, e3), n3 = Ga(t4.expr, e3);
+    var r3 = Qa(t4, e3), n3 = Qa(t4.expr, e3);
     return e3 === "all" || n3 !== null && n3 <= r3;
   }
   return n2.prototype = new r2(), n2.prototype.type = "FunctionAssignmentNode", n2.prototype.isFunctionAssignmentNode = true, n2.prototype._compile = function(t4, r3) {
     var n3 = Object.create(r3);
-    an(this.params, function(t5) {
+    ln(this.params, function(t5) {
       n3[t5] = true;
     });
-    var i3 = this.expr._compile(t4, n3), s2 = this.name, a2 = this.params, o2 = on(this.types, ","), u2 = s2 + "(" + on(this.params, ", ") + ")";
+    var i3 = this.expr._compile(t4, n3), s2 = this.name, a2 = this.params, o2 = pn(this.types, ","), u2 = s2 + "(" + pn(this.params, ", ") + ")";
     return function(t5, r4, n4) {
       var h = {};
       h[o2] = function() {
@@ -7357,7 +7143,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
         return i3(t5, e3, n4);
       };
       var c2 = e2(s2, h);
-      return c2.syntax = u2, ea(t5, s2, c2), c2;
+      return c2.syntax = u2, aa(t5, s2, c2), c2;
     };
   }, n2.prototype.forEach = function(t4) {
     t4(this.expr, "expr", this);
@@ -7378,29 +7164,29 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     return new n2(t4.name, t4.params, t4.expr);
   }, n2.prototype.toHTML = function(t4) {
     for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = [], n3 = 0; n3 < this.params.length; n3++)
-      r3.push('<span class="math-symbol math-parameter">' + $r(this.params[n3]) + "</span>");
+      r3.push('<span class="math-symbol math-parameter">' + Xr(this.params[n3]) + "</span>");
     var s2 = this.expr.toHTML(t4);
-    return i2(this, e3) && (s2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + s2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), '<span class="math-function">' + $r(this.name) + '</span><span class="math-parenthesis math-round-parenthesis">(</span>' + r3.join('<span class="math-separator">,</span>') + '<span class="math-parenthesis math-round-parenthesis">)</span><span class="math-operator math-assignment-operator math-variable-assignment-operator math-binary-operator">=</span>' + s2;
+    return i2(this, e3) && (s2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + s2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), '<span class="math-function">' + Xr(this.name) + '</span><span class="math-parenthesis math-round-parenthesis">(</span>' + r3.join('<span class="math-separator">,</span>') + '<span class="math-parenthesis math-round-parenthesis">)</span><span class="math-operator math-assignment-operator math-variable-assignment-operator math-binary-operator">=</span>' + s2;
   }, n2.prototype._toTex = function(t4) {
     var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = this.expr.toTex(t4);
-    return i2(this, e3) && (r3 = "\\left(".concat(r3, "\\right)")), "\\mathrm{" + this.name + "}\\left(" + this.params.map(oo).join(",") + "\\right):=" + r3;
+    return i2(this, e3) && (r3 = "\\left(".concat(r3, "\\right)")), "\\mathrm{" + this.name + "}\\left(" + this.params.map(po).join(",") + "\\right):=" + r3;
   }, n2;
-}, {isClass: true, isNode: true}), co = cn("IndexNode", ["Range", "Node", "size"], (t3) => {
+}, {isClass: true, isNode: true}), yo = mn("IndexNode", ["Range", "Node", "size"], (t3) => {
   var {Range: e2, Node: r2, size: n2} = t3;
   function i2(t4, e3) {
     if (!(this instanceof i2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (this.dimensions = t4, this.dotNotation = e3 || false, !Array.isArray(t4) || !t4.every(ir))
+    if (this.dimensions = t4, this.dotNotation = e3 || false, !Array.isArray(t4) || !t4.every(hr))
       throw new TypeError('Array containing Nodes expected for parameter "dimensions"');
     if (this.dotNotation && !this.isObjectProperty())
       throw new Error("dotNotation only applicable for object properties");
   }
   function s2(t4, r3, n3) {
-    return new e2(Oe(t4) ? t4.toNumber() : t4, Oe(r3) ? r3.toNumber() : r3, Oe(n3) ? n3.toNumber() : n3);
+    return new e2(De(t4) ? t4.toNumber() : t4, De(r3) ? r3.toNumber() : r3, De(n3) ? n3.toNumber() : n3);
   }
   return i2.prototype = new r2(), i2.prototype.type = "IndexNode", i2.prototype.isIndexNode = true, i2.prototype._compile = function(t4, e3) {
-    var r3 = sn(this.dimensions, function(r4, i4) {
-      if (ur(r4)) {
+    var r3 = cn(this.dimensions, function(r4, i4) {
+      if (fr(r4)) {
         if (r4.needsEnd()) {
           var a2 = Object.create(e3);
           a2.end = true;
@@ -7419,22 +7205,22 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
           return s2(c2(t5, e4, r5), l2(t5, e4, r5), p2(t5, e4, r5));
         };
       }
-      if (hr(r4) && r4.name === "end") {
+      if (dr(r4) && r4.name === "end") {
         var f2 = Object.create(e3);
         f2.end = true;
-        var d2 = r4._compile(t4, f2);
+        var d = r4._compile(t4, f2);
         return function(t5, e4, r5) {
           var s3 = n2(r5).valueOf(), a3 = Object.create(e4);
-          return a3.end = s3[i4], d2(t5, a3, r5);
+          return a3.end = s3[i4], d(t5, a3, r5);
         };
       }
       var m2 = r4._compile(t4, e3);
       return function(t5, e4, r5) {
         return m2(t5, e4, r5);
       };
-    }), i3 = ta(t4, "index");
+    }), i3 = sa(t4, "index");
     return function(t5, e4, n3) {
-      var s3 = sn(r3, function(r4) {
+      var s3 = cn(r3, function(r4) {
         return r4(t5, e4, n3);
       });
       return i3(...s3);
@@ -7449,7 +7235,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, i2.prototype.clone = function() {
     return new i2(this.dimensions.slice(0), this.dotNotation);
   }, i2.prototype.isObjectProperty = function() {
-    return this.dimensions.length === 1 && tr(this.dimensions[0]) && typeof this.dimensions[0].value == "string";
+    return this.dimensions.length === 1 && sr(this.dimensions[0]) && typeof this.dimensions[0].value == "string";
   }, i2.prototype.getObjectProperty = function() {
     return this.isObjectProperty() ? this.dimensions[0].value : null;
   }, i2.prototype._toString = function(t4) {
@@ -7461,55 +7247,55 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, i2.prototype.toHTML = function(t4) {
     for (var e3 = [], r3 = 0; r3 < this.dimensions.length; r3++)
       e3[r3] = this.dimensions[r3].toHTML();
-    return this.dotNotation ? '<span class="math-operator math-accessor-operator">.</span><span class="math-symbol math-property">' + $r(this.getObjectProperty()) + "</span>" : '<span class="math-parenthesis math-square-parenthesis">[</span>' + e3.join('<span class="math-separator">,</span>') + '<span class="math-parenthesis math-square-parenthesis">]</span>';
+    return this.dotNotation ? '<span class="math-operator math-accessor-operator">.</span><span class="math-symbol math-property">' + Xr(this.getObjectProperty()) + "</span>" : '<span class="math-parenthesis math-square-parenthesis">[</span>' + e3.join('<span class="math-separator">,</span>') + '<span class="math-parenthesis math-square-parenthesis">]</span>';
   }, i2.prototype._toTex = function(t4) {
     var e3 = this.dimensions.map(function(e4) {
       return e4.toTex(t4);
     });
     return this.dotNotation ? "." + this.getObjectProperty() : "_{" + e3.join(",") + "}";
   }, i2;
-}, {isClass: true, isNode: true}), lo = cn("ObjectNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), go = mn("ObjectNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
     if (this.properties = t4 || {}, t4 && (typeof t4 != "object" || !Object.keys(t4).every(function(e3) {
-      return ir(t4[e3]);
+      return hr(t4[e3]);
     })))
       throw new TypeError("Object containing Nodes expected");
   }
   return r2.prototype = new e2(), r2.prototype.type = "ObjectNode", r2.prototype.isObjectNode = true, r2.prototype._compile = function(t4, e3) {
     var r3 = {};
     for (var n2 in this.properties)
-      if (wr(this.properties, n2)) {
-        var i2 = Vr(n2), s2 = JSON.parse(i2);
-        if (!ra(this.properties, s2))
+      if (Er(this.properties, n2)) {
+        var i2 = Zr(n2), s2 = JSON.parse(i2);
+        if (!oa(this.properties, s2))
           throw new Error('No access to property "' + s2 + '"');
         r3[s2] = this.properties[n2]._compile(t4, e3);
       }
     return function(t5, e4, n3) {
       var i3 = {};
       for (var s3 in r3)
-        wr(r3, s3) && (i3[s3] = r3[s3](t5, e4, n3));
+        Er(r3, s3) && (i3[s3] = r3[s3](t5, e4, n3));
       return i3;
     };
   }, r2.prototype.forEach = function(t4) {
     for (var e3 in this.properties)
-      wr(this.properties, e3) && t4(this.properties[e3], "properties[" + Vr(e3) + "]", this);
+      Er(this.properties, e3) && t4(this.properties[e3], "properties[" + Zr(e3) + "]", this);
   }, r2.prototype.map = function(t4) {
     var e3 = {};
     for (var n2 in this.properties)
-      wr(this.properties, n2) && (e3[n2] = this._ifNode(t4(this.properties[n2], "properties[" + Vr(n2) + "]", this)));
+      Er(this.properties, n2) && (e3[n2] = this._ifNode(t4(this.properties[n2], "properties[" + Zr(n2) + "]", this)));
     return new r2(e3);
   }, r2.prototype.clone = function() {
     var t4 = {};
     for (var e3 in this.properties)
-      wr(this.properties, e3) && (t4[e3] = this.properties[e3]);
+      Er(this.properties, e3) && (t4[e3] = this.properties[e3]);
     return new r2(t4);
   }, r2.prototype._toString = function(t4) {
     var e3 = [];
     for (var r3 in this.properties)
-      wr(this.properties, r3) && e3.push(Vr(r3) + ": " + this.properties[r3].toString(t4));
+      Er(this.properties, r3) && e3.push(Zr(r3) + ": " + this.properties[r3].toString(t4));
     return "{" + e3.join(", ") + "}";
   }, r2.prototype.toJSON = function() {
     return {mathjs: "ObjectNode", properties: this.properties};
@@ -7518,15 +7304,15 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype.toHTML = function(t4) {
     var e3 = [];
     for (var r3 in this.properties)
-      wr(this.properties, r3) && e3.push('<span class="math-symbol math-property">' + $r(r3) + '</span><span class="math-operator math-assignment-operator math-property-assignment-operator math-binary-operator">:</span>' + this.properties[r3].toHTML(t4));
+      Er(this.properties, r3) && e3.push('<span class="math-symbol math-property">' + Xr(r3) + '</span><span class="math-operator math-assignment-operator math-property-assignment-operator math-binary-operator">:</span>' + this.properties[r3].toHTML(t4));
     return '<span class="math-parenthesis math-curly-parenthesis">{</span>' + e3.join('<span class="math-separator">,</span>') + '<span class="math-parenthesis math-curly-parenthesis">}</span>';
   }, r2.prototype._toTex = function(t4) {
     var e3 = [];
     for (var r3 in this.properties)
-      wr(this.properties, r3) && e3.push("\\mathbf{" + r3 + ":} & " + this.properties[r3].toTex(t4) + "\\\\");
+      Er(this.properties, r3) && e3.push("\\mathbf{" + r3 + ":} & " + this.properties[r3].toTex(t4) + "\\\\");
     return "\\left\\{\\begin{array}{ll}".concat(e3.join("\n"), "\\end{array}\\right\\}");
   }, r2;
-}, {isClass: true, isNode: true}), po = cn("OperatorNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), vo = mn("OperatorNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4, e3, n3, i2) {
     if (!(this instanceof r2))
@@ -7535,12 +7321,12 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
       throw new TypeError('string expected for parameter "op"');
     if (typeof e3 != "string")
       throw new TypeError('string expected for parameter "fn"');
-    if (!Array.isArray(n3) || !n3.every(ir))
+    if (!Array.isArray(n3) || !n3.every(hr))
       throw new TypeError('Array containing Nodes expected for parameter "args"');
     this.implicit = i2 === true, this.op = t4, this.fn = e3, this.args = n3 || [];
   }
   function n2(t4, e3, r3, n3, i2) {
-    var s2, a2 = Ga(t4, e3), o2 = Wa(t4, e3);
+    var s2, a2 = Qa(t4, e3), o2 = Ja(t4, e3);
     if (e3 === "all" || n3.length > 2 && t4.getIdentifier() !== "OperatorNode:add" && t4.getIdentifier() !== "OperatorNode:multiply")
       return n3.map(function(t5) {
         switch (t5.getContent().type) {
@@ -7558,14 +7344,14 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
         s2 = [];
         break;
       case 1:
-        var u2 = Ga(n3[0], e3);
+        var u2 = Qa(n3[0], e3);
         if (i2 && u2 !== null) {
           var h, c2;
-          if (e3 === "keep" ? (h = n3[0].getIdentifier(), c2 = t4.getIdentifier()) : (h = n3[0].getContent().getIdentifier(), c2 = t4.getContent().getIdentifier()), $a[a2][c2].latexLeftParens === false) {
+          if (e3 === "keep" ? (h = n3[0].getIdentifier(), c2 = t4.getIdentifier()) : (h = n3[0].getContent().getIdentifier(), c2 = t4.getContent().getIdentifier()), Xa[a2][c2].latexLeftParens === false) {
             s2 = [false];
             break;
           }
-          if ($a[u2][h].latexParens === false) {
+          if (Xa[u2][h].latexParens === false) {
             s2 = [false];
             break;
           }
@@ -7581,16 +7367,16 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
         s2 = [false];
         break;
       case 2:
-        var l2, p2, f2 = Ga(n3[0], e3), d2 = Ya(t4, n3[0], e3);
-        l2 = f2 !== null && (f2 === a2 && o2 === "right" && !d2 || f2 < a2);
-        var m2, y2, g2, v = Ga(n3[1], e3), x = Ya(t4, n3[1], e3);
-        if (p2 = v !== null && (v === a2 && o2 === "left" && !x || v < a2), i2)
-          e3 === "keep" ? (m2 = t4.getIdentifier(), y2 = t4.args[0].getIdentifier(), g2 = t4.args[1].getIdentifier()) : (m2 = t4.getContent().getIdentifier(), y2 = t4.args[0].getContent().getIdentifier(), g2 = t4.args[1].getContent().getIdentifier()), f2 !== null && ($a[a2][m2].latexLeftParens === false && (l2 = false), $a[f2][y2].latexParens === false && (l2 = false)), v !== null && ($a[a2][m2].latexRightParens === false && (p2 = false), $a[v][g2].latexParens === false && (p2 = false));
+        var l2, p2, f2 = Qa(n3[0], e3), d = Ka(t4, n3[0], e3);
+        l2 = f2 !== null && (f2 === a2 && o2 === "right" && !d || f2 < a2);
+        var m2, y2, g2, v2 = Qa(n3[1], e3), x2 = Ka(t4, n3[1], e3);
+        if (p2 = v2 !== null && (v2 === a2 && o2 === "left" && !x2 || v2 < a2), i2)
+          e3 === "keep" ? (m2 = t4.getIdentifier(), y2 = t4.args[0].getIdentifier(), g2 = t4.args[1].getIdentifier()) : (m2 = t4.getContent().getIdentifier(), y2 = t4.args[0].getContent().getIdentifier(), g2 = t4.args[1].getContent().getIdentifier()), f2 !== null && (Xa[a2][m2].latexLeftParens === false && (l2 = false), Xa[f2][y2].latexParens === false && (l2 = false)), v2 !== null && (Xa[a2][m2].latexRightParens === false && (p2 = false), Xa[v2][g2].latexParens === false && (p2 = false));
         s2 = [l2, p2];
         break;
       default:
         t4.getIdentifier() !== "OperatorNode:add" && t4.getIdentifier() !== "OperatorNode:multiply" || (s2 = n3.map(function(r4) {
-          var n4 = Ga(r4, e3), i3 = Ya(t4, r4, e3), s3 = Wa(r4, e3);
+          var n4 = Qa(r4, e3), i3 = Ka(t4, r4, e3), s3 = Ja(r4, e3);
           return n4 !== null && (a2 === n4 && o2 === s3 && !i3 || n4 < a2);
         }));
     }
@@ -7600,9 +7386,9 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     })), s2;
   }
   return r2.prototype = new e2(), r2.prototype.type = "OperatorNode", r2.prototype.isOperatorNode = true, r2.prototype._compile = function(t4, e3) {
-    if (typeof this.fn != "string" || !na(t4, this.fn))
+    if (typeof this.fn != "string" || !ua(t4, this.fn))
       throw t4[this.fn] ? new Error('No access to function "' + this.fn + '"') : new Error("Function " + this.fn + ' missing in provided namespace "math"');
-    var r3 = ta(t4, this.fn), n3 = sn(this.args, function(r4) {
+    var r3 = sa(t4, this.fn), n3 = cn(this.args, function(r4) {
       return r4._compile(t4, e3);
     });
     if (n3.length === 1) {
@@ -7618,7 +7404,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
       };
     }
     return function(t5, e4, i3) {
-      return r3.apply(null, sn(n3, function(r4) {
+      return r3.apply(null, cn(n3, function(r4) {
         return r4(t5, e4, i3);
       }));
     };
@@ -7638,7 +7424,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype._toString = function(t4) {
     var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = t4 && t4.implicit ? t4.implicit : "hide", i2 = this.args, s2 = n2(this, e3, r3, i2, false);
     if (i2.length === 1) {
-      var a2 = Wa(this, e3), o2 = i2[0].toString(t4);
+      var a2 = Ja(this, e3), o2 = i2[0].toString(t4);
       s2[0] && (o2 = "(" + o2 + ")");
       var u2 = /[a-zA-Z]+/.test(this.op);
       return a2 === "right" ? this.op + (u2 ? " " : "") + o2 : a2 === "left" ? o2 + (u2 ? " " : "") + this.op : o2 + this.op;
@@ -7661,21 +7447,21 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype.toHTML = function(t4) {
     var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = t4 && t4.implicit ? t4.implicit : "hide", i2 = this.args, s2 = n2(this, e3, r3, i2, false);
     if (i2.length === 1) {
-      var a2 = Wa(this, e3), o2 = i2[0].toHTML(t4);
-      return s2[0] && (o2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + o2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), a2 === "right" ? '<span class="math-operator math-unary-operator math-lefthand-unary-operator">' + $r(this.op) + "</span>" + o2 : o2 + '<span class="math-operator math-unary-operator math-righthand-unary-operator">' + $r(this.op) + "</span>";
+      var a2 = Ja(this, e3), o2 = i2[0].toHTML(t4);
+      return s2[0] && (o2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + o2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), a2 === "right" ? '<span class="math-operator math-unary-operator math-lefthand-unary-operator">' + Xr(this.op) + "</span>" + o2 : o2 + '<span class="math-operator math-unary-operator math-righthand-unary-operator">' + Xr(this.op) + "</span>";
     }
     if (i2.length === 2) {
       var u2 = i2[0].toHTML(t4), h = i2[1].toHTML(t4);
-      return s2[0] && (u2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + u2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), s2[1] && (h = '<span class="math-parenthesis math-round-parenthesis">(</span>' + h + '<span class="math-parenthesis math-round-parenthesis">)</span>'), this.implicit && this.getIdentifier() === "OperatorNode:multiply" && r3 === "hide" ? u2 + '<span class="math-operator math-binary-operator math-implicit-binary-operator"></span>' + h : u2 + '<span class="math-operator math-binary-operator math-explicit-binary-operator">' + $r(this.op) + "</span>" + h;
+      return s2[0] && (u2 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + u2 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), s2[1] && (h = '<span class="math-parenthesis math-round-parenthesis">(</span>' + h + '<span class="math-parenthesis math-round-parenthesis">)</span>'), this.implicit && this.getIdentifier() === "OperatorNode:multiply" && r3 === "hide" ? u2 + '<span class="math-operator math-binary-operator math-implicit-binary-operator"></span>' + h : u2 + '<span class="math-operator math-binary-operator math-explicit-binary-operator">' + Xr(this.op) + "</span>" + h;
     }
     var c2 = i2.map(function(e4, r4) {
       return e4 = e4.toHTML(t4), s2[r4] && (e4 = '<span class="math-parenthesis math-round-parenthesis">(</span>' + e4 + '<span class="math-parenthesis math-round-parenthesis">)</span>'), e4;
     });
-    return i2.length > 2 && (this.getIdentifier() === "OperatorNode:add" || this.getIdentifier() === "OperatorNode:multiply") ? this.implicit && this.getIdentifier() === "OperatorNode:multiply" && r3 === "hide" ? c2.join('<span class="math-operator math-binary-operator math-implicit-binary-operator"></span>') : c2.join('<span class="math-operator math-binary-operator math-explicit-binary-operator">' + $r(this.op) + "</span>") : '<span class="math-function">' + $r(this.fn) + '</span><span class="math-paranthesis math-round-parenthesis">(</span>' + c2.join('<span class="math-separator">,</span>') + '<span class="math-paranthesis math-round-parenthesis">)</span>';
+    return i2.length > 2 && (this.getIdentifier() === "OperatorNode:add" || this.getIdentifier() === "OperatorNode:multiply") ? this.implicit && this.getIdentifier() === "OperatorNode:multiply" && r3 === "hide" ? c2.join('<span class="math-operator math-binary-operator math-implicit-binary-operator"></span>') : c2.join('<span class="math-operator math-binary-operator math-explicit-binary-operator">' + Xr(this.op) + "</span>") : '<span class="math-function">' + Xr(this.fn) + '</span><span class="math-paranthesis math-round-parenthesis">(</span>' + c2.join('<span class="math-separator">,</span>') + '<span class="math-paranthesis math-round-parenthesis">)</span>';
   }, r2.prototype._toTex = function(t4) {
-    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = t4 && t4.implicit ? t4.implicit : "hide", i2 = this.args, s2 = n2(this, e3, r3, i2, true), a2 = no[this.fn];
+    var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = t4 && t4.implicit ? t4.implicit : "hide", i2 = this.args, s2 = n2(this, e3, r3, i2, true), a2 = uo[this.fn];
     if (a2 = a2 === void 0 ? this.op : a2, i2.length === 1) {
-      var o2 = Wa(this, e3), u2 = i2[0].toTex(t4);
+      var o2 = Ja(this, e3), u2 = i2[0].toTex(t4);
       return s2[0] && (u2 = "\\left(".concat(u2, "\\right)")), o2 === "right" ? a2 + u2 : u2 + a2;
     }
     if (i2.length === 2) {
@@ -7710,12 +7496,12 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype.getIdentifier = function() {
     return this.type + ":" + this.fn;
   }, r2;
-}, {isClass: true, isNode: true}), fo = cn("ParenthesisNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), xo = mn("ParenthesisNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (!ir(t4))
+    if (!hr(t4))
       throw new TypeError('Node expected for parameter "content"');
     this.content = t4;
   }
@@ -7740,33 +7526,33 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype._toTex = function(t4) {
     return !t4 || t4 && !t4.parenthesis || t4 && t4.parenthesis === "keep" ? "\\left(".concat(this.content.toTex(t4), "\\right)") : this.content.toTex(t4);
   }, r2;
-}, {isClass: true, isNode: true}), mo = cn("RangeNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), wo = mn("RangeNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4, e3, n3) {
     if (!(this instanceof r2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (!ir(t4))
+    if (!hr(t4))
       throw new TypeError("Node expected");
-    if (!ir(e3))
+    if (!hr(e3))
       throw new TypeError("Node expected");
-    if (n3 && !ir(n3))
+    if (n3 && !hr(n3))
       throw new TypeError("Node expected");
     if (arguments.length > 3)
       throw new Error("Too many arguments");
     this.start = t4, this.end = e3, this.step = n3 || null;
   }
   function n2(t4, e3) {
-    var r3 = Ga(t4, e3), n3 = {}, i2 = Ga(t4.start, e3);
+    var r3 = Qa(t4, e3), n3 = {}, i2 = Qa(t4.start, e3);
     if (n3.start = i2 !== null && i2 <= r3 || e3 === "all", t4.step) {
-      var s2 = Ga(t4.step, e3);
+      var s2 = Qa(t4.step, e3);
       n3.step = s2 !== null && s2 <= r3 || e3 === "all";
     }
-    var a2 = Ga(t4.end, e3);
+    var a2 = Qa(t4.end, e3);
     return n3.end = a2 !== null && a2 <= r3 || e3 === "all", n3;
   }
   return r2.prototype = new e2(), r2.prototype.type = "RangeNode", r2.prototype.isRangeNode = true, r2.prototype.needsEnd = function() {
     return this.filter(function(t4) {
-      return hr(t4) && t4.name === "end";
+      return dr(t4) && t4.name === "end";
     }).length > 0;
   }, r2.prototype._compile = function(t4, e3) {
     var r3 = t4.range, n3 = this.start._compile(t4, e3), i2 = this.end._compile(t4, e3);
@@ -7814,7 +7600,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     var s2 = this.end.toTex(t4);
     return e3.end && (s2 = "\\left(".concat(s2, "\\right)")), r3 += ":" + s2;
   }, r2;
-}, {isClass: true, isNode: true}), yo = cn("RelationalNode", ["Node"], (t3) => {
+}, {isClass: true, isNode: true}), bo = mn("RelationalNode", ["Node"], (t3) => {
   var {Node: e2} = t3;
   function r2(t4, e3) {
     if (!(this instanceof r2))
@@ -7831,7 +7617,7 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
     var r3 = this, n2 = this.params.map((r4) => r4._compile(t4, e3));
     return function(e4, i2, s2) {
       for (var a2, o2 = n2[0](e4, i2, s2), u2 = 0; u2 < r3.conditionals.length; u2++) {
-        if (a2 = o2, o2 = n2[u2 + 1](e4, i2, s2), !ta(t4, r3.conditionals[u2])(a2, o2))
+        if (a2 = o2, o2 = n2[u2 + 1](e4, i2, s2), !sa(t4, r3.conditionals[u2])(a2, o2))
           return false;
       }
       return true;
@@ -7843,8 +7629,8 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.prototype.clone = function() {
     return new r2(this.conditionals, this.params);
   }, r2.prototype._toString = function(t4) {
-    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Ga(this, e3), n2 = this.params.map(function(n3, i3) {
-      var s3 = Ga(n3, e3);
+    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Qa(this, e3), n2 = this.params.map(function(n3, i3) {
+      var s3 = Qa(n3, e3);
       return e3 === "all" || s3 !== null && s3 <= r3 ? "(" + n3.toString(t4) + ")" : n3.toString(t4);
     }), i2 = {equal: "==", unequal: "!=", smaller: "<", larger: ">", smallerEq: "<=", largerEq: ">="}, s2 = n2[0], a2 = 0; a2 < this.conditionals.length; a2++)
       s2 += " " + i2[this.conditionals[a2]] + " " + n2[a2 + 1];
@@ -7854,23 +7640,23 @@ var uo = cn("ConstantNode", ["Node"], (t3) => {
   }, r2.fromJSON = function(t4) {
     return new r2(t4.conditionals, t4.params);
   }, r2.prototype.toHTML = function(t4) {
-    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Ga(this, e3), n2 = this.params.map(function(n3, i3) {
-      var s3 = Ga(n3, e3);
+    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Qa(this, e3), n2 = this.params.map(function(n3, i3) {
+      var s3 = Qa(n3, e3);
       return e3 === "all" || s3 !== null && s3 <= r3 ? '<span class="math-parenthesis math-round-parenthesis">(</span>' + n3.toHTML(t4) + '<span class="math-parenthesis math-round-parenthesis">)</span>' : n3.toHTML(t4);
     }), i2 = {equal: "==", unequal: "!=", smaller: "<", larger: ">", smallerEq: "<=", largerEq: ">="}, s2 = n2[0], a2 = 0; a2 < this.conditionals.length; a2++)
-      s2 += '<span class="math-operator math-binary-operator math-explicit-binary-operator">' + $r(i2[this.conditionals[a2]]) + "</span>" + n2[a2 + 1];
+      s2 += '<span class="math-operator math-binary-operator math-explicit-binary-operator">' + Xr(i2[this.conditionals[a2]]) + "</span>" + n2[a2 + 1];
     return s2;
   }, r2.prototype._toTex = function(t4) {
-    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Ga(this, e3), n2 = this.params.map(function(n3, i3) {
-      var s3 = Ga(n3, e3);
+    for (var e3 = t4 && t4.parenthesis ? t4.parenthesis : "keep", r3 = Qa(this, e3), n2 = this.params.map(function(n3, i3) {
+      var s3 = Qa(n3, e3);
       return e3 === "all" || s3 !== null && s3 <= r3 ? "\\left(" + n3.toTex(t4) + "\right)" : n3.toTex(t4);
     }), i2 = n2[0], s2 = 0; s2 < this.conditionals.length; s2++)
-      i2 += no[this.conditionals[s2]] + n2[s2 + 1];
+      i2 += uo[this.conditionals[s2]] + n2[s2 + 1];
     return i2;
   }, r2;
 }, {isClass: true, isNode: true});
-function go() {
-  return (go = Object.assign || function(t3) {
+function _o() {
+  return (_o = Object.assign || function(t3) {
     for (var e2 = 1; e2 < arguments.length; e2++) {
       var r2 = arguments[e2];
       for (var n2 in r2)
@@ -7879,8 +7665,8 @@ function go() {
     return t3;
   }).apply(this, arguments);
 }
-function vo() {
-  return (vo = Object.assign || function(t3) {
+function Mo() {
+  return (Mo = Object.assign || function(t3) {
     for (var e2 = 1; e2 < arguments.length; e2++) {
       var r2 = arguments[e2];
       for (var n2 in r2)
@@ -7889,7 +7675,7 @@ function vo() {
     return t3;
   }).apply(this, arguments);
 }
-var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {createMatrixClass: rs}, _o = {MatrixDependencies: bo, createDenseMatrixClass: ns}, Mo = {createFractionClass: ts}, Eo = {BigNumberDependencies: xo, ComplexDependencies: wo, DenseMatrixDependencies: _o, FractionDependencies: Mo, createTyped: dn}, No = {typedDependencies: Eo, createEqualScalar: vs}, So = {MatrixDependencies: bo, equalScalarDependencies: No, typedDependencies: Eo, createSparseMatrixClass: xs}, To = {typedDependencies: Eo, createNumber: ws}, Oo = {FractionDependencies: Mo, typedDependencies: Eo, createFraction: _s}, zo = {DenseMatrixDependencies: _o, MatrixDependencies: bo, SparseMatrixDependencies: So, typedDependencies: Eo, createMatrix: Ms}, Ao = {typedDependencies: Eo, createUnaryMinus: Es}, Co = {typedDependencies: Eo, createAbs: Ns}, Ro = {typedDependencies: Eo, createAddScalar: Ss}, Do = {BigNumberDependencies: xo, DenseMatrixDependencies: _o, equalScalarDependencies: No, matrixDependencies: zo, typedDependencies: Eo, zerosDependencies: {BigNumberDependencies: xo, matrixDependencies: zo, typedDependencies: Eo, createZeros: pa}, createRound: ba}, Io = {typedDependencies: Eo, createMultiplyScalar: js}, Lo = {matrixDependencies: zo, typedDependencies: Eo, createSize: Ks}, Bo = {addScalarDependencies: Ro, dotDependencies: {addScalarDependencies: Ro, conjDependencies: {typedDependencies: Eo, createConj: Gs}, multiplyScalarDependencies: Io, sizeDependencies: Lo, typedDependencies: Eo, createDot: Fa}, equalScalarDependencies: No, matrixDependencies: zo, multiplyScalarDependencies: Io, typedDependencies: Eo, createMultiply: qs}, Fo = {DenseMatrixDependencies: _o, addScalarDependencies: Ro, equalScalarDependencies: No, matrixDependencies: zo, typedDependencies: Eo, unaryMinusDependencies: Ao, createSubtract: Hs}, Po = {DenseMatrixDependencies: _o, matrixDependencies: zo, typedDependencies: Eo, createLarger: Na}, Uo = {BigNumberDependencies: xo, DenseMatrixDependencies: _o, SparseMatrixDependencies: So, matrixDependencies: zo, typedDependencies: Eo, createIdentity: Zs}, qo = {bignumberDependencies: {BigNumberDependencies: xo, typedDependencies: Eo, createBignumber: bs}, fractionDependencies: Oo, numberDependencies: To, createNumeric: da}, Ho = {numericDependencies: qo, typedDependencies: Eo, createDivideScalar: ma}, Vo = {matrixDependencies: zo, typedDependencies: Eo, createSubset: oa}, $o = {BigNumberDependencies: xo, ComplexDependencies: wo, FractionDependencies: Mo, absDependencies: Co, addScalarDependencies: Ro, divideScalarDependencies: Ho, equalDependencies: {DenseMatrixDependencies: _o, equalScalarDependencies: No, matrixDependencies: zo, typedDependencies: Eo, createEqual: Ma}, fixDependencies: {ComplexDependencies: wo, ceilDependencies: {equalScalarDependencies: No, matrixDependencies: zo, roundDependencies: Do, typedDependencies: Eo, createCeil: zs}, floorDependencies: {equalScalarDependencies: No, matrixDependencies: zo, roundDependencies: Do, typedDependencies: Eo, createFloor: Cs}, matrixDependencies: zo, typedDependencies: Eo, createFix: As}, formatDependencies: {typedDependencies: Eo, createFormat: fa}, isNumericDependencies: {typedDependencies: Eo, createIsNumeric: ms}, multiplyScalarDependencies: Io, numberDependencies: To, powDependencies: {ComplexDependencies: wo, fractionDependencies: Oo, identityDependencies: Uo, matrixDependencies: zo, multiplyDependencies: Bo, numberDependencies: To, typedDependencies: Eo, createPow: ya}, roundDependencies: Do, subtractDependencies: Fo, createUnitClass: ka}, Yo = {createNode: Ua}, Zo = {UnitDependencies: $o, NodeDependencies: Yo, createSymbolNode: cn("SymbolNode", ["math", "?Unit", "Node"], (t3) => {
+var No = {createBigNumberClass: Ki}, Eo = {createComplexClass: rs}, So = {createMatrixClass: os}, To = {MatrixDependencies: So, createDenseMatrixClass: us}, Oo = {createFractionClass: ss}, zo = {BigNumberDependencies: No, ComplexDependencies: Eo, DenseMatrixDependencies: To, FractionDependencies: Oo, createTyped: xn}, Co = {typedDependencies: zo, createEqualScalar: Ms}, Ao = {MatrixDependencies: So, equalScalarDependencies: Co, typedDependencies: zo, createSparseMatrixClass: Ns}, Ro = {typedDependencies: zo, createNumber: Es}, Do = {FractionDependencies: Oo, typedDependencies: zo, createFraction: Ts}, ko = {DenseMatrixDependencies: To, MatrixDependencies: So, SparseMatrixDependencies: Ao, typedDependencies: zo, createMatrix: Os}, Io = {typedDependencies: zo, createUnaryMinus: zs}, Lo = {typedDependencies: zo, createAbs: Cs}, Bo = {typedDependencies: zo, createAddScalar: As}, Fo = {BigNumberDependencies: No, DenseMatrixDependencies: To, equalScalarDependencies: Co, matrixDependencies: ko, typedDependencies: zo, zerosDependencies: {BigNumberDependencies: No, matrixDependencies: ko, typedDependencies: zo, createZeros: ga}, createRound: Sa}, Uo = {typedDependencies: zo, createMultiplyScalar: Gs}, jo = {matrixDependencies: ko, typedDependencies: zo, createSize: ia}, qo = {addScalarDependencies: Bo, dotDependencies: {addScalarDependencies: Bo, conjDependencies: {typedDependencies: zo, createConj: Qs}, multiplyScalarDependencies: Uo, sizeDependencies: jo, typedDependencies: zo, createDot: Ha}, equalScalarDependencies: Co, matrixDependencies: ko, multiplyScalarDependencies: Uo, typedDependencies: zo, createMultiply: Ws}, Ho = {DenseMatrixDependencies: To, addScalarDependencies: Bo, equalScalarDependencies: Co, matrixDependencies: ko, typedDependencies: zo, unaryMinusDependencies: Io, createSubtract: Ys}, Vo = {DenseMatrixDependencies: To, matrixDependencies: ko, typedDependencies: zo, createLarger: Ca}, $o = {BigNumberDependencies: No, DenseMatrixDependencies: To, SparseMatrixDependencies: Ao, matrixDependencies: ko, typedDependencies: zo, createIdentity: ta}, Wo = {bignumberDependencies: {BigNumberDependencies: No, typedDependencies: zo, createBignumber: Ss}, fractionDependencies: Do, numberDependencies: Ro, createNumeric: xa}, Yo = {numericDependencies: Wo, typedDependencies: zo, createDivideScalar: wa}, Zo = {matrixDependencies: ko, typedDependencies: zo, createSubset: pa}, Xo = {BigNumberDependencies: No, ComplexDependencies: Eo, FractionDependencies: Oo, absDependencies: Lo, addScalarDependencies: Bo, divideScalarDependencies: Yo, equalDependencies: {DenseMatrixDependencies: To, equalScalarDependencies: Co, matrixDependencies: ko, typedDependencies: zo, createEqual: Oa}, fixDependencies: {ComplexDependencies: Eo, ceilDependencies: {equalScalarDependencies: Co, matrixDependencies: ko, roundDependencies: Fo, typedDependencies: zo, createCeil: ks}, floorDependencies: {equalScalarDependencies: Co, matrixDependencies: ko, roundDependencies: Fo, typedDependencies: zo, createFloor: Ls}, matrixDependencies: ko, typedDependencies: zo, createFix: Is}, formatDependencies: {typedDependencies: zo, createFormat: va}, isNumericDependencies: {typedDependencies: zo, createIsNumeric: ws}, multiplyScalarDependencies: Uo, numberDependencies: Ro, powDependencies: {ComplexDependencies: Eo, fractionDependencies: Do, identityDependencies: $o, matrixDependencies: ko, multiplyDependencies: qo, numberDependencies: Ro, typedDependencies: zo, createPow: ba}, roundDependencies: Fo, subtractDependencies: Ho, createUnitClass: Pa}, Ko = {createNode: $a}, tu = {UnitDependencies: Xo, NodeDependencies: Ko, createSymbolNode: mn("SymbolNode", ["math", "?Unit", "Node"], (t3) => {
   var {math: e2, Unit: r2, Node: n2} = t3;
   function i2(t4) {
     return !!r2 && r2.isValuelessUnit(t4);
@@ -7909,11 +7695,11 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
       };
     if (n3 in t4)
       return function(e4, r3, i3) {
-        return ta(n3 in e4 ? e4 : t4, n3);
+        return sa(n3 in e4 ? e4 : t4, n3);
       };
     var s3 = i2(n3);
     return function(t5, e4, i3) {
-      return n3 in t5 ? ta(t5, n3) : s3 ? new r2(null, n3) : function(t6) {
+      return n3 in t5 ? sa(t5, n3) : s3 ? new r2(null, n3) : function(t6) {
         throw new Error("Undefined symbol " + t6);
       }(n3);
     };
@@ -7925,7 +7711,7 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   }, s2.prototype._toString = function(t4) {
     return this.name;
   }, s2.prototype.toHTML = function(t4) {
-    var e3 = $r(this.name);
+    var e3 = Xr(this.name);
     return e3 === "true" || e3 === "false" ? '<span class="math-symbol math-boolean">' + e3 + "</span>" : e3 === "i" ? '<span class="math-symbol math-imaginary-symbol">' + e3 + "</span>" : e3 === "Infinity" ? '<span class="math-symbol math-infinity-symbol">' + e3 + "</span>" : e3 === "NaN" ? '<span class="math-symbol math-nan-symbol">' + e3 + "</span>" : e3 === "null" ? '<span class="math-symbol math-null-symbol">' + e3 + "</span>" : e3 === "undefined" ? '<span class="math-symbol math-undefined-symbol">' + e3 + "</span>" : '<span class="math-symbol">' + e3 + "</span>";
   }, s2.prototype.toJSON = function() {
     return {mathjs: "SymbolNode", name: this.name};
@@ -7934,18 +7720,18 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   }, s2.prototype._toTex = function(t4) {
     var r3 = false;
     e2[this.name] === void 0 && i2(this.name) && (r3 = true);
-    var n3 = oo(this.name, r3);
+    var n3 = po(this.name, r3);
     return n3[0] === "\\" ? n3 : " " + n3;
   }, s2;
 }, {isClass: true, isNode: true})};
-({parseDependencies: {AccessorNodeDependencies: {NodeDependencies: Yo, subsetDependencies: Vo, createAccessorNode: Ha}, ArrayNodeDependencies: {NodeDependencies: Yo, createArrayNode: Va}, AssignmentNodeDependencies: {matrixDependencies: zo, NodeDependencies: Yo, subsetDependencies: Vo, createAssignmentNode: Za}, BlockNodeDependencies: {NodeDependencies: Yo, ResultSetDependencies: {createResultSet: wn}, createBlockNode: Xa}, ConditionalNodeDependencies: {NodeDependencies: Yo, createConditionalNode: Qa}, ConstantNodeDependencies: {NodeDependencies: Yo, createConstantNode: uo}, FunctionAssignmentNodeDependencies: {NodeDependencies: Yo, typedDependencies: Eo, createFunctionAssignmentNode: ho}, FunctionNodeDependencies: {NodeDependencies: Yo, SymbolNodeDependencies: Zo, createFunctionNode: cn("FunctionNode", ["math", "Node", "SymbolNode"], (t3) => {
+({parseDependencies: {AccessorNodeDependencies: {NodeDependencies: Ko, subsetDependencies: Zo, createAccessorNode: Ya}, ArrayNodeDependencies: {NodeDependencies: Ko, createArrayNode: Za}, AssignmentNodeDependencies: {matrixDependencies: ko, NodeDependencies: Ko, subsetDependencies: Zo, createAssignmentNode: to}, BlockNodeDependencies: {NodeDependencies: Ko, ResultSetDependencies: {createResultSet: En}, createBlockNode: eo}, ConditionalNodeDependencies: {NodeDependencies: Ko, createConditionalNode: ro}, ConstantNodeDependencies: {NodeDependencies: Ko, createConstantNode: fo}, FunctionAssignmentNodeDependencies: {NodeDependencies: Ko, typedDependencies: zo, createFunctionAssignmentNode: mo}, FunctionNodeDependencies: {NodeDependencies: Ko, SymbolNodeDependencies: tu, createFunctionNode: mn("FunctionNode", ["math", "Node", "SymbolNode"], (t3) => {
   var {math: e2, Node: r2, SymbolNode: n2} = t3;
   function i2(t4, e3) {
     if (!(this instanceof i2))
       throw new SyntaxError("Constructor must be called with the new operator");
-    if (typeof t4 == "string" && (t4 = new n2(t4)), !ir(t4))
+    if (typeof t4 == "string" && (t4 = new n2(t4)), !hr(t4))
       throw new TypeError('Node expected as parameter "fn"');
-    if (!Array.isArray(e3) || !e3.every(ir))
+    if (!Array.isArray(e3) || !e3.every(hr))
       throw new TypeError('Array containing Nodes expected for parameter "args"');
     this.fn = t4, this.args = e3 || [], Object.defineProperty(this, "name", {get: function() {
       return this.fn.name || "";
@@ -7956,51 +7742,51 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   i2.prototype = new r2(), i2.prototype.type = "FunctionNode", i2.prototype.isFunctionNode = true, i2.prototype._compile = function(t4, e3) {
     if (!(this instanceof i2))
       throw new TypeError("No valid FunctionNode");
-    var r3 = sn(this.args, function(r4) {
+    var r3 = cn(this.args, function(r4) {
       return r4._compile(t4, e3);
     });
-    if (hr(this.fn)) {
-      var n3 = this.fn.name, s3 = n3 in t4 ? ta(t4, n3) : void 0;
+    if (dr(this.fn)) {
+      var n3 = this.fn.name, s3 = n3 in t4 ? sa(t4, n3) : void 0;
       if (typeof s3 == "function" && s3.rawArgs === true) {
         var a3 = this.args;
         return function(e4, r4, i3) {
-          return (n3 in e4 ? ta(e4, n3) : s3)(a3, t4, go({}, e4, r4));
+          return (n3 in e4 ? sa(e4, n3) : s3)(a3, t4, _o({}, e4, r4));
         };
       }
       if (r3.length === 1) {
         var o3 = r3[0];
         return function(t5, e4, r4) {
-          return (n3 in t5 ? ta(t5, n3) : s3)(o3(t5, e4, r4));
+          return (n3 in t5 ? sa(t5, n3) : s3)(o3(t5, e4, r4));
         };
       }
       if (r3.length === 2) {
         var u2 = r3[0], h = r3[1];
         return function(t5, e4, r4) {
-          return (n3 in t5 ? ta(t5, n3) : s3)(u2(t5, e4, r4), h(t5, e4, r4));
+          return (n3 in t5 ? sa(t5, n3) : s3)(u2(t5, e4, r4), h(t5, e4, r4));
         };
       }
       return function(t5, e4, i3) {
-        return (n3 in t5 ? ta(t5, n3) : s3).apply(null, sn(r3, function(r4) {
+        return (n3 in t5 ? sa(t5, n3) : s3).apply(null, cn(r3, function(r4) {
           return r4(t5, e4, i3);
         }));
       };
     }
-    if (Ze(this.fn) && nr(this.fn.index) && this.fn.index.isObjectProperty()) {
+    if (tr(this.fn) && ur(this.fn.index) && this.fn.index.isObjectProperty()) {
       var c2 = this.fn.object._compile(t4, e3), l2 = this.fn.index.getObjectProperty(), p2 = this.args;
       return function(e4, n4, i3) {
         var s4 = c2(e4, n4, i3);
         return function(t5, e5) {
-          if (!na(t5, e5))
+          if (!ua(t5, e5))
             throw new Error('No access to method "' + e5 + '"');
-        }(s4, l2), s4[l2] && s4[l2].rawArgs ? s4[l2](p2, t4, go({}, e4, n4)) : s4[l2].apply(s4, sn(r3, function(t5) {
+        }(s4, l2), s4[l2] && s4[l2].rawArgs ? s4[l2](p2, t4, _o({}, e4, n4)) : s4[l2].apply(s4, cn(r3, function(t5) {
           return t5(e4, n4, i3);
         }));
       };
     }
-    var f2 = this.fn._compile(t4, e3), d2 = this.args;
+    var f2 = this.fn._compile(t4, e3), d = this.args;
     return function(e4, n4, i3) {
       var s4 = f2(e4, n4, i3);
-      return s4 && s4.rawArgs ? s4(d2, t4, go({}, e4, n4)) : s4.apply(s4, sn(r3, function(t5) {
+      return s4 && s4.rawArgs ? s4(d, t4, _o({}, e4, n4)) : s4.apply(s4, cn(r3, function(t5) {
         return t5(e4, n4, i3);
       }));
     };
@@ -8031,13 +7817,13 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
               i3 += o3;
               break;
             case "object":
-              if (ir(o3))
+              if (hr(o3))
                 i3 += o3.toTex(r3);
               else {
                 if (!Array.isArray(o3))
                   throw new TypeError("Template: " + n3[1] + " has to be a Node, String or array of Nodes");
                 i3 += o3.map(function(t5, e4) {
-                  if (ir(t5))
+                  if (hr(t5))
                     return t5.toTex(r3);
                   throw new TypeError("Template: " + n3[1] + "[" + e4 + "] is not a Node.");
                 }).join(",");
@@ -8047,7 +7833,7 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
               throw new TypeError("Template: " + n3[1] + " has to be a Node, String or array of Nodes");
           }
         else {
-          if (!ir(o3[n3[2]] && o3[n3[2]]))
+          if (!hr(o3[n3[2]] && o3[n3[2]]))
             throw new TypeError("Template: " + n3[1] + "[" + n3[2] + "] is not a Node.");
           i3 += o3[n3[2]].toTex(r3);
         }
@@ -8056,12 +7842,12 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   }
   i2.prototype.toString = function(t4) {
     var e3, r3 = this.fn.toString(t4);
-    return t4 && typeof t4.handler == "object" && wr(t4.handler, r3) && (e3 = t4.handler[r3](this, t4)), e3 !== void 0 ? e3 : s2.call(this, t4);
+    return t4 && typeof t4.handler == "object" && Er(t4.handler, r3) && (e3 = t4.handler[r3](this, t4)), e3 !== void 0 ? e3 : s2.call(this, t4);
   }, i2.prototype._toString = function(t4) {
     var e3 = this.args.map(function(e4) {
       return e4.toString(t4);
     });
-    return (er(this.fn) ? "(" + this.fn.toString(t4) + ")" : this.fn.toString(t4)) + "(" + e3.join(", ") + ")";
+    return (ar(this.fn) ? "(" + this.fn.toString(t4) + ")" : this.fn.toString(t4)) + "(" + e3.join(", ") + ")";
   }, i2.prototype.toJSON = function() {
     return {mathjs: "FunctionNode", fn: this.fn, args: this.args};
   }, i2.fromJSON = function(t4) {
@@ -8070,17 +7856,17 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
     var e3 = this.args.map(function(e4) {
       return e4.toHTML(t4);
     });
-    return '<span class="math-function">' + $r(this.fn) + '</span><span class="math-paranthesis math-round-parenthesis">(</span>' + e3.join('<span class="math-separator">,</span>') + '<span class="math-paranthesis math-round-parenthesis">)</span>';
+    return '<span class="math-function">' + Xr(this.fn) + '</span><span class="math-paranthesis math-round-parenthesis">(</span>' + e3.join('<span class="math-separator">,</span>') + '<span class="math-paranthesis math-round-parenthesis">)</span>';
   };
   var o2 = i2.prototype.toTex;
   return i2.prototype.toTex = function(t4) {
     var e3;
-    return t4 && typeof t4.handler == "object" && wr(t4.handler, this.name) && (e3 = t4.handler[this.name](this, t4)), e3 !== void 0 ? e3 : o2.call(this, t4);
+    return t4 && typeof t4.handler == "object" && Er(t4.handler, this.name) && (e3 = t4.handler[this.name](this, t4)), e3 !== void 0 ? e3 : o2.call(this, t4);
   }, i2.prototype._toTex = function(t4) {
     var r3, n3, i3 = this.args.map(function(e3) {
       return e3.toTex(t4);
     });
-    switch (io[this.name] && (r3 = io[this.name]), !e2[this.name] || typeof e2[this.name].toTex != "function" && typeof e2[this.name].toTex != "object" && typeof e2[this.name].toTex != "string" || (r3 = e2[this.name].toTex), typeof r3) {
+    switch (ho[this.name] && (r3 = ho[this.name]), !e2[this.name] || typeof e2[this.name].toTex != "function" && typeof e2[this.name].toTex != "object" && typeof e2[this.name].toTex != "string" || (r3 = e2[this.name].toTex), typeof r3) {
       case "function":
         n3 = r3(this, t4);
         break;
@@ -8100,204 +7886,204 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   }, i2.prototype.getIdentifier = function() {
     return this.type + ":" + this.name;
   }, i2;
-}, {isClass: true, isNode: true})}, IndexNodeDependencies: {NodeDependencies: Yo, RangeDependencies: {createRangeClass: es}, sizeDependencies: Lo, createIndexNode: co}, ObjectNodeDependencies: {NodeDependencies: Yo, createObjectNode: lo}, OperatorNodeDependencies: {NodeDependencies: Yo, createOperatorNode: po}, ParenthesisNodeDependencies: {NodeDependencies: Yo, createParenthesisNode: fo}, RangeNodeDependencies: {NodeDependencies: Yo, createRangeNode: mo}, RelationalNodeDependencies: {NodeDependencies: Yo, createRelationalNode: yo}, SymbolNodeDependencies: Zo, numericDependencies: qo, typedDependencies: Eo, createParse: cn("parse", ["typed", "numeric", "config", "AccessorNode", "ArrayNode", "AssignmentNode", "BlockNode", "ConditionalNode", "ConstantNode", "FunctionAssignmentNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "RangeNode", "RelationalNode", "SymbolNode"], (t3) => {
-  var {typed: e2, numeric: r2, config: n2, AccessorNode: i2, ArrayNode: s2, AssignmentNode: a2, BlockNode: o2, ConditionalNode: u2, ConstantNode: h, FunctionAssignmentNode: c2, FunctionNode: l2, IndexNode: p2, ObjectNode: f2, OperatorNode: d2, ParenthesisNode: m2, RangeNode: y2, RelationalNode: g2, SymbolNode: v} = t3, x = e2("parse", {string: function(t4) {
-    return P2(t4, {});
+}, {isClass: true, isNode: true})}, IndexNodeDependencies: {NodeDependencies: Ko, RangeDependencies: {createRangeClass: as}, sizeDependencies: jo, createIndexNode: yo}, ObjectNodeDependencies: {NodeDependencies: Ko, createObjectNode: go}, OperatorNodeDependencies: {NodeDependencies: Ko, createOperatorNode: vo}, ParenthesisNodeDependencies: {NodeDependencies: Ko, createParenthesisNode: xo}, RangeNodeDependencies: {NodeDependencies: Ko, createRangeNode: wo}, RelationalNodeDependencies: {NodeDependencies: Ko, createRelationalNode: bo}, SymbolNodeDependencies: tu, numericDependencies: Wo, typedDependencies: zo, createParse: mn("parse", ["typed", "numeric", "config", "AccessorNode", "ArrayNode", "AssignmentNode", "BlockNode", "ConditionalNode", "ConstantNode", "FunctionAssignmentNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "RangeNode", "RelationalNode", "SymbolNode"], (t3) => {
+  var {typed: e2, numeric: r2, config: n2, AccessorNode: i2, ArrayNode: s2, AssignmentNode: a2, BlockNode: o2, ConditionalNode: u2, ConstantNode: h, FunctionAssignmentNode: c2, FunctionNode: l2, IndexNode: p2, ObjectNode: f2, OperatorNode: d, ParenthesisNode: m2, RangeNode: y2, RelationalNode: g2, SymbolNode: v2} = t3, x2 = e2("parse", {string: function(t4) {
+    return P(t4, {});
   }, "Array | Matrix": function(t4) {
-    return w(t4, {});
+    return w2(t4, {});
   }, "string, Object": function(t4, e3) {
-    return P2(t4, e3.nodes !== void 0 ? e3.nodes : {});
-  }, "Array | Matrix, Object": w});
-  function w(t4) {
+    return P(t4, e3.nodes !== void 0 ? e3.nodes : {});
+  }, "Array | Matrix, Object": w2});
+  function w2(t4) {
     var e3 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, r3 = e3.nodes !== void 0 ? e3.nodes : {};
-    return is(t4, function(t5) {
+    return hs(t4, function(t5) {
       if (typeof t5 != "string")
         throw new TypeError("String expected");
-      return P2(t5, r3);
+      return P(t5, r3);
     });
   }
-  var b = 0, _ = 1, M = 2, E = 3, N = 4, S = {",": true, "(": true, ")": true, "[": true, "]": true, "{": true, "}": true, '"': true, "'": true, ";": true, "+": true, "-": true, "*": true, ".*": true, "/": true, "./": true, "%": true, "^": true, ".^": true, "~": true, "!": true, "&": true, "|": true, "^|": true, "=": true, ":": true, "?": true, "==": true, "!=": true, "<": true, ">": true, "<=": true, ">=": true, "<<": true, ">>": true, ">>>": true}, T = {mod: true, to: true, in: true, and: true, xor: true, or: true, not: true}, O2 = {true: true, false: false, null: null, undefined: void 0}, z2 = ["NaN", "Infinity"];
-  function A2(t4, e3) {
+  var b2 = 0, _2 = 1, M = 2, N = 3, E = 4, S = {",": true, "(": true, ")": true, "[": true, "]": true, "{": true, "}": true, '"': true, "'": true, ";": true, "+": true, "-": true, "*": true, ".*": true, "/": true, "./": true, "%": true, "^": true, ".^": true, "~": true, "!": true, "&": true, "|": true, "^|": true, "=": true, ":": true, "?": true, "==": true, "!=": true, "<": true, ">": true, "<=": true, ">=": true, "<<": true, ">>": true, ">>>": true}, T = {mod: true, to: true, in: true, and: true, xor: true, or: true, not: true}, O = {true: true, false: false, null: null, undefined: void 0}, z = ["NaN", "Infinity"];
+  function C(t4, e3) {
     return t4.expression.substr(t4.index, e3);
   }
-  function C2(t4) {
-    return A2(t4, 1);
+  function A(t4) {
+    return C(t4, 1);
   }
-  function R2(t4) {
+  function R(t4) {
     t4.index++;
   }
-  function D2(t4) {
+  function D(t4) {
     return t4.expression.charAt(t4.index - 1);
   }
-  function k2(t4) {
+  function k(t4) {
     return t4.expression.charAt(t4.index + 1);
   }
-  function I2(t4) {
-    for (t4.tokenType = b, t4.token = "", t4.comment = ""; x.isWhitespace(C2(t4), t4.nestingLevel); )
-      R2(t4);
-    if (C2(t4) === "#")
-      for (; C2(t4) !== "\n" && C2(t4) !== ""; )
-        t4.comment += C2(t4), R2(t4);
-    if (C2(t4) !== "") {
-      if (C2(t4) === "\n" && !t4.nestingLevel)
-        return t4.tokenType = _, t4.token = C2(t4), void R2(t4);
-      var e3 = C2(t4), r3 = A2(t4, 2), n3 = A2(t4, 3);
+  function I(t4) {
+    for (t4.tokenType = b2, t4.token = "", t4.comment = ""; x2.isWhitespace(A(t4), t4.nestingLevel); )
+      R(t4);
+    if (A(t4) === "#")
+      for (; A(t4) !== "\n" && A(t4) !== ""; )
+        t4.comment += A(t4), R(t4);
+    if (A(t4) !== "") {
+      if (A(t4) === "\n" && !t4.nestingLevel)
+        return t4.tokenType = _2, t4.token = A(t4), void R(t4);
+      var e3 = A(t4), r3 = C(t4, 2), n3 = C(t4, 3);
       if (n3.length === 3 && S[n3])
-        return t4.tokenType = _, t4.token = n3, R2(t4), R2(t4), void R2(t4);
+        return t4.tokenType = _2, t4.token = n3, R(t4), R(t4), void R(t4);
       if (r3.length === 2 && S[r3])
-        return t4.tokenType = _, t4.token = r3, R2(t4), void R2(t4);
+        return t4.tokenType = _2, t4.token = r3, R(t4), void R(t4);
       if (S[e3])
-        return t4.tokenType = _, t4.token = e3, void R2(t4);
-      if (x.isDigitDot(e3)) {
+        return t4.tokenType = _2, t4.token = e3, void R(t4);
+      if (x2.isDigitDot(e3)) {
         t4.tokenType = M;
-        var i3 = A2(t4, 2);
+        var i3 = C(t4, 2);
         if (i3 === "0b" || i3 === "0o" || i3 === "0x") {
-          for (t4.token += C2(t4), R2(t4), t4.token += C2(t4), R2(t4); x.isHexDigit(C2(t4)); )
-            t4.token += C2(t4), R2(t4);
+          for (t4.token += A(t4), R(t4), t4.token += A(t4), R(t4); x2.isHexDigit(A(t4)); )
+            t4.token += A(t4), R(t4);
           return;
         }
-        if (C2(t4) === ".")
-          t4.token += C2(t4), R2(t4), x.isDigit(C2(t4)) || (t4.tokenType = _);
+        if (A(t4) === ".")
+          t4.token += A(t4), R(t4), x2.isDigit(A(t4)) || (t4.tokenType = _2);
         else {
-          for (; x.isDigit(C2(t4)); )
-            t4.token += C2(t4), R2(t4);
-          x.isDecimalMark(C2(t4), k2(t4)) && (t4.token += C2(t4), R2(t4));
+          for (; x2.isDigit(A(t4)); )
+            t4.token += A(t4), R(t4);
+          x2.isDecimalMark(A(t4), k(t4)) && (t4.token += A(t4), R(t4));
         }
-        for (; x.isDigit(C2(t4)); )
-          t4.token += C2(t4), R2(t4);
-        if (C2(t4) === "E" || C2(t4) === "e") {
-          if (x.isDigit(k2(t4)) || k2(t4) === "-" || k2(t4) === "+") {
-            if (t4.token += C2(t4), R2(t4), C2(t4) !== "+" && C2(t4) !== "-" || (t4.token += C2(t4), R2(t4)), !x.isDigit(C2(t4)))
-              throw at(t4, 'Digit expected, got "' + C2(t4) + '"');
-            for (; x.isDigit(C2(t4)); )
-              t4.token += C2(t4), R2(t4);
-            if (x.isDecimalMark(C2(t4), k2(t4)))
-              throw at(t4, 'Digit expected, got "' + C2(t4) + '"');
-          } else if (k2(t4) === ".")
-            throw R2(t4), at(t4, 'Digit expected, got "' + C2(t4) + '"');
+        for (; x2.isDigit(A(t4)); )
+          t4.token += A(t4), R(t4);
+        if (A(t4) === "E" || A(t4) === "e") {
+          if (x2.isDigit(k(t4)) || k(t4) === "-" || k(t4) === "+") {
+            if (t4.token += A(t4), R(t4), A(t4) !== "+" && A(t4) !== "-" || (t4.token += A(t4), R(t4)), !x2.isDigit(A(t4)))
+              throw at(t4, 'Digit expected, got "' + A(t4) + '"');
+            for (; x2.isDigit(A(t4)); )
+              t4.token += A(t4), R(t4);
+            if (x2.isDecimalMark(A(t4), k(t4)))
+              throw at(t4, 'Digit expected, got "' + A(t4) + '"');
+          } else if (k(t4) === ".")
+            throw R(t4), at(t4, 'Digit expected, got "' + A(t4) + '"');
         }
       } else {
-        if (!x.isAlpha(C2(t4), D2(t4), k2(t4))) {
-          for (t4.tokenType = N; C2(t4) !== ""; )
-            t4.token += C2(t4), R2(t4);
+        if (!x2.isAlpha(A(t4), D(t4), k(t4))) {
+          for (t4.tokenType = E; A(t4) !== ""; )
+            t4.token += A(t4), R(t4);
           throw at(t4, 'Syntax error in part "' + t4.token + '"');
         }
-        for (; x.isAlpha(C2(t4), D2(t4), k2(t4)) || x.isDigit(C2(t4)); )
-          t4.token += C2(t4), R2(t4);
-        wr(T, t4.token) ? t4.tokenType = _ : t4.tokenType = E;
+        for (; x2.isAlpha(A(t4), D(t4), k(t4)) || x2.isDigit(A(t4)); )
+          t4.token += A(t4), R(t4);
+        Er(T, t4.token) ? t4.tokenType = _2 : t4.tokenType = N;
       }
     } else
-      t4.tokenType = _;
+      t4.tokenType = _2;
   }
-  function L2(t4) {
+  function L(t4) {
     do {
-      I2(t4);
+      I(t4);
     } while (t4.token === "\n");
   }
-  function B2(t4) {
+  function B(t4) {
     t4.nestingLevel++;
   }
-  function F2(t4) {
+  function F(t4) {
     t4.nestingLevel--;
   }
-  function P2(t4, e3) {
-    var r3 = {extraNodes: {}, expression: "", comment: "", index: 0, token: "", tokenType: b, nestingLevel: 0, conditionalLevel: null};
-    vo(r3, {expression: t4, extraNodes: e3}), I2(r3);
+  function P(t4, e3) {
+    var r3 = {extraNodes: {}, expression: "", comment: "", index: 0, token: "", tokenType: b2, nestingLevel: 0, conditionalLevel: null};
+    Mo(r3, {expression: t4, extraNodes: e3}), I(r3);
     var n3 = function(t5) {
       var e4, r4, n4 = [];
-      t5.token !== "" && t5.token !== "\n" && t5.token !== ";" && ((e4 = U2(t5)).comment = t5.comment);
+      t5.token !== "" && t5.token !== "\n" && t5.token !== ";" && ((e4 = U(t5)).comment = t5.comment);
       for (; t5.token === "\n" || t5.token === ";"; )
-        n4.length === 0 && e4 && (r4 = t5.token !== ";", n4.push({node: e4, visible: r4})), I2(t5), t5.token !== "\n" && t5.token !== ";" && t5.token !== "" && ((e4 = U2(t5)).comment = t5.comment, r4 = t5.token !== ";", n4.push({node: e4, visible: r4}));
+        n4.length === 0 && e4 && (r4 = t5.token !== ";", n4.push({node: e4, visible: r4})), I(t5), t5.token !== "\n" && t5.token !== ";" && t5.token !== "" && ((e4 = U(t5)).comment = t5.comment, r4 = t5.token !== ";", n4.push({node: e4, visible: r4}));
       return n4.length > 0 ? new o2(n4) : (e4 || ((e4 = new h(void 0)).comment = t5.comment), e4);
     }(r3);
     if (r3.token !== "")
-      throw r3.tokenType === _ ? ot(r3, "Unexpected operator " + r3.token) : at(r3, 'Unexpected part "' + r3.token + '"');
+      throw r3.tokenType === _2 ? ot2(r3, "Unexpected operator " + r3.token) : at(r3, 'Unexpected part "' + r3.token + '"');
     return n3;
   }
-  function U2(t4) {
+  function U(t4) {
     var e3, r3, n3, i3, s3 = function(t5) {
       var e4 = function(t6) {
-        var e5 = j2(t6);
+        var e5 = j(t6);
         for (; t6.token === "or"; )
-          L2(t6), e5 = new d2("or", "or", [e5, j2(t6)]);
+          L(t6), e5 = new d("or", "or", [e5, j(t6)]);
         return e5;
       }(t5);
       for (; t5.token === "?"; ) {
         var r4 = t5.conditionalLevel;
-        t5.conditionalLevel = t5.nestingLevel, L2(t5);
-        var n4 = e4, i4 = U2(t5);
+        t5.conditionalLevel = t5.nestingLevel, L(t5);
+        var n4 = e4, i4 = U(t5);
         if (t5.token !== ":")
           throw at(t5, "False part of conditional expression expected");
-        t5.conditionalLevel = null, L2(t5);
-        var s4 = U2(t5);
+        t5.conditionalLevel = null, L(t5);
+        var s4 = U(t5);
         e4 = new u2(n4, i4, s4), t5.conditionalLevel = r4;
       }
       return e4;
     }(t4);
     if (t4.token === "=") {
-      if (hr(s3))
-        return e3 = s3.name, L2(t4), n3 = U2(t4), new a2(new v(e3), n3);
-      if (Ze(s3))
-        return L2(t4), n3 = U2(t4), new a2(s3.object, s3.index, n3);
-      if (rr(s3) && hr(s3.fn) && (i3 = true, r3 = [], e3 = s3.name, s3.args.forEach(function(t5, e4) {
-        hr(t5) ? r3[e4] = t5.name : i3 = false;
+      if (dr(s3))
+        return e3 = s3.name, L(t4), n3 = U(t4), new a2(new v2(e3), n3);
+      if (tr(s3))
+        return L(t4), n3 = U(t4), new a2(s3.object, s3.index, n3);
+      if (or(s3) && dr(s3.fn) && (i3 = true, r3 = [], e3 = s3.name, s3.args.forEach(function(t5, e4) {
+        dr(t5) ? r3[e4] = t5.name : i3 = false;
       }), i3))
-        return L2(t4), n3 = U2(t4), new c2(e3, r3, n3);
+        return L(t4), n3 = U(t4), new c2(e3, r3, n3);
       throw at(t4, "Invalid left hand side of assignment operator =");
     }
     return s3;
   }
-  function j2(t4) {
-    for (var e3 = q2(t4); t4.token === "xor"; )
-      L2(t4), e3 = new d2("xor", "xor", [e3, q2(t4)]);
+  function j(t4) {
+    for (var e3 = q(t4); t4.token === "xor"; )
+      L(t4), e3 = new d("xor", "xor", [e3, q(t4)]);
     return e3;
   }
-  function q2(t4) {
-    for (var e3 = H2(t4); t4.token === "and"; )
-      L2(t4), e3 = new d2("and", "and", [e3, H2(t4)]);
+  function q(t4) {
+    for (var e3 = H(t4); t4.token === "and"; )
+      L(t4), e3 = new d("and", "and", [e3, H(t4)]);
     return e3;
   }
-  function H2(t4) {
-    for (var e3 = V2(t4); t4.token === "|"; )
-      L2(t4), e3 = new d2("|", "bitOr", [e3, V2(t4)]);
+  function H(t4) {
+    for (var e3 = V(t4); t4.token === "|"; )
+      L(t4), e3 = new d("|", "bitOr", [e3, V(t4)]);
     return e3;
   }
-  function V2(t4) {
+  function V(t4) {
     for (var e3 = $(t4); t4.token === "^|"; )
-      L2(t4), e3 = new d2("^|", "bitXor", [e3, $(t4)]);
+      L(t4), e3 = new d("^|", "bitXor", [e3, $(t4)]);
     return e3;
   }
   function $(t4) {
     for (var e3 = G(t4); t4.token === "&"; )
-      L2(t4), e3 = new d2("&", "bitAnd", [e3, G(t4)]);
+      L(t4), e3 = new d("&", "bitAnd", [e3, G(t4)]);
     return e3;
   }
   function G(t4) {
-    for (var e3 = [W(t4)], r3 = [], n3 = {"==": "equal", "!=": "unequal", "<": "smaller", ">": "larger", "<=": "smallerEq", ">=": "largerEq"}; wr(n3, t4.token); ) {
+    for (var e3 = [W(t4)], r3 = [], n3 = {"==": "equal", "!=": "unequal", "<": "smaller", ">": "larger", "<=": "smallerEq", ">=": "largerEq"}; Er(n3, t4.token); ) {
       var i3 = {name: t4.token, fn: n3[t4.token]};
-      r3.push(i3), L2(t4), e3.push(W(t4));
+      r3.push(i3), L(t4), e3.push(W(t4));
     }
-    return e3.length === 1 ? e3[0] : e3.length === 2 ? new d2(r3[0].name, r3[0].fn, e3) : new g2(r3.map((t5) => t5.fn), e3);
+    return e3.length === 1 ? e3[0] : e3.length === 2 ? new d(r3[0].name, r3[0].fn, e3) : new g2(r3.map((t5) => t5.fn), e3);
   }
   function W(t4) {
     var e3, r3, n3, i3;
     e3 = Y(t4);
-    for (var s3 = {"<<": "leftShift", ">>": "rightArithShift", ">>>": "rightLogShift"}; wr(s3, t4.token); )
-      n3 = s3[r3 = t4.token], L2(t4), i3 = [e3, Y(t4)], e3 = new d2(r3, n3, i3);
+    for (var s3 = {"<<": "leftShift", ">>": "rightArithShift", ">>>": "rightLogShift"}; Er(s3, t4.token); )
+      n3 = s3[r3 = t4.token], L(t4), i3 = [e3, Y(t4)], e3 = new d(r3, n3, i3);
     return e3;
   }
   function Y(t4) {
     var e3, r3, n3, i3;
     e3 = Z(t4);
-    for (var s3 = {to: "to", in: "to"}; wr(s3, t4.token); )
-      n3 = s3[r3 = t4.token], L2(t4), r3 === "in" && t4.token === "" ? e3 = new d2("*", "multiply", [e3, new v("in")], true) : (i3 = [e3, Z(t4)], e3 = new d2(r3, n3, i3));
+    for (var s3 = {to: "to", in: "to"}; Er(s3, t4.token); )
+      n3 = s3[r3 = t4.token], L(t4), r3 === "in" && t4.token === "" ? e3 = new d("*", "multiply", [e3, new v2("in")], true) : (i3 = [e3, Z(t4)], e3 = new d(r3, n3, i3));
     return e3;
   }
   function Z(t4) {
     var e3, r3 = [];
     if (e3 = t4.token === ":" ? new h(1) : X(t4), t4.token === ":" && t4.conditionalLevel !== t4.nestingLevel) {
       for (r3.push(e3); t4.token === ":" && r3.length < 3; )
-        L2(t4), t4.token === ")" || t4.token === "]" || t4.token === "," || t4.token === "" ? r3.push(new v("end")) : r3.push(X(t4));
+        L(t4), t4.token === ")" || t4.token === "]" || t4.token === "," || t4.token === "" ? r3.push(new v2("end")) : r3.push(X(t4));
       e3 = r3.length === 3 ? new y2(r3[0], r3[2], r3[1]) : new y2(r3[0], r3[1]);
     }
     return e3;
@@ -8305,65 +8091,65 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
   function X(t4) {
     var e3, r3, n3, i3;
     e3 = Q(t4);
-    for (var s3 = {"+": "add", "-": "subtract"}; wr(s3, t4.token); )
-      n3 = s3[r3 = t4.token], L2(t4), i3 = [e3, Q(t4)], e3 = new d2(r3, n3, i3);
+    for (var s3 = {"+": "add", "-": "subtract"}; Er(s3, t4.token); )
+      n3 = s3[r3 = t4.token], L(t4), i3 = [e3, Q(t4)], e3 = new d(r3, n3, i3);
     return e3;
   }
   function Q(t4) {
     var e3, r3, n3, i3;
     r3 = e3 = J(t4);
-    for (var s3 = {"*": "multiply", ".*": "dotMultiply", "/": "divide", "./": "dotDivide", "%": "mod", mod: "mod"}; wr(s3, t4.token); )
-      i3 = s3[n3 = t4.token], L2(t4), r3 = J(t4), e3 = new d2(n3, i3, [e3, r3]);
+    for (var s3 = {"*": "multiply", ".*": "dotMultiply", "/": "divide", "./": "dotDivide", "%": "mod", mod: "mod"}; Er(s3, t4.token); )
+      i3 = s3[n3 = t4.token], L(t4), r3 = J(t4), e3 = new d(n3, i3, [e3, r3]);
     return e3;
   }
   function J(t4) {
     var e3, r3;
-    for (r3 = e3 = K(t4); t4.tokenType === E || t4.token === "in" && tr(e3) || !(t4.tokenType !== M || tr(r3) || ar(r3) && r3.op !== "!") || t4.token === "("; )
-      r3 = K(t4), e3 = new d2("*", "multiply", [e3, r3], true);
+    for (r3 = e3 = K(t4); t4.tokenType === N || t4.token === "in" && sr(e3) || !(t4.tokenType !== M || sr(r3) || lr(r3) && r3.op !== "!") || t4.token === "("; )
+      r3 = K(t4), e3 = new d("*", "multiply", [e3, r3], true);
     return e3;
   }
   function K(t4) {
-    for (var e3 = tt(t4), r3 = e3, n3 = []; t4.token === "/" && tr(r3); ) {
-      if (n3.push(vo({}, t4)), L2(t4), t4.tokenType !== M) {
-        vo(t4, n3.pop());
+    for (var e3 = tt(t4), r3 = e3, n3 = []; t4.token === "/" && sr(r3); ) {
+      if (n3.push(Mo({}, t4)), L(t4), t4.tokenType !== M) {
+        Mo(t4, n3.pop());
         break;
       }
-      if (n3.push(vo({}, t4)), L2(t4), t4.tokenType !== E && t4.token !== "(") {
-        n3.pop(), vo(t4, n3.pop());
+      if (n3.push(Mo({}, t4)), L(t4), t4.tokenType !== N && t4.token !== "(") {
+        n3.pop(), Mo(t4, n3.pop());
         break;
       }
-      vo(t4, n3.pop()), n3.pop(), r3 = tt(t4), e3 = new d2("/", "divide", [e3, r3]);
+      Mo(t4, n3.pop()), n3.pop(), r3 = tt(t4), e3 = new d("/", "divide", [e3, r3]);
     }
     return e3;
   }
   function tt(t4) {
     var e3, i3, a3, o3 = {"-": "unaryMinus", "+": "unaryPlus", "~": "bitNot", not: "not"};
-    return wr(o3, t4.token) ? (a3 = o3[t4.token], e3 = t4.token, L2(t4), i3 = [tt(t4)], new d2(e3, a3, i3)) : function(t5) {
+    return Er(o3, t4.token) ? (a3 = o3[t4.token], e3 = t4.token, L(t4), i3 = [tt(t4)], new d(e3, a3, i3)) : function(t5) {
       var e4, i4, a4, o4;
       e4 = function(t6) {
         var e5, i5, a5;
         e5 = function(t7) {
           var e6 = [];
-          if (t7.tokenType === E && wr(t7.extraNodes, t7.token)) {
+          if (t7.tokenType === N && Er(t7.extraNodes, t7.token)) {
             var i6 = t7.extraNodes[t7.token];
-            if (I2(t7), t7.token === "(") {
-              if (e6 = [], B2(t7), I2(t7), t7.token !== ")")
-                for (e6.push(U2(t7)); t7.token === ","; )
-                  I2(t7), e6.push(U2(t7));
+            if (I(t7), t7.token === "(") {
+              if (e6 = [], B(t7), I(t7), t7.token !== ")")
+                for (e6.push(U(t7)); t7.token === ","; )
+                  I(t7), e6.push(U(t7));
               if (t7.token !== ")")
                 throw at(t7, "Parenthesis ) expected");
-              F2(t7), I2(t7);
+              F(t7), I(t7);
             }
             return new i6(e6);
           }
           return function(t8) {
             var e7;
-            if (t8.tokenType === E || t8.tokenType === _ && t8.token in T)
-              return e7 = t8.token, I2(t8), et(t8, wr(O2, e7) ? new h(O2[e7]) : z2.indexOf(e7) !== -1 ? new h(r2(e7, "number")) : new v(e7));
+            if (t8.tokenType === N || t8.tokenType === _2 && t8.token in T)
+              return e7 = t8.token, I(t8), et(t8, Er(O, e7) ? new h(O[e7]) : z.indexOf(e7) !== -1 ? new h(r2(e7, "number")) : new v2(e7));
             return function(t9) {
               var e8;
               if (t9.token === '"')
-                return e8 = rt2(t9), et(t9, new h(e8));
+                return e8 = rt(t9), et(t9, new h(e8));
               return function(t10) {
                 var e9;
                 if (t10.token === "'")
@@ -8371,64 +8157,64 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
                 return function(t11) {
                   var e10, i7, a6, o6;
                   if (t11.token === "[") {
-                    if (B2(t11), I2(t11), t11.token !== "]") {
+                    if (B(t11), I(t11), t11.token !== "]") {
                       var u3 = it(t11);
                       if (t11.token === ";") {
                         for (a6 = 1, i7 = [u3]; t11.token === ";"; )
-                          I2(t11), i7[a6] = it(t11), a6++;
+                          I(t11), i7[a6] = it(t11), a6++;
                         if (t11.token !== "]")
                           throw at(t11, "End of matrix ] expected");
-                        F2(t11), I2(t11), o6 = i7[0].items.length;
+                        F(t11), I(t11), o6 = i7[0].items.length;
                         for (var c3 = 1; c3 < a6; c3++)
                           if (i7[c3].items.length !== o6)
-                            throw ot(t11, "Column dimensions mismatch (" + i7[c3].items.length + " !== " + o6 + ")");
+                            throw ot2(t11, "Column dimensions mismatch (" + i7[c3].items.length + " !== " + o6 + ")");
                         e10 = new s2(i7);
                       } else {
                         if (t11.token !== "]")
                           throw at(t11, "End of matrix ] expected");
-                        F2(t11), I2(t11), e10 = u3;
+                        F(t11), I(t11), e10 = u3;
                       }
                     } else
-                      F2(t11), I2(t11), e10 = new s2([]);
+                      F(t11), I(t11), e10 = new s2([]);
                     return et(t11, e10);
                   }
                   return function(t12) {
                     if (t12.token === "{") {
                       var e11;
-                      B2(t12);
+                      B(t12);
                       var i8 = {};
                       do {
-                        if (I2(t12), t12.token !== "}") {
+                        if (I(t12), t12.token !== "}") {
                           if (t12.token === '"')
-                            e11 = rt2(t12);
+                            e11 = rt(t12);
                           else if (t12.token === "'")
                             e11 = nt(t12);
                           else {
-                            if (!(t12.tokenType === E || t12.tokenType === _ && t12.token in T))
+                            if (!(t12.tokenType === N || t12.tokenType === _2 && t12.token in T))
                               throw at(t12, "Symbol or string expected as object key");
-                            e11 = t12.token, I2(t12);
+                            e11 = t12.token, I(t12);
                           }
                           if (t12.token !== ":")
                             throw at(t12, "Colon : expected after object key");
-                          I2(t12), i8[e11] = U2(t12);
+                          I(t12), i8[e11] = U(t12);
                         }
                       } while (t12.token === ",");
                       if (t12.token !== "}")
                         throw at(t12, "Comma , or bracket } expected after object value");
-                      F2(t12), I2(t12);
+                      F(t12), I(t12);
                       var s3 = new f2(i8);
                       return s3 = et(t12, s3);
                     }
                     return function(t13) {
                       var e12;
                       if (t13.tokenType === M)
-                        return e12 = t13.token, I2(t13), new h(r2(e12, n2.number));
+                        return e12 = t13.token, I(t13), new h(r2(e12, n2.number));
                       return function(t14) {
                         var e13;
                         if (t14.token === "(") {
-                          if (B2(t14), I2(t14), e13 = U2(t14), t14.token !== ")")
+                          if (B(t14), I(t14), e13 = U(t14), t14.token !== ")")
                             throw at(t14, "Parenthesis ) expected");
-                          return F2(t14), I2(t14), e13 = et(t14, e13 = new m2(e13));
+                          return F(t14), I(t14), e13 = et(t14, e13 = new m2(e13));
                         }
                         return function(t15) {
                           throw t15.token === "" ? at(t15, "Unexpected end of expression") : at(t15, "Value expected");
@@ -8442,56 +8228,56 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
           }(t7);
         }(t6);
         var o5 = {"!": "factorial", "'": "ctranspose"};
-        for (; wr(o5, t6.token); )
-          a5 = o5[i5 = t6.token], I2(t6), e5 = et(t6, e5 = new d2(i5, a5, [e5]));
+        for (; Er(o5, t6.token); )
+          a5 = o5[i5 = t6.token], I(t6), e5 = et(t6, e5 = new d(i5, a5, [e5]));
         return e5;
-      }(t5), (t5.token === "^" || t5.token === ".^") && (a4 = (i4 = t5.token) === "^" ? "pow" : "dotPow", L2(t5), o4 = [e4, tt(t5)], e4 = new d2(i4, a4, o4));
+      }(t5), (t5.token === "^" || t5.token === ".^") && (a4 = (i4 = t5.token) === "^" ? "pow" : "dotPow", L(t5), o4 = [e4, tt(t5)], e4 = new d(i4, a4, o4));
       return e4;
     }(t4);
   }
   function et(t4, e3, r3) {
     for (var n3; !(t4.token !== "(" && t4.token !== "[" && t4.token !== "." || r3 && r3.indexOf(t4.token) === -1); )
       if (n3 = [], t4.token === "(") {
-        if (!hr(e3) && !Ze(e3))
+        if (!dr(e3) && !tr(e3))
           return e3;
-        if (B2(t4), I2(t4), t4.token !== ")")
-          for (n3.push(U2(t4)); t4.token === ","; )
-            I2(t4), n3.push(U2(t4));
+        if (B(t4), I(t4), t4.token !== ")")
+          for (n3.push(U(t4)); t4.token === ","; )
+            I(t4), n3.push(U(t4));
         if (t4.token !== ")")
           throw at(t4, "Parenthesis ) expected");
-        F2(t4), I2(t4), e3 = new l2(e3, n3);
+        F(t4), I(t4), e3 = new l2(e3, n3);
       } else if (t4.token === "[") {
-        if (B2(t4), I2(t4), t4.token !== "]")
-          for (n3.push(U2(t4)); t4.token === ","; )
-            I2(t4), n3.push(U2(t4));
+        if (B(t4), I(t4), t4.token !== "]")
+          for (n3.push(U(t4)); t4.token === ","; )
+            I(t4), n3.push(U(t4));
         if (t4.token !== "]")
           throw at(t4, "Parenthesis ] expected");
-        F2(t4), I2(t4), e3 = new i2(e3, new p2(n3));
+        F(t4), I(t4), e3 = new i2(e3, new p2(n3));
       } else {
-        if (I2(t4), t4.tokenType !== E)
+        if (I(t4), t4.tokenType !== N)
           throw at(t4, "Property name expected after dot");
-        n3.push(new h(t4.token)), I2(t4);
+        n3.push(new h(t4.token)), I(t4);
         e3 = new i2(e3, new p2(n3, true));
       }
     return e3;
   }
-  function rt2(t4) {
-    for (var e3 = ""; C2(t4) !== "" && C2(t4) !== '"'; )
-      C2(t4) === "\\" && (e3 += C2(t4), R2(t4)), e3 += C2(t4), R2(t4);
-    if (I2(t4), t4.token !== '"')
+  function rt(t4) {
+    for (var e3 = ""; A(t4) !== "" && A(t4) !== '"'; )
+      A(t4) === "\\" && (e3 += A(t4), R(t4)), e3 += A(t4), R(t4);
+    if (I(t4), t4.token !== '"')
       throw at(t4, 'End of string " expected');
-    return I2(t4), JSON.parse('"' + e3 + '"');
+    return I(t4), JSON.parse('"' + e3 + '"');
   }
   function nt(t4) {
-    for (var e3 = ""; C2(t4) !== "" && C2(t4) !== "'"; )
-      C2(t4) === "\\" && (e3 += C2(t4), R2(t4)), e3 += C2(t4), R2(t4);
-    if (I2(t4), t4.token !== "'")
+    for (var e3 = ""; A(t4) !== "" && A(t4) !== "'"; )
+      A(t4) === "\\" && (e3 += A(t4), R(t4)), e3 += A(t4), R(t4);
+    if (I(t4), t4.token !== "'")
       throw at(t4, "End of string ' expected");
-    return I2(t4), JSON.parse('"' + e3 + '"');
+    return I(t4), JSON.parse('"' + e3 + '"');
   }
   function it(t4) {
-    for (var e3 = [U2(t4)], r3 = 1; t4.token === ","; )
-      I2(t4), e3[r3] = U2(t4), r3++;
+    for (var e3 = [U(t4)], r3 = 1; t4.token === ","; )
+      I(t4), e3[r3] = U(t4), r3++;
     return new s2(e3);
   }
   function st(t4) {
@@ -8501,28 +8287,28 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
     var r3 = st(t4), n3 = new SyntaxError(e3 + " (char " + r3 + ")");
     return n3.char = r3, n3;
   }
-  function ot(t4, e3) {
+  function ot2(t4, e3) {
     var r3 = st(t4), n3 = new SyntaxError(e3 + " (char " + r3 + ")");
     return n3.char = r3, n3;
   }
-  return x.isAlpha = function(t4, e3, r3) {
-    return x.isValidLatinOrGreek(t4) || x.isValidMathSymbol(t4, r3) || x.isValidMathSymbol(e3, t4);
-  }, x.isValidLatinOrGreek = function(t4) {
+  return x2.isAlpha = function(t4, e3, r3) {
+    return x2.isValidLatinOrGreek(t4) || x2.isValidMathSymbol(t4, r3) || x2.isValidMathSymbol(e3, t4);
+  }, x2.isValidLatinOrGreek = function(t4) {
     return /^[a-zA-Z_$\u00C0-\u02AF\u0370-\u03FF\u2100-\u214F]$/.test(t4);
-  }, x.isValidMathSymbol = function(t4, e3) {
+  }, x2.isValidMathSymbol = function(t4, e3) {
     return /^[\uD835]$/.test(t4) && /^[\uDC00-\uDFFF]$/.test(e3) && /^[^\uDC55\uDC9D\uDCA0\uDCA1\uDCA3\uDCA4\uDCA7\uDCA8\uDCAD\uDCBA\uDCBC\uDCC4\uDD06\uDD0B\uDD0C\uDD15\uDD1D\uDD3A\uDD3F\uDD45\uDD47-\uDD49\uDD51\uDEA6\uDEA7\uDFCC\uDFCD]$/.test(e3);
-  }, x.isWhitespace = function(t4, e3) {
+  }, x2.isWhitespace = function(t4, e3) {
     return t4 === " " || t4 === "	" || t4 === "\n" && e3 > 0;
-  }, x.isDecimalMark = function(t4, e3) {
+  }, x2.isDecimalMark = function(t4, e3) {
     return t4 === "." && e3 !== "/" && e3 !== "*" && e3 !== "^";
-  }, x.isDigitDot = function(t4) {
+  }, x2.isDigitDot = function(t4) {
     return t4 >= "0" && t4 <= "9" || t4 === ".";
-  }, x.isDigit = function(t4) {
+  }, x2.isDigit = function(t4) {
     return t4 >= "0" && t4 <= "9";
-  }, x.isHexDigit = function(t4) {
+  }, x2.isHexDigit = function(t4) {
     return t4 >= "0" && t4 <= "9" || t4 >= "a" && t4 <= "f" || t4 >= "A" && t4 <= "F";
-  }, x;
-})}, typedDependencies: Eo, createEvaluate: cn("evaluate", ["typed", "parse"], (t3) => {
+  }, x2;
+})}, typedDependencies: zo, createEvaluate: mn("evaluate", ["typed", "parse"], (t3) => {
   var {typed: e2, parse: r2} = t3;
   return e2("evaluate", {string: function(t4) {
     return r2(t4).compile().evaluate({});
@@ -8530,108 +8316,108 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
     return r2(t4).compile().evaluate(e3);
   }, "Array | Matrix": function(t4) {
     var e3 = {};
-    return is(t4, function(t5) {
+    return hs(t4, function(t5) {
       return r2(t5).compile().evaluate(e3);
     });
   }, "Array | Matrix, Object": function(t4, e3) {
-    return is(t4, function(t5) {
+    return hs(t4, function(t5) {
       return r2(t5).compile().evaluate(e3);
     });
   }});
 })});
-({divideScalarDependencies: Ho, equalScalarDependencies: No, invDependencies: {absDependencies: Co, addScalarDependencies: Ro, detDependencies: {lupDependencies: {DenseMatrixDependencies: _o, SpaDependencies: {FibonacciHeapDependencies: {largerDependencies: Po, smallerDependencies: {DenseMatrixDependencies: _o, matrixDependencies: zo, typedDependencies: Eo, createSmaller: Ea}, createFibonacciHeapClass: Sa}, addScalarDependencies: Ro, equalScalarDependencies: No, createSpaClass: Ta}, SparseMatrixDependencies: So, absDependencies: Co, addScalarDependencies: Ro, divideScalarDependencies: Ho, equalScalarDependencies: No, largerDependencies: Po, matrixDependencies: zo, multiplyScalarDependencies: Io, subtractDependencies: Fo, typedDependencies: Eo, unaryMinusDependencies: Ao, createLup: cn("lup", ["typed", "matrix", "abs", "addScalar", "divideScalar", "multiplyScalar", "subtract", "larger", "equalScalar", "unaryMinus", "DenseMatrix", "SparseMatrix", "Spa"], (t3) => {
+({divideScalarDependencies: Yo, equalScalarDependencies: Co, invDependencies: {absDependencies: Lo, addScalarDependencies: Bo, detDependencies: {lupDependencies: {DenseMatrixDependencies: To, SpaDependencies: {FibonacciHeapDependencies: {largerDependencies: Vo, smallerDependencies: {DenseMatrixDependencies: To, matrixDependencies: ko, typedDependencies: zo, createSmaller: za}, createFibonacciHeapClass: Aa}, addScalarDependencies: Bo, equalScalarDependencies: Co, createSpaClass: Ra}, SparseMatrixDependencies: Ao, absDependencies: Lo, addScalarDependencies: Bo, divideScalarDependencies: Yo, equalScalarDependencies: Co, largerDependencies: Vo, matrixDependencies: ko, multiplyScalarDependencies: Uo, subtractDependencies: Ho, typedDependencies: zo, unaryMinusDependencies: Io, createLup: mn("lup", ["typed", "matrix", "abs", "addScalar", "divideScalar", "multiplyScalar", "subtract", "larger", "equalScalar", "unaryMinus", "DenseMatrix", "SparseMatrix", "Spa"], (t3) => {
   var {typed: e2, matrix: r2, abs: n2, addScalar: i2, divideScalar: s2, multiplyScalar: a2, subtract: o2, larger: u2, equalScalar: h, unaryMinus: c2, DenseMatrix: l2, SparseMatrix: p2, Spa: f2} = t3;
   return e2("lup", {DenseMatrix: function(t4) {
-    return d2(t4);
+    return d(t4);
   }, SparseMatrix: function(t4) {
     return function(t5) {
-      var e3, r3, i3, o3 = t5._size[0], l3 = t5._size[1], d3 = Math.min(o3, l3), m2 = t5._values, y2 = t5._index, g2 = t5._ptr, v = [], x = [], w = [], b = [o3, d3], _ = [], M = [], E = [], N = [d3, l3], S = [], T = [];
+      var e3, r3, i3, o3 = t5._size[0], l3 = t5._size[1], d2 = Math.min(o3, l3), m2 = t5._values, y2 = t5._index, g2 = t5._ptr, v2 = [], x2 = [], w2 = [], b2 = [o3, d2], _2 = [], M = [], N = [], E = [d2, l3], S = [], T = [];
       for (e3 = 0; e3 < o3; e3++)
         S[e3] = e3, T[e3] = e3;
-      var O2 = function(t6, e4) {
+      var O = function(t6, e4) {
         var r4 = T[t6], n3 = T[e4];
         S[r4] = e4, S[n3] = t6, T[t6] = n3, T[e4] = r4;
-      }, z2 = function() {
+      }, z = function() {
         var t6 = new f2();
-        r3 < o3 && (w.push(v.length), v.push(1), x.push(r3)), E.push(_.length);
-        var l4 = g2[r3], d4 = g2[r3 + 1];
-        for (i3 = l4; i3 < d4; i3++)
+        r3 < o3 && (w2.push(v2.length), v2.push(1), x2.push(r3)), N.push(_2.length);
+        var l4 = g2[r3], d3 = g2[r3 + 1];
+        for (i3 = l4; i3 < d3; i3++)
           e3 = y2[i3], t6.set(S[e3], m2[i3]);
         r3 > 0 && t6.forEach(0, r3 - 1, function(e4, r4) {
-          p2._forEachRow(e4, v, x, w, function(n3, i4) {
+          p2._forEachRow(e4, v2, x2, w2, function(n3, i4) {
             n3 > e4 && t6.accumulate(n3, c2(a2(i4, r4)));
           });
         });
-        var T2 = r3, z3 = t6.get(r3), A2 = n2(z3);
+        var T2 = r3, z2 = t6.get(r3), C = n2(z2);
         t6.forEach(r3 + 1, o3 - 1, function(t7, e4) {
           var r4 = n2(e4);
-          u2(r4, A2) && (T2 = t7, A2 = r4, z3 = e4);
-        }), r3 !== T2 && (p2._swapRows(r3, T2, b[1], v, x, w), p2._swapRows(r3, T2, N[1], _, M, E), t6.swap(r3, T2), O2(r3, T2)), t6.forEach(0, o3 - 1, function(t7, e4) {
-          t7 <= r3 ? (_.push(e4), M.push(t7)) : (e4 = s2(e4, z3), h(e4, 0) || (v.push(e4), x.push(t7)));
+          u2(r4, C) && (T2 = t7, C = r4, z2 = e4);
+        }), r3 !== T2 && (p2._swapRows(r3, T2, b2[1], v2, x2, w2), p2._swapRows(r3, T2, E[1], _2, M, N), t6.swap(r3, T2), O(r3, T2)), t6.forEach(0, o3 - 1, function(t7, e4) {
+          t7 <= r3 ? (_2.push(e4), M.push(t7)) : (e4 = s2(e4, z2), h(e4, 0) || (v2.push(e4), x2.push(t7)));
         });
       };
       for (r3 = 0; r3 < l3; r3++)
-        z2();
-      return E.push(_.length), w.push(v.length), {L: new p2({values: v, index: x, ptr: w, size: b}), U: new p2({values: _, index: M, ptr: E, size: N}), p: S, toString: function() {
+        z();
+      return N.push(_2.length), w2.push(v2.length), {L: new p2({values: v2, index: x2, ptr: w2, size: b2}), U: new p2({values: _2, index: M, ptr: N, size: E}), p: S, toString: function() {
         return "L: " + this.L.toString() + "\nU: " + this.U.toString() + "\nP: " + this.p;
       }};
     }(t4);
   }, Array: function(t4) {
-    var e3 = d2(r2(t4));
+    var e3 = d(r2(t4));
     return {L: e3.L.valueOf(), U: e3.U.valueOf(), p: e3.p};
   }});
-  function d2(t4) {
-    var e3, r3, c3, p3 = t4._size[0], f3 = t4._size[1], d3 = Math.min(p3, f3), m2 = pr(t4._data), y2 = [], g2 = [p3, d3], v = [], x = [d3, f3], w = [];
+  function d(t4) {
+    var e3, r3, c3, p3 = t4._size[0], f3 = t4._size[1], d2 = Math.min(p3, f3), m2 = gr(t4._data), y2 = [], g2 = [p3, d2], v2 = [], x2 = [d2, f3], w2 = [];
     for (e3 = 0; e3 < p3; e3++)
-      w[e3] = e3;
+      w2[e3] = e3;
     for (r3 = 0; r3 < f3; r3++) {
       if (r3 > 0)
         for (e3 = 0; e3 < p3; e3++) {
-          var b = Math.min(e3, r3), _ = 0;
-          for (c3 = 0; c3 < b; c3++)
-            _ = i2(_, a2(m2[e3][c3], m2[c3][r3]));
-          m2[e3][r3] = o2(m2[e3][r3], _);
+          var b2 = Math.min(e3, r3), _2 = 0;
+          for (c3 = 0; c3 < b2; c3++)
+            _2 = i2(_2, a2(m2[e3][c3], m2[c3][r3]));
+          m2[e3][r3] = o2(m2[e3][r3], _2);
         }
-      var M = r3, E = 0, N = 0;
+      var M = r3, N = 0, E = 0;
       for (e3 = r3; e3 < p3; e3++) {
         var S = m2[e3][r3], T = n2(S);
-        u2(T, E) && (M = e3, E = T, N = S);
+        u2(T, N) && (M = e3, N = T, E = S);
       }
-      if (r3 !== M && (w[r3] = [w[M], w[M] = w[r3]][0], l2._swapRows(r3, M, m2)), r3 < p3)
+      if (r3 !== M && (w2[r3] = [w2[M], w2[M] = w2[r3]][0], l2._swapRows(r3, M, m2)), r3 < p3)
         for (e3 = r3 + 1; e3 < p3; e3++) {
-          var O2 = m2[e3][r3];
-          h(O2, 0) || (m2[e3][r3] = s2(m2[e3][r3], N));
+          var O = m2[e3][r3];
+          h(O, 0) || (m2[e3][r3] = s2(m2[e3][r3], E));
         }
     }
     for (r3 = 0; r3 < f3; r3++)
       for (e3 = 0; e3 < p3; e3++)
-        r3 === 0 && (e3 < f3 && (v[e3] = []), y2[e3] = []), e3 < r3 ? (e3 < f3 && (v[e3][r3] = m2[e3][r3]), r3 < p3 && (y2[e3][r3] = 0)) : e3 !== r3 ? (e3 < f3 && (v[e3][r3] = 0), r3 < p3 && (y2[e3][r3] = m2[e3][r3])) : (e3 < f3 && (v[e3][r3] = m2[e3][r3]), r3 < p3 && (y2[e3][r3] = 1));
-    var z2 = new l2({data: y2, size: g2}), A2 = new l2({data: v, size: x}), C2 = [];
-    for (e3 = 0, d3 = w.length; e3 < d3; e3++)
-      C2[w[e3]] = e3;
-    return {L: z2, U: A2, p: C2, toString: function() {
+        r3 === 0 && (e3 < f3 && (v2[e3] = []), y2[e3] = []), e3 < r3 ? (e3 < f3 && (v2[e3][r3] = m2[e3][r3]), r3 < p3 && (y2[e3][r3] = 0)) : e3 !== r3 ? (e3 < f3 && (v2[e3][r3] = 0), r3 < p3 && (y2[e3][r3] = m2[e3][r3])) : (e3 < f3 && (v2[e3][r3] = m2[e3][r3]), r3 < p3 && (y2[e3][r3] = 1));
+    var z = new l2({data: y2, size: g2}), C = new l2({data: v2, size: x2}), A = [];
+    for (e3 = 0, d2 = w2.length; e3 < d2; e3++)
+      A[w2[e3]] = e3;
+    return {L: z, U: C, p: A, toString: function() {
       return "L: " + this.L.toString() + "\nU: " + this.U.toString() + "\nP: " + this.p;
     }};
   }
-})}, matrixDependencies: zo, multiplyDependencies: Bo, subtractDependencies: Fo, typedDependencies: Eo, unaryMinusDependencies: Ao, createDet: cn("det", ["typed", "matrix", "subtract", "multiply", "unaryMinus", "lup"], (t3) => {
+})}, matrixDependencies: ko, multiplyDependencies: qo, subtractDependencies: Ho, typedDependencies: zo, unaryMinusDependencies: Io, createDet: mn("det", ["typed", "matrix", "subtract", "multiply", "unaryMinus", "lup"], (t3) => {
   var {typed: e2, matrix: r2, subtract: n2, multiply: i2, unaryMinus: s2, lup: a2} = t3;
   return e2("det", {any: function(t4) {
-    return pr(t4);
+    return gr(t4);
   }, "Array | Matrix": function(t4) {
     var e3;
-    switch ((e3 = ke(t4) ? t4.size() : Array.isArray(t4) ? (t4 = r2(t4)).size() : []).length) {
+    switch ((e3 = Pe(t4) ? t4.size() : Array.isArray(t4) ? (t4 = r2(t4)).size() : []).length) {
       case 0:
-        return pr(t4);
+        return gr(t4);
       case 1:
         if (e3[0] === 1)
-          return pr(t4.valueOf()[0]);
-        throw new RangeError("Matrix must be square (size: " + Hr(e3) + ")");
+          return gr(t4.valueOf()[0]);
+        throw new RangeError("Matrix must be square (size: " + Yr(e3) + ")");
       case 2:
         var o2 = e3[0];
         if (o2 === e3[1])
           return function(t5, e4, r3) {
             if (e4 === 1)
-              return pr(t5[0][0]);
+              return gr(t5[0][0]);
             if (e4 === 2)
               return n2(i2(t5[0][0], t5[1][1]), i2(t5[1][0], t5[0][1]));
             for (var o3 = a2(t5), u2 = o3.U[0][0], h = 1; h < e4; h++)
@@ -8641,39 +8427,39 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
                 l2++;
               if (l2 >= e4)
                 break;
-              for (var f2 = l2, d2 = 0; !p2[o3.p[f2]]; )
-                p2[o3.p[f2]] = true, f2 = o3.p[f2], d2++;
-              d2 % 2 == 0 && c2++;
+              for (var f2 = l2, d = 0; !p2[o3.p[f2]]; )
+                p2[o3.p[f2]] = true, f2 = o3.p[f2], d++;
+              d % 2 == 0 && c2++;
             }
             return c2 % 2 == 0 ? u2 : s2(u2);
           }(t4.clone().valueOf(), o2);
-        throw new RangeError("Matrix must be square (size: " + Hr(e3) + ")");
+        throw new RangeError("Matrix must be square (size: " + Yr(e3) + ")");
       default:
-        throw new RangeError("Matrix must be two dimensional (size: " + Hr(e3) + ")");
+        throw new RangeError("Matrix must be two dimensional (size: " + Yr(e3) + ")");
     }
   }});
-})}, divideScalarDependencies: Ho, identityDependencies: Uo, matrixDependencies: zo, multiplyDependencies: Bo, typedDependencies: Eo, unaryMinusDependencies: Ao, createInv: cn("inv", ["typed", "matrix", "divideScalar", "addScalar", "multiply", "unaryMinus", "det", "identity", "abs"], (t3) => {
+})}, divideScalarDependencies: Yo, identityDependencies: $o, matrixDependencies: ko, multiplyDependencies: qo, typedDependencies: zo, unaryMinusDependencies: Io, createInv: mn("inv", ["typed", "matrix", "divideScalar", "addScalar", "multiply", "unaryMinus", "det", "identity", "abs"], (t3) => {
   var {typed: e2, matrix: r2, divideScalar: n2, addScalar: i2, multiply: s2, unaryMinus: a2, det: o2, identity: u2, abs: h} = t3;
   return e2("inv", {"Array | Matrix": function(t4) {
-    var e3 = ke(t4) ? t4.size() : Zr(t4);
+    var e3 = Pe(t4) ? t4.size() : tn(t4);
     switch (e3.length) {
       case 1:
         if (e3[0] === 1)
-          return ke(t4) ? r2([n2(1, t4.valueOf()[0])]) : [n2(1, t4[0])];
-        throw new RangeError("Matrix must be square (size: " + Hr(e3) + ")");
+          return Pe(t4) ? r2([n2(1, t4.valueOf()[0])]) : [n2(1, t4[0])];
+        throw new RangeError("Matrix must be square (size: " + Yr(e3) + ")");
       case 2:
         var i3 = e3[0], s3 = e3[1];
         if (i3 === s3)
-          return ke(t4) ? r2(c2(t4.valueOf(), i3, s3), t4.storage()) : c2(t4, i3, s3);
-        throw new RangeError("Matrix must be square (size: " + Hr(e3) + ")");
+          return Pe(t4) ? r2(c2(t4.valueOf(), i3, s3), t4.storage()) : c2(t4, i3, s3);
+        throw new RangeError("Matrix must be square (size: " + Yr(e3) + ")");
       default:
-        throw new RangeError("Matrix must be two dimensional (size: " + Hr(e3) + ")");
+        throw new RangeError("Matrix must be two dimensional (size: " + Yr(e3) + ")");
     }
   }, any: function(t4) {
     return n2(1, t4);
   }});
   function c2(t4, e3, r3) {
-    var c3, l2, p2, f2, d2;
+    var c3, l2, p2, f2, d;
     if (e3 === 1) {
       if ((f2 = t4[0][0]) === 0)
         throw Error("Cannot calculate inverse, determinant is zero");
@@ -8688,36 +8474,36 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
     var y2 = t4.concat();
     for (c3 = 0; c3 < e3; c3++)
       y2[c3] = y2[c3].concat();
-    for (var g2 = u2(e3).valueOf(), v = 0; v < r3; v++) {
-      var x = h(y2[v][v]), w = v;
-      for (c3 = v + 1; c3 < e3; )
-        h(y2[c3][v]) > x && (x = h(y2[c3][v]), w = c3), c3++;
-      if (x === 0)
+    for (var g2 = u2(e3).valueOf(), v2 = 0; v2 < r3; v2++) {
+      var x2 = h(y2[v2][v2]), w2 = v2;
+      for (c3 = v2 + 1; c3 < e3; )
+        h(y2[c3][v2]) > x2 && (x2 = h(y2[c3][v2]), w2 = c3), c3++;
+      if (x2 === 0)
         throw Error("Cannot calculate inverse, determinant is zero");
-      (c3 = w) !== v && (d2 = y2[v], y2[v] = y2[c3], y2[c3] = d2, d2 = g2[v], g2[v] = g2[c3], g2[c3] = d2);
-      var b = y2[v], _ = g2[v];
+      (c3 = w2) !== v2 && (d = y2[v2], y2[v2] = y2[c3], y2[c3] = d, d = g2[v2], g2[v2] = g2[c3], g2[c3] = d);
+      var b2 = y2[v2], _2 = g2[v2];
       for (c3 = 0; c3 < e3; c3++) {
-        var M = y2[c3], E = g2[c3];
-        if (c3 !== v) {
-          if (M[v] !== 0) {
-            for (p2 = n2(a2(M[v]), b[v]), l2 = v; l2 < r3; l2++)
-              M[l2] = i2(M[l2], s2(p2, b[l2]));
+        var M = y2[c3], N = g2[c3];
+        if (c3 !== v2) {
+          if (M[v2] !== 0) {
+            for (p2 = n2(a2(M[v2]), b2[v2]), l2 = v2; l2 < r3; l2++)
+              M[l2] = i2(M[l2], s2(p2, b2[l2]));
             for (l2 = 0; l2 < r3; l2++)
-              E[l2] = i2(E[l2], s2(p2, _[l2]));
+              N[l2] = i2(N[l2], s2(p2, _2[l2]));
           }
         } else {
-          for (p2 = b[v], l2 = v; l2 < r3; l2++)
+          for (p2 = b2[v2], l2 = v2; l2 < r3; l2++)
             M[l2] = n2(M[l2], p2);
           for (l2 = 0; l2 < r3; l2++)
-            E[l2] = n2(E[l2], p2);
+            N[l2] = n2(N[l2], p2);
         }
       }
     }
     return g2;
   }
-})}, matrixDependencies: zo, multiplyDependencies: Bo, typedDependencies: Eo, createDivide: cn("divide", ["typed", "matrix", "multiply", "equalScalar", "divideScalar", "inv"], (t3) => {
-  var {typed: e2, matrix: r2, multiply: n2, equalScalar: i2, divideScalar: s2, inv: a2} = t3, o2 = Ts({typed: e2, equalScalar: i2}), u2 = Os({typed: e2});
-  return e2("divide", dr({"Array | Matrix, Array | Matrix": function(t4, e3) {
+})}, matrixDependencies: ko, multiplyDependencies: qo, typedDependencies: zo, createDivide: mn("divide", ["typed", "matrix", "multiply", "equalScalar", "divideScalar", "inv"], (t3) => {
+  var {typed: e2, matrix: r2, multiply: n2, equalScalar: i2, divideScalar: s2, inv: a2} = t3, o2 = Rs({typed: e2, equalScalar: i2}), u2 = Ds({typed: e2});
+  return e2("divide", xr({"Array | Matrix, Array | Matrix": function(t4, e3) {
     return n2(t4, a2(e3));
   }, "DenseMatrix, any": function(t4, e3) {
     return u2(t4, e3, s2, false);
@@ -8729,10 +8515,10 @@ var xo = {createBigNumberClass: Yi}, wo = {createComplexClass: Qi}, bo = {create
     return n2(t4, a2(e3));
   }}, s2.signatures));
 })});
-var Jo = {exports: {}};
-function Ko() {
+var nu = {exports: {}};
+function iu() {
 }
-Ko.prototype = {on: function(t3, e2, r2) {
+iu.prototype = {on: function(t3, e2, r2) {
   var n2 = this.e || (this.e = {});
   return (n2[t3] || (n2[t3] = [])).push({fn: e2, ctx: r2}), this;
 }, once: function(t3, e2, r2) {
@@ -8751,17 +8537,16 @@ Ko.prototype = {on: function(t3, e2, r2) {
     for (var s2 = 0, a2 = n2.length; s2 < a2; s2++)
       n2[s2].fn !== e2 && n2[s2].fn._ !== e2 && i2.push(n2[s2]);
   return i2.length ? r2[t3] = i2 : delete r2[t3], this;
-}}, Jo.exports = Ko, Jo.exports.TinyEmitter = Ko;
-new a();
-function ou(t3, e2, r2, n2 = 0) {
+}}, nu.exports = iu, nu.exports.TinyEmitter = iu;
+function pu(t3, e2, r2, n2 = 0) {
   n2++;
   for (let i2 = t3.firstChild; i2; i2 = i2.nextSibling)
     if (i2.nodeType === Node.ELEMENT_NODE) {
       const t4 = i2;
-      e2.call(r2, t4, n2) && ou(t4, e2, r2, n2);
+      e2.call(r2, t4, n2) && pu(t4, e2, r2, n2);
     }
 }
-function uu(t3, e2, r2, n2) {
+function fu(t3, e2, r2, n2) {
   "insertRule" in t3 ? t3.insertRule(e2 + "{" + r2 + "}", n2) : "addRule" in t3 && t3.addRule(e2, r2, n2);
 }
 !function(t3) {
@@ -8847,8 +8632,8 @@ function uu(t3, e2, r2, n2) {
       throw Error("Failed to decode: the 'stream' option is unsupported.");
     return t4 = t4 instanceof Uint8Array ? t4 : t4.buffer instanceof ArrayBuffer ? new Uint8Array(t4.buffer) : new Uint8Array(t4), s2(t4);
   }, t3.TextEncoder = e2, t3.TextDecoder = r2;
-}(typeof window != "undefined" ? window : Sr);
-class hu {
+}(typeof window != "undefined" ? window : Ar);
+class du {
   constructor() {
     this.left = 0, this.top = 0, this.width = 0, this.height = 0;
   }
@@ -8856,7 +8641,7 @@ class hu {
     return this.top = t3.top, this.left = t3.left, this.width = t3.width, this.height = t3.height, this;
   }
 }
-class cu {
+class mu {
   constructor() {
     this.left = 0, this.top = 0, this.right = 0, this.bottom = 0;
   }
@@ -8864,7 +8649,7 @@ class cu {
     return this.top = t3.top, this.left = t3.left, this.right = t3.right, this.bottom = t3.bottom, this;
   }
 }
-function lu(t3, e2 = new hu(), r2) {
+function yu(t3, e2 = new du(), r2) {
   const n2 = t3.ownerDocument, i2 = n2.documentElement, s2 = n2.body;
   if (t3 === i2)
     return function(t4, e3) {
@@ -8875,19 +8660,19 @@ function lu(t3, e2 = new hu(), r2) {
     return e2.left = 0, e2.top = 0, e2.width = t3.offsetWidth, void (e2.height = t3.offsetHeight);
   const a2 = t3.ownerDocument.defaultView;
   let o2, u2 = t3, h = u2.offsetParent, c2 = a2.getComputedStyle(u2, null), l2 = u2.offsetTop, p2 = u2.offsetLeft;
-  for (h && r2 && h.contains(r2) && h !== r2 && (lu(r2, e2, h), p2 -= e2.left, l2 -= e2.top); (u2 = u2.parentElement) && u2 !== s2 && u2 !== i2 && u2 !== r2 && c2.position !== "fixed"; )
+  for (h && r2 && h.contains(r2) && h !== r2 && (yu(r2, e2, h), p2 -= e2.left, l2 -= e2.top); (u2 = u2.parentElement) && u2 !== s2 && u2 !== i2 && u2 !== r2 && c2.position !== "fixed"; )
     o2 = a2.getComputedStyle(u2, null), l2 -= u2.scrollTop, p2 -= u2.scrollLeft, u2 === h && (l2 += u2.offsetTop, p2 += u2.offsetLeft, l2 += parseFloat(o2.borderTopWidth) || 0, p2 += parseFloat(o2.borderLeftWidth) || 0, h = u2.offsetParent), c2 = o2;
   return c2.position === "fixed" && (l2 += Math.max(i2.scrollTop, s2.scrollTop), p2 += Math.max(i2.scrollLeft, s2.scrollLeft)), e2.left = p2, e2.top = l2, e2.width = t3.offsetWidth, e2.height = t3.offsetHeight, e2;
 }
-const pu = document.createElement("div");
-function fu(t3) {
+const gu = document.createElement("div");
+function vu(t3) {
   const e2 = document.createElement("div");
   e2.innerHTML = t3;
   const r2 = e2.firstElementChild;
   return e2.removeChild(r2), r2;
 }
-pu.id = "VIEWPORT", pu.style.position = "fixed", pu.style.width = "100vw", pu.style.height = "100vh", pu.style.visibility = "hidden", pu.style.pointerEvents = "none";
-var du = {};
+gu.id = "VIEWPORT", gu.style.position = "fixed", gu.style.width = "100vw", gu.style.height = "100vh", gu.style.visibility = "hidden", gu.style.pointerEvents = "none";
+var xu = {};
 !function(t3) {
   const e2 = Symbol("newer"), r2 = Symbol("older");
   function n2(t4, e3) {
@@ -8976,8 +8761,52 @@ var du = {};
       t4 += String(r3.key) + ":" + r3.value, (r3 = r3[e2]) && (t4 += " < ");
     return t4;
   };
-}(du);
-var mu = {exports: {}};
+}(xu);
+var wu = {exports: {}};
+function bu(t3, e2) {
+  return " " + t3 + '="' + function(t4) {
+    return t4.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+  }(e2) + '"';
+}
+function _u(t3) {
+  var e2 = t3.tagName;
+  return t3.namespaceURI === "http://www.w3.org/1999/xhtml" && (e2 = e2.toLowerCase()), e2;
+}
+function Mu(t3, e2) {
+  let r2 = "";
+  for (const n2 of t3.childNodes)
+    r2 += Nu(n2, e2);
+  return r2;
+}
+function Nu(t3, e2) {
+  var r2;
+  const n2 = (r2 = e2.replacer) == null ? void 0 : r2.call(e2, t3);
+  if (typeof n2 == "string")
+    return n2;
+  if (t3.nodeName === "#document" || t3.nodeName === "#document-fragment")
+    return Mu(t3, e2);
+  if (t3.tagName)
+    return function(t4, e3) {
+      let r3 = "<" + _u(t4);
+      r3 += function(t5, e4) {
+        return t5.hasAttribute("xmlns") || !e4 && t5.namespaceURI === t5.parentElement.namespaceURI ? "" : ' xmlns="' + t5.namespaceURI + '"';
+      }(t4, e3.depth === 0);
+      for (const n3 of t4.attributes)
+        r3 += bu(n3.name, n3.value);
+      return t4.childNodes.length > 0 ? (e3.depth++, r3 += ">", r3 += Mu(t4, e3), r3 += "</" + _u(t4) + ">", e3.depth--) : r3 += "/>", r3;
+    }(t3, e2);
+  if (t3.nodeName === "#text")
+    return function(t4) {
+      return (t4.nodeValue || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }(t3);
+  if (t3.nodeName === "#comment")
+    ;
+  else if (t3.nodeName === "#cdata-section")
+    return function(t4) {
+      return "<![CDATA[" + t4.nodeValue + "]]>";
+    }(t3);
+  return "";
+}
 !function(t3) {
   !function(e2, r2) {
     var n2 = {};
@@ -8985,13 +8814,13 @@ var mu = {exports: {}};
       t4.__esModule = true, t4.digestLength = 32, t4.blockSize = 64;
       var e3 = new Uint32Array([1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298]);
       function r3(t5, r4, n4, i4, s4) {
-        for (var a3, o3, u3, h2, c3, l2, p2, f2, d2, m2, y2, g2, v; s4 >= 64; ) {
+        for (var a3, o3, u3, h2, c3, l2, p2, f2, d, m2, y2, g2, v2; s4 >= 64; ) {
           for (a3 = r4[0], o3 = r4[1], u3 = r4[2], h2 = r4[3], c3 = r4[4], l2 = r4[5], p2 = r4[6], f2 = r4[7], m2 = 0; m2 < 16; m2++)
             y2 = i4 + 4 * m2, t5[m2] = (255 & n4[y2]) << 24 | (255 & n4[y2 + 1]) << 16 | (255 & n4[y2 + 2]) << 8 | 255 & n4[y2 + 3];
           for (m2 = 16; m2 < 64; m2++)
-            g2 = ((d2 = t5[m2 - 2]) >>> 17 | d2 << 15) ^ (d2 >>> 19 | d2 << 13) ^ d2 >>> 10, v = ((d2 = t5[m2 - 15]) >>> 7 | d2 << 25) ^ (d2 >>> 18 | d2 << 14) ^ d2 >>> 3, t5[m2] = (g2 + t5[m2 - 7] | 0) + (v + t5[m2 - 16] | 0);
+            g2 = ((d = t5[m2 - 2]) >>> 17 | d << 15) ^ (d >>> 19 | d << 13) ^ d >>> 10, v2 = ((d = t5[m2 - 15]) >>> 7 | d << 25) ^ (d >>> 18 | d << 14) ^ d >>> 3, t5[m2] = (g2 + t5[m2 - 7] | 0) + (v2 + t5[m2 - 16] | 0);
           for (m2 = 0; m2 < 64; m2++)
-            g2 = (((c3 >>> 6 | c3 << 26) ^ (c3 >>> 11 | c3 << 21) ^ (c3 >>> 25 | c3 << 7)) + (c3 & l2 ^ ~c3 & p2) | 0) + (f2 + (e3[m2] + t5[m2] | 0) | 0) | 0, v = ((a3 >>> 2 | a3 << 30) ^ (a3 >>> 13 | a3 << 19) ^ (a3 >>> 22 | a3 << 10)) + (a3 & o3 ^ a3 & u3 ^ o3 & u3) | 0, f2 = p2, p2 = l2, l2 = c3, c3 = h2 + g2 | 0, h2 = u3, u3 = o3, o3 = a3, a3 = g2 + v | 0;
+            g2 = (((c3 >>> 6 | c3 << 26) ^ (c3 >>> 11 | c3 << 21) ^ (c3 >>> 25 | c3 << 7)) + (c3 & l2 ^ ~c3 & p2) | 0) + (f2 + (e3[m2] + t5[m2] | 0) | 0) | 0, v2 = ((a3 >>> 2 | a3 << 30) ^ (a3 >>> 13 | a3 << 19) ^ (a3 >>> 22 | a3 << 10)) + (a3 & o3 ^ a3 & u3 ^ o3 & u3) | 0, f2 = p2, p2 = l2, l2 = c3, c3 = h2 + g2 | 0, h2 = u3, u3 = o3, o3 = a3, a3 = g2 + v2 | 0;
           r4[0] += a3, r4[1] += o3, r4[2] += u3, r4[3] += h2, r4[4] += c3, r4[5] += l2, r4[6] += p2, r4[7] += f2, i4 += 64, s4 -= 64;
         }
         return i4;
@@ -9095,8 +8924,8 @@ var mu = {exports: {}};
       var u2 = new Uint8Array(t4.digestLength);
       function h(t5, e4, r4, n4) {
         e4 === void 0 && (e4 = u2), n4 === void 0 && (n4 = 32);
-        for (var s4 = new Uint8Array([1]), h2 = a2(e4, t5), c3 = new i3(h2), l2 = new Uint8Array(c3.digestLength), p2 = l2.length, f2 = new Uint8Array(n4), d2 = 0; d2 < n4; d2++)
-          p2 === l2.length && (o2(l2, c3, r4, s4), p2 = 0), f2[d2] = l2[p2++];
+        for (var s4 = new Uint8Array([1]), h2 = a2(e4, t5), c3 = new i3(h2), l2 = new Uint8Array(c3.digestLength), p2 = l2.length, f2 = new Uint8Array(n4), d = 0; d < n4; d++)
+          p2 === l2.length && (o2(l2, c3, r4, s4), p2 = 0), f2[d] = l2[p2++];
         return c3.clean(), l2.fill(0), s4.fill(0), f2;
       }
       function c2(t5, e4, r4, n4) {
@@ -9107,8 +8936,8 @@ var mu = {exports: {}};
             u3[f2] = h2[f2];
           for (f2 = 2; f2 <= r4; f2++) {
             s4.reset(), s4.update(h2).finish(h2);
-            for (var d2 = 0; d2 < a3; d2++)
-              u3[d2] ^= h2[d2];
+            for (var d = 0; d < a3; d++)
+              u3[d] ^= h2[d];
           }
           for (f2 = 0; f2 < a3 && l2 * a3 + f2 < n4; f2++)
             c3[l2 * a3 + f2] = u3[f2];
@@ -9126,10 +8955,25 @@ var mu = {exports: {}};
       i2[s2] = n2[s2];
     t3.exports = i2;
   }();
-}(mu);
-const yu = class {
+}(wu);
+const Eu = class {
   constructor(t3, e2) {
-    this.element = t3, this.eventCallback = e2, this.needsRefresh = true, this.needsRemoval = false, this.psuedoStates = {hover: false, active: false, focus: false, target: false}, this.svgImage = new Image(), this.bounds = new hu(), this.padding = new cu(), this.margin = new cu(), this.border = new cu(), this.childLayers = [], this.cachedBounds = new Map(), this.cachedMargin = new Map(), this._dynamicAttributes = "", this._svgDocument = "", this._rasterizingDocument = "", this._svgSrc = "", this._hashingCanvas = document.createElement("canvas"), ch.layers.set(t3, this), this.id = t3.getAttribute(ch.ELEMENT_UID_ATTRIBUTE) || ch.generateElementUID(), t3.setAttribute(ch.ELEMENT_UID_ATTRIBUTE, this.id), t3.setAttribute(ch.LAYER_ATTRIBUTE, ""), this.parentLayer = ch.getClosestLayer(this.element.parentElement), this.eventCallback("layercreated", {target: t3}), yu.cachedCanvases.limit = ch.layers.size * yu.DEFAULT_CACHE_SIZE, this._hashingCanvas.width = 20, this._hashingCanvas.height = 20;
+    this.element = t3, this.eventCallback = e2, this.needsRefresh = true, this.needsRemoval = false, this.pseudoStates = {hover: false, active: false, focus: false, target: false}, this.svgImage = new Image(), this.bounds = new du(), this.padding = new mu(), this.margin = new mu(), this.border = new mu(), this.childLayers = [], this.cachedBounds = new Map(), this.cachedMargin = new Map(), this._dynamicAttributes = "", this._svgDocument = "", this._rasterizingDocument = "", this._svgSrc = "", this._hashingCanvas = document.createElement("canvas"), this.serializationReplacer = (t4) => {
+      if (this.element === t4)
+        return;
+      const e3 = t4, r2 = xh.layers.get(e3);
+      if (r2) {
+        const t5 = r2.bounds;
+        let n2 = "";
+        const i2 = `min-width:${t5.width}px;min-height:${t5.height}px;visibility:hidden`;
+        let s2 = false;
+        for (const e4 of r2.element.attributes)
+          e4.name == "style" ? (n2 += bu(e4.name, e4.value + ";" + i2), s2 = true) : n2 += bu(e4.name, e4.value);
+        s2 || (n2 += bu("style", i2));
+        const a2 = e3.tagName.toLowerCase();
+        return `<${a2} ${n2}></${a2}>`;
+      }
+    }, xh.layers.set(t3, this), this.id = t3.getAttribute(xh.ELEMENT_UID_ATTRIBUTE) || xh.generateElementUID(), t3.setAttribute(xh.ELEMENT_UID_ATTRIBUTE, this.id), t3.setAttribute(xh.LAYER_ATTRIBUTE, ""), this.parentLayer = xh.getClosestLayer(this.element.parentElement), this.eventCallback("layercreated", {target: t3}), Eu.cachedCanvases.limit = xh.layers.size * Eu.DEFAULT_CACHE_SIZE, this._hashingCanvas.width = 20, this._hashingCanvas.height = 20;
   }
   set canvas(t3) {
     this._canvas !== t3 && (this._canvas = t3, this.eventCallback && this.eventCallback("layerpainted", {target: this.element}));
@@ -9161,23 +9005,23 @@ const yu = class {
       e2.traverseLayers(t3);
   }
   refresh() {
-    lu(this.element, this.bounds, this.parentLayer && this.parentLayer.element), this.needsRefresh = false, this._updateParentAndChildLayers(), ch.addToSerializeQueue(this);
+    yu(this.element, this.bounds, this.parentLayer && this.parentLayer.element), this.needsRefresh = false, this._updateParentAndChildLayers(), xh.addToSerializeQueue(this);
   }
   _updateParentAndChildLayers() {
     const t3 = this.element, e2 = this.childLayers, r2 = e2.slice(), n2 = this.parentLayer;
-    this.parentLayer = ch.getClosestLayer(this.element.parentElement), n2 !== this.parentLayer && (this.parentLayer && this.parentLayer.childLayers.push(this), this.eventCallback("layermoved", {target: t3})), e2.length = 0, ou(t3, this._tryConvertElementToWebLayer, this);
+    this.parentLayer = xh.getClosestLayer(this.element.parentElement), n2 !== this.parentLayer && (this.parentLayer && this.parentLayer.childLayers.push(this), this.eventCallback("layermoved", {target: t3})), e2.length = 0, pu(t3, this._tryConvertElementToWebLayer, this);
     for (const i2 of r2) {
-      ch.getClosestLayer(i2.element.parentElement) || (i2.needsRemoval = true, e2.push(i2));
+      xh.getClosestLayer(i2.element.parentElement) || (i2.needsRemoval = true, e2.push(i2));
     }
   }
   _tryConvertElementToWebLayer(t3) {
     if (this.needsRemoval)
       return false;
     const e2 = t3, r2 = getComputedStyle(e2);
-    e2.getAttribute(ch.ELEMENT_UID_ATTRIBUTE) || e2.setAttribute(ch.ELEMENT_UID_ATTRIBUTE, ch.generateElementUID());
-    if (e2.hasAttribute(ch.LAYER_ATTRIBUTE) || e2.nodeName === "VIDEO" || r2.transform !== "none") {
-      let t4 = ch.layers.get(e2);
-      return t4 || (t4 = new yu(e2, this.eventCallback)), this.childLayers.push(t4), false;
+    e2.getAttribute(xh.ELEMENT_UID_ATTRIBUTE) || e2.setAttribute(xh.ELEMENT_UID_ATTRIBUTE, xh.generateElementUID());
+    if (e2.hasAttribute(xh.LAYER_ATTRIBUTE) || e2.nodeName === "VIDEO" || r2.transform !== "none") {
+      let t4 = xh.layers.get(e2);
+      return t4 || (t4 = new Eu(e2, this.eventCallback)), this.childLayers.push(t4), false;
     }
     return true;
   }
@@ -9196,21 +9040,22 @@ const yu = class {
         let r3 = getComputedStyle(t4);
         e3.left = parseFloat(r3.borderLeftWidth) || 0, e3.right = parseFloat(r3.borderRightWidth) || 0, e3.top = parseFloat(r3.borderTopWidth) || 0, e3.bottom = parseFloat(r3.borderBottomWidth) || 0;
       }(this.element, this.border), t3 += Math.max(this.margin.left, 0) + Math.max(this.margin.right, 0), e2 += Math.max(this.margin.top, 0) + Math.max(this.margin.bottom, 0);
-      const r2 = ch.attributeHTML(ch.ELEMENT_UID_ATTRIBUTE, "" + this.id), n2 = this.element, i2 = getComputedStyle(n2).display === "inline";
-      ch.updateInputAttributes(n2);
-      const s2 = ch.serializer.serializeToString(n2).replace(r2, `${r2} ${ch.RENDERING_ATTRIBUTE}="" ${i2 ? `${ch.RENDERING_INLINE_ATTRIBUTE}="" ` : " "} ` + ch.getPsuedoAttributes(this.psuedoStates)), a2 = this._getParentsHTML(n2);
-      a2[0] = a2[0].replace("html", "html " + ch.RENDERING_DOCUMENT_ATTRIBUTE + '="" ');
-      const [o2] = await Promise.all([ch.getEmbeddedCSS(this.element), ch.embedExternalResources(this.element)]), u2 = '<svg width="' + t3 + '" height="' + e2 + '" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[a[href]{color:#0000EE;text-decoration:underline;}' + o2.join("") + ']]></style></defs><foreignObject x="0" y="0" width="' + t3 + '" height="' + e2 + '">' + a2[0] + s2 + a2[1] + "</foreignObject></svg>", h = this._svgDocument = u2, c2 = yu.canvasHashes.get(h);
-      if (c2 && yu.cachedCanvases.has(c2))
-        return void (this.canvas = yu.cachedCanvases.get(c2));
-      this.cachedBounds.set(h, new hu().copy(this.bounds)), this.cachedMargin.set(h, new cu().copy(this.margin)), ch.addToRasterizeQueue(this);
+      const i2 = xh.attributeHTML(xh.ELEMENT_UID_ATTRIBUTE, "" + this.id), s2 = this.element, a2 = getComputedStyle(s2).display === "inline";
+      xh.updateInputAttributes(s2);
+      const o2 = (r2 = s2, n2 = this.serializationReplacer, Nu(r2, {depth: 0, replacer: n2}).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "")).replace(i2, `${i2} ${xh.RENDERING_ATTRIBUTE}="" ${a2 ? `${xh.RENDERING_INLINE_ATTRIBUTE}="" ` : " "} ` + xh.getPsuedoAttributes(this.pseudoStates)), u2 = this._getParentsHTML(s2);
+      u2[0] = u2[0].replace("html", "html " + xh.RENDERING_DOCUMENT_ATTRIBUTE + '="" ');
+      const [h] = await Promise.all([xh.getEmbeddedCSS(this.element), xh.embedExternalResources(this.element)]), c2 = '<svg width="' + t3 + '" height="' + e2 + '" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[a[href]{color:#0000EE;text-decoration:underline;}' + h.join("") + ']]></style></defs><foreignObject x="0" y="0" width="' + t3 + '" height="' + e2 + '">' + u2[0] + o2 + u2[1] + "</foreignObject></svg>", l2 = this._svgDocument = c2, p2 = Eu.canvasHashes.get(l2);
+      if (p2 && Eu.cachedCanvases.has(p2))
+        return void (this.canvas = Eu.cachedCanvases.get(p2));
+      this.cachedBounds.set(l2, new du().copy(this.bounds)), this.cachedMargin.set(l2, new mu().copy(this.margin)), xh.addToRasterizeQueue(this);
     }
+    var r2, n2;
   }
   async rasterize() {
     return new Promise((t3) => {
       this.svgImage.onload = () => {
-        ch.addToRenderQueue(this), t3();
-      }, this._rasterizingDocument = this._svgDocument, this.svgImage.src = this._svgSrc = "data:image/svg+xml;utf8," + encodeURIComponent(this._svgDocument), this.svgImage.complete && this.svgImage.currentSrc === this.svgImage.src && (ch.addToRenderQueue(this), this.svgImage.onload = null, t3());
+        xh.addToRenderQueue(this), t3();
+      }, this._rasterizingDocument = this._svgDocument, this.svgImage.src = this._svgSrc = "data:image/svg+xml;utf8," + encodeURIComponent(this._svgDocument), this.svgImage.complete && this.svgImage.currentSrc === this.svgImage.src && (xh.addToRenderQueue(this), this.svgImage.onload = null, t3());
     });
   }
   render() {
@@ -9218,23 +9063,23 @@ const yu = class {
     if (!this.cachedBounds.has(t3) || !this.cachedMargin.has(t3))
       return void (this.needsRefresh = true);
     if (!this.svgImage.complete)
-      return void ch.addToRenderQueue(this);
+      return void xh.addToRenderQueue(this);
     let {width: e2, height: r2} = this.cachedBounds.get(t3), {left: n2, top: i2} = this.cachedMargin.get(t3);
     const s2 = this._hashingCanvas;
     let a2 = s2.width, o2 = s2.height;
     const u2 = s2.getContext("2d");
     u2.clearRect(0, 0, a2, o2), u2.imageSmoothingEnabled = false, u2.drawImage(this.svgImage, n2, i2, e2, r2, 0, 0, a2, o2);
-    const h = u2.getImageData(0, 0, a2, o2).data, c2 = ch.arrayBufferToBase64(mu.exports.hash(new Uint8Array(h))) + "?w=" + e2 + ";h=" + r2;
-    yu.canvasHashes.set(t3, c2);
-    const l2 = yu.blankRetryCounts.get(t3) || 0;
-    if (ch.isBlankImage(h) && l2 < 10)
-      return yu.blankRetryCounts.set(t3, l2 + 1), void setTimeout(() => ch.addToRenderQueue(this), 500);
-    if (yu.cachedCanvases.has(c2))
-      return void (this.canvas = yu.cachedCanvases.get(c2));
-    const p2 = this.pixelRatio || parseFloat(this.element.getAttribute(ch.PIXEL_RATIO_ATTRIBUTE)) || window.devicePixelRatio, f2 = yu.cachedCanvases.size === yu.cachedCanvases.limit ? yu.cachedCanvases.shift()[1] : document.createElement("canvas");
-    let d2 = f2.width = e2 * p2, m2 = f2.height = r2 * p2;
+    const h = u2.getImageData(0, 0, a2, o2).data, c2 = xh.arrayBufferToBase64(wu.exports.hash(new Uint8Array(h))) + "?w=" + e2 + ";h=" + r2;
+    Eu.canvasHashes.set(t3, c2);
+    const l2 = Eu.blankRetryCounts.get(t3) || 0;
+    if (xh.isBlankImage(h) && l2 < 10)
+      return Eu.blankRetryCounts.set(t3, l2 + 1), void setTimeout(() => xh.addToRenderQueue(this), 500);
+    if (Eu.cachedCanvases.has(c2))
+      return void (this.canvas = Eu.cachedCanvases.get(c2));
+    const p2 = this.pixelRatio || parseFloat(this.element.getAttribute(xh.PIXEL_RATIO_ATTRIBUTE)) || window.devicePixelRatio, f2 = Eu.cachedCanvases.size === Eu.cachedCanvases.limit ? Eu.cachedCanvases.shift()[1] : document.createElement("canvas");
+    let d = f2.width = e2 * p2, m2 = f2.height = r2 * p2;
     const y2 = f2.getContext("2d");
-    y2.imageSmoothingEnabled = false, y2.clearRect(0, 0, d2, m2), y2.drawImage(this.svgImage, n2, i2, e2, r2, 0, 0, d2, m2), yu.cachedCanvases.set(c2, f2), this.canvas = f2;
+    y2.imageSmoothingEnabled = false, y2.clearRect(0, 0, d, m2), y2.drawImage(this.svgImage, n2, i2, e2, r2, 0, 0, d, m2), Eu.cachedCanvases.set(c2, f2), this.canvas = f2;
   }
   _getParentsHTML(t3) {
     const e2 = [], r2 = [];
@@ -9244,7 +9089,7 @@ const yu = class {
       let t4 = n2.tagName.toLowerCase(), i2 = " ";
       for (const e3 of n2.attributes)
         e3.name !== "style" && (i2 += `${e3.name}="${e3.value}" `);
-      const s2 = "<" + t4 + (t4 === "html" ? ` xmlns="http://www.w3.org/1999/xhtml" style="--x-width:${this.bounds.width}px;--x-height:${this.bounds.height}px;--x-inline-top:${this.border.top + this.margin.top + this.padding.top}px" ` : "") + i2 + `${ch.RENDERING_PARENT_ATTRIBUTE}=""  >`;
+      const s2 = "<" + t4 + (t4 === "html" ? ` xmlns="http://www.w3.org/1999/xhtml" style="--x-width:${this.bounds.width}px;--x-height:${this.bounds.height}px;--x-inline-top:${this.border.top + this.margin.top + this.padding.top}px" ` : "") + i2 + `${xh.RENDERING_PARENT_ATTRIBUTE}=""  >`;
       e2.unshift(s2);
       const a2 = "</" + t4 + ">";
       if (r2.push(a2), t4 == "html")
@@ -9253,17 +9098,17 @@ const yu = class {
     return [e2.join(""), r2.join("")];
   }
 };
-let gu = yu;
-gu.DEFAULT_CACHE_SIZE = 4, gu.blankRetryCounts = new Map(), gu.canvasHashes = new du.LRUMap(1e3), gu.cachedCanvases = new du.LRUMap(yu.DEFAULT_CACHE_SIZE);
-var vu, xu, wu = [], bu = "ResizeObserver loop completed with undelivered notifications.";
-(xu = vu || (vu = {})).BORDER_BOX = "border-box", xu.CONTENT_BOX = "content-box", xu.DEVICE_PIXEL_CONTENT_BOX = "device-pixel-content-box";
-var _u, Mu = function(t3) {
+let Su = Eu;
+Su.DEFAULT_CACHE_SIZE = 4, Su.blankRetryCounts = new Map(), Su.canvasHashes = new xu.LRUMap(1e3), Su.cachedCanvases = new xu.LRUMap(Eu.DEFAULT_CACHE_SIZE);
+var Tu, Ou, zu = [], Cu = "ResizeObserver loop completed with undelivered notifications.";
+(Ou = Tu || (Tu = {})).BORDER_BOX = "border-box", Ou.CONTENT_BOX = "content-box", Ou.DEVICE_PIXEL_CONTENT_BOX = "device-pixel-content-box";
+var Au, Ru = function(t3) {
   return Object.freeze(t3);
-}, Eu = function(t3, e2) {
-  this.inlineSize = t3, this.blockSize = e2, Mu(this);
-}, Nu = function() {
+}, Du = function(t3, e2) {
+  this.inlineSize = t3, this.blockSize = e2, Ru(this);
+}, ku = function() {
   function t3(t4, e2, r2, n2) {
-    return this.x = t4, this.y = e2, this.width = r2, this.height = n2, this.top = this.y, this.left = this.x, this.bottom = this.top + this.height, this.right = this.left + this.width, Mu(this);
+    return this.x = t4, this.y = e2, this.width = r2, this.height = n2, this.top = this.y, this.left = this.x, this.bottom = this.top + this.height, this.right = this.left + this.width, Ru(this);
   }
   return t3.prototype.toJSON = function() {
     var t4 = this;
@@ -9271,59 +9116,59 @@ var _u, Mu = function(t3) {
   }, t3.fromRect = function(e2) {
     return new t3(e2.x, e2.y, e2.width, e2.height);
   }, t3;
-}(), Su = function(t3) {
+}(), Iu = function(t3) {
   return t3 instanceof SVGElement && "getBBox" in t3;
-}, Tu = function(t3) {
-  if (Su(t3)) {
+}, Lu = function(t3) {
+  if (Iu(t3)) {
     var e2 = t3.getBBox(), r2 = e2.width, n2 = e2.height;
     return !r2 && !n2;
   }
   var i2 = t3, s2 = i2.offsetWidth, a2 = i2.offsetHeight;
   return !(s2 || a2 || t3.getClientRects().length);
-}, Ou = function(t3) {
+}, Bu = function(t3) {
   var e2, r2;
   if (t3 instanceof Element)
     return true;
   var n2 = (r2 = (e2 = t3) === null || e2 === void 0 ? void 0 : e2.ownerDocument) === null || r2 === void 0 ? void 0 : r2.defaultView;
   return !!(n2 && t3 instanceof n2.Element);
-}, zu = typeof window != "undefined" ? window : {}, Au = new WeakMap(), Cu = /auto|scroll/, Ru = /^tb|vertical/, Du = /msie|trident/i.test(zu.navigator && zu.navigator.userAgent), ku = function(t3) {
+}, Fu = typeof window != "undefined" ? window : {}, Pu = new WeakMap(), Uu = /auto|scroll/, ju = /^tb|vertical/, qu = /msie|trident/i.test(Fu.navigator && Fu.navigator.userAgent), Hu = function(t3) {
   return parseFloat(t3 || "0");
-}, Iu = function(t3, e2, r2) {
-  return t3 === void 0 && (t3 = 0), e2 === void 0 && (e2 = 0), r2 === void 0 && (r2 = false), new Eu((r2 ? e2 : t3) || 0, (r2 ? t3 : e2) || 0);
-}, Lu = Mu({devicePixelContentBoxSize: Iu(), borderBoxSize: Iu(), contentBoxSize: Iu(), contentRect: new Nu(0, 0, 0, 0)}), Bu = function(t3, e2) {
-  if (e2 === void 0 && (e2 = false), Au.has(t3) && !e2)
-    return Au.get(t3);
-  if (Tu(t3))
-    return Au.set(t3, Lu), Lu;
-  var r2 = getComputedStyle(t3), n2 = Su(t3) && t3.ownerSVGElement && t3.getBBox(), i2 = !Du && r2.boxSizing === "border-box", s2 = Ru.test(r2.writingMode || ""), a2 = !n2 && Cu.test(r2.overflowY || ""), o2 = !n2 && Cu.test(r2.overflowX || ""), u2 = n2 ? 0 : ku(r2.paddingTop), h = n2 ? 0 : ku(r2.paddingRight), c2 = n2 ? 0 : ku(r2.paddingBottom), l2 = n2 ? 0 : ku(r2.paddingLeft), p2 = n2 ? 0 : ku(r2.borderTopWidth), f2 = n2 ? 0 : ku(r2.borderRightWidth), d2 = n2 ? 0 : ku(r2.borderBottomWidth), m2 = l2 + h, y2 = u2 + c2, g2 = (n2 ? 0 : ku(r2.borderLeftWidth)) + f2, v = p2 + d2, x = o2 ? t3.offsetHeight - v - t3.clientHeight : 0, w = a2 ? t3.offsetWidth - g2 - t3.clientWidth : 0, b = i2 ? m2 + g2 : 0, _ = i2 ? y2 + v : 0, M = n2 ? n2.width : ku(r2.width) - b - w, E = n2 ? n2.height : ku(r2.height) - _ - x, N = M + m2 + w + g2, S = E + y2 + x + v, T = Mu({devicePixelContentBoxSize: Iu(Math.round(M * devicePixelRatio), Math.round(E * devicePixelRatio), s2), borderBoxSize: Iu(N, S, s2), contentBoxSize: Iu(M, E, s2), contentRect: new Nu(l2, u2, M, E)});
-  return Au.set(t3, T), T;
-}, Fu = function(t3, e2, r2) {
-  var n2 = Bu(t3, r2), i2 = n2.borderBoxSize, s2 = n2.contentBoxSize, a2 = n2.devicePixelContentBoxSize;
+}, Vu = function(t3, e2, r2) {
+  return t3 === void 0 && (t3 = 0), e2 === void 0 && (e2 = 0), r2 === void 0 && (r2 = false), new Du((r2 ? e2 : t3) || 0, (r2 ? t3 : e2) || 0);
+}, $u = Ru({devicePixelContentBoxSize: Vu(), borderBoxSize: Vu(), contentBoxSize: Vu(), contentRect: new ku(0, 0, 0, 0)}), Gu = function(t3, e2) {
+  if (e2 === void 0 && (e2 = false), Pu.has(t3) && !e2)
+    return Pu.get(t3);
+  if (Lu(t3))
+    return Pu.set(t3, $u), $u;
+  var r2 = getComputedStyle(t3), n2 = Iu(t3) && t3.ownerSVGElement && t3.getBBox(), i2 = !qu && r2.boxSizing === "border-box", s2 = ju.test(r2.writingMode || ""), a2 = !n2 && Uu.test(r2.overflowY || ""), o2 = !n2 && Uu.test(r2.overflowX || ""), u2 = n2 ? 0 : Hu(r2.paddingTop), h = n2 ? 0 : Hu(r2.paddingRight), c2 = n2 ? 0 : Hu(r2.paddingBottom), l2 = n2 ? 0 : Hu(r2.paddingLeft), p2 = n2 ? 0 : Hu(r2.borderTopWidth), f2 = n2 ? 0 : Hu(r2.borderRightWidth), d = n2 ? 0 : Hu(r2.borderBottomWidth), m2 = l2 + h, y2 = u2 + c2, g2 = (n2 ? 0 : Hu(r2.borderLeftWidth)) + f2, v2 = p2 + d, x2 = o2 ? t3.offsetHeight - v2 - t3.clientHeight : 0, w2 = a2 ? t3.offsetWidth - g2 - t3.clientWidth : 0, b2 = i2 ? m2 + g2 : 0, _2 = i2 ? y2 + v2 : 0, M = n2 ? n2.width : Hu(r2.width) - b2 - w2, N = n2 ? n2.height : Hu(r2.height) - _2 - x2, E = M + m2 + w2 + g2, S = N + y2 + x2 + v2, T = Ru({devicePixelContentBoxSize: Vu(Math.round(M * devicePixelRatio), Math.round(N * devicePixelRatio), s2), borderBoxSize: Vu(E, S, s2), contentBoxSize: Vu(M, N, s2), contentRect: new ku(l2, u2, M, N)});
+  return Pu.set(t3, T), T;
+}, Wu = function(t3, e2, r2) {
+  var n2 = Gu(t3, r2), i2 = n2.borderBoxSize, s2 = n2.contentBoxSize, a2 = n2.devicePixelContentBoxSize;
   switch (e2) {
-    case vu.DEVICE_PIXEL_CONTENT_BOX:
+    case Tu.DEVICE_PIXEL_CONTENT_BOX:
       return a2;
-    case vu.BORDER_BOX:
+    case Tu.BORDER_BOX:
       return i2;
     default:
       return s2;
   }
-}, Pu = function(t3) {
-  var e2 = Bu(t3);
-  this.target = t3, this.contentRect = e2.contentRect, this.borderBoxSize = Mu([e2.borderBoxSize]), this.contentBoxSize = Mu([e2.contentBoxSize]), this.devicePixelContentBoxSize = Mu([e2.devicePixelContentBoxSize]);
-}, Uu = function(t3) {
-  if (Tu(t3))
+}, Yu = function(t3) {
+  var e2 = Gu(t3);
+  this.target = t3, this.contentRect = e2.contentRect, this.borderBoxSize = Ru([e2.borderBoxSize]), this.contentBoxSize = Ru([e2.contentBoxSize]), this.devicePixelContentBoxSize = Ru([e2.devicePixelContentBoxSize]);
+}, Zu = function(t3) {
+  if (Lu(t3))
     return 1 / 0;
   for (var e2 = 0, r2 = t3.parentNode; r2; )
     e2 += 1, r2 = r2.parentNode;
   return e2;
-}, ju = function() {
+}, Xu = function() {
   var t3 = 1 / 0, e2 = [];
-  wu.forEach(function(r3) {
+  zu.forEach(function(r3) {
     if (r3.activeTargets.length !== 0) {
       var n3 = [];
       r3.activeTargets.forEach(function(e3) {
-        var r4 = new Pu(e3.target), i2 = Uu(e3.target);
-        n3.push(r4), e3.lastReportedSize = Fu(e3.target, e3.observedBox), i2 < t3 && (t3 = i2);
+        var r4 = new Yu(e3.target), i2 = Zu(e3.target);
+        n3.push(r4), e3.lastReportedSize = Wu(e3.target, e3.observedBox), i2 < t3 && (t3 = i2);
       }), e2.push(function() {
         r3.callback.call(r3.observer, n3, r3.observer);
       }), r3.activeTargets.splice(0, r3.activeTargets.length);
@@ -9333,36 +9178,36 @@ var _u, Mu = function(t3) {
     (0, n2[r2])();
   }
   return t3;
-}, qu = function(t3) {
-  wu.forEach(function(e2) {
+}, Qu = function(t3) {
+  zu.forEach(function(e2) {
     e2.activeTargets.splice(0, e2.activeTargets.length), e2.skippedTargets.splice(0, e2.skippedTargets.length), e2.observationTargets.forEach(function(r2) {
-      r2.isActive() && (Uu(r2.target) > t3 ? e2.activeTargets.push(r2) : e2.skippedTargets.push(r2));
+      r2.isActive() && (Zu(r2.target) > t3 ? e2.activeTargets.push(r2) : e2.skippedTargets.push(r2));
     });
   });
-}, Hu = function() {
+}, Ju = function() {
   var t3, e2 = 0;
-  for (qu(e2); wu.some(function(t4) {
+  for (Qu(e2); zu.some(function(t4) {
     return t4.activeTargets.length > 0;
   }); )
-    e2 = ju(), qu(e2);
-  return wu.some(function(t4) {
+    e2 = Xu(), Qu(e2);
+  return zu.some(function(t4) {
     return t4.skippedTargets.length > 0;
-  }) && (typeof ErrorEvent == "function" ? t3 = new ErrorEvent("error", {message: bu}) : ((t3 = document.createEvent("Event")).initEvent("error", false, false), t3.message = bu), window.dispatchEvent(t3)), e2 > 0;
-}, Vu = [], $u = function(t3) {
-  if (!_u) {
+  }) && (typeof ErrorEvent == "function" ? t3 = new ErrorEvent("error", {message: Cu}) : ((t3 = document.createEvent("Event")).initEvent("error", false, false), t3.message = Cu), window.dispatchEvent(t3)), e2 > 0;
+}, Ku = [], th = function(t3) {
+  if (!Au) {
     var e2 = 0, r2 = document.createTextNode("");
     new MutationObserver(function() {
-      return Vu.splice(0).forEach(function(t4) {
+      return Ku.splice(0).forEach(function(t4) {
         return t4();
       });
-    }).observe(r2, {characterData: true}), _u = function() {
+    }).observe(r2, {characterData: true}), Au = function() {
       r2.textContent = "" + (e2 ? e2-- : e2++);
     };
   }
-  Vu.push(t3), _u();
-}, Gu = 0, Wu = {attributes: true, characterData: true, childList: true, subtree: true}, Yu = ["resize", "load", "transitionend", "animationend", "animationstart", "animationiteration", "keyup", "keydown", "mouseup", "mousedown", "mouseover", "mouseout", "blur", "focus"], Zu = function(t3) {
+  Ku.push(t3), Au();
+}, eh = 0, rh = {attributes: true, characterData: true, childList: true, subtree: true}, nh = ["resize", "load", "transitionend", "animationend", "animationstart", "animationiteration", "keyup", "keydown", "mouseup", "mousedown", "mouseover", "mouseout", "blur", "focus"], ih = function(t3) {
   return t3 === void 0 && (t3 = 0), Date.now() + t3;
-}, Xu = false, Qu = new (function() {
+}, sh = false, ah = new (function() {
   function t3() {
     var t4 = this;
     this.stopped = true, this.listener = function() {
@@ -9371,19 +9216,19 @@ var _u, Mu = function(t3) {
   }
   return t3.prototype.run = function(t4) {
     var e2 = this;
-    if (t4 === void 0 && (t4 = 250), !Xu) {
-      Xu = true;
-      var r2, n2 = Zu(t4);
+    if (t4 === void 0 && (t4 = 250), !sh) {
+      sh = true;
+      var r2, n2 = ih(t4);
       r2 = function() {
         var r3 = false;
         try {
-          r3 = Hu();
+          r3 = Ju();
         } finally {
-          if (Xu = false, t4 = n2 - Zu(), !Gu)
+          if (sh = false, t4 = n2 - ih(), !eh)
             return;
           r3 ? e2.run(1e3) : t4 > 0 ? e2.run(t4) : e2.start();
         }
-      }, $u(function() {
+      }, th(function() {
         requestAnimationFrame(r2);
       });
     }
@@ -9391,29 +9236,29 @@ var _u, Mu = function(t3) {
     this.stop(), this.run();
   }, t3.prototype.observe = function() {
     var t4 = this, e2 = function() {
-      return t4.observer && t4.observer.observe(document.body, Wu);
+      return t4.observer && t4.observer.observe(document.body, rh);
     };
-    document.body ? e2() : zu.addEventListener("DOMContentLoaded", e2);
+    document.body ? e2() : Fu.addEventListener("DOMContentLoaded", e2);
   }, t3.prototype.start = function() {
     var t4 = this;
-    this.stopped && (this.stopped = false, this.observer = new MutationObserver(this.listener), this.observe(), Yu.forEach(function(e2) {
-      return zu.addEventListener(e2, t4.listener, true);
+    this.stopped && (this.stopped = false, this.observer = new MutationObserver(this.listener), this.observe(), nh.forEach(function(e2) {
+      return Fu.addEventListener(e2, t4.listener, true);
     }));
   }, t3.prototype.stop = function() {
     var t4 = this;
-    this.stopped || (this.observer && this.observer.disconnect(), Yu.forEach(function(e2) {
-      return zu.removeEventListener(e2, t4.listener, true);
+    this.stopped || (this.observer && this.observer.disconnect(), nh.forEach(function(e2) {
+      return Fu.removeEventListener(e2, t4.listener, true);
     }), this.stopped = true);
   }, t3;
-}())(), Ju = function(t3) {
-  !Gu && t3 > 0 && Qu.start(), !(Gu += t3) && Qu.stop();
-}, Ku = function() {
+}())(), oh = function(t3) {
+  !eh && t3 > 0 && ah.start(), !(eh += t3) && ah.stop();
+}, uh = function() {
   function t3(t4, e2) {
-    this.target = t4, this.observedBox = e2 || vu.CONTENT_BOX, this.lastReportedSize = {inlineSize: 0, blockSize: 0};
+    this.target = t4, this.observedBox = e2 || Tu.CONTENT_BOX, this.lastReportedSize = {inlineSize: 0, blockSize: 0};
   }
   return t3.prototype.isActive = function() {
-    var t4, e2 = Fu(this.target, this.observedBox, true);
-    return t4 = this.target, Su(t4) || function(t5) {
+    var t4, e2 = Wu(this.target, this.observedBox, true);
+    return t4 = this.target, Iu(t4) || function(t5) {
       switch (t5.tagName) {
         case "INPUT":
           if (t5.type !== "image")
@@ -9430,59 +9275,59 @@ var _u, Mu = function(t3) {
       return false;
     }(t4) || getComputedStyle(t4).display !== "inline" || (this.lastReportedSize = e2), this.lastReportedSize.inlineSize !== e2.inlineSize || this.lastReportedSize.blockSize !== e2.blockSize;
   }, t3;
-}(), th = function(t3, e2) {
+}(), hh = function(t3, e2) {
   this.activeTargets = [], this.skippedTargets = [], this.observationTargets = [], this.observer = t3, this.callback = e2;
-}, eh = new WeakMap(), rh = function(t3, e2) {
+}, ch = new WeakMap(), lh = function(t3, e2) {
   for (var r2 = 0; r2 < t3.length; r2 += 1)
     if (t3[r2].target === e2)
       return r2;
   return -1;
-}, nh = function() {
+}, ph = function() {
   function t3() {
   }
   return t3.connect = function(t4, e2) {
-    var r2 = new th(t4, e2);
-    eh.set(t4, r2);
+    var r2 = new hh(t4, e2);
+    ch.set(t4, r2);
   }, t3.observe = function(t4, e2, r2) {
-    var n2 = eh.get(t4), i2 = n2.observationTargets.length === 0;
-    rh(n2.observationTargets, e2) < 0 && (i2 && wu.push(n2), n2.observationTargets.push(new Ku(e2, r2 && r2.box)), Ju(1), Qu.schedule());
+    var n2 = ch.get(t4), i2 = n2.observationTargets.length === 0;
+    lh(n2.observationTargets, e2) < 0 && (i2 && zu.push(n2), n2.observationTargets.push(new uh(e2, r2 && r2.box)), oh(1), ah.schedule());
   }, t3.unobserve = function(t4, e2) {
-    var r2 = eh.get(t4), n2 = rh(r2.observationTargets, e2), i2 = r2.observationTargets.length === 1;
-    n2 >= 0 && (i2 && wu.splice(wu.indexOf(r2), 1), r2.observationTargets.splice(n2, 1), Ju(-1));
+    var r2 = ch.get(t4), n2 = lh(r2.observationTargets, e2), i2 = r2.observationTargets.length === 1;
+    n2 >= 0 && (i2 && zu.splice(zu.indexOf(r2), 1), r2.observationTargets.splice(n2, 1), oh(-1));
   }, t3.disconnect = function(t4) {
-    var e2 = this, r2 = eh.get(t4);
+    var e2 = this, r2 = ch.get(t4);
     r2.observationTargets.slice().forEach(function(r3) {
       return e2.unobserve(t4, r3.target);
     }), r2.activeTargets.splice(0, r2.activeTargets.length);
   }, t3;
-}(), ih = function() {
+}(), fh = function() {
   function t3(t4) {
     if (arguments.length === 0)
       throw new TypeError("Failed to construct 'ResizeObserver': 1 argument required, but only 0 present.");
     if (typeof t4 != "function")
       throw new TypeError("Failed to construct 'ResizeObserver': The callback provided as parameter 1 is not a function.");
-    nh.connect(this, t4);
+    ph.connect(this, t4);
   }
   return t3.prototype.observe = function(t4, e2) {
     if (arguments.length === 0)
       throw new TypeError("Failed to execute 'observe' on 'ResizeObserver': 1 argument required, but only 0 present.");
-    if (!Ou(t4))
+    if (!Bu(t4))
       throw new TypeError("Failed to execute 'observe' on 'ResizeObserver': parameter 1 is not of type 'Element");
-    nh.observe(this, t4, e2);
+    ph.observe(this, t4, e2);
   }, t3.prototype.unobserve = function(t4) {
     if (arguments.length === 0)
       throw new TypeError("Failed to execute 'unobserve' on 'ResizeObserver': 1 argument required, but only 0 present.");
-    if (!Ou(t4))
+    if (!Bu(t4))
       throw new TypeError("Failed to execute 'unobserve' on 'ResizeObserver': parameter 1 is not of type 'Element");
-    nh.unobserve(this, t4);
+    ph.unobserve(this, t4);
   }, t3.prototype.disconnect = function() {
-    nh.disconnect(this);
+    ph.disconnect(this);
   }, t3.toString = function() {
     return "function ResizeObserver () { [polyfill code] }";
   }, t3;
 }();
-const sh = self.ResizeObserver || ih;
-const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
+const dh = self.ResizeObserver || fh;
+const mh = new m(), yh = new m(), gh = new TextDecoder(), vh = class {
   static get ELEMENT_UID_ATTRIBUTE() {
     return this.ATTRIBUTE_PREFIX + "-uid";
   }
@@ -9533,7 +9378,7 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     n2.append(i2);
     const s2 = i2.sheet;
     let a2 = 0;
-    if (uu(s2, `[${hh.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}], [${hh.RENDERING_ATTRIBUTE}] [${hh.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", a2++), uu(s2, `[${hh.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", a2++), uu(s2, `[${hh.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:static !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", a2++), uu(s2, `[${hh.RENDERING_PARENT_ATTRIBUTE}]::before, [${hh.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", a2++), r2 === e2) {
+    if (fu(s2, `[${vh.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", a2++), fu(s2, `[${vh.RENDERING_ATTRIBUTE}], [${vh.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", a2++), fu(s2, `[${vh.RENDERING_ATTRIBUTE}] [${vh.LAYER_ATTRIBUTE}], [${vh.RENDERING_ATTRIBUTE}] [${vh.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", a2++), fu(s2, `[${vh.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", a2++), fu(s2, `[${vh.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", a2++), fu(s2, `[${vh.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:static !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", a2++), fu(s2, `[${vh.RENDERING_PARENT_ATTRIBUTE}]::before, [${vh.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", a2++), r2 === e2) {
       let t4 = "";
       const e3 = () => {
         if (t4 != window.location.hash && window.location.hash)
@@ -9577,19 +9422,19 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     this.renderQueue.indexOf(t3) === -1 && this.renderQueue.push(t3);
   }
   static _runTasks() {
-    hh.tasksPending = false;
-    const t3 = hh.serializeQueue, e2 = hh.rasterizeQueue, r2 = hh.renderQueue, n2 = hh.TASK_SYNC_MAX_TIME / 2;
+    vh.tasksPending = false;
+    const t3 = vh.serializeQueue, e2 = vh.rasterizeQueue, r2 = vh.renderQueue, n2 = vh.TASK_SYNC_MAX_TIME / 2;
     let i2 = performance.now();
     for (; r2.length && performance.now() - i2 < n2; )
       r2.shift().render();
     for (i2 = performance.now(); t3.length && performance.now() - i2 < n2; )
       t3.shift().serialize();
-    e2.length && hh.rasterizeTaskCount < hh.TASK_ASYNC_MAX_COUNT && (hh.rasterizeTaskCount++, e2.shift().rasterize().then(() => {
-      hh.rasterizeTaskCount--;
+    e2.length && vh.rasterizeTaskCount < vh.TASK_ASYNC_MAX_COUNT && (vh.rasterizeTaskCount++, e2.shift().rasterize().then(() => {
+      vh.rasterizeTaskCount--;
     }));
   }
   static scheduleTasksIfNeeded() {
-    this.tasksPending || hh.serializeQueue.length === 0 && hh.renderQueue.length === 0 && (hh.rasterizeQueue.length === 0 || hh.rasterizeTaskCount === hh.TASK_ASYNC_MAX_COUNT) || (this.tasksPending = true, hh.scheduleIdle(hh._runTasks));
+    this.tasksPending || vh.serializeQueue.length === 0 && vh.renderQueue.length === 0 && (vh.rasterizeQueue.length === 0 || vh.rasterizeTaskCount === vh.TASK_ASYNC_MAX_COUNT) || (this.tasksPending = true, vh.scheduleIdle(vh._runTasks));
   }
   static scheduleIdle(t3) {
     setTimeout(t3, 1);
@@ -9598,25 +9443,25 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     t3.needsRefresh = true;
   }
   static createLayerTree(t3, e2) {
-    if (hh.getClosestLayer(t3))
+    if (vh.getClosestLayer(t3))
       throw new Error("A root WebLayer for the given element already exists");
     !function(t4) {
       const e3 = t4.ownerDocument, r3 = t4.getRootNode();
       if (e3.contains(t4) || e3.contains(r3 == null ? void 0 : r3.host))
         return t4;
       const n3 = r3.host || e3.createElement("div");
-      n3.setAttribute(ch.RENDERING_CONTAINER_ATTRIBUTE, ""), n3.style.position = "fixed", n3.style.width = "100%", n3.style.height = "100%", n3.style.top = "-100000px", n3.style.contain = "strict", r3.host || n3.appendChild(t4), e3.documentElement.appendChild(n3);
-    }(t3), hh.initRootNodeObservation(t3);
-    const r2 = new MutationObserver(hh._handleMutations);
+      n3.setAttribute(xh.RENDERING_CONTAINER_ATTRIBUTE, ""), n3.style.position = "fixed", n3.style.width = "100%", n3.style.height = "100%", n3.style.top = "-100000px", n3.style.contain = "strict", r3.host || n3.appendChild(t4), e3.documentElement.appendChild(n3);
+    }(t3), vh.initRootNodeObservation(t3);
+    const r2 = new MutationObserver(vh._handleMutations);
     this.mutationObservers.set(t3, r2), this.startMutationObserver(t3);
-    const n2 = new sh((t4) => {
+    const n2 = new dh((t4) => {
       for (const e3 of t4) {
         const t5 = this.getClosestLayer(e3.target);
-        t5.traverseLayers(hh.setLayerNeedsRefresh), t5.traverseParentLayers(hh.setLayerNeedsRefresh);
+        t5.traverseLayers(vh.setLayerNeedsRefresh), t5.traverseParentLayers(vh.setLayerNeedsRefresh);
       }
     });
     n2.observe(t3), this.resizeObservers.set(t3, n2), t3.addEventListener("input", this._triggerRefresh, {capture: true}), t3.addEventListener("keydown", this._triggerRefresh, {capture: true}), t3.addEventListener("submit", this._triggerRefresh, {capture: true}), t3.addEventListener("change", this._triggerRefresh, {capture: true}), t3.addEventListener("focus", this._triggerRefresh, {capture: true}), t3.addEventListener("blur", this._triggerRefresh, {capture: true}), t3.addEventListener("transitionend", this._triggerRefresh, {capture: true});
-    const i2 = new gu(t3, e2);
+    const i2 = new Su(t3, e2);
     return this.rootLayers.set(t3, i2), i2;
   }
   static disposeLayer(t3) {
@@ -9627,60 +9472,63 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     }
   }
   static getClosestLayer(t3) {
-    const e2 = t3 && t3.closest(`[${hh.LAYER_ATTRIBUTE}]`);
+    const e2 = t3 && t3.closest(`[${vh.LAYER_ATTRIBUTE}]`);
     return this.layers.get(e2);
   }
-  static getCSSTransformForElement(t3, e2 = new c()) {
-    const r2 = getComputedStyle(t3);
-    var n2 = r2.transform;
-    if (n2.indexOf("matrix(") == 0) {
-      e2.identity();
-      var i2 = n2.substring(7, n2.length - 1).split(", ").map(parseFloat);
-      e2.elements[0] = i2[0], e2.elements[1] = i2[1], e2.elements[4] = i2[2], e2.elements[5] = i2[3], e2.elements[12] = i2[4], e2.elements[13] = i2[5];
+  static parseCSSTransform(t3, e2, r2, n2, i2 = new m()) {
+    const s2 = t3.transform, a2 = t3.transformOrigin;
+    if (s2.indexOf("matrix(") == 0) {
+      i2.identity();
+      var o2 = s2.substring(7, s2.length - 1).split(", ").map(parseFloat);
+      i2.elements[0] = o2[0], i2.elements[1] = o2[1], i2.elements[4] = o2[2], i2.elements[5] = o2[3], i2.elements[12] = o2[4], i2.elements[13] = o2[5];
     } else {
-      if (n2.indexOf("matrix3d(") != 0)
-        return e2.identity();
-      i2 = n2.substring(9, n2.length - 1).split(", ").map(parseFloat);
-      e2.fromArray(i2);
+      if (s2.indexOf("matrix3d(") != 0)
+        return null;
+      o2 = s2.substring(9, s2.length - 1).split(", ").map(parseFloat);
+      i2.fromArray(o2);
     }
-    var s2 = r2.transformOrigin.split(" ").map(parseFloat), a2 = s2[0], o2 = s2[1], u2 = s2[2] || 0, h = ah.identity().makeTranslation(-a2, -o2, -u2), l2 = oh.identity().makeTranslation(a2, o2, u2);
-    return e2.premultiply(l2).multiply(h);
+    i2.elements[0] === 0 && (i2.elements[0] = 1e-15), i2.elements[5] === 0 && (i2.elements[5] = 1e-15), i2.elements[10] === 0 && (i2.elements[10] = 1e-15), i2.elements[12] *= n2, i2.elements[13] *= -1 * n2;
+    var u2 = a2.split(" ").map(parseFloat), h = (u2[0] - e2 / 2) * n2, c2 = (u2[1] - r2 / 2) * n2 * -1, l2 = u2[2] || 0, p2 = mh.identity().makeTranslation(-h, -c2, -l2), f2 = yh.identity().makeTranslation(h, c2, l2);
+    for (const d of i2.elements)
+      if (isNaN(d))
+        return null;
+    return i2.premultiply(f2).multiply(p2);
   }
   static async embedExternalResources(t3) {
     const e2 = [], r2 = t3.querySelectorAll("*");
     for (const i2 of r2) {
       const t4 = i2.getAttributeNS("http://www.w3.org/1999/xlink", "href");
-      t4 && e2.push(hh.getDataURL(t4).then((t5) => {
+      t4 && e2.push(vh.getDataURL(t4).then((t5) => {
         i2.removeAttributeNS("http://www.w3.org/1999/xlink", "href"), i2.setAttribute("href", t5);
       }));
       const r3 = i2;
-      if (i2.tagName == "IMG" && r3.src.substr(0, 4) != "data" && e2.push(hh.getDataURL(r3.src).then((t5) => {
+      if (i2.tagName == "IMG" && r3.src.substr(0, 4) != "data" && e2.push(vh.getDataURL(r3.src).then((t5) => {
         i2.setAttribute("src", t5);
       })), i2.namespaceURI == "http://www.w3.org/1999/xhtml" && i2.hasAttribute("style")) {
         const t5 = i2.getAttribute("style") || "";
-        e2.push(hh.generateEmbeddedCSS(window.location.href, t5).then((e3) => {
+        e2.push(vh.generateEmbeddedCSS(window.location.href, t5).then((e3) => {
           t5 != e3 && i2.setAttribute("style", e3);
         }));
       }
     }
     const n2 = t3.querySelectorAll("style");
     for (const i2 of n2)
-      e2.push(hh.generateEmbeddedCSS(window.location.href, i2.innerHTML).then((t4) => {
+      e2.push(vh.generateEmbeddedCSS(window.location.href, i2.innerHTML).then((t4) => {
         i2.innerHTML != t4 && (i2.innerHTML = t4);
       }));
     return Promise.all(e2);
   }
   static pauseMutationObservers() {
-    const t3 = hh.mutationObservers.values();
+    const t3 = vh.mutationObservers.values();
     for (const e2 of t3)
-      hh._handleMutations(e2.takeRecords()), e2.disconnect();
+      vh._handleMutations(e2.takeRecords()), e2.disconnect();
   }
   static resumeMutationObservers() {
-    for (const [t3] of hh.mutationObservers)
+    for (const [t3] of vh.mutationObservers)
       this.startMutationObserver(t3);
   }
   static startMutationObserver(t3) {
-    hh.mutationObservers.get(t3).observe(t3, {attributes: true, childList: true, subtree: true, characterData: true, characterDataOldValue: true, attributeOldValue: true});
+    vh.mutationObservers.get(t3).observe(t3, {attributes: true, childList: true, subtree: true, characterData: true, characterDataOldValue: true, attributeOldValue: true});
   }
   static _addDynamicPseudoClassRules(t3) {
     const e2 = t3.styleSheets;
@@ -9691,7 +9539,7 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
           continue;
         const a2 = [];
         for (var r2 = 0; r2 < i2.length; r2++) {
-          i2[r2].cssText.indexOf(":hover") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":hover", "g"), `[${hh.HOVER_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":active") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":active", "g"), `[${hh.ACTIVE_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":focus") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":focus", "g"), `[${hh.FOCUS_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":target") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":target", "g"), `[${hh.TARGET_ATTRIBUTE}]`));
+          i2[r2].cssText.indexOf(":hover") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":hover", "g"), `[${vh.HOVER_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":active") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":active", "g"), `[${vh.ACTIVE_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":focus") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":focus", "g"), `[${vh.FOCUS_ATTRIBUTE}]`)), i2[r2].cssText.indexOf(":target") > -1 && a2.push(i2[r2].cssText.replace(new RegExp(":target", "g"), `[${vh.TARGET_ATTRIBUTE}]`));
           var n2 = a2.indexOf(i2[r2].cssText);
           n2 > -1 && a2.splice(n2, 1);
         }
@@ -9752,7 +9600,7 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
             if (!t4.response)
               return "";
             this._addDynamicPseudoClassRules(e2);
-            var r3 = uh.decode(t4.response);
+            var r3 = gh.decode(t4.response);
             return this.generateEmbeddedCSS(window.location.href, r3);
           }));
     return i2 && this._addDynamicPseudoClassRules(e2), Promise.all(r2.values());
@@ -9761,7 +9609,7 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     var e2;
     const r2 = await this.getURL(t3), n2 = new Uint8Array(r2.response), i2 = (e2 = r2.getResponseHeader("Content-Type")) == null ? void 0 : e2.split(";")[0];
     if (i2 == "text/css") {
-      let e3 = uh.decode(n2);
+      let e3 = gh.decode(n2);
       e3 = await this.generateEmbeddedCSS(t3, e3);
       const r3 = window.btoa(e3);
       return r3.length > 0 ? "data:" + i2 + ";base64," + r3 : "";
@@ -9780,8 +9628,8 @@ const ah = new c(), oh = new c(), uh = new TextDecoder(), hh = class {
     return !new Uint32Array(t3.buffer).some((t4) => t4 !== 0);
   }
 };
-let ch = hh;
-if (ch.ATTRIBUTE_PREFIX = "xr", ch._nextUID = 0, ch.serializer = new XMLSerializer(), ch.rootLayers = new Map(), ch.layers = new Map(), ch.mutationObservers = new Map(), ch.resizeObservers = new Map(), ch.serializeQueue = [], ch.rasterizeQueue = [], ch.renderQueue = [], ch.focusElement = null, ch.activeElement = null, ch.targetElement = null, ch.rootNodeObservers = new Map(), ch.TASK_ASYNC_MAX_COUNT = 2, ch.TASK_SYNC_MAX_TIME = 200, ch.rasterizeTaskCount = 0, ch.tasksPending = false, ch._handleMutations = (t3) => {
+let xh = vh;
+if (xh.ATTRIBUTE_PREFIX = "xr", xh._nextUID = 0, xh.serializer = new XMLSerializer(), xh.rootLayers = new Map(), xh.layers = new Map(), xh.mutationObservers = new Map(), xh.resizeObservers = new Map(), xh.serializeQueue = [], xh.rasterizeQueue = [], xh.renderQueue = [], xh.focusElement = null, xh.activeElement = null, xh.targetElement = null, xh.rootNodeObservers = new Map(), xh.TASK_ASYNC_MAX_COUNT = 2, xh.TASK_SYNC_MAX_TIME = 200, xh.rasterizeTaskCount = 0, xh.tasksPending = false, xh._handleMutations = (t3) => {
   for (const e2 of t3) {
     if (e2.type === "attributes") {
       if (e2.target.getAttribute(e2.attributeName) === e2.oldValue)
@@ -9794,41 +9642,41 @@ if (ch.ATTRIBUTE_PREFIX = "xr", ch._nextUID = 0, ch.serializer = new XMLSerializ
     const t4 = e2.target.nodeType === Node.ELEMENT_NODE ? e2.target : e2.target.parentElement;
     if (!t4)
       continue;
-    const r2 = hh.getClosestLayer(t4);
+    const r2 = vh.getClosestLayer(t4);
     if (r2) {
       if (e2.type === "attributes" && e2.attributeName === "class") {
         if ((e2.oldValue ? e2.oldValue : "") === e2.target.className)
           continue;
       }
-      r2.parentLayer ? r2.parentLayer.traverseChildLayers(hh.setLayerNeedsRefresh) : r2.traverseLayers(hh.setLayerNeedsRefresh);
+      r2.parentLayer ? r2.parentLayer.traverseChildLayers(vh.setLayerNeedsRefresh) : r2.traverseLayers(vh.setLayerNeedsRefresh);
     }
   }
-}, ch._triggerRefresh = async (t3) => {
-  const e2 = hh.getClosestLayer(t3.target);
-  e2 && (e2.parentLayer ? e2.parentLayer.traverseChildLayers(hh.setLayerNeedsRefresh) : e2.traverseLayers(hh.setLayerNeedsRefresh));
-}, ch.embeddedCSS = new Map(), self.THREE)
-  var lh = self.THREE;
+}, xh._triggerRefresh = async (t3) => {
+  const e2 = vh.getClosestLayer(t3.target);
+  e2 && (e2.parentLayer ? e2.parentLayer.traverseChildLayers(vh.setLayerNeedsRefresh) : e2.traverseLayers(vh.setLayerNeedsRefresh));
+}, xh.embeddedCSS = new Map(), self.THREE)
+  var wh = self.THREE;
 else
-  lh = t;
-const ph = new lh.Vector3(), fh = new lh.Vector3(), dh = new hu(), mh = new hu();
-class yh extends lh.Group {
+  wh = t;
+const bh = new wh.Matrix4(), _h = new wh.Vector3(), Mh = new wh.Vector3(), Nh = new du(), Eh = new du(), Sh = Symbol("ON_BEFORE_UPDATE");
+class Th extends wh.Object3D {
   constructor(t3, e2 = {}) {
-    super(), this.options = e2, this.textures = new Map(), this.textureNeedsUpdate = false, this.contentMesh = new lh.Mesh(vh.GEOMETRY, new lh.MeshBasicMaterial({transparent: true, alphaTest: 1e-3, opacity: 1})), this._boundsMesh = new lh.Mesh(vh.GEOMETRY, new lh.MeshBasicMaterial({visible: false})), this.cursor = new lh.Object3D(), this.depthMaterial = new lh.MeshDepthMaterial({depthPacking: lh.RGBADepthPacking, alphaTest: 0.01}), this.domLayout = new lh.Object3D(), this.domSize = new lh.Vector3(1, 1, 1), this.childWebLayers = [], this.shouldApplyDOMLayout = "auto";
-    const r2 = this.element = typeof t3 == "string" ? fu(t3) : t3;
-    this.name = r2.id, this._webLayer = ch.getClosestLayer(r2), this.add(this.contentMesh), this.add(this._boundsMesh), this.cursor.visible = false, this.matrixAutoUpdate = true, this.contentMesh.matrixAutoUpdate = true, this.contentMesh.material.toneMapped = false, this.contentMesh.visible = false, this.contentMesh.customDepthMaterial = this.depthMaterial, this._boundsMesh.matrixAutoUpdate = true, vh.layersByElement.set(this.element, this), vh.layersByMesh.set(this.contentMesh, this);
+    super(), this.element = t3, this.options = e2, this.isRoot = false, this._localZ = 0, this._viewZ = 0, this._renderZ = 0, this.textures = new Map(), this.textureNeedsUpdate = false, this.contentMesh = new wh.Mesh(zh.GEOMETRY, new wh.MeshBasicMaterial({side: wh.DoubleSide, transparent: true, alphaTest: 1e-3, opacity: 1})), this._boundsMesh = new wh.Mesh(zh.GEOMETRY, new wh.MeshBasicMaterial({visible: false})), this.cursor = new wh.Object3D(), this.depthMaterial = new wh.MeshDepthMaterial({depthPacking: wh.RGBADepthPacking, alphaTest: 1e-3}), this.domLayout = new wh.Object3D(), this.domSize = new wh.Vector3(1, 1, 1), this.childWebLayers = [], this.shouldApplyDOMLayout = "auto", this.name = t3.id, this._webLayer = xh.getClosestLayer(t3), this.add(this.contentMesh), this.add(this._boundsMesh), this.cursor.visible = false, this.matrixAutoUpdate = true, this.contentMesh.matrixAutoUpdate = true, this.contentMesh.visible = false, this.contentMesh.customDepthMaterial = this.depthMaterial, this.contentMesh.onBeforeRender = (t4, e3, r2) => {
+      this._camera = r2;
+    }, this._boundsMesh.matrixAutoUpdate = true, zh.layersByElement.set(this.element, this), zh.layersByMesh.set(this.contentMesh, this);
   }
   get currentTexture() {
     if (this._webLayer.element.tagName === "VIDEO") {
       const t4 = this._webLayer.element;
       let e3 = this.textures.get(t4);
-      return e3 || (e3 = new lh.VideoTexture(t4), e3.wrapS = lh.ClampToEdgeWrapping, e3.wrapT = lh.ClampToEdgeWrapping, e3.minFilter = lh.LinearFilter, this.options.textureEncoding && (e3.encoding = this.options.textureEncoding), this.textures.set(t4, e3)), e3;
+      return e3 || (e3 = new wh.VideoTexture(t4), e3.wrapS = wh.ClampToEdgeWrapping, e3.wrapT = wh.ClampToEdgeWrapping, e3.minFilter = wh.LinearFilter, this.options.textureEncoding && (e3.encoding = this.options.textureEncoding), this.textures.set(t4, e3)), e3;
     }
     const t3 = this._webLayer.canvas;
     let e2 = this.textures.get(t3);
-    return e2 ? this.textureNeedsUpdate && (this.textureNeedsUpdate = false, e2.needsUpdate = true) : (e2 = new lh.Texture(t3), e2.needsUpdate = true, e2.wrapS = lh.ClampToEdgeWrapping, e2.wrapT = lh.ClampToEdgeWrapping, e2.minFilter = lh.LinearFilter, this.options.textureEncoding && (e2.encoding = this.options.textureEncoding), this.textures.set(t3, e2)), e2;
+    return e2 ? this.textureNeedsUpdate && (this.textureNeedsUpdate = false, e2.needsUpdate = true) : (e2 = new wh.Texture(t3), e2.needsUpdate = true, e2.wrapS = wh.ClampToEdgeWrapping, e2.wrapT = wh.ClampToEdgeWrapping, e2.minFilter = wh.LinearFilter, this.options.textureEncoding && (e2.encoding = this.options.textureEncoding), this.textures.set(t3, e2)), e2;
   }
   get pseudoStates() {
-    return this._webLayer.psuedoStates;
+    return this._webLayer.pseudoStates;
   }
   get depth() {
     return this._webLayer.depth;
@@ -9840,7 +9688,7 @@ class yh extends lh.Group {
     return this._webLayer.needsRefresh;
   }
   setNeedsRefresh() {
-    this._webLayer.traverseLayers(ch.setLayerNeedsRefresh);
+    this._webLayer.traverseLayers(xh.setLayerNeedsRefresh);
   }
   get needsRemoval() {
     return this._webLayer.needsRemoval;
@@ -9849,27 +9697,36 @@ class yh extends lh.Group {
     return this._webLayer.bounds;
   }
   get parentWebLayer() {
-    return this._webLayer.parentLayer && vh.layersByElement.get(this._webLayer.parentLayer.element);
+    return this._webLayer.parentLayer && zh.layersByElement.get(this._webLayer.parentLayer.element);
   }
   refresh(t3 = false) {
     this._webLayer.refresh(), this.childWebLayers.length = 0;
     for (const e2 of this._webLayer.childLayers) {
-      const r2 = vh.getClosestLayerForElement(e2.element);
+      const r2 = zh.getClosestLayerForElement(e2.element);
       r2 && (this.childWebLayers.push(r2), t3 && r2.refresh(t3));
     }
     this._refreshVideoBounds(), this._refreshDOMLayout();
   }
   updateLayout() {
-    this.position.copy(this.domLayout.position), this.quaternion.copy(this.domLayout.quaternion), this.scale.copy(this.domLayout.scale), this.contentMesh.scale.copy(this.domSize), this._boundsMesh.scale.copy(this.domSize);
-    const t3 = this.contentMesh, e2 = t3.material.opacity < 5e-3;
-    e2 ? t3.visible = false : t3.material.map && (t3.visible = true), this.needsRemoval && e2 && (this.parent && this.parent.remove(this), this.dispose());
+    this.position.copy(this.domLayout.position), this.quaternion.copy(this.domLayout.quaternion), this.scale.copy(this.domLayout.scale), this.contentMesh.position.set(0, 0, 0), this.contentMesh.scale.copy(this.domSize), this.contentMesh.quaternion.set(0, 0, 0, 1), this._boundsMesh.position.set(0, 0, 0), this._boundsMesh.scale.copy(this.domSize), this._boundsMesh.quaternion.set(0, 0, 0, 1);
   }
   updateContent() {
     const t3 = this.contentMesh, e2 = this.currentTexture, r2 = t3.material;
-    e2.image && r2.map !== e2 && (r2.map = e2, this.depthMaterial.map = e2, this.depthMaterial.needsUpdate = true, r2.depthWrite = false, this.renderOrder = this.depth + 1e-3 * this.index + (this.options.renderOrderOffset || 0), r2.needsUpdate = true);
+    e2.image && r2.map !== e2 && (r2.map = e2, r2.depthWrite = false, r2.needsUpdate = true, this.depthMaterial.map = e2, this.depthMaterial.needsUpdate = true), r2.transparent = true;
+    const n2 = t3.material.opacity < 5e-3;
+    if (n2 ? t3.visible = false : t3.material.map && (t3.visible = true), this.needsRemoval && n2 && (this.parent && this.parent.remove(this), this.dispose()), !this._camera)
+      return;
+    this._localZ = Math.abs(_h.setFromMatrixPosition(this.matrix).z + _h.setFromMatrixPosition(this.contentMesh.matrix).z), this._viewZ = Math.abs(this.contentMesh.getWorldPosition(_h).applyMatrix4(this._camera.matrixWorldInverse).z);
+    let i2 = this.parentWebLayer ? this.parentWebLayer._renderZ : this._viewZ;
+    this._localZ < 1e-8 ? this._renderZ = i2 : this._renderZ = this._viewZ, this.contentMesh.renderOrder = (this.options.renderOrderOffset || 0) + (1 - Math.log(this._renderZ + 1) / Math.log(this._camera.far + 1)) + 1e-7 * (this.depth + 1e-3 * this.index);
+  }
+  get rootWebLayer() {
+    return zh.layersByElement.get(this._webLayer.rootLayer.element);
+  }
+  [Sh]() {
   }
   _doUpdate() {
-    this.updateLayout(), this.updateContent(), this.needsRefresh && this.options.autoRefresh && this.refresh(), ch.scheduleTasksIfNeeded();
+    this[Sh](), this.updateContent(), this.updateLayout(), this.needsRefresh && this.options.autoRefresh !== false && this.refresh(), xh.scheduleTasksIfNeeded();
   }
   update(t3 = false) {
     t3 ? this.traverseLayersPreOrder(this._doUpdate) : this._doUpdate();
@@ -9877,7 +9734,7 @@ class yh extends lh.Group {
   querySelector(t3) {
     const e2 = this.element.querySelector(t3);
     if (e2)
-      return vh.layersByElement.get(e2);
+      return zh.layersByElement.get(e2);
   }
   traverseLayerAncestors(t3) {
     const e2 = this.parentWebLayer;
@@ -9900,7 +9757,7 @@ class yh extends lh.Group {
   dispose() {
     for (const t3 of this.textures.values())
       t3.dispose();
-    this.contentMesh.geometry.dispose(), this._boundsMesh.geometry.dispose(), ch.disposeLayer(this._webLayer);
+    this.contentMesh.geometry.dispose(), this._boundsMesh.geometry.dispose(), xh.disposeLayer(this._webLayer);
     for (const t3 of this.childWebLayers)
       t3.dispose();
   }
@@ -9940,50 +9797,43 @@ class yh extends lh.Group {
     if (this.needsRemoval)
       return;
     this.domLayout.position.set(0, 0, 0), this.domLayout.scale.set(1, 1, 1), this.domLayout.quaternion.set(0, 0, 0, 1);
-    const t3 = this.bounds, e2 = t3.width, r2 = t3.height, n2 = 1 / vh.DEFAULT_PIXELS_PER_UNIT;
-    if (this.domSize.set(Math.max(n2 * e2, 1e-5), Math.max(n2 * r2, 1e-5), 1), !vh.shouldApplyDOMLayout(this))
+    const t3 = this.bounds, e2 = t3.width, r2 = t3.height, n2 = 1 / zh.DEFAULT_PIXELS_PER_UNIT;
+    if (this.domSize.set(Math.max(n2 * e2, 1e-5), Math.max(n2 * r2, 1e-5), 1), !zh.shouldApplyDOMLayout(this))
       return;
-    const i2 = this.parentWebLayer instanceof yh ? this.parentWebLayer.bounds : function(t4) {
-      return pu.parentNode || document.documentElement.append(pu), t4.left = pageXOffset, t4.top = pageYOffset, t4.width = pu.offsetWidth, t4.height = pu.offsetHeight, t4;
-    }(dh), s2 = -i2.width / 2 + e2 / 2, a2 = i2.height / 2 - r2 / 2;
-    this.options.layerSeparation || vh.DEFAULT_LAYER_SEPARATION, this.domLayout.position.set(n2 * (s2 + t3.left), n2 * (a2 - t3.top), 0);
+    const i2 = this.parentWebLayer instanceof Th ? this.parentWebLayer.bounds : function(t4) {
+      return gu.parentNode || document.documentElement.append(gu), t4.left = pageXOffset, t4.top = pageYOffset, t4.width = gu.offsetWidth, t4.height = gu.offsetHeight, t4;
+    }(Nh), s2 = -i2.width / 2 + e2 / 2, a2 = i2.height / 2 - r2 / 2;
+    this.domLayout.position.set(n2 * (s2 + t3.left), n2 * (a2 - t3.top), 0);
+    const o2 = getComputedStyle(this.element), u2 = o2.transform;
+    if (u2 && u2 !== "none") {
+      const t4 = xh.parseCSSTransform(o2, e2, r2, n2, bh);
+      t4 && (this.domLayout.updateMatrix(), this.domLayout.matrix.multiply(t4), this.domLayout.matrix.decompose(this.domLayout.position, this.domLayout.quaternion, this.domLayout.scale));
+    }
   }
 }
-const gh = class extends yh {
+const Oh = class extends wh.Object3D {
   constructor(t3, e2 = {}) {
-    super(t3, e2), this.options = e2, this._interactionRays = [], this._raycaster = new lh.Raycaster(), this._hitIntersections = [], this._previousHoverLayers = new Set(), this._contentMeshes = [], this._prepareHitTest = (t4) => {
+    super(), this.options = e2, this._interactionRays = [], this._raycaster = new wh.Raycaster(), this._hitIntersections = [], this._previousHoverLayers = new Set(), this._contentMeshes = [], this._prepareHitTest = (t4) => {
       t4.pseudoStates.hover && this._previousHoverLayers.add(t4), t4.cursor.visible = false, t4.pseudoStates.hover = false, this._contentMeshes.push(t4.contentMesh);
-    }, this._webLayer = ch.createLayerTree(this.element, (t4, {target: e3}) => {
-      var r2, n2;
+    };
+    const r2 = typeof t3 == "string" ? vu(t3) : t3;
+    xh.createLayerTree(r2, (t4, {target: e3}) => {
+      var n2, i2;
       if (t4 === "layercreated") {
-        if (e3 === this.element)
-          return;
-        const t5 = new yh(e3, this.options);
-        (r2 = t5.parentWebLayer) == null || r2.add(t5), this.options.onLayerCreate && this.options.onLayerCreate(t5);
+        const t5 = new Th(e3, this.options);
+        e3 === r2 ? (t5[Sh] = () => this._updateInteractions(), t5.isRoot = true, this.rootLayer = t5, this.add(t5)) : (n2 = t5.parentWebLayer) == null || n2.add(t5), this.options.onLayerCreate && this.options.onLayerCreate(t5);
       } else if (t4 === "layerpainted") {
-        const t5 = ch.layers.get(e3);
-        gh.layersByElement.get(t5.element).textureNeedsUpdate = true;
+        const t5 = xh.layers.get(e3);
+        Oh.layersByElement.get(t5.element).textureNeedsUpdate = true;
       } else if (t4 === "layermoved") {
-        const t5 = gh.layersByElement.get(e3);
-        (n2 = t5.parentWebLayer) == null || n2.add(t5);
+        const t5 = Oh.layersByElement.get(e3);
+        (i2 = t5.parentWebLayer) == null || i2.add(t5);
       }
-    }), this.options.onLayerCreate && this.options.onLayerCreate(this), this.refresh(true), this.update();
-  }
-  static computeNaturalDistance(t3, e2) {
-    let r2 = t3;
-    t3.isCamera && (r2 = t3.projectionMatrix);
-    const n2 = e2.getPixelRatio(), i2 = e2.domElement.width / n2, s2 = gh.DEFAULT_PIXELS_PER_UNIT * i2, a2 = function(t4) {
-      const e3 = xh, r3 = wh.getInverse(t4), n3 = bh;
-      return e3.left = n3.set(-1, 0, -1).applyMatrix4(r3).angleTo(_h), e3.right = n3.set(1, 0, -1).applyMatrix4(r3).angleTo(_h), e3.top = n3.set(0, 1, -1).applyMatrix4(r3).angleTo(_h), e3.bottom = n3.set(0, -1, -1).applyMatrix4(r3).angleTo(_h), e3.horizontal = e3.right + e3.left, e3.vertical = e3.top + e3.bottom, e3;
-    }(r2).horizontal;
-    return s2 / 2 / Math.tan(a2 / 2);
+    }), this.refresh(), this.update();
   }
   static shouldApplyDOMLayout(t3) {
     const e2 = t3.shouldApplyDOMLayout;
     return e2 === "always" || e2 === true || e2 !== "never" && e2 !== false && !(e2 !== "auto" || !t3.parentWebLayer || t3.parent !== t3.parentWebLayer);
-  }
-  get parentWebLayer() {
-    return super.parentWebLayer;
   }
   get interactionRays() {
     return this._interactionRays;
@@ -9991,25 +9841,29 @@ const gh = class extends yh {
   set interactionRays(t3) {
     this._interactionRays = t3;
   }
-  update(t3 = false) {
-    this._updateInteractions(), super.update(t3);
+  querySelector(t3) {
+    return this.rootLayer.querySelector(t3);
   }
-  _intersectionGetGroupOrder(t3) {
-    let e2 = t3.object;
-    for (; e2.parent && !e2.isGroup; )
-      e2 = e2.parent;
-    t3.groupOrder = e2.renderOrder;
+  refresh() {
+    this.rootLayer.refresh(true);
+  }
+  update() {
+    this.rootLayer.update(true);
+  }
+  get contentMesh() {
+    return this.rootLayer.contentMesh;
   }
   _intersectionSort(t3, e2) {
-    return t3.groupOrder !== e2.groupOrder ? e2.groupOrder - t3.groupOrder : t3.object.renderOrder !== e2.object.renderOrder ? e2.object.renderOrder - t3.object.renderOrder : t3.distance - e2.distance;
+    const r2 = t3.object.parent, n2 = e2.object.parent;
+    return r2.depth !== n2.depth ? n2.depth - r2.depth : n2.index - r2.index;
   }
   _updateInteractions() {
     const t3 = this._previousHoverLayers;
-    t3.clear(), this._contentMeshes.length = 0, this.traverseLayersPreOrder(this._prepareHitTest);
+    t3.clear(), this._contentMeshes.length = 0, this.rootLayer.traverseLayersPreOrder(this._prepareHitTest);
     for (const e2 of this._interactionRays) {
-      e2 instanceof lh.Ray ? this._raycaster.ray.copy(e2) : this._raycaster.ray.set(e2.getWorldPosition(ph), e2.getWorldDirection(fh)), this._hitIntersections.length = 0;
+      e2 instanceof wh.Ray ? this._raycaster.ray.copy(e2) : this._raycaster.ray.set(e2.getWorldPosition(_h), e2.getWorldDirection(Mh)), this._hitIntersections.length = 0;
       const r2 = this._raycaster.intersectObjects(this._contentMeshes, false, this._hitIntersections);
-      r2.forEach(this._intersectionGetGroupOrder), r2.sort(this._intersectionSort);
+      r2.sort(this._intersectionSort);
       const n2 = r2[0];
       if (n2) {
         const e3 = n2.object.parent;
@@ -10021,37 +9875,32 @@ const gh = class extends yh {
   }
   static getLayerForQuery(t3) {
     const e2 = document.querySelector(t3);
-    return gh.layersByElement.get(e2);
+    return Oh.layersByElement.get(e2);
   }
   static getClosestLayerForElement(t3) {
-    const e2 = t3 && t3.closest(`[${ch.LAYER_ATTRIBUTE}]`);
-    return gh.layersByElement.get(e2);
+    const e2 = t3 && t3.closest(`[${xh.LAYER_ATTRIBUTE}]`);
+    return Oh.layersByElement.get(e2);
   }
   hitTest(t3) {
-    const e2 = this._raycaster, r2 = this._hitIntersections, n2 = gh.layersByMesh;
-    e2.ray.copy(t3), r2.length = 0, e2.intersectObject(this, true, r2), r2.forEach(this._intersectionGetGroupOrder), r2.sort(this._intersectionSort);
+    const e2 = this._raycaster, r2 = this._hitIntersections, n2 = Oh.layersByMesh;
+    e2.ray.copy(t3), r2.length = 0, e2.intersectObject(this, true, r2), r2.sort(this._intersectionSort);
     for (const i2 of r2) {
       const t4 = n2.get(i2.object);
       if (!t4)
         continue;
-      const e3 = lu(t4.element, dh);
+      const e3 = yu(t4.element, Nh);
       if (!e3.width || !e3.height)
         continue;
       let r3 = t4.element;
       const s2 = i2.uv.x * e3.width, a2 = (1 - i2.uv.y) * e3.height;
-      return ou(t4.element, (t5) => {
+      return pu(t4.element, (t5) => {
         if (!r3.contains(t5))
           return false;
-        const n3 = lu(t5, mh), i3 = n3.left - e3.left, o2 = n3.top - e3.top, {width: u2, height: h} = n3;
+        const n3 = yu(t5, Eh), i3 = n3.left - e3.left, o2 = n3.top - e3.top, {width: u2, height: h} = n3;
         return s2 > i3 && s2 < i3 + u2 && a2 > o2 && a2 < o2 + h && (r3 = t5, true);
       }), {layer: t4, intersection: i2, target: r3};
     }
   }
 };
-let vh = gh;
-vh.layersByElement = new WeakMap(), vh.layersByMesh = new WeakMap(), vh.DEFAULT_LAYER_SEPARATION = 1e-3, vh.DEFAULT_PIXELS_PER_UNIT = 1e3, vh.GEOMETRY = new lh.PlaneGeometry(1, 1, 2, 2);
-const xh = new class {
-  constructor() {
-    this.top = 0, this.left = 0, this.bottom = 0, this.right = 0, this.horizontal = 0, this.vertical = 0;
-  }
-}(), wh = new lh.Matrix4(), bh = new lh.Vector3(), _h = new lh.Vector3(0, 0, -1);
+let zh = Oh;
+zh.layersByElement = new WeakMap(), zh.layersByMesh = new WeakMap(), zh.DEFAULT_LAYER_SEPARATION = 1e-3, zh.DEFAULT_PIXELS_PER_UNIT = 1e3, zh.GEOMETRY = new wh.PlaneGeometry(1, 1, 2, 2);
