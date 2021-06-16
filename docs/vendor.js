@@ -721,40 +721,11 @@ function isProxy(value) {
 function toRaw(observed) {
   return observed && toRaw(observed["__v_raw"]) || observed;
 }
-const convert = (val) => isObject(val) ? reactive(val) : val;
 function isRef(r) {
   return Boolean(r && r.__v_isRef === true);
 }
-function ref(value) {
-  return createRef(value);
-}
-class RefImpl {
-  constructor(_rawValue, _shallow = false) {
-    this._rawValue = _rawValue;
-    this._shallow = _shallow;
-    this.__v_isRef = true;
-    this._value = _shallow ? _rawValue : convert(_rawValue);
-  }
-  get value() {
-    track(toRaw(this), "get", "value");
-    return this._value;
-  }
-  set value(newVal) {
-    if (hasChanged(toRaw(newVal), this._rawValue)) {
-      this._rawValue = newVal;
-      this._value = this._shallow ? newVal : convert(newVal);
-      trigger(toRaw(this), "set", "value", newVal);
-    }
-  }
-}
-function createRef(rawValue, shallow = false) {
-  if (isRef(rawValue)) {
-    return rawValue;
-  }
-  return new RefImpl(rawValue, shallow);
-}
-function unref(ref2) {
-  return isRef(ref2) ? ref2.value : ref2;
+function unref(ref) {
+  return isRef(ref) ? ref.value : ref;
 }
 const shallowUnwrapHandlers = {
   get: (target, key, receiver) => unref(Reflect.get(target, key, receiver)),
@@ -1196,7 +1167,6 @@ function pushScopeId(id) {
 function popScopeId() {
   currentScopeId = null;
 }
-const withScopeId = (_id) => withCtx;
 function withCtx(fn, ctx = currentRenderingInstance) {
   if (!ctx)
     return fn;
@@ -2068,11 +2038,11 @@ const setRef = (rawRef, oldRawRef, parentSuspense, vnode) => {
   } else {
     value = vnode.el;
   }
-  const {i: owner, r: ref2} = rawRef;
+  const {i: owner, r: ref} = rawRef;
   const oldRef = oldRawRef && oldRawRef.r;
   const refs = owner.refs === EMPTY_OBJ ? owner.refs = {} : owner.refs;
   const setupState = owner.setupState;
-  if (oldRef != null && oldRef !== ref2) {
+  if (oldRef != null && oldRef !== ref) {
     if (isString(oldRef)) {
       refs[oldRef] = null;
       if (hasOwn(setupState, oldRef)) {
@@ -2082,11 +2052,11 @@ const setRef = (rawRef, oldRawRef, parentSuspense, vnode) => {
       oldRef.value = null;
     }
   }
-  if (isString(ref2)) {
+  if (isString(ref)) {
     const doSet = () => {
-      refs[ref2] = value;
-      if (hasOwn(setupState, ref2)) {
-        setupState[ref2] = value;
+      refs[ref] = value;
+      if (hasOwn(setupState, ref)) {
+        setupState[ref] = value;
       }
     };
     if (value) {
@@ -2095,9 +2065,9 @@ const setRef = (rawRef, oldRawRef, parentSuspense, vnode) => {
     } else {
       doSet();
     }
-  } else if (isRef(ref2)) {
+  } else if (isRef(ref)) {
     const doSet = () => {
-      ref2.value = value;
+      ref.value = value;
     };
     if (value) {
       doSet.id = -1;
@@ -2105,8 +2075,8 @@ const setRef = (rawRef, oldRawRef, parentSuspense, vnode) => {
     } else {
       doSet();
     }
-  } else if (isFunction(ref2)) {
-    callWithErrorHandling(ref2, owner, 12, [value, refs]);
+  } else if (isFunction(ref)) {
+    callWithErrorHandling(ref, owner, 12, [value, refs]);
   } else
     ;
 };
@@ -2125,7 +2095,7 @@ function baseCreateRenderer(options, createHydrationFns) {
       optimized = false;
       n2.dynamicChildren = null;
     }
-    const {type, ref: ref2, shapeFlag} = n2;
+    const {type, ref, shapeFlag} = n2;
     switch (type) {
       case Text:
         processText(n1, n2, container, anchor);
@@ -2153,8 +2123,8 @@ function baseCreateRenderer(options, createHydrationFns) {
         } else
           ;
     }
-    if (ref2 != null && parentComponent) {
-      setRef(ref2, n1 && n1.ref, parentSuspense, n2);
+    if (ref != null && parentComponent) {
+      setRef(ref, n1 && n1.ref, parentSuspense, n2);
     }
   };
   const processText = (n1, n2, container, anchor) => {
@@ -2719,9 +2689,9 @@ function baseCreateRenderer(options, createHydrationFns) {
     }
   };
   const unmount = (vnode, parentComponent, parentSuspense, doRemove = false, optimized = false) => {
-    const {type, props, ref: ref2, children, dynamicChildren, shapeFlag, patchFlag, dirs} = vnode;
-    if (ref2 != null) {
-      setRef(ref2, null, parentSuspense, null);
+    const {type, props, ref, children, dynamicChildren, shapeFlag, patchFlag, dirs} = vnode;
+    if (ref != null) {
+      setRef(ref, null, parentSuspense, null);
     }
     if (shapeFlag & 256) {
       parentComponent.ctx.deactivate(vnode);
@@ -2968,8 +2938,8 @@ function isSameVNodeType(n1, n2) {
 }
 const InternalObjectKey = `__vInternal`;
 const normalizeKey = ({key}) => key != null ? key : null;
-const normalizeRef = ({ref: ref2}) => {
-  return ref2 != null ? isString(ref2) || isRef(ref2) || isFunction(ref2) ? {i: currentRenderingInstance, r: ref2} : ref2 : null;
+const normalizeRef = ({ref}) => {
+  return ref != null ? isString(ref) || isRef(ref) || isFunction(ref) ? {i: currentRenderingInstance, r: ref} : ref : null;
 };
 const createVNode = _createVNode;
 function _createVNode(type, props = null, children = null, patchFlag = 0, dynamicProps = null, isBlockNode = false) {
@@ -3041,7 +3011,7 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
   return vnode;
 }
 function cloneVNode(vnode, extraProps, mergeRef = false) {
-  const {props, ref: ref2, patchFlag, children} = vnode;
+  const {props, ref, patchFlag, children} = vnode;
   const mergedProps = extraProps ? mergeProps(props || {}, extraProps) : props;
   return {
     __v_isVNode: true,
@@ -3049,7 +3019,7 @@ function cloneVNode(vnode, extraProps, mergeRef = false) {
     type: vnode.type,
     props: mergedProps,
     key: mergedProps && normalizeKey(mergedProps),
-    ref: extraProps && extraProps.ref ? mergeRef && ref2 ? isArray(ref2) ? ref2.concat(normalizeRef(extraProps)) : [ref2, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref2,
+    ref: extraProps && extraProps.ref ? mergeRef && ref ? isArray(ref) ? ref.concat(normalizeRef(extraProps)) : [ref, normalizeRef(extraProps)] : normalizeRef(extraProps) : ref,
     scopeId: vnode.scopeId,
     slotScopeIds: vnode.slotScopeIds,
     children,
@@ -16650,7 +16620,7 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
 }
 function WebGLUtils(gl, extensions, capabilities) {
   const isWebGL2 = capabilities.isWebGL2;
-  function convert2(p2) {
+  function convert(p2) {
     let extension;
     if (p2 === UnsignedByteType)
       return 5121;
@@ -16782,7 +16752,7 @@ function WebGLUtils(gl, extensions, capabilities) {
       }
     }
   }
-  return {convert: convert2};
+  return {convert};
 }
 function ArrayCamera(array) {
   PerspectiveCamera.call(this);
@@ -33358,4 +33328,4 @@ var t = /* @__PURE__ */ Object.freeze({
   ZeroStencilOp,
   sRGBEncoding
 });
-export {Fragment as F, readonly as a, popScopeId as b, createApp as c, createBlock as d, createVNode as e, createTextVNode as f, ref as g, onMounted as h, inject as i, t as j, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u, withScopeId as w};
+export {Fragment as F, readonly as a, popScopeId as b, createApp as c, createBlock as d, createVNode as e, createTextVNode as f, t as g, inject as i, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u};

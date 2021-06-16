@@ -8,7 +8,7 @@
     "serve": "npm run buildDev && vite preview"
   },
   "dependencies": {
-    "reveal.js": "file:../../presentations/reveal.js",
+    "reveal.js": "^4",
     "three": "^0.122.0",
     "three-mesh-bvh": "^0.2.0",
     "vue": "^3.0.5"

@@ -1,5 +1,5 @@
 import "./App.js";
-import {j as t} from "./vendor.js";
+import {g as t} from "./vendor.js";
 import "./App2.js";
 import "./logo.js";
 class e {
