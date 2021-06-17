@@ -36,6 +36,11 @@ export default class HubsApp {
             textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0  // -1000
         });
+
+        if (this.isInteractive) {
+            // for interaction
+            this.raycaster = new THREE.Raycaster()
+        }
     }
 
     setNetworkMethods(takeOwnership, setSharedData) {
@@ -62,6 +67,29 @@ export default class HubsApp {
         raise("getSharedData should be overridden by subclasses")
     }
     
+    // override to check for your own 3D objects that aren't webLayers
+    clicked(evt) {
+        if (!this.isInteractive) { return }
+        
+        const obj = evt.object3D
+        this.raycaster.ray.set(obj.position, 
+            this.webLayer3D.getWorldDirection(new THREE.Vector3()).negate())
+        const hit = this.webLayer3D.hitTest(this.raycaster.ray)
+        if (hit) {
+          hit.target.click()
+          hit.target.focus()
+          console.log('hit', hit.target, hit.layer)
+        }   
+    }
+
+    dragStart(evt) {
+        // nothing here ... subclass should override
+    }
+
+    dragEnd (evt) {
+        // nothing here ... subclass should override
+    }
+
     play() {
         // if we can figure out how to pause, then restart here
     }
