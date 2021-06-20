@@ -1,6 +1,6 @@
 <template>
-    <link rel="stylesheet" href="/test-vue-app/public/reveal/reveal.css"/>
-    <link rel="stylesheet" href="/test-vue-app/public/reveal/theme/white.css"/>
+    <link rel="stylesheet" href="/vue-apps/public/reveal/reveal.css"/>
+    <link rel="stylesheet" href="/vue-apps/public/reveal/theme/white.css"/>
   <div ref="root" id="top">
     <div ref="reveal" class="reveal">
       <div class="slides">

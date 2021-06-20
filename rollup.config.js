@@ -25,7 +25,7 @@ if ((process.env.BUILD !== 'production')) {
 } else {
     serverPath = "https://resources.realitymedia.digital";
 }
-var componentPath = serverPath + '/test-vue-app/'
+var componentPath = serverPath + '/vue-apps/'
 export default {
     input: 'hubs.js',
     // external: ['three'],
@@ -66,11 +66,11 @@ export default {
         // are always bundled with the code, not copied to /dist
         //limit: Infinity,
         limit: 1000,
-        publicPath: serverPath + '/test-vue-app/dist/',
+        publicPath: serverPath + '/vue-apps/dist/',
       }),
       replace({
           'process.env.NODE_ENV': JSON.stringify( 'production' ),
-          'https://resources.realitymedia.digital/test-vue-app/': componentPath //JSON.stringify( componentPath )
+          'https://resources.realitymedia.digital/vue-apps/': componentPath //JSON.stringify( componentPath )
 
       }),
       vue({
@@ -83,7 +83,7 @@ export default {
         //     cssUrl({
         //         url: "inline", // enable inline assets using base64 encoding
         //         maxSize: 1000, // maximum file size to inline (in kilobytes)
-        //         publicPath: serverPath + '/test-vue-app/dist/',
+        //         publicPath: serverPath + '/vue-apps/dist/',
         //     })
 
         //   cssImport({
@@ -97,7 +97,7 @@ export default {
         //             // '../../../node_modules/reveal.js/dist/theme/white.css',
         //             //'src/assets/theme/fonts/**/*.eot', 'src/assets/theme/fonts/**/*.ttf', 'src/assets/theme/fonts/**/*.woff'], 
         //             '*.eot', '*.ttf', '*.woff'], 
-        //             url: (asset) => `${serverPath}/test-vue-app/dist/public/fonts/${asset.relativePath}`             
+        //             url: (asset) => `${serverPath}/vue-apps/dist/public/fonts/${asset.relativePath}`             
         //           }
         //         )]
         //   })

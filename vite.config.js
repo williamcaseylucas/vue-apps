@@ -16,7 +16,7 @@ export default defineConfig({
       port: 3000
     }
   },
-  base: '/test-vue-app/',
+  base: '/vue-apps/',
   build: {
     minify: false,
     outDir: "docs",

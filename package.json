@@ -1,5 +1,5 @@
 {
-  "name": "test-vue-app",
+  "name": "vue-apps",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

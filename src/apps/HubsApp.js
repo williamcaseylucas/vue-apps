@@ -28,7 +28,7 @@ export default class HubsApp {
 
         // // add a link to the shared css
         let l = document.createElement("link")
-        l.setAttribute("href", "https://resources.realitymedia.digital/test-vue-app/dist/hubs.css")
+        l.setAttribute("href", "https://resources.realitymedia.digital/vue-apps/dist/hubs.css")
         l.setAttribute("rel", "stylesheet")
         l.setAttribute("crossorigin","anonymous")
         this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.children[0])
