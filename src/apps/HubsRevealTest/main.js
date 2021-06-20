@@ -3,8 +3,8 @@ import App from './App.vue'
 import Store from "./shared"
 import loadStyles from './styles'
 
-import '../../../node_modules/reveal.js/dist/reveal.css';
-import '../../../node_modules/reveal.js/dist/theme/white.css';
+// import '../../../node_modules/reveal.js/dist/reveal.css';
+// import '../../../node_modules/reveal.js/dist/theme/white.css';
 
 class WebApp extends WebAppProto {
     constructor () {

@@ -3,8 +3,8 @@ import HubsAppProto from "../HubsApp";
 import Store from "./shared"
 import loadStyles from './styles'
 
-import '../../../node_modules/reveal.js/dist/reveal.css';
-import '../../../node_modules/reveal.js/dist/theme/white.css';
+// import '../../../node_modules/reveal.js/dist/reveal.css';
+// import '../../../node_modules/reveal.js/dist/theme/white.css';
 
 class HubsApp extends HubsAppProto {
     constructor () {

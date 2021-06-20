@@ -1,5 +1,5 @@
 import {createApp} from "vue";
-import { WebLayer3D } from "../../packages/ethereal/ethereal.es";
+import { WebLayer3D } from "ethereal";
 
 export default class HubsApp {
     constructor (App, createOptions={}) {
@@ -25,6 +25,14 @@ export default class HubsApp {
 
     mount() {
         this.vueRoot = this.vueApp.mount(this.appDiv);
+
+        // // add a link to the shared css
+        let l = document.createElement("link")
+        l.setAttribute("href", "https://resources.realitymedia.digital/test-vue-app/dist/hubs.css")
+        l.setAttribute("rel", "stylesheet")
+        l.setAttribute("crossorigin","anonymous")
+        this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.children[0])
+        
         this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
             autoRefresh: true,
             onLayerCreate: (layer) => {
