@@ -11,28 +11,21 @@ export default class HubsApp {
         this.setSharedData = this.setSharedDataProto.bind(this)
 
         this.headDiv = document.createElement("div")
-        this.appDiv  = document.createElement("div")
-    
-        // this.headDiv.style.position = "absolute";
-        // this.headDiv.style.left = -10000+'px';
-        // this.headDiv.style.top = 0+'px';
-        
-        this.headDiv.appendChild(this.appDiv)
-        // document.body.appendChild(this.headDiv)
+        this.headDiv.setAttribute("style","width: 100%;height: 100%;")
 
         this.vueApp = createApp(App, createOptions)
     }
 
     mount() {
-        this.vueRoot = this.vueApp.mount(this.appDiv);
+        this.vueRoot = this.vueApp.mount(this.headDiv);
 
         // // add a link to the shared css
         let l = document.createElement("link")
         l.setAttribute("href", "https://resources.realitymedia.digital/vue-apps/dist/hubs.css")
         l.setAttribute("rel", "stylesheet")
         l.setAttribute("crossorigin","anonymous")
-        this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.children[0])
-        
+        this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.firstChild)
+
         this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
             autoRefresh: true,
             onLayerCreate: (layer) => {
@@ -44,6 +37,9 @@ export default class HubsApp {
             textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0  // -1000
         });
+
+        this.getSize()
+        console.log("size: ", this.size)
 
         if (this.isInteractive) {
             // for interaction
@@ -68,6 +64,19 @@ export default class HubsApp {
     // receive data updates.  should be overridden by subclasses
     updateSharedData(dataObject) {
         raise("updateData should be overridden by subclasses")
+    }
+
+    getSize() {
+        if (!this.compStyles) {
+            this.compStyles = window.getComputedStyle(this.vueRoot.$el);
+        }
+        var width = this.compStyles.getPropertyValue('width')
+        width = width && width.length > 0 ? parseFloat(width) / 1000: 1
+        var height = this.compStyles.getPropertyValue('height')
+        height = height && height.length > 0 ? parseFloat(height) / 1000: 1
+        this.size = { width: width, height: height}
+        console.log ("div size: {" + width + ", " + height + "}")
+        return this.size
     }
 
     // receive data updates.  should be overridden by subclasses
