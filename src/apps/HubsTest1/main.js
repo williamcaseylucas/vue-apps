@@ -4,7 +4,7 @@ import Store from "./shared"
 
 class WebApp extends WebAppProto {
     constructor () {
-        super(App)
+        super(App, 400, 450)
 
         // create our shared data object that will
         // share data between vue and hubs

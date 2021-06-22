@@ -2,22 +2,25 @@ import {createApp} from "vue";
 import { WebLayer3D } from "ethereal";
 
 export default class HubsApp {
-    constructor (App, createOptions={}) {
+    constructor (App, width, height, createOptions={}) {
         this.isInteractive = false;
         this.isNetworked = false;
         this.isStatic = true;
-
+        this.width = width
+        this.height = height
+        this.size = { width: width/1000, height: height/1000}
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
 
         this.headDiv = document.createElement("div")
-        this.headDiv.setAttribute("style","width: 100%;height: 100%;")
+        //this.headDiv.setAttribute("style","width: 100%;height: 100%;")
 
         this.vueApp = createApp(App, createOptions)
     }
 
     mount() {
         this.vueRoot = this.vueApp.mount(this.headDiv);
+        this.vueRoot.$el.setAttribute("style","width: " + this.width + "px; height: " + this.height + "px;")
 
         // // add a link to the shared css
         let l = document.createElement("link")
@@ -38,7 +41,6 @@ export default class HubsApp {
             renderOrderOffset: 0  // -1000
         });
 
-        this.getSize()
         console.log("size: ", this.size)
 
         if (this.isInteractive) {
@@ -67,15 +69,15 @@ export default class HubsApp {
     }
 
     getSize() {
-        if (!this.compStyles) {
-            this.compStyles = window.getComputedStyle(this.vueRoot.$el);
-        }
-        var width = this.compStyles.getPropertyValue('width')
-        width = width && width.length > 0 ? parseFloat(width) / 1000: 1
-        var height = this.compStyles.getPropertyValue('height')
-        height = height && height.length > 0 ? parseFloat(height) / 1000: 1
-        this.size = { width: width, height: height}
-        console.log ("div size: {" + width + ", " + height + "}")
+        // if (!this.compStyles) {
+        //     this.compStyles = window.getComputedStyle(this.vueRoot.$el);
+        // }
+        // var width = this.compStyles.getPropertyValue('width')
+        // width = width && width.length > 0 ? parseFloat(width) / 1000: 1
+        // var height = this.compStyles.getPropertyValue('height')
+        // height = height && height.length > 0 ? parseFloat(height) / 1000: 1
+        // this.size = { width: width, height: height}
+        console.log ("div size: {" + this.size.width + ", " + this.size.height + "}")
         return this.size
     }
 

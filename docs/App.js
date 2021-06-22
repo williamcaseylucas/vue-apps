@@ -28,8 +28,8 @@ const _sfc_main$1 = {
   }
 };
 _sfc_main$1.__scopeId = "data-v-0a071200";
-var App_vue_vue_type_style_index_0_scoped_true_lang = "\n#top[data-v-c8cc23f4] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n  border: 5;\n  border-radius: 10px;\n  border-color: red;\n  width: 400px; height: 450px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-c8cc23f4] {\n    box-sizing: content-box;\n}\nimg[data-v-c8cc23f4] {\n    max-width: none;\n        display: inline;\n}\n";
-pushScopeId("data-v-c8cc23f4");
+var App_vue_vue_type_style_index_0_scoped_true_lang = "\n#top[data-v-ff38986c] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n  border: 5;\n  border-radius: 10px;\n  border-color: red;\n  width: 400px; height: 450px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n\n\n/* * {\n    box-sizing: content-box;\n} */\nimg[data-v-ff38986c] {\n    max-width: none;\n    display: inline;\n}\n";
+pushScopeId("data-v-ff38986c");
 const _hoisted_1 = { id: "top" };
 const _hoisted_2 = /* @__PURE__ */ createVNode("img", {
   alt: "Vue logo",
@@ -47,5 +47,5 @@ const _sfc_main = {
     };
   }
 };
-_sfc_main.__scopeId = "data-v-c8cc23f4";
+_sfc_main.__scopeId = "data-v-ff38986c";
 export { _sfc_main as _ };

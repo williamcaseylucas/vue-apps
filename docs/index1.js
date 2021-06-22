@@ -22,7 +22,7 @@ class Store {
 }
 class WebApp extends WebApp$1 {
   constructor() {
-    super(_sfc_main);
+    super(_sfc_main, 400, 450);
     this.shared = new Store(this);
     this.vueApp.provide("shared", this.shared);
     console.log(JSON.stringify(this.shared.data));

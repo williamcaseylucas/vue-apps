@@ -1,15 +1,18 @@
 import {createApp} from "vue";
 
 export default class WebApp {
-    constructor (App, createOptions={}) {
+    constructor (App, width, height, createOptions={}) {
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
+        this.width = width
+        this.height = height
 
         this.vueApp = createApp(App, createOptions)
     }
 
     mount() {
         this.vueRoot = this.vueApp.mount("#app");
+        this.vueRoot.$el.setAttribute("style","width: " + this.width + "px; height: " + this.height + "px;")
     }
 
     // dummy functions, just to let us use the same

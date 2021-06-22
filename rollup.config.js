@@ -9,12 +9,15 @@ import replace from '@rollup/plugin-replace'
 import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
-import url from '@rollup/plugin-url';
+import rollupUrl from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import copy from 'rollup-plugin-copy'
 import css from 'rollup-plugin-css-only'
+import { writeFileSync } from 'fs';
+import url from 'url';
+
 // import cssImport from "postcss-import"
 // import cssUrl from 'postcss-url'
 
@@ -26,8 +29,10 @@ if ((process.env.BUILD !== 'production')) {
     serverPath = "https://resources.realitymedia.digital";
 }
 var componentPath = serverPath + '/vue-apps/'
-export default {
-    input: 'hubs.js',
+export default {//["HubsTest1", "HubsTest2"].map((name, index) => ({
+    //input: ["src/apps/HubsTest1/hubs.js", "src/apps/HubsTest2/hubs.js"],
+    //input: `src/apps/${name}/hubs.js`,
+    input: "hubs.js",
     // external: ['three'],
     // globals: {
     //   'three': 'THREE'
@@ -35,16 +40,28 @@ export default {
   
     output: [{
         dir: 'docs/dist',
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
+        //entryFileNames: `${name}.js`,
+        entryFileNames: "[name].js",
+        assetFileNames: "[name].[ext]",
+        manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+        },
+        
         format: 'es',
         sourcemap: 'inline'
       },
       {
-        file: "docs/dist/hubs.min.js", 
+        //file: `docs/dist/${name}.min.js`, 
+        file: "docs/dist/hubs.min.js",
+        //entryFileNames: `${name}.js`,
+        //entryFileNames: "[name].min.js",
+
         format: 'es', 
         plugins: [terser()]
-      }], 
+      }
+    ], 
 
     plugins: [
       virtual({
@@ -59,7 +76,7 @@ export default {
       }),
 
       rollupPluginNodeResolve(),
-      url({
+      rollupUrl({
         // by default, rollup-plugin-url will not handle font files
         include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
         // setting infinite limit will ensure that the files 
@@ -75,10 +92,28 @@ export default {
       }),
       vue({
           preprocessStyles: true,
-          css: false
+          css: false,
+          styleInjectorSSR: "foooooo"
       }),
       css({output: "hubs.css"}),
-      postcss({
+      //css(),
+    //   css({
+    //       output: function (styles, styleNodes) {
+    //         const keys = Object.keys(styleNodes);
+
+    //         keys.forEach((key, index) => {
+    //             let u = new URL ("file://" + key)
+    //             console.log(u)
+    //             let p = u.pathname
+    //             console.log(p)
+    //             let ps = p.split('/')
+    //             console.log(ps)
+    //             console.log(key)
+    //           writeFileSync(key, styleNodes[key])
+    //         })
+    //       }
+    //     }),
+    //   postcss({
         // plugins: [
         //     cssUrl({
         //         url: "inline", // enable inline assets using base64 encoding
@@ -102,8 +137,8 @@ export default {
         //         )]
         //   })
    // ]
-      }),
+    //  }),
       sourcemaps(),
 
     ]
-  }
+  }//))

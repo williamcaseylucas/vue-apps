@@ -1,5 +1,5 @@
 
-#top[data-v-e5a378b8] {
+#top[data-v-4b63dd40] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,10 +15,12 @@
   display: block;
   background-color: white;
 }
-*[data-v-e5a378b8] {
+
+
+/* * {
     box-sizing: content-box;
-}
-img[data-v-e5a378b8] {
+} */
+img[data-v-4b63dd40] {
     max-width: none;
         display: inline;
 }

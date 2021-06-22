@@ -8,7 +8,7 @@ import loadStyles from './styles'
 
 class HubsApp extends HubsAppProto {
     constructor () {
-        super(App)
+        super(App, 400, 300)
 
         loadStyles();
         

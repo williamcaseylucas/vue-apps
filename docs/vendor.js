@@ -37972,6 +37972,7 @@ function nodeTreeToXHTML(node, options) {
 function serializeToString(node, replacer2) {
   return removeInvalidCharacters(nodeTreeToXHTML(node, { depth: 0, replacer: replacer2 }));
 }
+const encoder = new TextEncoder();
 const _WebLayer = class {
   constructor(element, eventCallback) {
     this.element = element;
@@ -37993,8 +37994,9 @@ const _WebLayer = class {
     this.cachedBounds = new Map();
     this.cachedMargin = new Map();
     this._dynamicAttributes = "";
+    this._svgHash = "";
     this._svgDocument = "";
-    this._rasterizingDocument = "";
+    this._svgHashRasterizing = "";
     this._svgSrc = "";
     this._hashingCanvas = document.createElement("canvas");
     this.serializationReplacer = (node) => {
@@ -38145,13 +38147,14 @@ const _WebLayer = class {
       ]);
       const docString = '<svg width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[\n' + svgCSS.join("\n") + ']]></style></defs><foreignObject x="0" y="0" width="' + width + '" height="' + height + '">' + parentsHTML[0] + layerHTML + parentsHTML[1] + "</foreignObject></svg>";
       const svgDoc = this._svgDocument = docString;
-      const canvasHash = _WebLayer.canvasHashes.get(svgDoc);
+      const svgHash = this._svgHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(encoder.encode(svgDoc)));
+      const canvasHash = _WebLayer.canvasHashes.get(svgHash);
       if (canvasHash && _WebLayer.cachedCanvases.has(canvasHash)) {
         this.canvas = _WebLayer.cachedCanvases.get(canvasHash);
         return;
       }
-      this.cachedBounds.set(svgDoc, new Bounds().copy(this.bounds));
-      this.cachedMargin.set(svgDoc, new Edges().copy(this.margin));
+      this.cachedBounds.set(svgHash, new Bounds().copy(this.bounds));
+      this.cachedMargin.set(svgHash, new Edges().copy(this.margin));
       WebRenderer.addToRasterizeQueue(this);
     }
   }
@@ -38161,7 +38164,7 @@ const _WebLayer = class {
         WebRenderer.addToRenderQueue(this);
         resolve();
       };
-      this._rasterizingDocument = this._svgDocument;
+      this._svgHashRasterizing = this._svgHash;
       this.svgImage.src = this._svgSrc = "data:image/svg+xml;utf8," + encodeURIComponent(this._svgDocument);
       if (this.svgImage.complete && this.svgImage.currentSrc === this.svgImage.src) {
         WebRenderer.addToRenderQueue(this);
@@ -38171,8 +38174,8 @@ const _WebLayer = class {
     });
   }
   render() {
-    const svgDoc = this._rasterizingDocument;
-    if (!this.cachedBounds.has(svgDoc) || !this.cachedMargin.has(svgDoc)) {
+    const svgHash = this._svgHashRasterizing;
+    if (!this.cachedBounds.has(svgHash) || !this.cachedMargin.has(svgHash)) {
       this.needsRefresh = true;
       return;
     }
@@ -38180,8 +38183,8 @@ const _WebLayer = class {
       WebRenderer.addToRenderQueue(this);
       return;
     }
-    let { width, height } = this.cachedBounds.get(svgDoc);
-    let { left, top } = this.cachedMargin.get(svgDoc);
+    let { width, height } = this.cachedBounds.get(svgHash);
+    let { left, top } = this.cachedMargin.get(svgHash);
     const hashingCanvas = this._hashingCanvas;
     let hw = hashingCanvas.width;
     let hh = hashingCanvas.height;
@@ -38190,16 +38193,16 @@ const _WebLayer = class {
     hctx.imageSmoothingEnabled = false;
     hctx.drawImage(this.svgImage, left, top, width, height, 0, 0, hw, hh);
     const hashData = hctx.getImageData(0, 0, hw, hh).data;
-    const hash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(new Uint8Array(hashData))) + "?w=" + width + ";h=" + height;
-    _WebLayer.canvasHashes.set(svgDoc, hash);
-    const blankRetryCount = _WebLayer.blankRetryCounts.get(svgDoc) || 0;
+    const canvasHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(new Uint8Array(hashData))) + "?w=" + width + ";h=" + height;
+    _WebLayer.canvasHashes.set(svgHash, canvasHash);
+    const blankRetryCount = _WebLayer.blankRetryCounts.get(svgHash) || 0;
     if (WebRenderer.isBlankImage(hashData) && blankRetryCount < 10) {
-      _WebLayer.blankRetryCounts.set(svgDoc, blankRetryCount + 1);
+      _WebLayer.blankRetryCounts.set(svgHash, blankRetryCount + 1);
       setTimeout(() => WebRenderer.addToRenderQueue(this), 500);
       return;
     }
-    if (_WebLayer.cachedCanvases.has(hash)) {
-      this.canvas = _WebLayer.cachedCanvases.get(hash);
+    if (_WebLayer.cachedCanvases.has(canvasHash)) {
+      this.canvas = _WebLayer.cachedCanvases.get(canvasHash);
       return;
     }
     const pixelRatio = this.pixelRatio || parseFloat(this.element.getAttribute(WebRenderer.PIXEL_RATIO_ATTRIBUTE)) || window.devicePixelRatio;
@@ -38210,7 +38213,7 @@ const _WebLayer = class {
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, w2, h2);
     ctx.drawImage(this.svgImage, left, top, width, height, 0, 0, w2, h2);
-    _WebLayer.cachedCanvases.set(hash, newCanvas);
+    _WebLayer.cachedCanvases.set(canvasHash, newCanvas);
     this.canvas = newCanvas;
   }
   _getParentsHTML(element) {
@@ -38835,7 +38838,7 @@ const _WebRenderer = class {
       addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}], [${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", i2++);
       addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", i2++);
       addCSSRule(sheet, `[${_WebRenderer.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:static !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", i2++);
+      addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:fixed !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", i2++);
       addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::before, [${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", i2++);
     }
     if (rootNode === document2) {
@@ -39179,21 +39182,38 @@ const _WebRenderer = class {
     this.embeddedCSS.set(rootNode, embedded);
     const styleElements = Array.from(rootNode.querySelectorAll("style, link[type='text/css'], link[rel='stylesheet']"));
     styleElements.push(this.renderingStyleElement);
-    el.getRootNode() instanceof ShadowRoot;
-    let foundNewStyles = false;
+    const inShadow = el.getRootNode() instanceof ShadowRoot;
+    function processSheetRules(rules) {
+      let allRules = "";
+      let fontRules = "";
+      for (const rule of rules) {
+        if (rule.type === CSSRule.FONT_FACE_RULE) {
+          fontRules += "\n\n" + rule.cssText;
+        }
+        allRules += "\n\n" + rule.cssText;
+      }
+      return { allRules, fontRules };
+    }
     for (const element of styleElements) {
       if (!embedded.has(element)) {
-        foundNewStyles = true;
-        const sheet = element.sheet;
-        let cssText = "";
-        for (const rule of sheet.cssRules) {
-          cssText += "\n\n" + rule.cssText;
-        }
-        embedded.set(element, this.generateEmbeddedCSS(window.location.href, cssText));
+        embedded.set(element, new Promise((resolve) => {
+          const loading2 = setInterval(() => {
+            if (element.sheet) {
+              clearInterval(loading2);
+              const result = processSheetRules(element.sheet.rules);
+              if (inShadow && result.fontRules) {
+                const fontStyles = document.createElement("style");
+                fontStyles.innerHTML = result.fontRules;
+                document.head.appendChild(fontStyles);
+                embedded.set(fontStyles, Promise.resolve(""));
+              }
+              this._addDynamicPseudoClassRules(rootNode);
+              resolve(result.allRules);
+            }
+          }, 10);
+        }).then((cssText) => this.generateEmbeddedCSS(window.location.href, cssText)));
       }
     }
-    if (foundNewStyles)
-      this._addDynamicPseudoClassRules(rootNode);
     return Promise.all(embedded.values());
   }
   static async getDataURL(url) {
@@ -39211,7 +39231,25 @@ const _WebRenderer = class {
         return "";
       }
     } else {
-      return "data:" + contentType + ";base64," + this.arrayBufferToBase64(arr);
+      const dataURL = "data:" + contentType + ";base64," + this.arrayBufferToBase64(arr);
+      if (contentType == null ? void 0 : contentType.startsWith("image")) {
+        let loaded = function() {
+          requestAnimationFrame(rendered);
+        }, rendered = function() {
+          resolveRendered();
+        };
+        const loader = document.createElement("img");
+        let resolveRendered;
+        const onRendered = new Promise((resolve) => {
+          resolveRendered = resolve;
+          loader.onload = () => {
+            requestAnimationFrame(loaded);
+          };
+        });
+        loader.src = dataURL;
+        await onRendered;
+      }
+      return dataURL;
     }
   }
   static updateInputAttributes(element) {

@@ -8,7 +8,7 @@ import loadStyles from './styles'
 
 class WebApp extends WebAppProto {
     constructor () {
-        super(App)
+        super(App, 400, 300)
 
         loadStyles()
         // create our shared data object that will

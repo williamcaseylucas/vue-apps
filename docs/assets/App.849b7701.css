@@ -62,7 +62,7 @@ button[data-v-0a071200] {
     background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
 } */
 
-#top[data-v-c8cc23f4] {
+#top[data-v-ff38986c] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -78,10 +78,12 @@ button[data-v-0a071200] {
   display: block;
   background-color: white;
 }
-*[data-v-c8cc23f4] {
+
+
+/* * {
     box-sizing: content-box;
-}
-img[data-v-c8cc23f4] {
+} */
+img[data-v-ff38986c] {
     max-width: none;
-        display: inline;
+    display: inline;
 }
