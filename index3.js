@@ -1,6 +1,6 @@
 import { W as WebApp$1 } from "./WebApp.js";
-import { g as ref, h as onMounted, $, p as pushScopeId, b as popScopeId, o as openBlock, d as createBlock, e as createVNode, F as Fragment, w as withScopeId, r as reactive, a as readonly } from "./vendor.js";
-var App_vue_vue_type_style_index_0_scoped_true_lang = "\n#top[data-v-e5a378b8] {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #50312c;\n  margin-top: 30px;\n  border: 5;\n  border-radius: 10px;\n  border-color: red;\n  width: 400px; height: 300px;\n  position: absolute;\n\n  display: block;\n  background-color: white;\n}\n*[data-v-e5a378b8] {\n    box-sizing: content-box;\n}\nimg[data-v-e5a378b8] {\n    max-width: none;\n        display: inline;\n}\n";
+import { g as ref, h as onMounted, $, d as createBlock, e as createVNode, F as Fragment, w as withScopeId, p as pushScopeId, b as popScopeId, o as openBlock, r as reactive, a as readonly } from "./vendor.js";
+/* empty css     */var App_vue_vue_type_style_index_0_scoped_true_lang = "\n";
 const _sfc_main = {
   setup() {
     const root = ref(null);
@@ -43,7 +43,7 @@ const _sfc_main = {
   }
 };
 const _withId = /* @__PURE__ */ withScopeId();
-pushScopeId("data-v-e5a378b8");
+pushScopeId("data-v-f56285d4");
 const _hoisted_1 = /* @__PURE__ */ createVNode("link", {
   rel: "stylesheet",
   href: "/vue-apps/public/reveal/reveal.css"
@@ -78,7 +78,7 @@ const _sfc_render = /* @__PURE__ */ _withId((_ctx, _cache, $props, $setup, $data
   ], 64);
 });
 _sfc_main.render = _sfc_render;
-_sfc_main.__scopeId = "data-v-e5a378b8";
+_sfc_main.__scopeId = "data-v-f56285d4";
 class Store {
   constructor(app2) {
     this._state = reactive({
@@ -109,7 +109,7 @@ class Store {
 }
 class WebApp extends WebApp$1 {
   constructor() {
-    super(_sfc_main);
+    super(_sfc_main, 400, 300);
     this.shared = new Store(this);
     this.vueApp.provide("shared", this.shared);
     console.log(JSON.stringify(this.shared.data));
