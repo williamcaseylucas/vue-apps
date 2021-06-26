@@ -742,6 +742,10 @@ function isProxy(value) {
 function toRaw(observed) {
   return observed && toRaw(observed["__v_raw"]) || observed;
 }
+function markRaw(value) {
+  def(value, "__v_skip", true);
+  return value;
+}
 const convert = (val) => isObject(val) ? reactive(val) : val;
 function isRef(r2) {
   return Boolean(r2 && r2.__v_isRef === true);
@@ -750,7 +754,7 @@ function ref(value) {
   return createRef(value);
 }
 class RefImpl {
-  constructor(_rawValue, _shallow = false) {
+  constructor(_rawValue, _shallow) {
     this._rawValue = _rawValue;
     this._shallow = _shallow;
     this.__v_isRef = true;
@@ -1178,10 +1182,11 @@ function emit(instance, event, ...rawArgs) {
   const onceHandler = props[handlerName + `Once`];
   if (onceHandler) {
     if (!instance.emitted) {
-      (instance.emitted = {})[handlerName] = true;
+      instance.emitted = {};
     } else if (instance.emitted[handlerName]) {
       return;
     }
+    instance.emitted[handlerName] = true;
     callWithAsyncErrorHandling(onceHandler, instance, 6, args);
   }
 }
@@ -1493,7 +1498,7 @@ function inject(key, defaultValue, treatDefaultAsFactory = false) {
     if (provides && key in provides) {
       return provides[key];
     } else if (arguments.length > 1) {
-      return treatDefaultAsFactory && isFunction(defaultValue) ? defaultValue() : defaultValue;
+      return treatDefaultAsFactory && isFunction(defaultValue) ? defaultValue.call(instance.proxy) : defaultValue;
     } else
       ;
   }
@@ -1948,21 +1953,21 @@ const internalOptionMergeStrats = {
   emits: mergeObjectOptions,
   methods: mergeObjectOptions,
   computed: mergeObjectOptions,
-  beforeCreate: mergeHook,
-  created: mergeHook,
-  beforeMount: mergeHook,
-  mounted: mergeHook,
-  beforeUpdate: mergeHook,
-  updated: mergeHook,
-  beforeDestroy: mergeHook,
-  destroyed: mergeHook,
-  activated: mergeHook,
-  deactivated: mergeHook,
-  errorCaptured: mergeHook,
-  serverPrefetch: mergeHook,
+  beforeCreate: mergeAsArray,
+  created: mergeAsArray,
+  beforeMount: mergeAsArray,
+  mounted: mergeAsArray,
+  beforeUpdate: mergeAsArray,
+  updated: mergeAsArray,
+  beforeDestroy: mergeAsArray,
+  destroyed: mergeAsArray,
+  activated: mergeAsArray,
+  deactivated: mergeAsArray,
+  errorCaptured: mergeAsArray,
+  serverPrefetch: mergeAsArray,
   components: mergeObjectOptions,
   directives: mergeObjectOptions,
-  watch: mergeObjectOptions,
+  watch: mergeWatchOptions,
   provide: mergeDataFn,
   inject: mergeInject
 };
@@ -1990,11 +1995,22 @@ function normalizeInject(raw) {
   }
   return raw;
 }
-function mergeHook(to, from) {
+function mergeAsArray(to, from) {
   return to ? [...new Set([].concat(to, from))] : from;
 }
 function mergeObjectOptions(to, from) {
   return to ? extend(extend(Object.create(null), to), from) : from;
+}
+function mergeWatchOptions(to, from) {
+  if (!to)
+    return from;
+  if (!from)
+    return to;
+  const merged = extend(Object.create(null), to);
+  for (const key in from) {
+    merged[key] = mergeAsArray(to[key], from[key]);
+  }
+  return merged;
 }
 function initProps(instance, rawProps, isStateful, isSSR = false) {
   const props = {};
@@ -2355,6 +2371,7 @@ function createAppAPI(render, hydrate) {
       _props: rootProps,
       _container: null,
       _context: context,
+      _instance: null,
       version,
       get config() {
         return context.config;
@@ -2549,7 +2566,7 @@ function baseCreateRenderer(options, createHydrationFns) {
     }
   };
   const mountStaticNode = (n2, container, anchor, isSVG2) => {
-    [n2.el, n2.anchor] = hostInsertStaticContent(n2.children, container, anchor, isSVG2);
+    [n2.el, n2.anchor] = hostInsertStaticContent(n2.children, container, anchor, isSVG2, n2.el && [n2.el, n2.anchor]);
   };
   const moveStaticNode = ({ el, anchor }, container, nextSibling) => {
     let next;
@@ -3565,9 +3582,6 @@ const publicPropertiesMap = extend(Object.create(null), {
 const PublicInstanceProxyHandlers = {
   get({ _: instance }, key) {
     const { ctx, setupState, data, props, accessCache, type, appContext } = instance;
-    if (key === "__v_skip") {
-      return true;
-    }
     let normalizedProps;
     if (key[0] !== "$") {
       const n2 = accessCache[key];
@@ -3741,7 +3755,7 @@ function setupComponent(instance, isSSR = false) {
 function setupStatefulComponent(instance, isSSR) {
   const Component = instance.type;
   instance.accessCache = Object.create(null);
-  instance.proxy = new Proxy(instance.ctx, PublicInstanceProxyHandlers);
+  instance.proxy = markRaw(new Proxy(instance.ctx, PublicInstanceProxyHandlers));
   const { setup } = Component;
   if (setup) {
     const setupContext = instance.setupContext = setup.length > 1 ? createSetupContext(instance) : null;
@@ -3845,11 +3859,9 @@ function computed(getterOrOptions) {
   recordInstanceBoundEffect(c2.effect);
   return c2;
 }
-const version = "3.1.1";
+const version = "3.1.2";
 const svgNS = "http://www.w3.org/2000/svg";
 const doc = typeof document !== "undefined" ? document : null;
-let tempContainer;
-let tempSVGContainer;
 const nodeOps = {
   insert: (child, parent, anchor) => {
     parent.insertBefore(child, anchor || null);
@@ -3888,18 +3900,45 @@ const nodeOps = {
     }
     return cloned;
   },
-  insertStaticContent(content, parent, anchor, isSVG2) {
-    const temp = isSVG2 ? tempSVGContainer || (tempSVGContainer = doc.createElementNS(svgNS, "svg")) : tempContainer || (tempContainer = doc.createElement("div"));
-    temp.innerHTML = content;
-    const first = temp.firstChild;
-    let node = first;
-    let last = node;
-    while (node) {
-      last = node;
-      nodeOps.insert(node, parent, anchor);
-      node = temp.firstChild;
+  insertStaticContent(content, parent, anchor, isSVG2, cached) {
+    if (cached) {
+      let [cachedFirst, cachedLast] = cached;
+      let first, last;
+      while (true) {
+        let node = cachedFirst.cloneNode(true);
+        if (!first)
+          first = node;
+        parent.insertBefore(node, anchor);
+        if (cachedFirst === cachedLast) {
+          last = node;
+          break;
+        }
+        cachedFirst = cachedFirst.nextSibling;
+      }
+      return [first, last];
     }
-    return [first, last];
+    const before = anchor ? anchor.previousSibling : parent.lastChild;
+    if (anchor) {
+      let insertionPoint;
+      let usingTempInsertionPoint = false;
+      if (anchor instanceof Element) {
+        insertionPoint = anchor;
+      } else {
+        usingTempInsertionPoint = true;
+        insertionPoint = isSVG2 ? doc.createElementNS(svgNS, "g") : doc.createElement("div");
+        parent.insertBefore(insertionPoint, anchor);
+      }
+      insertionPoint.insertAdjacentHTML("beforebegin", content);
+      if (usingTempInsertionPoint) {
+        parent.removeChild(insertionPoint);
+      }
+    } else {
+      parent.insertAdjacentHTML("beforeend", content);
+    }
+    return [
+      before ? before.nextSibling : parent.firstChild,
+      anchor ? anchor.previousSibling : parent.lastChild
+    ];
   }
 };
 function patchClass(el, value, isSVG2) {
@@ -6992,11 +7031,11 @@ class Vector3$1 {
     return this.copy(v2).multiplyScalar(scalar);
   }
   projectOnPlane(planeNormal) {
-    _vector$d.copy(this).projectOnVector(planeNormal);
-    return this.sub(_vector$d);
+    _vector$e.copy(this).projectOnVector(planeNormal);
+    return this.sub(_vector$e);
   }
   reflect(normal) {
-    return this.sub(_vector$d.copy(normal).multiplyScalar(2 * this.dot(normal)));
+    return this.sub(_vector$e.copy(normal).multiplyScalar(2 * this.dot(normal)));
   }
   angleTo(v2) {
     const denominator = Math.sqrt(this.lengthSq() * v2.lengthSq());
@@ -7087,7 +7126,7 @@ class Vector3$1 {
     return this;
   }
 }
-const _vector$d = /* @__PURE__ */ new Vector3$1();
+const _vector$e = /* @__PURE__ */ new Vector3$1();
 const _quaternion$5 = /* @__PURE__ */ new Quaternion$1();
 class Matrix4$1 {
   constructor() {
@@ -7182,9 +7221,9 @@ class Matrix4$1 {
   extractRotation(m2) {
     const te = this.elements;
     const me = m2.elements;
-    const scaleX = 1 / _v1$7.setFromMatrixColumn(m2, 0).length();
-    const scaleY = 1 / _v1$7.setFromMatrixColumn(m2, 1).length();
-    const scaleZ = 1 / _v1$7.setFromMatrixColumn(m2, 2).length();
+    const scaleX = 1 / _v1$8.setFromMatrixColumn(m2, 0).length();
+    const scaleY = 1 / _v1$8.setFromMatrixColumn(m2, 1).length();
+    const scaleZ = 1 / _v1$8.setFromMatrixColumn(m2, 2).length();
     te[0] = me[0] * scaleX;
     te[1] = me[1] * scaleX;
     te[2] = me[2] * scaleX;
@@ -7540,9 +7579,9 @@ class Matrix4$1 {
   }
   decompose(position, quaternion, scale) {
     const te = this.elements;
-    let sx = _v1$7.set(te[0], te[1], te[2]).length();
-    const sy = _v1$7.set(te[4], te[5], te[6]).length();
-    const sz = _v1$7.set(te[8], te[9], te[10]).length();
+    let sx = _v1$8.set(te[0], te[1], te[2]).length();
+    const sy = _v1$8.set(te[4], te[5], te[6]).length();
+    const sz = _v1$8.set(te[8], te[9], te[10]).length();
     const det = this.determinant();
     if (det < 0)
       sx = -sx;
@@ -7659,14 +7698,498 @@ class Matrix4$1 {
     return array;
   }
 }
-const _v1$7 = /* @__PURE__ */ new Vector3$1();
+const _v1$8 = /* @__PURE__ */ new Vector3$1();
 const _m1$4 = /* @__PURE__ */ new Matrix4$1();
 const _zero$1 = /* @__PURE__ */ new Vector3$1(0, 0, 0);
 const _one$1 = /* @__PURE__ */ new Vector3$1(1, 1, 1);
 const _x$1 = /* @__PURE__ */ new Vector3$1();
 const _y$1 = /* @__PURE__ */ new Vector3$1();
 const _z$1 = /* @__PURE__ */ new Vector3$1();
-const _vector$c = /* @__PURE__ */ new Vector2$1();
+const _colorKeywords$1 = {
+  "aliceblue": 15792383,
+  "antiquewhite": 16444375,
+  "aqua": 65535,
+  "aquamarine": 8388564,
+  "azure": 15794175,
+  "beige": 16119260,
+  "bisque": 16770244,
+  "black": 0,
+  "blanchedalmond": 16772045,
+  "blue": 255,
+  "blueviolet": 9055202,
+  "brown": 10824234,
+  "burlywood": 14596231,
+  "cadetblue": 6266528,
+  "chartreuse": 8388352,
+  "chocolate": 13789470,
+  "coral": 16744272,
+  "cornflowerblue": 6591981,
+  "cornsilk": 16775388,
+  "crimson": 14423100,
+  "cyan": 65535,
+  "darkblue": 139,
+  "darkcyan": 35723,
+  "darkgoldenrod": 12092939,
+  "darkgray": 11119017,
+  "darkgreen": 25600,
+  "darkgrey": 11119017,
+  "darkkhaki": 12433259,
+  "darkmagenta": 9109643,
+  "darkolivegreen": 5597999,
+  "darkorange": 16747520,
+  "darkorchid": 10040012,
+  "darkred": 9109504,
+  "darksalmon": 15308410,
+  "darkseagreen": 9419919,
+  "darkslateblue": 4734347,
+  "darkslategray": 3100495,
+  "darkslategrey": 3100495,
+  "darkturquoise": 52945,
+  "darkviolet": 9699539,
+  "deeppink": 16716947,
+  "deepskyblue": 49151,
+  "dimgray": 6908265,
+  "dimgrey": 6908265,
+  "dodgerblue": 2003199,
+  "firebrick": 11674146,
+  "floralwhite": 16775920,
+  "forestgreen": 2263842,
+  "fuchsia": 16711935,
+  "gainsboro": 14474460,
+  "ghostwhite": 16316671,
+  "gold": 16766720,
+  "goldenrod": 14329120,
+  "gray": 8421504,
+  "green": 32768,
+  "greenyellow": 11403055,
+  "grey": 8421504,
+  "honeydew": 15794160,
+  "hotpink": 16738740,
+  "indianred": 13458524,
+  "indigo": 4915330,
+  "ivory": 16777200,
+  "khaki": 15787660,
+  "lavender": 15132410,
+  "lavenderblush": 16773365,
+  "lawngreen": 8190976,
+  "lemonchiffon": 16775885,
+  "lightblue": 11393254,
+  "lightcoral": 15761536,
+  "lightcyan": 14745599,
+  "lightgoldenrodyellow": 16448210,
+  "lightgray": 13882323,
+  "lightgreen": 9498256,
+  "lightgrey": 13882323,
+  "lightpink": 16758465,
+  "lightsalmon": 16752762,
+  "lightseagreen": 2142890,
+  "lightskyblue": 8900346,
+  "lightslategray": 7833753,
+  "lightslategrey": 7833753,
+  "lightsteelblue": 11584734,
+  "lightyellow": 16777184,
+  "lime": 65280,
+  "limegreen": 3329330,
+  "linen": 16445670,
+  "magenta": 16711935,
+  "maroon": 8388608,
+  "mediumaquamarine": 6737322,
+  "mediumblue": 205,
+  "mediumorchid": 12211667,
+  "mediumpurple": 9662683,
+  "mediumseagreen": 3978097,
+  "mediumslateblue": 8087790,
+  "mediumspringgreen": 64154,
+  "mediumturquoise": 4772300,
+  "mediumvioletred": 13047173,
+  "midnightblue": 1644912,
+  "mintcream": 16121850,
+  "mistyrose": 16770273,
+  "moccasin": 16770229,
+  "navajowhite": 16768685,
+  "navy": 128,
+  "oldlace": 16643558,
+  "olive": 8421376,
+  "olivedrab": 7048739,
+  "orange": 16753920,
+  "orangered": 16729344,
+  "orchid": 14315734,
+  "palegoldenrod": 15657130,
+  "palegreen": 10025880,
+  "paleturquoise": 11529966,
+  "palevioletred": 14381203,
+  "papayawhip": 16773077,
+  "peachpuff": 16767673,
+  "peru": 13468991,
+  "pink": 16761035,
+  "plum": 14524637,
+  "powderblue": 11591910,
+  "purple": 8388736,
+  "rebeccapurple": 6697881,
+  "red": 16711680,
+  "rosybrown": 12357519,
+  "royalblue": 4286945,
+  "saddlebrown": 9127187,
+  "salmon": 16416882,
+  "sandybrown": 16032864,
+  "seagreen": 3050327,
+  "seashell": 16774638,
+  "sienna": 10506797,
+  "silver": 12632256,
+  "skyblue": 8900331,
+  "slateblue": 6970061,
+  "slategray": 7372944,
+  "slategrey": 7372944,
+  "snow": 16775930,
+  "springgreen": 65407,
+  "steelblue": 4620980,
+  "tan": 13808780,
+  "teal": 32896,
+  "thistle": 14204888,
+  "tomato": 16737095,
+  "turquoise": 4251856,
+  "violet": 15631086,
+  "wheat": 16113331,
+  "white": 16777215,
+  "whitesmoke": 16119285,
+  "yellow": 16776960,
+  "yellowgreen": 10145074
+};
+const _hslA$1 = { h: 0, s: 0, l: 0 };
+const _hslB$1 = { h: 0, s: 0, l: 0 };
+function hue2rgb$1(p2, q2, t2) {
+  if (t2 < 0)
+    t2 += 1;
+  if (t2 > 1)
+    t2 -= 1;
+  if (t2 < 1 / 6)
+    return p2 + (q2 - p2) * 6 * t2;
+  if (t2 < 1 / 2)
+    return q2;
+  if (t2 < 2 / 3)
+    return p2 + (q2 - p2) * 6 * (2 / 3 - t2);
+  return p2;
+}
+function SRGBToLinear$1(c2) {
+  return c2 < 0.04045 ? c2 * 0.0773993808 : Math.pow(c2 * 0.9478672986 + 0.0521327014, 2.4);
+}
+function LinearToSRGB$1(c2) {
+  return c2 < 31308e-7 ? c2 * 12.92 : 1.055 * Math.pow(c2, 0.41666) - 0.055;
+}
+class Color$1 {
+  constructor(r2, g2, b2) {
+    Object.defineProperty(this, "isColor", { value: true });
+    if (g2 === void 0 && b2 === void 0) {
+      return this.set(r2);
+    }
+    return this.setRGB(r2, g2, b2);
+  }
+  set(value) {
+    if (value && value.isColor) {
+      this.copy(value);
+    } else if (typeof value === "number") {
+      this.setHex(value);
+    } else if (typeof value === "string") {
+      this.setStyle(value);
+    }
+    return this;
+  }
+  setScalar(scalar) {
+    this.r = scalar;
+    this.g = scalar;
+    this.b = scalar;
+    return this;
+  }
+  setHex(hex) {
+    hex = Math.floor(hex);
+    this.r = (hex >> 16 & 255) / 255;
+    this.g = (hex >> 8 & 255) / 255;
+    this.b = (hex & 255) / 255;
+    return this;
+  }
+  setRGB(r2, g2, b2) {
+    this.r = r2;
+    this.g = g2;
+    this.b = b2;
+    return this;
+  }
+  setHSL(h2, s2, l2) {
+    h2 = MathUtils$1.euclideanModulo(h2, 1);
+    s2 = MathUtils$1.clamp(s2, 0, 1);
+    l2 = MathUtils$1.clamp(l2, 0, 1);
+    if (s2 === 0) {
+      this.r = this.g = this.b = l2;
+    } else {
+      const p2 = l2 <= 0.5 ? l2 * (1 + s2) : l2 + s2 - l2 * s2;
+      const q2 = 2 * l2 - p2;
+      this.r = hue2rgb$1(q2, p2, h2 + 1 / 3);
+      this.g = hue2rgb$1(q2, p2, h2);
+      this.b = hue2rgb$1(q2, p2, h2 - 1 / 3);
+    }
+    return this;
+  }
+  setStyle(style) {
+    function handleAlpha(string) {
+      if (string === void 0)
+        return;
+      if (parseFloat(string) < 1) {
+        console.warn("THREE.Color: Alpha component of " + style + " will be ignored.");
+      }
+    }
+    let m2;
+    if (m2 = /^((?:rgb|hsl)a?)\(\s*([^\)]*)\)/.exec(style)) {
+      let color;
+      const name = m2[1];
+      const components = m2[2];
+      switch (name) {
+        case "rgb":
+        case "rgba":
+          if (color = /^(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(components)) {
+            this.r = Math.min(255, parseInt(color[1], 10)) / 255;
+            this.g = Math.min(255, parseInt(color[2], 10)) / 255;
+            this.b = Math.min(255, parseInt(color[3], 10)) / 255;
+            handleAlpha(color[5]);
+            return this;
+          }
+          if (color = /^(\d+)\%\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(components)) {
+            this.r = Math.min(100, parseInt(color[1], 10)) / 100;
+            this.g = Math.min(100, parseInt(color[2], 10)) / 100;
+            this.b = Math.min(100, parseInt(color[3], 10)) / 100;
+            handleAlpha(color[5]);
+            return this;
+          }
+          break;
+        case "hsl":
+        case "hsla":
+          if (color = /^([0-9]*\.?[0-9]+)\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(,\s*([0-9]*\.?[0-9]+)\s*)?$/.exec(components)) {
+            const h2 = parseFloat(color[1]) / 360;
+            const s2 = parseInt(color[2], 10) / 100;
+            const l2 = parseInt(color[3], 10) / 100;
+            handleAlpha(color[5]);
+            return this.setHSL(h2, s2, l2);
+          }
+          break;
+      }
+    } else if (m2 = /^\#([A-Fa-f0-9]+)$/.exec(style)) {
+      const hex = m2[1];
+      const size2 = hex.length;
+      if (size2 === 3) {
+        this.r = parseInt(hex.charAt(0) + hex.charAt(0), 16) / 255;
+        this.g = parseInt(hex.charAt(1) + hex.charAt(1), 16) / 255;
+        this.b = parseInt(hex.charAt(2) + hex.charAt(2), 16) / 255;
+        return this;
+      } else if (size2 === 6) {
+        this.r = parseInt(hex.charAt(0) + hex.charAt(1), 16) / 255;
+        this.g = parseInt(hex.charAt(2) + hex.charAt(3), 16) / 255;
+        this.b = parseInt(hex.charAt(4) + hex.charAt(5), 16) / 255;
+        return this;
+      }
+    }
+    if (style && style.length > 0) {
+      return this.setColorName(style);
+    }
+    return this;
+  }
+  setColorName(style) {
+    const hex = _colorKeywords$1[style];
+    if (hex !== void 0) {
+      this.setHex(hex);
+    } else {
+      console.warn("THREE.Color: Unknown color " + style);
+    }
+    return this;
+  }
+  clone() {
+    return new this.constructor(this.r, this.g, this.b);
+  }
+  copy(color) {
+    this.r = color.r;
+    this.g = color.g;
+    this.b = color.b;
+    return this;
+  }
+  copyGammaToLinear(color, gammaFactor) {
+    if (gammaFactor === void 0)
+      gammaFactor = 2;
+    this.r = Math.pow(color.r, gammaFactor);
+    this.g = Math.pow(color.g, gammaFactor);
+    this.b = Math.pow(color.b, gammaFactor);
+    return this;
+  }
+  copyLinearToGamma(color, gammaFactor) {
+    if (gammaFactor === void 0)
+      gammaFactor = 2;
+    const safeInverse = gammaFactor > 0 ? 1 / gammaFactor : 1;
+    this.r = Math.pow(color.r, safeInverse);
+    this.g = Math.pow(color.g, safeInverse);
+    this.b = Math.pow(color.b, safeInverse);
+    return this;
+  }
+  convertGammaToLinear(gammaFactor) {
+    this.copyGammaToLinear(this, gammaFactor);
+    return this;
+  }
+  convertLinearToGamma(gammaFactor) {
+    this.copyLinearToGamma(this, gammaFactor);
+    return this;
+  }
+  copySRGBToLinear(color) {
+    this.r = SRGBToLinear$1(color.r);
+    this.g = SRGBToLinear$1(color.g);
+    this.b = SRGBToLinear$1(color.b);
+    return this;
+  }
+  copyLinearToSRGB(color) {
+    this.r = LinearToSRGB$1(color.r);
+    this.g = LinearToSRGB$1(color.g);
+    this.b = LinearToSRGB$1(color.b);
+    return this;
+  }
+  convertSRGBToLinear() {
+    this.copySRGBToLinear(this);
+    return this;
+  }
+  convertLinearToSRGB() {
+    this.copyLinearToSRGB(this);
+    return this;
+  }
+  getHex() {
+    return this.r * 255 << 16 ^ this.g * 255 << 8 ^ this.b * 255 << 0;
+  }
+  getHexString() {
+    return ("000000" + this.getHex().toString(16)).slice(-6);
+  }
+  getHSL(target) {
+    if (target === void 0) {
+      console.warn("THREE.Color: .getHSL() target is now required");
+      target = { h: 0, s: 0, l: 0 };
+    }
+    const r2 = this.r, g2 = this.g, b2 = this.b;
+    const max = Math.max(r2, g2, b2);
+    const min = Math.min(r2, g2, b2);
+    let hue, saturation;
+    const lightness = (min + max) / 2;
+    if (min === max) {
+      hue = 0;
+      saturation = 0;
+    } else {
+      const delta = max - min;
+      saturation = lightness <= 0.5 ? delta / (max + min) : delta / (2 - max - min);
+      switch (max) {
+        case r2:
+          hue = (g2 - b2) / delta + (g2 < b2 ? 6 : 0);
+          break;
+        case g2:
+          hue = (b2 - r2) / delta + 2;
+          break;
+        case b2:
+          hue = (r2 - g2) / delta + 4;
+          break;
+      }
+      hue /= 6;
+    }
+    target.h = hue;
+    target.s = saturation;
+    target.l = lightness;
+    return target;
+  }
+  getStyle() {
+    return "rgb(" + (this.r * 255 | 0) + "," + (this.g * 255 | 0) + "," + (this.b * 255 | 0) + ")";
+  }
+  offsetHSL(h2, s2, l2) {
+    this.getHSL(_hslA$1);
+    _hslA$1.h += h2;
+    _hslA$1.s += s2;
+    _hslA$1.l += l2;
+    this.setHSL(_hslA$1.h, _hslA$1.s, _hslA$1.l);
+    return this;
+  }
+  add(color) {
+    this.r += color.r;
+    this.g += color.g;
+    this.b += color.b;
+    return this;
+  }
+  addColors(color1, color2) {
+    this.r = color1.r + color2.r;
+    this.g = color1.g + color2.g;
+    this.b = color1.b + color2.b;
+    return this;
+  }
+  addScalar(s2) {
+    this.r += s2;
+    this.g += s2;
+    this.b += s2;
+    return this;
+  }
+  sub(color) {
+    this.r = Math.max(0, this.r - color.r);
+    this.g = Math.max(0, this.g - color.g);
+    this.b = Math.max(0, this.b - color.b);
+    return this;
+  }
+  multiply(color) {
+    this.r *= color.r;
+    this.g *= color.g;
+    this.b *= color.b;
+    return this;
+  }
+  multiplyScalar(s2) {
+    this.r *= s2;
+    this.g *= s2;
+    this.b *= s2;
+    return this;
+  }
+  lerp(color, alpha) {
+    this.r += (color.r - this.r) * alpha;
+    this.g += (color.g - this.g) * alpha;
+    this.b += (color.b - this.b) * alpha;
+    return this;
+  }
+  lerpHSL(color, alpha) {
+    this.getHSL(_hslA$1);
+    color.getHSL(_hslB$1);
+    const h2 = MathUtils$1.lerp(_hslA$1.h, _hslB$1.h, alpha);
+    const s2 = MathUtils$1.lerp(_hslA$1.s, _hslB$1.s, alpha);
+    const l2 = MathUtils$1.lerp(_hslA$1.l, _hslB$1.l, alpha);
+    this.setHSL(h2, s2, l2);
+    return this;
+  }
+  equals(c2) {
+    return c2.r === this.r && c2.g === this.g && c2.b === this.b;
+  }
+  fromArray(array, offset = 0) {
+    this.r = array[offset];
+    this.g = array[offset + 1];
+    this.b = array[offset + 2];
+    return this;
+  }
+  toArray(array = [], offset = 0) {
+    array[offset] = this.r;
+    array[offset + 1] = this.g;
+    array[offset + 2] = this.b;
+    return array;
+  }
+  fromBufferAttribute(attribute, index) {
+    this.r = attribute.getX(index);
+    this.g = attribute.getY(index);
+    this.b = attribute.getZ(index);
+    if (attribute.normalized === true) {
+      this.r /= 255;
+      this.g /= 255;
+      this.b /= 255;
+    }
+    return this;
+  }
+  toJSON() {
+    return this.getHex();
+  }
+}
+Color$1.NAMES = _colorKeywords$1;
+Color$1.prototype.r = 1;
+Color$1.prototype.g = 1;
+Color$1.prototype.b = 1;
+const _vector$d = /* @__PURE__ */ new Vector2$1();
 class Box2$1 {
   constructor(min, max) {
     Object.defineProperty(this, "isBox2", { value: true });
@@ -7686,7 +8209,7 @@ class Box2$1 {
     return this;
   }
   setFromCenterAndSize(center, size2) {
-    const halfSize = _vector$c.copy(size2).multiplyScalar(0.5);
+    const halfSize = _vector$d.copy(size2).multiplyScalar(0.5);
     this.min.copy(center).sub(halfSize);
     this.max.copy(center).add(halfSize);
     return this;
@@ -7760,7 +8283,7 @@ class Box2$1 {
     return target.copy(point).clamp(this.min, this.max);
   }
   distanceToPoint(point) {
-    const clampedPoint = _vector$c.copy(point).clamp(this.min, this.max);
+    const clampedPoint = _vector$d.copy(point).clamp(this.min, this.max);
     return clampedPoint.sub(point).length();
   }
   intersect(box) {
@@ -7782,6 +8305,338 @@ class Box2$1 {
     return box.min.equals(this.min) && box.max.equals(this.max);
   }
 }
+class Box3$1 {
+  constructor(min, max) {
+    Object.defineProperty(this, "isBox3", { value: true });
+    this.min = min !== void 0 ? min : new Vector3$1(Infinity, Infinity, Infinity);
+    this.max = max !== void 0 ? max : new Vector3$1(-Infinity, -Infinity, -Infinity);
+  }
+  set(min, max) {
+    this.min.copy(min);
+    this.max.copy(max);
+    return this;
+  }
+  setFromArray(array) {
+    let minX = Infinity;
+    let minY = Infinity;
+    let minZ = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let maxZ = -Infinity;
+    for (let i2 = 0, l2 = array.length; i2 < l2; i2 += 3) {
+      const x2 = array[i2];
+      const y2 = array[i2 + 1];
+      const z2 = array[i2 + 2];
+      if (x2 < minX)
+        minX = x2;
+      if (y2 < minY)
+        minY = y2;
+      if (z2 < minZ)
+        minZ = z2;
+      if (x2 > maxX)
+        maxX = x2;
+      if (y2 > maxY)
+        maxY = y2;
+      if (z2 > maxZ)
+        maxZ = z2;
+    }
+    this.min.set(minX, minY, minZ);
+    this.max.set(maxX, maxY, maxZ);
+    return this;
+  }
+  setFromBufferAttribute(attribute) {
+    let minX = Infinity;
+    let minY = Infinity;
+    let minZ = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let maxZ = -Infinity;
+    for (let i2 = 0, l2 = attribute.count; i2 < l2; i2++) {
+      const x2 = attribute.getX(i2);
+      const y2 = attribute.getY(i2);
+      const z2 = attribute.getZ(i2);
+      if (x2 < minX)
+        minX = x2;
+      if (y2 < minY)
+        minY = y2;
+      if (z2 < minZ)
+        minZ = z2;
+      if (x2 > maxX)
+        maxX = x2;
+      if (y2 > maxY)
+        maxY = y2;
+      if (z2 > maxZ)
+        maxZ = z2;
+    }
+    this.min.set(minX, minY, minZ);
+    this.max.set(maxX, maxY, maxZ);
+    return this;
+  }
+  setFromPoints(points) {
+    this.makeEmpty();
+    for (let i2 = 0, il = points.length; i2 < il; i2++) {
+      this.expandByPoint(points[i2]);
+    }
+    return this;
+  }
+  setFromCenterAndSize(center, size2) {
+    const halfSize = _vector$c.copy(size2).multiplyScalar(0.5);
+    this.min.copy(center).sub(halfSize);
+    this.max.copy(center).add(halfSize);
+    return this;
+  }
+  setFromObject(object) {
+    this.makeEmpty();
+    return this.expandByObject(object);
+  }
+  clone() {
+    return new this.constructor().copy(this);
+  }
+  copy(box) {
+    this.min.copy(box.min);
+    this.max.copy(box.max);
+    return this;
+  }
+  makeEmpty() {
+    this.min.x = this.min.y = this.min.z = Infinity;
+    this.max.x = this.max.y = this.max.z = -Infinity;
+    return this;
+  }
+  isEmpty() {
+    return this.max.x < this.min.x || this.max.y < this.min.y || this.max.z < this.min.z;
+  }
+  getCenter(target) {
+    if (target === void 0) {
+      console.warn("THREE.Box3: .getCenter() target is now required");
+      target = new Vector3$1();
+    }
+    return this.isEmpty() ? target.set(0, 0, 0) : target.addVectors(this.min, this.max).multiplyScalar(0.5);
+  }
+  getSize(target) {
+    if (target === void 0) {
+      console.warn("THREE.Box3: .getSize() target is now required");
+      target = new Vector3$1();
+    }
+    return this.isEmpty() ? target.set(0, 0, 0) : target.subVectors(this.max, this.min);
+  }
+  expandByPoint(point) {
+    this.min.min(point);
+    this.max.max(point);
+    return this;
+  }
+  expandByVector(vector) {
+    this.min.sub(vector);
+    this.max.add(vector);
+    return this;
+  }
+  expandByScalar(scalar) {
+    this.min.addScalar(-scalar);
+    this.max.addScalar(scalar);
+    return this;
+  }
+  expandByObject(object) {
+    object.updateWorldMatrix(false, false);
+    const geometry = object.geometry;
+    if (geometry !== void 0) {
+      if (geometry.boundingBox === null) {
+        geometry.computeBoundingBox();
+      }
+      _box$4.copy(geometry.boundingBox);
+      _box$4.applyMatrix4(object.matrixWorld);
+      this.union(_box$4);
+    }
+    const children = object.children;
+    for (let i2 = 0, l2 = children.length; i2 < l2; i2++) {
+      this.expandByObject(children[i2]);
+    }
+    return this;
+  }
+  containsPoint(point) {
+    return point.x < this.min.x || point.x > this.max.x || point.y < this.min.y || point.y > this.max.y || point.z < this.min.z || point.z > this.max.z ? false : true;
+  }
+  containsBox(box) {
+    return this.min.x <= box.min.x && box.max.x <= this.max.x && this.min.y <= box.min.y && box.max.y <= this.max.y && this.min.z <= box.min.z && box.max.z <= this.max.z;
+  }
+  getParameter(point, target) {
+    if (target === void 0) {
+      console.warn("THREE.Box3: .getParameter() target is now required");
+      target = new Vector3$1();
+    }
+    return target.set((point.x - this.min.x) / (this.max.x - this.min.x), (point.y - this.min.y) / (this.max.y - this.min.y), (point.z - this.min.z) / (this.max.z - this.min.z));
+  }
+  intersectsBox(box) {
+    return box.max.x < this.min.x || box.min.x > this.max.x || box.max.y < this.min.y || box.min.y > this.max.y || box.max.z < this.min.z || box.min.z > this.max.z ? false : true;
+  }
+  intersectsSphere(sphere) {
+    this.clampPoint(sphere.center, _vector$c);
+    return _vector$c.distanceToSquared(sphere.center) <= sphere.radius * sphere.radius;
+  }
+  intersectsPlane(plane) {
+    let min, max;
+    if (plane.normal.x > 0) {
+      min = plane.normal.x * this.min.x;
+      max = plane.normal.x * this.max.x;
+    } else {
+      min = plane.normal.x * this.max.x;
+      max = plane.normal.x * this.min.x;
+    }
+    if (plane.normal.y > 0) {
+      min += plane.normal.y * this.min.y;
+      max += plane.normal.y * this.max.y;
+    } else {
+      min += plane.normal.y * this.max.y;
+      max += plane.normal.y * this.min.y;
+    }
+    if (plane.normal.z > 0) {
+      min += plane.normal.z * this.min.z;
+      max += plane.normal.z * this.max.z;
+    } else {
+      min += plane.normal.z * this.max.z;
+      max += plane.normal.z * this.min.z;
+    }
+    return min <= -plane.constant && max >= -plane.constant;
+  }
+  intersectsTriangle(triangle) {
+    if (this.isEmpty()) {
+      return false;
+    }
+    this.getCenter(_center$1);
+    _extents$1.subVectors(this.max, _center$1);
+    _v0$3.subVectors(triangle.a, _center$1);
+    _v1$7.subVectors(triangle.b, _center$1);
+    _v2$4.subVectors(triangle.c, _center$1);
+    _f0$1.subVectors(_v1$7, _v0$3);
+    _f1$1.subVectors(_v2$4, _v1$7);
+    _f2$1.subVectors(_v0$3, _v2$4);
+    let axes = [
+      0,
+      -_f0$1.z,
+      _f0$1.y,
+      0,
+      -_f1$1.z,
+      _f1$1.y,
+      0,
+      -_f2$1.z,
+      _f2$1.y,
+      _f0$1.z,
+      0,
+      -_f0$1.x,
+      _f1$1.z,
+      0,
+      -_f1$1.x,
+      _f2$1.z,
+      0,
+      -_f2$1.x,
+      -_f0$1.y,
+      _f0$1.x,
+      0,
+      -_f1$1.y,
+      _f1$1.x,
+      0,
+      -_f2$1.y,
+      _f2$1.x,
+      0
+    ];
+    if (!satForAxes$1(axes, _v0$3, _v1$7, _v2$4, _extents$1)) {
+      return false;
+    }
+    axes = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+    if (!satForAxes$1(axes, _v0$3, _v1$7, _v2$4, _extents$1)) {
+      return false;
+    }
+    _triangleNormal$1.crossVectors(_f0$1, _f1$1);
+    axes = [_triangleNormal$1.x, _triangleNormal$1.y, _triangleNormal$1.z];
+    return satForAxes$1(axes, _v0$3, _v1$7, _v2$4, _extents$1);
+  }
+  clampPoint(point, target) {
+    if (target === void 0) {
+      console.warn("THREE.Box3: .clampPoint() target is now required");
+      target = new Vector3$1();
+    }
+    return target.copy(point).clamp(this.min, this.max);
+  }
+  distanceToPoint(point) {
+    const clampedPoint = _vector$c.copy(point).clamp(this.min, this.max);
+    return clampedPoint.sub(point).length();
+  }
+  getBoundingSphere(target) {
+    if (target === void 0) {
+      console.error("THREE.Box3: .getBoundingSphere() target is now required");
+    }
+    this.getCenter(target.center);
+    target.radius = this.getSize(_vector$c).length() * 0.5;
+    return target;
+  }
+  intersect(box) {
+    this.min.max(box.min);
+    this.max.min(box.max);
+    if (this.isEmpty())
+      this.makeEmpty();
+    return this;
+  }
+  union(box) {
+    this.min.min(box.min);
+    this.max.max(box.max);
+    return this;
+  }
+  applyMatrix4(matrix) {
+    if (this.isEmpty())
+      return this;
+    _points$1[0].set(this.min.x, this.min.y, this.min.z).applyMatrix4(matrix);
+    _points$1[1].set(this.min.x, this.min.y, this.max.z).applyMatrix4(matrix);
+    _points$1[2].set(this.min.x, this.max.y, this.min.z).applyMatrix4(matrix);
+    _points$1[3].set(this.min.x, this.max.y, this.max.z).applyMatrix4(matrix);
+    _points$1[4].set(this.max.x, this.min.y, this.min.z).applyMatrix4(matrix);
+    _points$1[5].set(this.max.x, this.min.y, this.max.z).applyMatrix4(matrix);
+    _points$1[6].set(this.max.x, this.max.y, this.min.z).applyMatrix4(matrix);
+    _points$1[7].set(this.max.x, this.max.y, this.max.z).applyMatrix4(matrix);
+    this.setFromPoints(_points$1);
+    return this;
+  }
+  translate(offset) {
+    this.min.add(offset);
+    this.max.add(offset);
+    return this;
+  }
+  equals(box) {
+    return box.min.equals(this.min) && box.max.equals(this.max);
+  }
+}
+function satForAxes$1(axes, v0, v1, v2, extents) {
+  for (let i2 = 0, j = axes.length - 3; i2 <= j; i2 += 3) {
+    _testAxis$1.fromArray(axes, i2);
+    const r2 = extents.x * Math.abs(_testAxis$1.x) + extents.y * Math.abs(_testAxis$1.y) + extents.z * Math.abs(_testAxis$1.z);
+    const p0 = v0.dot(_testAxis$1);
+    const p1 = v1.dot(_testAxis$1);
+    const p2 = v2.dot(_testAxis$1);
+    if (Math.max(-Math.max(p0, p1, p2), Math.min(p0, p1, p2)) > r2) {
+      return false;
+    }
+  }
+  return true;
+}
+const _points$1 = [
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1(),
+  /* @__PURE__ */ new Vector3$1()
+];
+const _vector$c = /* @__PURE__ */ new Vector3$1();
+const _box$4 = /* @__PURE__ */ new Box3$1();
+const _v0$3 = /* @__PURE__ */ new Vector3$1();
+const _v1$7 = /* @__PURE__ */ new Vector3$1();
+const _v2$4 = /* @__PURE__ */ new Vector3$1();
+const _f0$1 = /* @__PURE__ */ new Vector3$1();
+const _f1$1 = /* @__PURE__ */ new Vector3$1();
+const _f2$1 = /* @__PURE__ */ new Vector3$1();
+const _center$1 = /* @__PURE__ */ new Vector3$1();
+const _extents$1 = /* @__PURE__ */ new Vector3$1();
+const _triangleNormal$1 = /* @__PURE__ */ new Vector3$1();
+const _testAxis$1 = /* @__PURE__ */ new Vector3$1();
 Object.freeze(new Vector2$1(0, 0));
 Object.freeze(new Vector2$1(1, 1));
 Object.freeze(new Vector3$1(0, 0, 0));
@@ -7843,6 +8698,12 @@ new Vector3$1();
 new Vector3$1();
 new Vector3$1();
 new Vector3$1();
+new Vector2$1();
+new Vector3$1();
+new Quaternion$1();
+new Box3$1();
+new Color$1();
+new Color$1(0, 0, 0);
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 new Vector3$1();
 const REVISION = "122";
@@ -37336,15 +38197,6 @@ function getPadding(element, padding) {
   padding.top = parseFloat(style.paddingTop) || 0;
   padding.bottom = parseFloat(style.paddingBottom) || 0;
 }
-function getViewportBounds(bounds) {
-  if (!viewportTester.parentNode)
-    document.documentElement.append(viewportTester);
-  bounds.left = pageXOffset;
-  bounds.top = pageYOffset;
-  bounds.width = viewportTester.offsetWidth;
-  bounds.height = viewportTester.offsetHeight;
-  return bounds;
-}
 const viewportTester = document.createElement("div");
 viewportTester.id = "VIEWPORT";
 viewportTester.style.position = "fixed";
@@ -37921,23 +38773,30 @@ function serializeNamespace(node, isRootNode) {
     return "";
   }
 }
-function serializeChildren(node, options) {
-  let output = "";
+async function serializeChildren(node, options) {
+  let output = [];
   for (const n2 of node.childNodes)
-    output += nodeTreeToXHTML(n2, options);
-  return output;
+    output.push(nodeTreeToXHTML(n2, options));
+  return Promise.all(output).then((output2) => output2.join(""));
 }
-function serializeTag(node, options) {
-  let output = "<" + getTagName(node);
+async function serializeTag(node, options) {
+  const tagName = getTagName(node);
+  let output = "<" + tagName;
   output += serializeNamespace(node, options.depth === 0);
+  const childrenHTML = serializeChildren(node, options);
+  const isImg = tagName === "img";
   for (const attr of node.attributes) {
-    output += serializeAttribute(attr.name, attr.value);
+    if (isImg && attr.name === "src") {
+      output += serializeAttribute(attr.name, await WebRenderer.getDataURL(attr.value));
+    } else {
+      output += serializeAttribute(attr.name, attr.value);
+    }
   }
   if (node.childNodes.length > 0) {
     options.depth++;
     output += ">";
-    output += serializeChildren(node, options);
-    output += "</" + getTagName(node) + ">";
+    output += await childrenHTML;
+    output += "</" + tagName + ">";
     options.depth--;
   } else {
     output += "/>";
@@ -37951,7 +38810,7 @@ function serializeText(node) {
 function serializeCDATA(node) {
   return "<![CDATA[" + node.nodeValue + "]]>";
 }
-function nodeTreeToXHTML(node, options) {
+async function nodeTreeToXHTML(node, options) {
   var _a;
   const replaced = (_a = options.replacer) == null ? void 0 : _a.call(options, node);
   if (typeof replaced === "string") {
@@ -37969,8 +38828,8 @@ function nodeTreeToXHTML(node, options) {
   }
   return "";
 }
-function serializeToString(node, replacer2) {
-  return removeInvalidCharacters(nodeTreeToXHTML(node, { depth: 0, replacer: replacer2 }));
+async function serializeToString(node, replacer2) {
+  return removeInvalidCharacters(await nodeTreeToXHTML(node, { depth: 0, replacer: replacer2 }));
 }
 const encoder = new TextEncoder();
 const _WebLayer = class {
@@ -37991,6 +38850,7 @@ const _WebLayer = class {
     this.margin = new Edges();
     this.border = new Edges();
     this.childLayers = [];
+    this.rasterizationCount = new Map();
     this.cachedBounds = new Map();
     this.cachedMargin = new Map();
     this._dynamicAttributes = "";
@@ -38007,7 +38867,7 @@ const _WebLayer = class {
       if (layer) {
         const bounds = layer.bounds;
         let attributes = "";
-        const extraStyle = `min-width:${bounds.width}px;min-height:${bounds.height}px;visibility:hidden`;
+        const extraStyle = `max-width:${bounds.width + 1}px;max-height:${bounds.height + 1}px;min-width:${bounds.width}px;min-height:${bounds.height}px;visibility:hidden`;
         let addedStyle = false;
         for (const attr of layer.element.attributes) {
           if (attr.name === "src")
@@ -38036,15 +38896,39 @@ const _WebLayer = class {
     this._hashingCanvas.width = 20;
     this._hashingCanvas.height = 20;
   }
-  set canvas(val) {
-    if (this._canvas !== val) {
-      this._canvas = val;
-      if (this.eventCallback)
-        this.eventCallback("layerpainted", { target: this.element });
+  trySetFromSVGHash(svgHash) {
+    const bounds = this.cachedBounds.get(svgHash);
+    const margin = this.cachedMargin.get(svgHash);
+    if (svgHash == this._currentSVGHash) {
+      if (bounds && margin) {
+        this._currentBounds = bounds;
+        this._currentMargin = margin;
+      }
+      return true;
+    } else {
+      const previousCanvasHash = _WebLayer.svgCanvasHash.get(this._currentSVGHash);
+      const canvasHash = _WebLayer.svgCanvasHash.get(svgHash);
+      const canvas = _WebLayer.cachedCanvases.get(canvasHash);
+      if (canvas && bounds && margin) {
+        this._currentSVGHash = svgHash;
+        this._currentCanvas = canvas;
+        this._currentBounds = bounds;
+        this._currentMargin = margin;
+        if (previousCanvasHash !== canvasHash && this.eventCallback)
+          this.eventCallback("layerchanged", { target: this.element });
+        return true;
+      }
     }
+    return false;
   }
-  get canvas() {
-    return this._canvas;
+  get currentCanvas() {
+    return this._currentCanvas;
+  }
+  get currentBounds() {
+    return this._currentBounds;
+  }
+  get currentMargin() {
+    return this._currentMargin;
   }
   get depth() {
     let depth = 0;
@@ -38079,6 +38963,11 @@ const _WebLayer = class {
   }
   refresh() {
     getBounds(this.element, this.bounds, this.parentLayer && this.parentLayer.element);
+    getMargin(this.element, this.margin);
+    if (!this._currentSVGHash) {
+      this._currentBounds = this.bounds;
+      this._currentMargin = this.margin;
+    }
     this.needsRefresh = false;
     this._updateParentAndChildLayers();
     WebRenderer.addToSerializeQueue(this);
@@ -38124,97 +39013,106 @@ const _WebLayer = class {
     return true;
   }
   async serialize() {
-    if (this.element.nodeName === "VIDEO")
+    var _a;
+    const layerElement = this.element;
+    if (layerElement.nodeName === "VIDEO")
       return;
+    getBounds(layerElement, this.bounds, (_a = this.parentLayer) == null ? void 0 : _a.element);
     let { width, height } = this.bounds;
     if (width * height > 0) {
-      getPadding(this.element, this.padding);
-      getMargin(this.element, this.margin);
-      getBorder(this.element, this.border);
+      getPadding(layerElement, this.padding);
+      getMargin(layerElement, this.margin);
+      getBorder(layerElement, this.border);
       width += Math.max(this.margin.left, 0) + Math.max(this.margin.right, 0);
       height += Math.max(this.margin.top, 0) + Math.max(this.margin.bottom, 0);
       const elementAttribute = WebRenderer.attributeHTML(WebRenderer.ELEMENT_UID_ATTRIBUTE, "" + this.id);
-      const layerElement = this.element;
       const computedStyle = getComputedStyle(layerElement);
       const needsInlineBlock = computedStyle.display === "inline";
       WebRenderer.updateInputAttributes(layerElement);
-      const layerHTML = serializeToString(layerElement, this.serializationReplacer).replace(elementAttribute, `${elementAttribute} ${WebRenderer.RENDERING_ATTRIBUTE}="" ${needsInlineBlock ? `${WebRenderer.RENDERING_INLINE_ATTRIBUTE}="" ` : " "} ` + WebRenderer.getPsuedoAttributes(this.pseudoStates));
       const parentsHTML = this._getParentsHTML(layerElement);
       parentsHTML[0] = parentsHTML[0].replace("html", "html " + WebRenderer.RENDERING_DOCUMENT_ATTRIBUTE + '="" ');
-      const [svgCSS] = await Promise.all([
-        WebRenderer.getRenderingCSS(this.element),
-        WebRenderer.embedExternalResources(this.element)
+      let [svgCSS, layerHTML] = await Promise.all([
+        WebRenderer.getRenderingCSS(layerElement),
+        serializeToString(layerElement, this.serializationReplacer)
       ]);
-      const docString = '<svg width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[\n' + svgCSS.join("\n") + ']]></style></defs><foreignObject x="0" y="0" width="' + width + '" height="' + height + '">' + parentsHTML[0] + layerHTML + parentsHTML[1] + "</foreignObject></svg>";
+      layerHTML = layerHTML.replace(elementAttribute, `${elementAttribute} ${WebRenderer.RENDERING_ATTRIBUTE}="" ${needsInlineBlock ? `${WebRenderer.RENDERING_INLINE_ATTRIBUTE}="" ` : " "} ` + WebRenderer.getPsuedoAttributes(this.pseudoStates));
+      const docString = '<svg width="' + width + '" height="' + height + '" xmlns="http://www.w3.org/2000/svg"><defs><style type="text/css"><![CDATA[\n' + svgCSS.join("\n") + ']]></style></defs><foreignObject x="0" y="0" width="' + (width + 1) + '" height="' + (height + 1) + '">' + parentsHTML[0] + layerHTML + parentsHTML[1] + "</foreignObject></svg>";
       const svgDoc = this._svgDocument = docString;
-      const svgHash = this._svgHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(encoder.encode(svgDoc)));
-      const canvasHash = _WebLayer.canvasHashes.get(svgHash);
-      if (canvasHash && _WebLayer.cachedCanvases.has(canvasHash)) {
-        this.canvas = _WebLayer.cachedCanvases.get(canvasHash);
-        return;
-      }
+      const svgHash = this._svgHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(encoder.encode(svgDoc))) + "?w=" + width + ";h=" + height;
       this.cachedBounds.set(svgHash, new Bounds().copy(this.bounds));
       this.cachedMargin.set(svgHash, new Edges().copy(this.margin));
+      if (this.trySetFromSVGHash(svgHash))
+        return;
       WebRenderer.addToRasterizeQueue(this);
     }
   }
   async rasterize() {
-    return new Promise((resolve) => {
-      this.svgImage.onload = () => {
-        WebRenderer.addToRenderQueue(this);
-        resolve();
-      };
-      this._svgHashRasterizing = this._svgHash;
-      this.svgImage.src = this._svgSrc = "data:image/svg+xml;utf8," + encodeURIComponent(this._svgDocument);
-      if (this.svgImage.complete && this.svgImage.currentSrc === this.svgImage.src) {
+    return new Promise((resolve, reject) => {
+      const render = () => {
         WebRenderer.addToRenderQueue(this);
         this.svgImage.onload = null;
         resolve();
-      }
+      };
+      this.svgImage.onload = () => {
+        setTimeout(render, 10);
+      };
+      this.svgImage.onerror = (error) => {
+        reject(error);
+      };
+      this._svgHashRasterizing = this._svgHash;
+      this.svgImage.src = this._svgSrc = "data:image/svg+xml;utf8," + encodeURIComponent(this._svgDocument);
     });
   }
   render() {
+    if (!this.svgImage.complete || this.svgImage.currentSrc !== this.svgImage.src) {
+      setTimeout(() => WebRenderer.addToRenderQueue(this), 100);
+      return;
+    }
     const svgHash = this._svgHashRasterizing;
     if (!this.cachedBounds.has(svgHash) || !this.cachedMargin.has(svgHash)) {
       this.needsRefresh = true;
       return;
     }
-    if (!this.svgImage.complete) {
-      WebRenderer.addToRenderQueue(this);
-      return;
-    }
     let { width, height } = this.cachedBounds.get(svgHash);
-    let { left, top } = this.cachedMargin.get(svgHash);
+    let { left, top, right, bottom } = this.cachedMargin.get(svgHash);
+    const fullWidth = width + left + right;
+    const fullHeight = height + top + bottom;
     const hashingCanvas = this._hashingCanvas;
     let hw = hashingCanvas.width;
     let hh = hashingCanvas.height;
     const hctx = hashingCanvas.getContext("2d");
     hctx.clearRect(0, 0, hw, hh);
     hctx.imageSmoothingEnabled = false;
-    hctx.drawImage(this.svgImage, left, top, width, height, 0, 0, hw, hh);
+    hctx.drawImage(this.svgImage, 0, 0, fullWidth, fullHeight, 0, 0, hw, hh);
     const hashData = hctx.getImageData(0, 0, hw, hh).data;
-    const canvasHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(new Uint8Array(hashData))) + "?w=" + width + ";h=" + height;
-    _WebLayer.canvasHashes.set(svgHash, canvasHash);
-    const blankRetryCount = _WebLayer.blankRetryCounts.get(svgHash) || 0;
-    if (WebRenderer.isBlankImage(hashData) && blankRetryCount < 10) {
-      _WebLayer.blankRetryCounts.set(svgHash, blankRetryCount + 1);
-      setTimeout(() => WebRenderer.addToRenderQueue(this), 500);
+    const canvasHash = WebRenderer.arrayBufferToBase64(sha256.exports.hash(new Uint8Array(hashData)));
+    const previousCanvasHash = _WebLayer.svgCanvasHash.get(svgHash);
+    _WebLayer.svgCanvasHash.set(svgHash, canvasHash);
+    if (previousCanvasHash !== canvasHash) {
+      _WebLayer.svgRetryCount.set(svgHash, 0);
+    }
+    const retryCount = _WebLayer.svgRetryCount.get(svgHash) || 0;
+    _WebLayer.svgRetryCount.set(svgHash, retryCount + 1);
+    if (retryCount > 3 && _WebLayer.cachedCanvases.has(canvasHash)) {
+      if (this._svgHash === this._svgHashRasterizing)
+        this.trySetFromSVGHash(this._svgHash);
       return;
     }
-    if (_WebLayer.cachedCanvases.has(canvasHash)) {
-      this.canvas = _WebLayer.cachedCanvases.get(canvasHash);
+    setTimeout(() => WebRenderer.addToRenderQueue(this), (500 + Math.random() * 1e3) * 2 ^ retryCount);
+    if (previousCanvasHash === canvasHash)
       return;
-    }
     const pixelRatio = this.pixelRatio || parseFloat(this.element.getAttribute(WebRenderer.PIXEL_RATIO_ATTRIBUTE)) || window.devicePixelRatio;
     const newCanvas = _WebLayer.cachedCanvases.size === _WebLayer.cachedCanvases.limit ? _WebLayer.cachedCanvases.shift()[1] : document.createElement("canvas");
-    let w2 = newCanvas.width = width * pixelRatio;
-    let h2 = newCanvas.height = height * pixelRatio;
+    let w2 = newCanvas.width = fullWidth * pixelRatio;
+    let h2 = newCanvas.height = fullHeight * pixelRatio;
     const ctx = newCanvas.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, w2, h2);
-    ctx.drawImage(this.svgImage, left, top, width, height, 0, 0, w2, h2);
+    ctx.drawImage(this.svgImage, 0, 0, fullWidth, fullHeight, 0, 0, w2, h2);
     _WebLayer.cachedCanvases.set(canvasHash, newCanvas);
-    this.canvas = newCanvas;
+    console.log("layer painted x" + retryCount, this.element);
+    if (this._svgHash === this._svgHashRasterizing)
+      this.trySetFromSVGHash(svgHash);
   }
   _getParentsHTML(element) {
     const opens = [];
@@ -38242,8 +39140,8 @@ const _WebLayer = class {
 };
 let WebLayer = _WebLayer;
 WebLayer.DEFAULT_CACHE_SIZE = 4;
-WebLayer.blankRetryCounts = new Map();
-WebLayer.canvasHashes = new lru.exports.LRUMap(1e3);
+WebLayer.svgRetryCount = new Map();
+WebLayer.svgCanvasHash = new lru.exports.LRUMap(1e3);
 WebLayer.cachedCanvases = new lru.exports.LRUMap(_WebLayer.DEFAULT_CACHE_SIZE);
 var resizeObservers = [];
 var hasActiveObservations = function() {
@@ -38762,6 +39660,7 @@ function ensureElementIsInDocument(element, options) {
   }
   const container = document.createElement("div");
   container.setAttribute(WebRenderer.RENDERING_CONTAINER_ATTRIBUTE, "");
+  container.style.all = "initial";
   container.style.position = "fixed";
   container.style.width = "100%";
   container.style.height = "100%";
@@ -38925,7 +39824,7 @@ const _WebRenderer = class {
     }
     if (rasterizeQueue.length && _WebRenderer.rasterizeTaskCount < _WebRenderer.TASK_ASYNC_MAX_COUNT) {
       _WebRenderer.rasterizeTaskCount++;
-      rasterizeQueue.shift().rasterize().then(() => {
+      rasterizeQueue.shift().rasterize().finally(() => {
         _WebRenderer.rasterizeTaskCount--;
       });
     }
@@ -39217,40 +40116,28 @@ const _WebRenderer = class {
     return Promise.all(embedded.values());
   }
   static async getDataURL(url) {
-    var _a;
-    const xhr = await this.getURL(url);
-    const arr = new Uint8Array(xhr.response);
-    const contentType = (_a = xhr.getResponseHeader("Content-Type")) == null ? void 0 : _a.split(";")[0];
-    if (contentType == "text/css") {
-      let css = textDecoder.decode(arr);
-      css = await this.generateEmbeddedCSS(url, css);
-      const base64 = window.btoa(css);
-      if (base64.length > 0) {
-        return "data:" + contentType + ";base64," + base64;
+    if (this.dataURLMap.has(url))
+      return this.dataURLMap.get(url);
+    const dataURLPromise = new Promise(async (resolveDataURL) => {
+      var _a;
+      const xhr = await this.getURL(url);
+      const arr = new Uint8Array(xhr.response);
+      const contentType = (_a = xhr.getResponseHeader("Content-Type")) == null ? void 0 : _a.split(";")[0];
+      let dataURL = "";
+      if (contentType == "text/css") {
+        let css = textDecoder.decode(arr);
+        css = await this.generateEmbeddedCSS(url, css);
+        const base64 = window.btoa(css);
+        if (base64.length > 0) {
+          dataURL = "data:" + contentType + ";base64," + base64;
+        }
       } else {
-        return "";
+        dataURL = "data:" + contentType + ";base64," + this.arrayBufferToBase64(arr);
       }
-    } else {
-      const dataURL = "data:" + contentType + ";base64," + this.arrayBufferToBase64(arr);
-      if (contentType == null ? void 0 : contentType.startsWith("image")) {
-        let loaded = function() {
-          requestAnimationFrame(rendered);
-        }, rendered = function() {
-          resolveRendered();
-        };
-        const loader = document.createElement("img");
-        let resolveRendered;
-        const onRendered = new Promise((resolve) => {
-          resolveRendered = resolve;
-          loader.onload = () => {
-            requestAnimationFrame(loaded);
-          };
-        });
-        loader.src = dataURL;
-        await onRendered;
-      }
-      return dataURL;
-    }
+      resolveDataURL(dataURL);
+    });
+    this.dataURLMap.set(url, dataURLPromise);
+    return dataURLPromise;
   }
   static updateInputAttributes(element) {
     if (element.matches("input"))
@@ -39330,6 +40217,7 @@ WebRenderer._triggerRefresh = async (e2) => {
   }
 };
 WebRenderer.embeddedCSS = new Map();
+WebRenderer.dataURLMap = new Map();
 if (self.THREE) {
   var THREE = self.THREE;
 } else {
@@ -39369,10 +40257,13 @@ class WebLayer3DContent extends THREE.Object3D {
     });
     this.domLayout = new THREE.Object3D();
     this.domSize = new THREE.Vector3(1, 1, 1);
+    this.bounds = new Bounds();
+    this.margin = new Edges();
     this.childWebLayers = [];
     this.shouldApplyDOMLayout = "auto";
     this.name = element.id;
     this._webLayer = WebRenderer.getClosestLayer(element);
+    element.layer = this;
     this.add(this.contentMesh);
     this.add(this._boundsMesh);
     this.cursor.visible = false;
@@ -39402,9 +40293,9 @@ class WebLayer3DContent extends THREE.Object3D {
       }
       return t22;
     }
-    const canvas = this._webLayer.canvas;
+    const canvas = this._webLayer.currentCanvas;
     let t2 = this.textures.get(canvas);
-    if (!t2) {
+    if (canvas && !t2) {
       t2 = new THREE.Texture(canvas);
       t2.needsUpdate = true;
       t2.wrapS = THREE.ClampToEdgeWrapping;
@@ -39434,9 +40325,6 @@ class WebLayer3DContent extends THREE.Object3D {
   get needsRemoval() {
     return this._webLayer.needsRemoval;
   }
-  get bounds() {
-    return this._webLayer.bounds;
-  }
   get parentWebLayer() {
     return this._webLayer.parentLayer && WebLayer3D.layersByElement.get(this._webLayer.parentLayer.element);
   }
@@ -39453,9 +40341,9 @@ class WebLayer3DContent extends THREE.Object3D {
         child.refresh(recurse);
     }
     this._refreshVideoBounds();
-    this._refreshDOMLayout();
   }
   updateLayout() {
+    this._updateDOMLayout();
     if (this._camera) {
       this._localZ = Math.abs(scratchVector.setFromMatrixPosition(this.matrix).z + scratchVector.setFromMatrixPosition(this.contentMesh.matrix).z);
       this._viewZ = Math.abs(this.contentMesh.getWorldPosition(scratchVector).applyMatrix4(this._camera.matrixWorldInverse).z);
@@ -39472,19 +40360,17 @@ class WebLayer3DContent extends THREE.Object3D {
     const mesh = this.contentMesh;
     const texture = this.currentTexture;
     const material = mesh.material;
-    if (texture.image && material.map !== texture) {
+    if (texture && (texture.image && material.map !== texture || this.textureNeedsUpdate)) {
       const contentScale = this.contentMesh.scale;
       const aspect2 = Math.abs(contentScale.x * this.scale.x / contentScale.y * this.scale.y);
       const targetAspect = this.domSize.x / this.domSize.y;
       if (Math.abs(targetAspect - aspect2) < 1e3) {
         material.map = texture;
         this.depthMaterial["map"] = texture;
-        if (this.textureNeedsUpdate) {
-          this.textureNeedsUpdate = false;
-          material.needsUpdate = true;
-          texture.needsUpdate = true;
-          this.depthMaterial.needsUpdate = true;
-        }
+        this.textureNeedsUpdate = false;
+        material.needsUpdate = true;
+        texture.needsUpdate = true;
+        this.depthMaterial.needsUpdate = true;
       }
     }
     material.transparent = true;
@@ -39575,7 +40461,7 @@ class WebLayer3DContent extends THREE.Object3D {
       const texture = this.currentTexture;
       const computedStyle = getComputedStyle(this.element);
       const { objectFit } = computedStyle;
-      const { width: viewWidth, height: viewHeight } = this.bounds;
+      const { width: viewWidth, height: viewHeight } = this.bounds.copy(this._webLayer.currentBounds);
       const { videoWidth, videoHeight } = video;
       const videoRatio = videoWidth / videoHeight;
       const viewRatio = viewWidth / viewHeight;
@@ -39616,30 +40502,39 @@ class WebLayer3DContent extends THREE.Object3D {
       }
     }
   }
-  _refreshDOMLayout() {
+  _updateDOMLayout() {
     if (this.needsRemoval) {
       return;
     }
+    const { currentBounds, currentMargin } = this._webLayer;
     this.domLayout.position.set(0, 0, 0);
     this.domLayout.scale.set(1, 1, 1);
     this.domLayout.quaternion.set(0, 0, 0, 1);
-    const bounds = this.bounds;
+    const isVideo = this.element.nodeName === "VIDEO";
+    const bounds = isVideo ? this.bounds : this.bounds.copy(currentBounds);
+    const margin = isVideo ? this.margin : this.margin.copy(currentMargin);
+    const fullWidth = bounds.width + margin.left + margin.right;
+    const fullHeight = bounds.height + margin.top + margin.bottom;
     const width = bounds.width;
     const height = bounds.height;
     const pixelSize = 1 / WebLayer3D.DEFAULT_PIXELS_PER_UNIT;
-    this.domSize.set(Math.max(pixelSize * width, 1e-5), Math.max(pixelSize * height, 1e-5), 1);
+    this.domSize.set(Math.max(pixelSize * (width + margin.left + margin.right), 1e-5), Math.max(pixelSize * (height + margin.top + margin.bottom), 1e-5), 1);
     if (!WebLayer3D.shouldApplyDOMLayout(this))
       return;
-    const parentBounds = this.parentWebLayer instanceof WebLayer3DContent ? this.parentWebLayer.bounds : getViewportBounds(scratchBounds);
-    const parentWidth = parentBounds.width;
-    const parentHeight = parentBounds.height;
-    const leftEdge = -parentWidth / 2 + width / 2;
-    const topEdge = parentHeight / 2 - height / 2;
-    this.domLayout.position.set(pixelSize * (leftEdge + bounds.left), pixelSize * (topEdge - bounds.top), 0);
+    const parentLayer = this.parentWebLayer;
+    if (!parentLayer)
+      return;
+    const parentBounds = parentLayer.bounds;
+    const parentMargin = parentLayer.margin;
+    const parentFullWidth = parentBounds.width + parentMargin.left + parentMargin.right;
+    const parentFullHeight = parentBounds.height + parentMargin.bottom + parentMargin.bottom;
+    const parentLeftEdge = -parentFullWidth / 2 + parentMargin.left;
+    const parentTopEdge = parentFullHeight / 2 - parentMargin.top;
+    this.domLayout.position.set(pixelSize * (parentLeftEdge + fullWidth / 2 + bounds.left - margin.left), pixelSize * (parentTopEdge - fullHeight / 2 - bounds.top + margin.top), 0);
     const computedStyle = getComputedStyle(this.element);
     const transform = computedStyle.transform;
     if (transform && transform !== "none") {
-      const cssTransform = WebRenderer.parseCSSTransform(computedStyle, width, height, pixelSize, scratchMatrix);
+      const cssTransform = WebRenderer.parseCSSTransform(computedStyle, bounds.width, bounds.height, pixelSize, scratchMatrix);
       if (cssTransform) {
         this.domLayout.updateMatrix();
         this.domLayout.matrix.multiply(cssTransform);
@@ -39678,10 +40573,11 @@ const _WebLayer3D = class extends THREE.Object3D {
           (_a = layer.parentWebLayer) == null ? void 0 : _a.add(layer);
         if (this.options.onLayerCreate)
           this.options.onLayerCreate(layer);
-      } else if (event === "layerpainted") {
+      } else if (event === "layerchanged") {
         const layer = WebRenderer.layers.get(target);
         const layer3D = _WebLayer3D.layersByElement.get(layer.element);
         layer3D.textureNeedsUpdate = true;
+        console.log("layerchanged", layer.element);
       } else if (event === "layermoved") {
         const layer = _WebLayer3D.layersByElement.get(target);
         (_b = layer.parentWebLayer) == null ? void 0 : _b.add(layer);

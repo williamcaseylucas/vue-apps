@@ -2,7 +2,7 @@ import { W as WebApp$1 } from "./WebApp.js";
 import { _ as _sfc_main } from "./App.js";
 import { r as reactive, a as readonly } from "./vendor.js";
 import "./logo.js";
-class Store {
+/* empty css     */class Store {
   constructor(app2) {
     this._state = reactive({
       count: 0
@@ -22,7 +22,7 @@ class Store {
 }
 class WebApp extends WebApp$1 {
   constructor() {
-    super(_sfc_main, 400, 450);
+    super(_sfc_main, 400, 475);
     this.shared = new Store(this);
     this.vueApp.provide("shared", this.shared);
     console.log(JSON.stringify(this.shared.data));

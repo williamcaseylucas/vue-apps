@@ -1,0 +1,12 @@
+
+a[data-v-167fde6a] {
+  color: #b542b9;
+}
+.fade[data-v-167fde6a] {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+.fade[data-v-167fde6a]:hover {
+  color: #a78e06;
+}
+

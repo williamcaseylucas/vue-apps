@@ -16,6 +16,7 @@
 <script>
 import Reveal from 'reveal.js/dist/reveal.esm'
 import { ref, onMounted } from 'vue'
+import "../../assets/top.css"
 
 export default {
 //   components: {
@@ -67,29 +68,4 @@ export default {
 </script>
 
 <style scoped>
-#top {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #50312c;
-  margin-top: 30px;
-  border: 5;
-  border-radius: 10px;
-  border-color: red;
-  width: 400px; height: 300px;
-  position: absolute;
-
-  display: block;
-  background-color: white;
-}
-
-
-* {
-    box-sizing: content-box;
-}
-img {
-    max-width: none;
-        display: inline;
-}
 </style>

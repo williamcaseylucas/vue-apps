@@ -2,7 +2,7 @@ import { W as WebApp$1 } from "./WebApp.js";
 import { _ as _sfc_main } from "./App2.js";
 import "./vendor.js";
 import "./logo.js";
-class WebApp extends WebApp$1 {
+/* empty css     */class WebApp extends WebApp$1 {
   constructor() {
     super(_sfc_main, 500, 500);
   }
