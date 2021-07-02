@@ -10,13 +10,13 @@ let loadStyles = function () {
     // var link = document.createElement('link');
     // link.rel = "stylesheet";
     // link.type = "text/css";
-    // link.href = "https://resources.realitymedia.digital/test-vue-app/dist/public/reveal.css";
+    // link.href = "https://resources.realitymedia.digital/vue-apps/dist/public/reveal.css";
     // document.head.appendChild(link);
 
     // link = document.createElement('link');
     // link.rel = "stylesheet";
     // link.type = "text/css";
-    // link.href = "https://resources.realitymedia.digital/test-vue-app/dist/public/theme/white.css";
+    // link.href = "https://resources.realitymedia.digital/vue-apps/dist/public/theme/white.css";
     // document.head.appendChild(link);
 
     // // var style = document.createElement('style');

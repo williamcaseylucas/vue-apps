@@ -1,23 +1,8 @@
-import {c as createApp, r as reactive, a as readonly} from "./vendor.js";
-import {_ as _sfc_main} from "./App.js";
+import { W as WebApp$1 } from "./WebApp.js";
+import { _ as _sfc_main } from "./App.js";
+import { r as reactive, a as readonly } from "./vendor.js";
 import "./logo.js";
-class WebApp$1 {
-  constructor(App, createOptions = {}) {
-    this.takeOwnership = this.takeOwnershipProto.bind(this);
-    this.setSharedData = this.setSharedDataProto.bind(this);
-    this.vueApp = createApp(App, createOptions);
-  }
-  mount() {
-    this.vueRoot = this.vueApp.mount("#app");
-  }
-  takeOwnershipProto() {
-    return true;
-  }
-  setSharedDataProto(object) {
-    return true;
-  }
-}
-class Store {
+/* empty css     */class Store {
   constructor(app2) {
     this._state = reactive({
       count: 0
@@ -37,7 +22,7 @@ class Store {
 }
 class WebApp extends WebApp$1 {
   constructor() {
-    super(_sfc_main);
+    super(_sfc_main, 400, 475);
     this.shared = new Store(this);
     this.vueApp.provide("shared", this.shared);
     console.log(JSON.stringify(this.shared.data));
