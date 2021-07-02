@@ -27,15 +27,17 @@ This is more involved.  You will need to checkout the `core-components` repo as 
 
 Step 1. Run ngrok in a terminal window, pointing at http port 5000.  If you have a paid account, you can use one of your reserved names for this server, using a command such as `ngrok http -subdomain=blairhome 5000` (with your domain instead of `blairhome`).   If you don't have a paid account, you will run without the `-subdomain` option and write down the random domain ngrok gives you (e.g., `973d3ab87afb.ngrok.io`)
 
-Step 2. In a terminal in this repository, run the command `npm run serve` to start the server on port 5000.  The ngrok from step 1 will use this.
+Step 2. In `rollup.config.js`, change the reference to `blairhome.grok.io` to the https url for the ngrok server name in Step 1.
 
-Step 3. In the `core-components/start.js`, you will need to change the reference to `profblair` to one of your reserved ngrok hostnames (you will need a paid ngrok account to have reserved hostnames), or write down the random domain ngrok gives you.
+Step 3. In a terminal in this repository, run the command `npm run serve` to start the server on port 5000.  The ngrok from step 1 will use this.
 
-Step 4. In the `core-components/rollup-config.js`, you will need to change the reference to `https://blairhome.ngrok.io` to the https url for the ngrok server name in Step 1. 
+Step 4. In the `core-components/start.js`, you will need to change the reference to `profblair` to one of your reserved ngrok hostnames (you will need a paid ngrok account to have reserved hostnames), or write down the random domain ngrok gives you.
 
-Step 5. In a terminal in the `core-components` directory, run `npm run start` to start the ngrok server.
+Step 5. In the `core-components/rollup-config.js`, you will need to change the reference to `https://blairhome.ngrok.io` to the https url for the ngrok server name in Step 1. 
 
-Step 6. In your room in hubs, point it's script URL at `[https url from step3]/src/rooms/index.html`
+Step 6. In a terminal in the `core-components` directory, run `npm run start` to start the ngrok server.
+
+Step 7. In your room in hubs, point it's script URL at `[https url from step3]/build/index.html`
 
 Now, when you enter the room, the core-components script will be loaded, and it will in turn load this repository's components.  If you make a change to the code in this repo, simple rerun the `npm run serve` command, and reload the hubs room.
 
