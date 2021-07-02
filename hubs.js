@@ -1,5 +1,6 @@
 import hubsTest1 from './src/apps/HubsTest1/hubs.js'
 import hubsTest2 from './src/apps/HubsTest2/hubs.js'
+import my3D from './src/apps/3D/hubs.js'
 
 // need to wait until we have some reasonable performance optimizations
 // such as shadow dom support for Ethereal
@@ -12,4 +13,4 @@ import hubsTest2 from './src/apps/HubsTest2/hubs.js'
 // 		this.matrix.decompose( this.position, this.quaternion, this.scale )
 // 	}
 // }
-export {hubsTest1, hubsTest2}
+export {hubsTest1, hubsTest2, my3D}
