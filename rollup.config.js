@@ -24,7 +24,7 @@ import url from 'url';
 var serverPath
 if ((process.env.BUILD !== 'production')) {
     // your ngrok host name for local testing
-    serverPath = "https://blairhome.ngrok.io";
+    serverPath = "https://jayhome.ngrok.io";
 } else {
     serverPath = "https://resources.realitymedia.digital";
 }
