@@ -1,28 +1,6 @@
 
 
 
-#top[data-v-20a66922] {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: justify;
-  color: #50312c;
-  margin-top: 30px;
-
-  width: 300px; height: 200px;
-  position: absolute;
-
-  display: block;
-  background-color: white;
-}
-*[data-v-20a66922] {
-    box-sizing: content-box;
-}
-img[data-v-20a66922] {
-    max-width: 400px;
-        display: inline;
-}
-
 
 
 
@@ -44,6 +22,28 @@ img[data-v-20a66922] {
     box-sizing: content-box;
 }
 img[data-v-a9ae49ec] {
+    max-width: none;
+        display: inline;
+}
+
+#top[data-v-3f6d4a0b] {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: justify;
+  color: #50312c;
+  margin-top: 30px;
+
+  width: 300px; height: 200px;
+  position: absolute;
+
+  display: block;
+  background-color: white;
+}
+*[data-v-3f6d4a0b] {
+    box-sizing: content-box;
+}
+img[data-v-3f6d4a0b] {
     max-width: none;
         display: inline;
 }
@@ -70,8 +70,7 @@ img[data-v-3cb6b80c] {
         display: inline;
 }
 
-
-#top[data-v-3f6d4a0b] {
+#top[data-v-20a66922] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -85,13 +84,14 @@ img[data-v-3cb6b80c] {
   display: block;
   background-color: white;
 }
-*[data-v-3f6d4a0b] {
+*[data-v-20a66922] {
     box-sizing: content-box;
 }
-img[data-v-3f6d4a0b] {
-    max-width: none;
+img[data-v-20a66922] {
+    max-width: 400px;
         display: inline;
 }
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v4.0 | 20180602
    License: none (public domain)
@@ -206,7 +206,6 @@ footer, header, hgroup, main, menu, nav, section {
     background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
 } */
 
-
 a[data-v-4679d783] {
   color: #42b983;
 }
@@ -257,6 +256,7 @@ button[data-v-4679d783] {
     border-image: initial;
     border-radius: 2px;
 }
+
 
 
 a[data-v-36bd408d] {
