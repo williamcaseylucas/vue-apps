@@ -1,31 +1,6 @@
 
 
 
-
-
-
-#top[data-v-a9ae49ec] {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #50312c;
-  margin-top: 30px;
-
-  width: 300px; height: 200px;
-  position: absolute;
-
-  display: block;
-  background-color: white;
-}
-*[data-v-a9ae49ec] {
-    box-sizing: content-box;
-}
-img[data-v-a9ae49ec] {
-    max-width: none;
-        display: inline;
-}
-
 #top[data-v-3f6d4a0b] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -91,6 +66,31 @@ img[data-v-20a66922] {
     max-width: 400px;
         display: inline;
 }
+
+#top[data-v-a9ae49ec] {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #50312c;
+  margin-top: 30px;
+
+  width: 300px; height: 200px;
+  position: absolute;
+
+  display: block;
+  background-color: white;
+}
+*[data-v-a9ae49ec] {
+    box-sizing: content-box;
+}
+img[data-v-a9ae49ec] {
+    max-width: none;
+        display: inline;
+}
+
+
+
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v4.0 | 20180602
@@ -206,6 +206,18 @@ footer, header, hgroup, main, menu, nav, section {
     background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));
 } */
 
+
+a[data-v-36bd408d] {
+  color: #b542b9;
+}
+.fade[data-v-36bd408d] {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+.fade[data-v-36bd408d]:hover {
+  color: #a78e06;
+}
+
 a[data-v-4679d783] {
   color: #42b983;
 }
@@ -257,15 +269,3 @@ button[data-v-4679d783] {
     border-radius: 2px;
 }
 
-
-
-a[data-v-36bd408d] {
-  color: #b542b9;
-}
-.fade[data-v-36bd408d] {
-  color: #9803a5;
-  /* transition: color 1s; */
-}
-.fade[data-v-36bd408d]:hover {
-  color: #a78e06;
-}
