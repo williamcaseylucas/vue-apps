@@ -3,13 +3,13 @@ import HubsAppProto from "../HubsApp";
 
 class HubsApp extends HubsAppProto {
     constructor (width, height) {
-        super(width, height, App)
+        super(App, width, height)
         this.isInteractive = true;
     }
 }
 
 var init = function () {
-    let app = new HubsApp(2.5, 2.5)
+    let app = new HubsApp(300, 475)
     app.mount()
     return app
 }

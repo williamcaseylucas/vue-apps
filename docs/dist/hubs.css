@@ -1,27 +1,8 @@
 
 
 
-#top[data-v-3f6d4a0b] {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: justify;
-  color: #50312c;
-  margin-top: 30px;
 
-  width: 300px; height: 200px;
-  position: absolute;
 
-  display: block;
-  background-color: white;
-}
-*[data-v-3f6d4a0b] {
-    box-sizing: content-box;
-}
-img[data-v-3f6d4a0b] {
-    max-width: none;
-        display: inline;
-}
 
 #top[data-v-3cb6b80c] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -41,6 +22,29 @@ img[data-v-3f6d4a0b] {
     box-sizing: content-box;
 }
 img[data-v-3cb6b80c] {
+    max-width: none;
+        display: inline;
+}
+
+
+#top[data-v-3f6d4a0b] {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: justify;
+  color: #50312c;
+  margin-top: 30px;
+
+  width: 300px; height: 200px;
+  position: absolute;
+
+  display: block;
+  background-color: white;
+}
+*[data-v-3f6d4a0b] {
+    box-sizing: content-box;
+}
+img[data-v-3f6d4a0b] {
     max-width: none;
         display: inline;
 }
@@ -66,30 +70,6 @@ img[data-v-20a66922] {
     max-width: 400px;
         display: inline;
 }
-
-#top[data-v-a9ae49ec] {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #50312c;
-  margin-top: 30px;
-
-  width: 300px; height: 200px;
-  position: absolute;
-
-  display: block;
-  background-color: white;
-}
-*[data-v-a9ae49ec] {
-    box-sizing: content-box;
-}
-img[data-v-a9ae49ec] {
-    max-width: none;
-        display: inline;
-}
-
-
 
 
 /* http://meyerweb.com/eric/tools/css/reset/

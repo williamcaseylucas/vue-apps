@@ -55,27 +55,7 @@ button[data-v-39aeb044] {
 
 
 
-#top[data-v-26bd4184] {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #50312c;
-  margin-top: 30px;
 
-  width: 300px; height: 200px;
-  position: absolute;
-
-  display: block;
-  background-color: white;
-}
-*[data-v-26bd4184] {
-    box-sizing: content-box;
-}
-img[data-v-26bd4184] {
-    max-width: none;
-        display: inline;
-}
 
 #top[data-v-c66f604a] {
   font-family: Avenir, Helvetica, Arial, sans-serif;
