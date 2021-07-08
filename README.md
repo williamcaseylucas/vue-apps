@@ -29,11 +29,11 @@ Step 1. Go to the `core-components` directory in a terminal. If you have a paid 
 
 Step 2. In `rollup.config.js`, change the reference to `blair-vue-apps.ngrok.io` to the https url for the ngrok server name for `vue-apps` in Step 1.
 
-Step 3. In a terminal in this repository (vue-apps), run the command `npm run serve` to start the server on port 5000.  The ngrok from step 1 will use redirect to this.
+Step 3. In another terminal window, in this repository (vue-apps), run the command `npm run serve` to start the server on port 5000.  The ngrok from step 1 will use redirect to this.
 
 Step 4. In the `core-components/rollup-config.js`, you will need to change the reference to `https://blair-vue-apps.ngrok.io` to the https url for the ngrok server name used for `vue-apps` in Step 1. 
 
-Step 5. In a terminal in the `core-components` directory, run `npm run serve` to start the local server on port 6000.  The ngrok from step 1 will redirect to this.
+Step 5. In another terminal window, in the `core-components` directory, run `npm run serve` to start the local server on port 6000.  The ngrok from step 1 will redirect to this.
 
 Step 6. In your room in hubs, point its script URL at `[https url from step3]/build/index.js`. That is, instead of 'blair-core.ngrok.io/build/index.js', you will have '[YourChosenDomain or RandomDomain for core-components].ngrok.io/build/index.js'.
 
