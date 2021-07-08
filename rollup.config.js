@@ -24,12 +24,12 @@ import url from 'url';
 var serverPath
 if ((process.env.BUILD !== 'production')) {
     // your ngrok host name for local testing
-    serverPath = "https://jayhome.ngrok.io";
+    serverPath = "https://blair-vue-apps.ngrok.io";
 } else {
     serverPath = "https://resources.realitymedia.digital";
 }
 var componentPath = serverPath + '/vue-apps/'
-export default {//["HubsTest1", "HubsTest2"].map((name, index) => ({
+export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     //input: ["src/apps/HubsTest1/hubs.js", "src/apps/HubsTest2/hubs.js"],
     //input: `src/apps/${name}/hubs.js`,
     input: "hubs.js",
@@ -141,4 +141,20 @@ export default {//["HubsTest1", "HubsTest2"].map((name, index) => ({
       sourcemaps(),
 
     ]
-  }//))
+  },
+  {
+    input: ["room.js", "room-dev-url.js"],
+    output: {
+        dir: 'docs',
+        entryFileNames: "[name].js",
+        chunkFileNames: '[name].js',
+        format: 'es'
+    },
+    plugins: [
+        replace({
+            'https://resources.realitymedia.digital/vue-apps/': componentPath 
+        })
+    ]
+
+  }
+]//))
