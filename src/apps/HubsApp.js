@@ -34,8 +34,8 @@ export default class HubsApp {
             onLayerCreate: (layer) => {
                 // nothing yet
             },
-            onAfterRasterize(layer) {
-                   // nothing yet
+            onLayerPaint: (layer) => {
+                if (this.isStatic) { this.needsUpdate = true }
             },
             textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0  // -1000
@@ -63,9 +63,10 @@ export default class HubsApp {
         return true;
     }
 
-    // receive data updates.  should be overridden by subclasses
+    // receive data updates.  should be overridden by subclasses, also requests
+    // update next tick
     updateSharedData(dataObject) {
-        raise("updateData should be overridden by subclasses")
+        this.needsUpdate = true
     }
 
     getSize() {
@@ -119,5 +120,12 @@ export default class HubsApp {
 
     destroy() {
         // TODO: destroy the vue component and any resources, etc., it has
+    }
+
+    tick(time) {
+        if (!this.isStatic || this.needsUpdate) {
+            this.webLayer3D.update(true);
+        }
+        this.needsUpdate = false
     }
 }
