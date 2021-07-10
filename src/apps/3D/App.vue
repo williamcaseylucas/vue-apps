@@ -6,6 +6,8 @@
 	</div>
 </template>
 
+
+
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
