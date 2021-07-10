@@ -1,13 +1,12 @@
-import hubsTest1 from './src/apps/HubsTest1/hubs.js'
-import hubsTest2 from './src/apps/HubsTest2/hubs.js'
-import my3D from './src/apps/3D/hubs.js'
-import ARVR from './src/apps/AR-VR/hubs.js'
-import Center1 from './src/apps/Center1/hubs.js'
-import Center2 from './src/apps/Center2/hubs.js'
-import History from './src/apps/History/hubs.js'
-import Intro from './src/apps/Intro/hubs.js'
 
-
+import Map from './src/apps/Center_Map/hubs.js'
+import Center1 from './src/apps/Center1_Intro/hubs.js'
+import Center2 from './src/apps/Center2_History/hubs.js'
+import Center3 from './src/apps/Center3_3D-Tracking/hubs.js'
+import Center4 from './src/apps/Center4_Presence/hubs.js'
+import Center5 from './src/apps/Center5_Genres/hubs.js'
+import Center6 from './src/apps/Center6_Future/hubs.js'
+import Center7 from './src/apps/Center7_Privacy/hubs.js'
 
 // need to wait until we have some reasonable performance optimizations
 // such as shadow dom support for Ethereal
@@ -20,4 +19,4 @@ import Intro from './src/apps/Intro/hubs.js'
 // 		this.matrix.decompose( this.position, this.quaternion, this.scale )
 // 	}
 // }
-export {hubsTest1, hubsTest2, my3D, ARVR, Center1,Center2, History, Intro}
+export {Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7}
