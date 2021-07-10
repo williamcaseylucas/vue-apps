@@ -93,6 +93,17 @@ footer, header, hgroup, main, menu, nav, section {
       margin-inline-end: 0px;
       font-weight: bold;
   }
+
+  h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    font-family: Futura, Avenir, sans-serif
+}
   
   button {
       width: auto;
@@ -136,6 +147,7 @@ a[data-v-36bd408d] {
 .fade[data-v-36bd408d]:hover {
   color: #a78e06;
 }
+
 
 a[data-v-4679d783] {
   color: #42b983;
@@ -187,5 +199,4 @@ button[data-v-4679d783] {
     border-image: initial;
     border-radius: 2px;
 }
-
 
