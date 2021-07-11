@@ -1,8 +1,9 @@
 <template>
   <div id="top">
-    <Title msg="The LaCiotat Effect" />
-	  <img src="../../assets/images/train.jpg" width="300">
-	  <div class="displaytext">Film became one of the most important reality media of the twentieth century, and in some ways, it is a forerunner of virtual reality.</div>  
+    <Title msg="Privacy and Public Space" />
+	  <div class="displaytext">Pervasive, always-on AR applications have the potential to provide companies or government authorities 
+      even more information and with more precision than our current mobile applications do, 
+      both by aggregating our habits as consumers and by identifying us as individuals.</div>  
   </div>
 </template>
 

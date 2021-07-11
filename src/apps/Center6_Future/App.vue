@@ -1,8 +1,8 @@
 <template>
   <div id="top">
-    <Title msg="The LaCiotat Effect" />
-	  <img src="../../assets/images/train.jpg" width="300">
-	  <div class="displaytext">Film became one of the most important reality media of the twentieth century, and in some ways, it is a forerunner of virtual reality.</div>  
+    <Title msg="The Future of AR & VR" />
+	  <img src="../../assets/images/parthenon.png" width="275">
+	  <div class="displaytext">VR will continue to construct special realities, apart from the everyday. VR worlds will continue to be metaphoric worlds.</div>  
   </div>
 </template>
 

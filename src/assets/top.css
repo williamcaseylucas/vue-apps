@@ -37,15 +37,16 @@ footer, header, hgroup, main, menu, nav, section {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #50312c;
+    color: #f2e6e5;
     margin-top: 30px;
+    margin: left,right 5px;
     border: 5;
     border-radius: 10px;
     border-color: red;
     position: absolute;
   
     display: block;
-    background-color: white;
+    background-color: black;
   }
 
   * {
@@ -56,6 +57,7 @@ footer, header, hgroup, main, menu, nav, section {
   img {
     max-width: none;
     display: inline;
+    margin-bottom: 10px;
   }
 
   a {

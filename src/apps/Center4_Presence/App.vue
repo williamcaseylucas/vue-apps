@@ -1,8 +1,8 @@
 <template>
   <div id="top">
-    <Title msg="The LaCiotat Effect" />
-	  <img src="../../assets/images/train.jpg" width="300">
-	  <div class="displaytext">Film became one of the most important reality media of the twentieth century, and in some ways, it is a forerunner of virtual reality.</div>  
+    <Title msg="Presence" />
+	  <img src="../../assets/images/parthenon.png" width="250">
+	  <div class="displaytext">Presence in VR is usually conceived of as forgetting that the medium is there. The idea is that if the user can be enticed into behaving as if she were not aware of all the complex technology, then she feels presence.</div>  
   </div>
 </template>
 

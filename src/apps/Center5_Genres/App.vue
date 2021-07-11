@@ -1,8 +1,8 @@
 <template>
   <div id="top">
-    <Title msg="The LaCiotat Effect" />
-	  <img src="../../assets/images/train.jpg" width="300">
-	  <div class="displaytext">Film became one of the most important reality media of the twentieth century, and in some ways, it is a forerunner of virtual reality.</div>  
+    <Title msg="Genres" />
+	  <img src="../../assets/images/parthenon.png" width="250">
+	  <div class="displaytext">Reality media applications often function as additions to established genres. Most current AR and VR applications behave like applications or artifacts that we know from earlier media.</div>  
   </div>
 </template>
 
