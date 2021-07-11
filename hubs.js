@@ -7,6 +7,7 @@ import Center4 from './src/apps/Center4_Presence/hubs.js'
 import Center5 from './src/apps/Center5_Genres/hubs.js'
 import Center6 from './src/apps/Center6_Future/hubs.js'
 import Center7 from './src/apps/Center7_Privacy/hubs.js'
+import Monolith1 from './src/apps/Monolith1_Intro/hubs.js'
 
 // need to wait until we have some reasonable performance optimizations
 // such as shadow dom support for Ethereal
@@ -19,4 +20,4 @@ import Center7 from './src/apps/Center7_Privacy/hubs.js'
 // 		this.matrix.decompose( this.position, this.quaternion, this.scale )
 // 	}
 // }
-export {Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7}
+export {Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7,Monolith1}
