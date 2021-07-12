@@ -16,6 +16,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v4.0 | 20180602
    License: none (public domain)
@@ -145,6 +157,10 @@ footer, header, hgroup, main, menu, nav, section {
   .squareoff {
     text-align: justify;
     }
+
+  .flushleft {
+    text-align: left;
+  }
   
   /* button :hover {
     background-color: -internal-light-dark(rgb(150, 150, 150), rgb(121, 121, 121));

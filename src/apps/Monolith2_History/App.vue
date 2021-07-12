@@ -1,9 +1,17 @@
 <template>
   <div id="top">
     <Title msg="The History of Reality Media" />
-    <img src="../../assets/images/pano.jpg" width="300"/>
-    <div class="displaytext">Historically, each reality medium mediates and remediates. It offers a new representation of the world that we implicitly compare to our experience of the world in itself, but also through other media.</div> 
-  </div>
+      <div class="spacer">
+        <div class="flushleft">
+        <br>
+        <h3> Some of the key differences between “classic” VR and AR</h3>
+        <br>
+        <h3> Extended reality (XR) and the immersive web </h3>
+        <br>
+        <h3> Where AR and VR fit on Milgram and Kishino’s virtuality continuum</h3>
+        </div>
+      </div> 
+    </div>
 </template>
 
 
