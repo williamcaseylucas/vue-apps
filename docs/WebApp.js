@@ -1,4 +1,4 @@
-import { c as createApp } from "./vendor.js";
+import { e as createApp } from "./vendor.js";
 class WebApp {
   constructor(App, width, height, createOptions = {}) {
     this.takeOwnership = this.takeOwnershipProto.bind(this);

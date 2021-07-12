@@ -1,5 +1,5 @@
 import { W as WebApp$1 } from "./WebApp.js";
-import { g as ref, h as onMounted, $, d as createBlock, e as createVNode, F as Fragment, w as withScopeId, p as pushScopeId, b as popScopeId, o as openBlock, r as reactive, a as readonly } from "./vendor.js";
+import { g as ref, h as onMounted, $, c as createBlock, b as createVNode, F as Fragment, w as withScopeId, p as pushScopeId, a as popScopeId, o as openBlock, r as reactive, d as readonly } from "./vendor.js";
 /* empty css     */var App_vue_vue_type_style_index_0_scoped_true_lang = "\n";
 const _sfc_main = {
   setup() {
