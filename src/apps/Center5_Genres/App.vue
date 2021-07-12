@@ -1,8 +1,10 @@
 <template>
   <div id="top">
     <Title msg="Genres" />
+    <div class="spacer"> 
 	  <img src="../../assets/images/parthenon.png" width="250">
-	  <div class="displaytext">Reality media applications often function as additions to established genres. Most current AR and VR applications behave like applications or artifacts that we know from earlier media.</div>  
+	  <div class="squareoff">Reality media applications often function as additions to established genres. Most current AR and VR applications behave like applications or artifacts that we know from earlier media.</div>  
+    </div>
   </div>
 </template>
 
