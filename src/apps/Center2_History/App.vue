@@ -18,4 +18,4 @@ import "../../assets/top.css"
 
 <style scoped>
 
-</style>
+</style>  
