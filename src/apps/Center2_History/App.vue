@@ -18,4 +18,4 @@ import "../../assets/room.css"
 
 <style scoped>
 
-</style>
+</style>  

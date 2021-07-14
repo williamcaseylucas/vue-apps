@@ -1,9 +1,16 @@
 <template>
   <div id="top">
-    <Title msg="The LaCiotat Effect" />
-	  <img src="../../assets/train.jpg" width="300">
-	  <div class="displaytext">Film became one of the most important reality media of the twentieth century, and in some ways, it is a forerunner of virtual reality.</div>  
-  </div>
+    <Title msg="Privacy" />
+      <div class="spacer">
+        <div class="flushleft">
+        <br>
+        <h3> Some of the key differences between “classic” VR and AR</h3>
+        <br>
+        <h3> Extended reality (XR) and the immersive web </h3>
+        <br>
+        <h3> Where AR and VR fit on Milgram and Kishino’s virtuality continuum</h3>
+        </div>
+      </div>   </div>
 </template>
 
 <script setup>

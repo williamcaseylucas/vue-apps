@@ -1,6 +1,6 @@
 <template>
   <div id="top">
-    <h2> 3-D Graphics & Tracking</h2>
+    <Title msg="3-D Graphics & Tracking" />
 	<div class="spacer">
 	<img src="../../assets/images/uncanny.jpg" width="200">
 	<div class="squareoff">3-D computer graphics help to construct the visual 
