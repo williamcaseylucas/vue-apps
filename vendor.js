@@ -40699,4 +40699,6 @@ WebLayer3D.layersByMesh = new WeakMap();
 WebLayer3D.DEFAULT_LAYER_SEPARATION = 1e-3;
 WebLayer3D.DEFAULT_PIXELS_PER_UNIT = 1e3;
 WebLayer3D.GEOMETRY = new THREE.PlaneGeometry(1, 1, 2, 2);
+new Matrix4$1();
+new Matrix4$1();
 export { $, Fragment as F, readonly as a, popScopeId as b, createApp as c, createBlock as d, createVNode as e, createTextVNode as f, ref as g, onMounted as h, inject as i, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u, withScopeId as w };
