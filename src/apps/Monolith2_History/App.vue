@@ -10,7 +10,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
-import "../../assets/top.css"
+import "../../assets/room.css"
 </script>
 
 <style scoped>
