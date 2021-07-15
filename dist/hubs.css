@@ -169,7 +169,6 @@ footer, header, hgroup, main, menu, nav, section {
     text-align: justify;
     }
   
-
 a[data-v-04cbd54a] {
   color: #b542b9;
 }
@@ -180,6 +179,7 @@ a[data-v-04cbd54a] {
 .fade[data-v-04cbd54a]:hover {
   color: #a78e06;
 }
+
 
 a[data-v-ecd9120c] {
   color: #42b983;
