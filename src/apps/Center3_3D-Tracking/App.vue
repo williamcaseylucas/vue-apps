@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
     <Title msg="3-D Graphics & Tracking" />
 	<div class="spacer">
 	<img src="../../assets/images/uncanny.jpg" width="200">
@@ -14,6 +14,7 @@
 import Title from '../../components/CenterTitle.vue'
 
 import "../../assets/top.css"
+import "../../assets/room.css"
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
     <Title msg="The LaCiotat Effect" />
     <div class="spacer">
 	  <img src="../../assets/images/laciotat.jpg" width="250">
@@ -13,6 +13,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
+import "../../assets/top.css"
 import "../../assets/room.css"
 </script>
 

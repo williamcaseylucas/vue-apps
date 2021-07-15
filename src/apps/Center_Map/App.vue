@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
   <Title msg="Reality Media" />
 	<img src="../../assets/images/rotunda-map.png" width="250" >
 	<div class="displaytext">AR allows us to extend our physical reality; VR creates for us a different reality.</div>
@@ -9,6 +9,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
+import "../../assets/top.css"
 import "../../assets/room.css"
 </script>
 
