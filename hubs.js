@@ -1,4 +1,7 @@
 
+import hubsTest1 from './src/apps/HubsTest1/hubs.js'
+import hubsTest2 from './src/apps/HubsTest2/hubs.js'
+
 import Map from './src/apps/Center_Map/hubs.js'
 import Center1 from './src/apps/Center1_Intro/hubs.js'
 import Center2 from './src/apps/Center2_History/hubs.js'
@@ -15,7 +18,12 @@ import Monolith5 from './src/apps/Monolith5_Genres/hubs.js'
 import Monolith6 from './src/apps/Monolith6_Future/hubs.js'
 import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
 
-export {Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7}
+export {
+    // Rotunda
+    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
+
+    // Tests
+    hubsTest1, hubsTest2}
 
 
 
