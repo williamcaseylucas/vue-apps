@@ -16,7 +16,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
-import "../../assets/room.css
+import "../../assets/room.css"
 </script>
 
 <style scoped>
