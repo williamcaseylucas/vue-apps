@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
     <Title msg="Privacy and Public Space" />
     <div class="spacer">
 	  <div class="squareoff">Pervasive, always-on AR applications have the potential to provide companies or government authorities 
@@ -12,6 +12,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
+import "../../assets/top.css"
 import "../../assets/room.css"
 </script>
 

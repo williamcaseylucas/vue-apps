@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
   <div class="spacer">
   <Title msg="AR & VR as reality media" />
 	<img src="../../assets/images/laciotat-VR.jpg" width="250" >
@@ -12,6 +12,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
+import "../../assets/top.css"
 import "../../assets/room.css"
 </script>
 

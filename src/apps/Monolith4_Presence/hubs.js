@@ -3,7 +3,7 @@ import HubsAppProto from "../HubsApp";
 
 class HubsApp extends HubsAppProto {
     constructor (width, height) {
-        super(width, height, App)
+        super(App,width,height)
         this.isInteractive = true;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="top">
+  <div id="room">
     <Title msg="Privacy" />
       <div class="spacer">
         <div class="flushleft">
@@ -16,6 +16,7 @@
 <script setup>
 import Title from '../../components/CenterTitle.vue'
 
+import "../../assets/top.css"
 import "../../assets/room.css"
 </script>
 
