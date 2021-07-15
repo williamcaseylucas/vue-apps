@@ -328,32 +328,35 @@ const builtInSymbols = new Set(Object.getOwnPropertyNames(Symbol).map((key) => S
 const get = /* @__PURE__ */ createGetter();
 const shallowGet = /* @__PURE__ */ createGetter(false, true);
 const readonlyGet = /* @__PURE__ */ createGetter(true);
-const shallowReadonlyGet = /* @__PURE__ */ createGetter(true, true);
-const arrayInstrumentations = {};
-["includes", "indexOf", "lastIndexOf"].forEach((key) => {
-  const method = Array.prototype[key];
-  arrayInstrumentations[key] = function(...args) {
-    const arr = toRaw(this);
-    for (let i2 = 0, l2 = this.length; i2 < l2; i2++) {
-      track(arr, "get", i2 + "");
-    }
-    const res = method.apply(arr, args);
-    if (res === -1 || res === false) {
-      return method.apply(arr, args.map(toRaw));
-    } else {
+const arrayInstrumentations = /* @__PURE__ */ createArrayInstrumentations();
+function createArrayInstrumentations() {
+  const instrumentations = {};
+  ["includes", "indexOf", "lastIndexOf"].forEach((key) => {
+    const method = Array.prototype[key];
+    instrumentations[key] = function(...args) {
+      const arr = toRaw(this);
+      for (let i2 = 0, l2 = this.length; i2 < l2; i2++) {
+        track(arr, "get", i2 + "");
+      }
+      const res = method.apply(arr, args);
+      if (res === -1 || res === false) {
+        return method.apply(arr, args.map(toRaw));
+      } else {
+        return res;
+      }
+    };
+  });
+  ["push", "pop", "shift", "unshift", "splice"].forEach((key) => {
+    const method = Array.prototype[key];
+    instrumentations[key] = function(...args) {
+      pauseTracking();
+      const res = method.apply(this, args);
+      resetTracking();
       return res;
-    }
-  };
-});
-["push", "pop", "shift", "unshift", "splice"].forEach((key) => {
-  const method = Array.prototype[key];
-  arrayInstrumentations[key] = function(...args) {
-    pauseTracking();
-    const res = method.apply(this, args);
-    resetTracking();
-    return res;
-  };
-});
+    };
+  });
+  return instrumentations;
+}
 function createGetter(isReadonly2 = false, shallow = false) {
   return function get2(target, key, receiver) {
     if (key === "__v_isReactive") {
@@ -448,12 +451,9 @@ const readonlyHandlers = {
     return true;
   }
 };
-const shallowReactiveHandlers = extend({}, mutableHandlers, {
+const shallowReactiveHandlers = /* @__PURE__ */ extend({}, mutableHandlers, {
   get: shallowGet,
   set: shallowSet
-});
-extend({}, readonlyHandlers, {
-  get: shallowReadonlyGet
 });
 const toReactive = (value) => isObject(value) ? reactive(value) : value;
 const toReadonly = (value) => isObject(value) ? readonly(value) : value;
@@ -586,73 +586,82 @@ function createReadonlyMethod(type) {
     return type === "delete" ? false : this;
   };
 }
-const mutableInstrumentations = {
-  get(key) {
-    return get$1(this, key);
-  },
-  get size() {
-    return size$1(this);
-  },
-  has: has$1,
-  add,
-  set: set$1,
-  delete: deleteEntry,
-  clear,
-  forEach: createForEach(false, false)
-};
-const shallowInstrumentations = {
-  get(key) {
-    return get$1(this, key, false, true);
-  },
-  get size() {
-    return size$1(this);
-  },
-  has: has$1,
-  add,
-  set: set$1,
-  delete: deleteEntry,
-  clear,
-  forEach: createForEach(false, true)
-};
-const readonlyInstrumentations = {
-  get(key) {
-    return get$1(this, key, true);
-  },
-  get size() {
-    return size$1(this, true);
-  },
-  has(key) {
-    return has$1.call(this, key, true);
-  },
-  add: createReadonlyMethod("add"),
-  set: createReadonlyMethod("set"),
-  delete: createReadonlyMethod("delete"),
-  clear: createReadonlyMethod("clear"),
-  forEach: createForEach(true, false)
-};
-const shallowReadonlyInstrumentations = {
-  get(key) {
-    return get$1(this, key, true, true);
-  },
-  get size() {
-    return size$1(this, true);
-  },
-  has(key) {
-    return has$1.call(this, key, true);
-  },
-  add: createReadonlyMethod("add"),
-  set: createReadonlyMethod("set"),
-  delete: createReadonlyMethod("delete"),
-  clear: createReadonlyMethod("clear"),
-  forEach: createForEach(true, true)
-};
-const iteratorMethods = ["keys", "values", "entries", Symbol.iterator];
-iteratorMethods.forEach((method) => {
-  mutableInstrumentations[method] = createIterableMethod(method, false, false);
-  readonlyInstrumentations[method] = createIterableMethod(method, true, false);
-  shallowInstrumentations[method] = createIterableMethod(method, false, true);
-  shallowReadonlyInstrumentations[method] = createIterableMethod(method, true, true);
-});
+function createInstrumentations() {
+  const mutableInstrumentations2 = {
+    get(key) {
+      return get$1(this, key);
+    },
+    get size() {
+      return size$1(this);
+    },
+    has: has$1,
+    add,
+    set: set$1,
+    delete: deleteEntry,
+    clear,
+    forEach: createForEach(false, false)
+  };
+  const shallowInstrumentations2 = {
+    get(key) {
+      return get$1(this, key, false, true);
+    },
+    get size() {
+      return size$1(this);
+    },
+    has: has$1,
+    add,
+    set: set$1,
+    delete: deleteEntry,
+    clear,
+    forEach: createForEach(false, true)
+  };
+  const readonlyInstrumentations2 = {
+    get(key) {
+      return get$1(this, key, true);
+    },
+    get size() {
+      return size$1(this, true);
+    },
+    has(key) {
+      return has$1.call(this, key, true);
+    },
+    add: createReadonlyMethod("add"),
+    set: createReadonlyMethod("set"),
+    delete: createReadonlyMethod("delete"),
+    clear: createReadonlyMethod("clear"),
+    forEach: createForEach(true, false)
+  };
+  const shallowReadonlyInstrumentations2 = {
+    get(key) {
+      return get$1(this, key, true, true);
+    },
+    get size() {
+      return size$1(this, true);
+    },
+    has(key) {
+      return has$1.call(this, key, true);
+    },
+    add: createReadonlyMethod("add"),
+    set: createReadonlyMethod("set"),
+    delete: createReadonlyMethod("delete"),
+    clear: createReadonlyMethod("clear"),
+    forEach: createForEach(true, true)
+  };
+  const iteratorMethods = ["keys", "values", "entries", Symbol.iterator];
+  iteratorMethods.forEach((method) => {
+    mutableInstrumentations2[method] = createIterableMethod(method, false, false);
+    readonlyInstrumentations2[method] = createIterableMethod(method, true, false);
+    shallowInstrumentations2[method] = createIterableMethod(method, false, true);
+    shallowReadonlyInstrumentations2[method] = createIterableMethod(method, true, true);
+  });
+  return [
+    mutableInstrumentations2,
+    readonlyInstrumentations2,
+    shallowInstrumentations2,
+    shallowReadonlyInstrumentations2
+  ];
+}
+const [mutableInstrumentations, readonlyInstrumentations, shallowInstrumentations, shallowReadonlyInstrumentations] = /* @__PURE__ */ createInstrumentations();
 function createInstrumentationGetter(isReadonly2, shallow) {
   const instrumentations = shallow ? isReadonly2 ? shallowReadonlyInstrumentations : shallowInstrumentations : isReadonly2 ? readonlyInstrumentations : mutableInstrumentations;
   return (target, key, receiver) => {
@@ -667,13 +676,13 @@ function createInstrumentationGetter(isReadonly2, shallow) {
   };
 }
 const mutableCollectionHandlers = {
-  get: createInstrumentationGetter(false, false)
+  get: /* @__PURE__ */ createInstrumentationGetter(false, false)
 };
 const shallowCollectionHandlers = {
-  get: createInstrumentationGetter(false, true)
+  get: /* @__PURE__ */ createInstrumentationGetter(false, true)
 };
 const readonlyCollectionHandlers = {
-  get: createInstrumentationGetter(true, false)
+  get: /* @__PURE__ */ createInstrumentationGetter(true, false)
 };
 const reactiveMap = new WeakMap();
 const shallowReactiveMap = new WeakMap();
@@ -795,22 +804,6 @@ const shallowUnwrapHandlers = {
 };
 function proxyRefs(objectWithRefs) {
   return isReactive(objectWithRefs) ? objectWithRefs : new Proxy(objectWithRefs, shallowUnwrapHandlers);
-}
-class ObjectRefImpl {
-  constructor(_object, _key) {
-    this._object = _object;
-    this._key = _key;
-    this.__v_isRef = true;
-  }
-  get value() {
-    return this._object[this._key];
-  }
-  set value(newVal) {
-    this._object[this._key] = newVal;
-  }
-}
-function toRef(object, key) {
-  return isRef(object[key]) ? object[key] : new ObjectRefImpl(object, key);
 }
 class ComputedRefImpl {
   constructor(getter, _setter, isReadonly2) {
@@ -1847,12 +1840,15 @@ function applyOptions(instance) {
   registerLifecycleHook(onServerPrefetch, serverPrefetch);
   if (isArray(expose)) {
     if (expose.length) {
-      const exposed = instance.exposed || (instance.exposed = proxyRefs({}));
+      const exposed = instance.exposed || (instance.exposed = {});
       expose.forEach((key) => {
-        exposed[key] = toRef(publicThis, key);
+        Object.defineProperty(exposed, key, {
+          get: () => publicThis[key],
+          set: (val) => publicThis[key] = val
+        });
       });
     } else if (!instance.exposed) {
-      instance.exposed = EMPTY_OBJ;
+      instance.exposed = {};
     }
   }
   if (render && instance.render === NOOP) {
@@ -2455,7 +2451,7 @@ const setRef = (rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) => 
   if (isAsyncWrapper(vnode) && !isUnmount) {
     return;
   }
-  const refValue = vnode.shapeFlag & 4 ? vnode.component.exposed || vnode.component.proxy : vnode.el;
+  const refValue = vnode.shapeFlag & 4 ? getExposeProxy(vnode.component) || vnode.component.proxy : vnode.el;
   const value = isUnmount ? null : refValue;
   const { i: owner, r: ref2 } = rawRef;
   const oldRef = oldRawRef && oldRawRef.r;
@@ -2566,7 +2562,12 @@ function baseCreateRenderer(options, createHydrationFns) {
     }
   };
   const mountStaticNode = (n2, container, anchor, isSVG2) => {
-    [n2.el, n2.anchor] = hostInsertStaticContent(n2.children, container, anchor, isSVG2, n2.el && [n2.el, n2.anchor]);
+    const nodes = hostInsertStaticContent(n2.children, container, anchor, isSVG2, n2.staticCache);
+    if (!n2.el) {
+      n2.staticCache = nodes;
+    }
+    n2.el = nodes[0];
+    n2.anchor = nodes[nodes.length - 1];
   };
   const moveStaticNode = ({ el, anchor }, container, nextSibling) => {
     let next;
@@ -3422,7 +3423,6 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
     anchor: null,
     target: null,
     targetAnchor: null,
-    staticCount: 0,
     shapeFlag,
     patchFlag,
     dynamicProps,
@@ -3454,6 +3454,7 @@ function cloneVNode(vnode, extraProps, mergeRef = false) {
     target: vnode.target,
     targetAnchor: vnode.targetAnchor,
     staticCount: vnode.staticCount,
+    staticCache: vnode.staticCache,
     shapeFlag: vnode.shapeFlag,
     patchFlag: extraProps && vnode.type !== Fragment ? patchFlag === -1 ? 16 : patchFlag | 16 : patchFlag,
     dynamicProps: vnode.dynamicProps,
@@ -3560,7 +3561,7 @@ const getPublicInstance = (i2) => {
   if (!i2)
     return null;
   if (isStatefulComponent(i2))
-    return i2.exposed ? i2.exposed : i2.proxy;
+    return getExposeProxy(i2) || i2.proxy;
   return getPublicInstance(i2.parent);
 };
 const publicPropertiesMap = extend(Object.create(null), {
@@ -3684,6 +3685,7 @@ function createComponentInstance(vnode, parent, suspense) {
     render: null,
     proxy: null,
     exposed: null,
+    exposeProxy: null,
     withProxy: null,
     effects: null,
     provides: parent ? parent.provides : Object.create(appContext.provides),
@@ -3765,6 +3767,10 @@ function setupStatefulComponent(instance, isSSR) {
     resetTracking();
     currentInstance = null;
     if (isPromise(setupResult)) {
+      const unsetInstance = () => {
+        currentInstance = null;
+      };
+      setupResult.then(unsetInstance, unsetInstance);
       if (isSSR) {
         return setupResult.then((resolvedResult) => {
           handleSetupResult(instance, resolvedResult);
@@ -3810,7 +3816,7 @@ function finishComponentSetup(instance, isSSR, skipOptions) {
 }
 function createSetupContext(instance) {
   const expose = (exposed) => {
-    instance.exposed = proxyRefs(exposed);
+    instance.exposed = exposed || {};
   };
   {
     return {
@@ -3819,6 +3825,19 @@ function createSetupContext(instance) {
       emit: instance.emit,
       expose
     };
+  }
+}
+function getExposeProxy(instance) {
+  if (instance.exposed) {
+    return instance.exposeProxy || (instance.exposeProxy = new Proxy(proxyRefs(markRaw(instance.exposed)), {
+      get(target, key) {
+        if (key in target) {
+          return target[key];
+        } else if (key in publicPropertiesMap) {
+          return publicPropertiesMap[key](instance);
+        }
+      }
+    }));
   }
 }
 function recordInstanceBoundEffect(effect2, instance = currentInstance) {
@@ -3859,7 +3878,7 @@ function computed(getterOrOptions) {
   recordInstanceBoundEffect(c2.effect);
   return c2;
 }
-const version = "3.1.2";
+const version = "3.1.4";
 const svgNS = "http://www.w3.org/2000/svg";
 const doc = typeof document !== "undefined" ? document : null;
 const nodeOps = {
@@ -3902,20 +3921,19 @@ const nodeOps = {
   },
   insertStaticContent(content, parent, anchor, isSVG2, cached) {
     if (cached) {
-      let [cachedFirst, cachedLast] = cached;
-      let first, last;
-      while (true) {
-        let node = cachedFirst.cloneNode(true);
-        if (!first)
-          first = node;
+      let first2;
+      let last2;
+      let i2 = 0;
+      let l2 = cached.length;
+      for (; i2 < l2; i2++) {
+        const node = cached[i2].cloneNode(true);
+        if (i2 === 0)
+          first2 = node;
+        if (i2 === l2 - 1)
+          last2 = node;
         parent.insertBefore(node, anchor);
-        if (cachedFirst === cachedLast) {
-          last = node;
-          break;
-        }
-        cachedFirst = cachedFirst.nextSibling;
       }
-      return [first, last];
+      return [first2, last2];
     }
     const before = anchor ? anchor.previousSibling : parent.lastChild;
     if (anchor) {
@@ -3935,10 +3953,16 @@ const nodeOps = {
     } else {
       parent.insertAdjacentHTML("beforeend", content);
     }
-    return [
-      before ? before.nextSibling : parent.firstChild,
-      anchor ? anchor.previousSibling : parent.lastChild
-    ];
+    let first = before ? before.nextSibling : parent.firstChild;
+    const last = anchor ? anchor.previousSibling : parent.lastChild;
+    const ret = [];
+    while (first) {
+      ret.push(first);
+      if (first === last)
+        break;
+      first = first.nextSibling;
+    }
+    return ret;
   }
 };
 function patchClass(el, value, isSVG2) {
@@ -38177,6 +38201,10 @@ function getBounds(element, bounds = new Bounds(), referenceElement) {
   return bounds;
 }
 function getMargin(element, margin) {
+  if (element.offsetParent === null) {
+    margin.left = margin.right = margin.top = margin.bottom = 0;
+    return;
+  }
   let style = getComputedStyle(element);
   margin.left = parseFloat(style.marginLeft) || 0;
   margin.right = parseFloat(style.marginRight) || 0;
@@ -38915,7 +38943,7 @@ const _WebLayer = class {
         this._currentBounds = bounds;
         this._currentMargin = margin;
         if (previousCanvasHash !== canvasHash && this.eventCallback)
-          this.eventCallback("layerchanged", { target: this.element });
+          this.eventCallback("layerpainted", { target: this.element });
         return true;
       }
     }
@@ -38962,9 +38990,9 @@ const _WebLayer = class {
     }
   }
   refresh() {
-    getBounds(this.element, this.bounds, this.parentLayer && this.parentLayer.element);
-    getMargin(this.element, this.margin);
     if (!this._currentSVGHash) {
+      getBounds(this.element, this.bounds, this.parentLayer && this.parentLayer.element);
+      getMargin(this.element, this.margin);
       this._currentBounds = this.bounds;
       this._currentMargin = this.margin;
     }
@@ -39018,13 +39046,13 @@ const _WebLayer = class {
     if (layerElement.nodeName === "VIDEO")
       return;
     getBounds(layerElement, this.bounds, (_a = this.parentLayer) == null ? void 0 : _a.element);
+    getMargin(layerElement, this.margin);
     let { width, height } = this.bounds;
+    width += Math.max(this.margin.left, 0) + Math.max(this.margin.right, 0);
+    height += Math.max(this.margin.top, 0) + Math.max(this.margin.bottom, 0);
     if (width * height > 0) {
       getPadding(layerElement, this.padding);
-      getMargin(layerElement, this.margin);
       getBorder(layerElement, this.border);
-      width += Math.max(this.margin.left, 0) + Math.max(this.margin.right, 0);
-      height += Math.max(this.margin.top, 0) + Math.max(this.margin.bottom, 0);
       const elementAttribute = WebRenderer.attributeHTML(WebRenderer.ELEMENT_UID_ATTRIBUTE, "" + this.id);
       const computedStyle = getComputedStyle(layerElement);
       const needsInlineBlock = computedStyle.display === "inline";
@@ -39044,6 +39072,9 @@ const _WebLayer = class {
       if (this.trySetFromSVGHash(svgHash))
         return;
       WebRenderer.addToRasterizeQueue(this);
+    } else {
+      this._currentBounds.copy(this.bounds);
+      this._currentMargin.copy(this.margin);
     }
   }
   async rasterize() {
@@ -39660,15 +39691,9 @@ function ensureElementIsInDocument(element, options) {
   }
   const container = document.createElement("div");
   container.setAttribute(WebRenderer.RENDERING_CONTAINER_ATTRIBUTE, "");
-  container.style.all = "initial";
-  container.style.position = "fixed";
-  container.style.width = "100%";
-  container.style.height = "100%";
-  container.style.top = "0px";
   container.style.visibility = "hidden";
   container.style.pointerEvents = "none";
   container.style.touchAction = "none";
-  container.style["contain"] = "strict";
   const containerShadow = container.attachShadow({ mode: "open" });
   containerShadow.appendChild(element);
   document.documentElement.appendChild(container);
@@ -39727,19 +39752,28 @@ const _WebRenderer = class {
     const styleRoot = "head" in rootNode ? rootNode.head : rootNode;
     if (this.rootNodeObservers.get(rootNode))
       return;
-    if (!this.renderingStyleElement) {
-      const style = this.renderingStyleElement = document2.createElement("style");
-      styleRoot.append(style);
-      const sheet = style.sheet;
-      let i2 = 0;
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}], [${_WebRenderer.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}], [${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; height:100% !important; padding:0 !important; position:fixed !important; display:block !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", i2++);
-      addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::before, [${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", i2++);
-    }
+    const containerStyle = this.containerStyleElement = document2.createElement("style");
+    document2.head.appendChild(containerStyle);
+    containerStyle.innerHTML = `
+      [${_WebRenderer.RENDERING_CONTAINER_ATTRIBUTE}] {
+        all: initial;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+      }
+    `;
+    const style = this.renderingStyleElement = document2.createElement("style");
+    styleRoot.append(style);
+    const sheet = style.sheet;
+    let i2 = 0;
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_DOCUMENT_ATTRIBUTE}] *`, "transform: none !important;", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}], [${_WebRenderer.RENDERING_ATTRIBUTE}] *`, "visibility: visible !important;", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}], [${_WebRenderer.RENDERING_ATTRIBUTE}] [${_WebRenderer.LAYER_ATTRIBUTE}] *`, "visibility: hidden !important;", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_ATTRIBUTE}]`, "position: relative; top: 0 !important; left: 0 !important; float: none; box-sizing:border-box; min-width:var(--x-width); min-height:var(--x-height); display:block !important;", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_INLINE_ATTRIBUTE}]`, "top: var(--x-inline-top) !important; width:auto !important", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]`, "transform: none !important; left: 0 !important; top: 0 !important; margin: 0 !important; border:0 !important; border-radius:0 !important; width: 100% !important; height:100% !important; padding:0 !important; background: rgba(0,0,0,0) none !important; box-shadow:none !important", i2++);
+    addCSSRule(sheet, `[${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::before, [${_WebRenderer.RENDERING_PARENT_ATTRIBUTE}]::after`, "content:none !important; box-shadow:none !important;", i2++);
     if (rootNode === document2) {
       let previousHash = "";
       const onHashChange = () => {
@@ -40561,7 +40595,7 @@ const _WebLayer3D = class extends THREE.Object3D {
     };
     const element = typeof elementOrHTML === "string" ? DOM(elementOrHTML) : elementOrHTML;
     WebRenderer.createLayerTree(element, options, (event, { target }) => {
-      var _a, _b;
+      var _a, _b, _c, _d, _e, _f;
       if (event === "layercreated") {
         const layer = new WebLayer3DContent(target, this.options);
         if (target === element) {
@@ -40571,16 +40605,15 @@ const _WebLayer3D = class extends THREE.Object3D {
           this.add(layer);
         } else
           (_a = layer.parentWebLayer) == null ? void 0 : _a.add(layer);
-        if (this.options.onLayerCreate)
-          this.options.onLayerCreate(layer);
-      } else if (event === "layerchanged") {
+        (_c = (_b = this.options).onLayerCreate) == null ? void 0 : _c.call(_b, layer);
+      } else if (event === "layerpainted") {
         const layer = WebRenderer.layers.get(target);
         const layer3D = _WebLayer3D.layersByElement.get(layer.element);
         layer3D.textureNeedsUpdate = true;
-        console.log("layerchanged", layer.element);
+        (_e = (_d = this.options).onLayerPaint) == null ? void 0 : _e.call(_d, layer3D);
       } else if (event === "layermoved") {
         const layer = _WebLayer3D.layersByElement.get(target);
-        (_b = layer.parentWebLayer) == null ? void 0 : _b.add(layer);
+        (_f = layer.parentWebLayer) == null ? void 0 : _f.add(layer);
       }
     });
     this.refresh();

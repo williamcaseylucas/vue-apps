@@ -9,7 +9,6 @@ const _hoisted_1$1 = {
 const _hoisted_2$1 = /* @__PURE__ */ createVNode("p", null, " Here's some more text just to make things not blank. ", -1);
 popScopeId();
 const _sfc_main$1 = {
-  expose: [],
   props: {
     msg: String
   },
@@ -37,7 +36,6 @@ const _hoisted_2 = /* @__PURE__ */ createVNode("img", {
 }, null, -1);
 popScopeId();
 const _sfc_main = {
-  expose: [],
   setup(__props) {
     return (_ctx, _cache) => {
       return openBlock(), createBlock("div", _hoisted_1, [

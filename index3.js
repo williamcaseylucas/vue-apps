@@ -1,5 +1,5 @@
 import { W as WebApp$1 } from "./WebApp.js";
-import { g as ref, h as onMounted, $, d as createBlock, e as createVNode, F as Fragment, w as withScopeId, p as pushScopeId, b as popScopeId, o as openBlock, r as reactive, a as readonly } from "./vendor.js";
+import { p as pushScopeId, b as popScopeId, g as ref, h as onMounted, $, d as createBlock, e as createVNode, F as Fragment, w as withScopeId, o as openBlock, r as reactive, a as readonly } from "./vendor.js";
 /* empty css     */var App_vue_vue_type_style_index_0_scoped_true_lang = "\n";
 const _sfc_main = {
   setup() {
@@ -42,7 +42,7 @@ const _sfc_main = {
     };
   }
 };
-const _withId = /* @__PURE__ */ withScopeId();
+const _withId = /* @__PURE__ */ withScopeId("data-v-f56285d4");
 pushScopeId("data-v-f56285d4");
 const _hoisted_1 = /* @__PURE__ */ createVNode("link", {
   rel: "stylesheet",
