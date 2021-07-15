@@ -169,6 +169,18 @@ footer, header, hgroup, main, menu, nav, section {
     text-align: justify;
     }
   
+
+a[data-v-04cbd54a] {
+  color: #b542b9;
+}
+.fade[data-v-04cbd54a] {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+.fade[data-v-04cbd54a]:hover {
+  color: #a78e06;
+}
+
 a[data-v-ecd9120c] {
   color: #42b983;
 }
@@ -220,15 +232,3 @@ button[data-v-ecd9120c] {
     border-radius: 2px;
 }
 
-
-
-a[data-v-04cbd54a] {
-  color: #b542b9;
-}
-.fade[data-v-04cbd54a] {
-  color: #9803a5;
-  /* transition: color 1s; */
-}
-.fade[data-v-04cbd54a]:hover {
-  color: #a78e06;
-}
