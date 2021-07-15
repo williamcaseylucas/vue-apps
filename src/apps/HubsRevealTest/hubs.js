@@ -25,6 +25,7 @@ class HubsApp extends HubsAppProto {
     }
     
     updateSharedData(dataObject) {
+        super.updateSharedData(dataObject)
         this.shared.updateSharedData(dataObject)
     }
 

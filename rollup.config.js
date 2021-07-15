@@ -92,8 +92,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
       }),
       vue({
           preprocessStyles: true,
-          css: false,
-          styleInjectorSSR: "foooooo"
+          css: false
       }),
       css({output: "hubs.css"}),
       //css(),
