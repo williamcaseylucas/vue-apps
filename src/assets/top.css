@@ -37,14 +37,15 @@ footer, header, hgroup, main, menu, nav, section {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #f2e6e5;
+    color: #50312c;
     margin-top: 30px;
-    border: 5px;
+    border: 5;
     border-radius: 10px;
     border-color: red;
     position: absolute;
+  
     display: block;
-    background-color: black;
+    background-color: white;
   }
 
   * {
@@ -55,7 +56,6 @@ footer, header, hgroup, main, menu, nav, section {
   img {
     max-width: none;
     display: inline;
-    margin-bottom: 10px;
   }
 
   a {
@@ -66,8 +66,8 @@ footer, header, hgroup, main, menu, nav, section {
       display: block;
       margin-block-start: 1em;
       margin-block-end: 1em;
-      margin-inline-start: 0ems;
-      margin-inline-end: 0ems;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
   }
   
   h1 {
@@ -79,17 +79,6 @@ footer, header, hgroup, main, menu, nav, section {
       margin-inline-end: 0px;
       font-weight: bold;
   }
-
-  h2 {
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    font-family: Futura, Avenir, sans-serif
-}
   
   button {
       width: auto;
@@ -117,19 +106,6 @@ footer, header, hgroup, main, menu, nav, section {
       border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
       border-image: initial;
       border-radius: 2px;
-  }
-
-  .spacer {
-    margin-left: 25px;
-    margin-right: 25px;
-    }
-
-  .squareoff {
-    text-align: justify;
-    }
-
-  .flushleft {
-    text-align: left;
   }
   
   /* button :hover {
