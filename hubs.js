@@ -1,6 +1,23 @@
-import hubsTest1 from './src/apps/HubsTest1/hubs.js'
-import hubsTest2 from './src/apps/HubsTest2/hubs.js'
-import my3D from './src/apps/3D/hubs.js'
+
+import Map from './src/apps/Center_Map/hubs.js'
+import Center1 from './src/apps/Center1_Intro/hubs.js'
+import Center2 from './src/apps/Center2_History/hubs.js'
+import Center3 from './src/apps/Center3_3D-Tracking/hubs.js'
+import Center4 from './src/apps/Center4_Presence/hubs.js'
+import Center5 from './src/apps/Center5_Genres/hubs.js'
+import Center6 from './src/apps/Center6_Future/hubs.js'
+import Center7 from './src/apps/Center7_Privacy/hubs.js'
+import Monolith1 from './src/apps/Monolith1_Intro/hubs.js'
+import Monolith2 from './src/apps/Monolith2_History/hubs.js'
+import Monolith3 from './src/apps/Monolith3_3D-Tracking//hubs.js'
+import Monolith4 from './src/apps/Monolith4_Presence/hubs.js'
+import Monolith5 from './src/apps/Monolith5_Genres/hubs.js'
+import Monolith6 from './src/apps/Monolith6_Future/hubs.js'
+import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
+
+export {Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7}
+
+
 
 // need to wait until we have some reasonable performance optimizations
 // such as shadow dom support for Ethereal
@@ -13,4 +30,3 @@ import my3D from './src/apps/3D/hubs.js'
 // 		this.matrix.decompose( this.position, this.quaternion, this.scale )
 // 	}
 // }
-export {hubsTest1, hubsTest2, my3D}

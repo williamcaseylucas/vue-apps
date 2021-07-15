@@ -9,24 +9,30 @@ import replace from '@rollup/plugin-replace'
 import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
-import url from '@rollup/plugin-url';
+import rollupUrl from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import copy from 'rollup-plugin-copy'
-import cssImport from "postcss-import"
-import cssUrl from 'postcss-url'
+import css from 'rollup-plugin-css-only'
+import { writeFileSync } from 'fs';
+import url from 'url';
+
+// import cssImport from "postcss-import"
+// import cssUrl from 'postcss-url'
 
 var serverPath
 if ((process.env.BUILD !== 'production')) {
     // your ngrok host name for local testing
-    serverPath = "https://blairhome.ngrok.io";
+    serverPath = "https://jay-vue-apps.ngrok.io";
 } else {
     serverPath = "https://resources.realitymedia.digital";
 }
-var componentPath = serverPath + '/test-vue-app/'
-export default {
-    input: 'hubs.js',
+var componentPath = serverPath + '/vue-apps/'
+export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
+    //input: ["src/apps/HubsTest1/hubs.js", "src/apps/HubsTest2/hubs.js"],
+    //input: `src/apps/${name}/hubs.js`,
+    input: "hubs.js",
     // external: ['three'],
     // globals: {
     //   'three': 'THREE'
@@ -34,60 +40,121 @@ export default {
   
     output: [{
         dir: 'docs/dist',
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
+        //entryFileNames: `${name}.js`,
+        entryFileNames: "[name].js",
+        assetFileNames: "[name].[ext]",
+        manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+        },
+        
         format: 'es',
         sourcemap: 'inline'
       },
       {
-        file: "docs/dist/hubs.min.js", 
+        //file: `docs/dist/${name}.min.js`, 
+        file: "docs/dist/hubs.min.js",
+        //entryFileNames: `${name}.js`,
+        //entryFileNames: "[name].min.js",
+
         format: 'es', 
         plugins: [terser()]
-      }], 
+      }
+    ], 
 
     plugins: [
       virtual({
           three: `export default THREE`
       }),
       copy({
-        targets: [{ src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' }],
+        targets: [
+            // { src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' },
+            { src: ['node_modules/reveal.js/dist/*'], dest: 'docs/public/reveal' }
+        ],
         verbose: true
       }),
+
       rollupPluginNodeResolve(),
-      url({
+      rollupUrl({
         // by default, rollup-plugin-url will not handle font files
         include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
         // setting infinite limit will ensure that the files 
         // are always bundled with the code, not copied to /dist
         //limit: Infinity,
         limit: 1000,
-        publicPath: serverPath + '/test-vue-app/dist/',
+        publicPath: serverPath + '/vue-apps/dist/',
       }),
       replace({
           'process.env.NODE_ENV': JSON.stringify( 'production' ),
-         // 'https://resources.realitymedia.digital/test-vue-app/': componentPath //JSON.stringify( componentPath )
+          'https://resources.realitymedia.digital/vue-apps/': componentPath //JSON.stringify( componentPath )
 
       }),
       vue({
-          preprocessStyles: true
+          preprocessStyles: true,
+          css: false,
+          styleInjectorSSR: "foooooo"
       }),
-      postcss({
-        plugins: [
+      css({output: "hubs.css"}),
+      //css(),
+    //   css({
+    //       output: function (styles, styleNodes) {
+    //         const keys = Object.keys(styleNodes);
+
+    //         keys.forEach((key, index) => {
+    //             let u = new URL ("file://" + key)
+    //             console.log(u)
+    //             let p = u.pathname
+    //             console.log(p)
+    //             let ps = p.split('/')
+    //             console.log(ps)
+    //             console.log(key)
+    //           writeFileSync(key, styleNodes[key])
+    //         })
+    //       }
+    //     }),
+    //   postcss({
+        // plugins: [
         //     cssUrl({
-        //     url: "inline", // enable inline assets using base64 encoding
-        //     maxSize: 1000, // maximum file size to inline (in kilobytes)
-        //     publicPath: serverPath + '/test-vue-app/dist/',
-        // }),
-          cssImport({
-            plugins: [
-                cssUrl({
-                    filter: ['src/assets/theme/fonts/**/*.eot', 'src/assets/theme/fonts/**/*.ttf', 'src/assets/theme/fonts/**/*.woff'], 
-                    
-                    url: (asset) => `${serverPath}/test-vue-app/dist/public/fonts/${asset.relativePath}`             
-                })]
-          })]
-      }),
+        //         url: "inline", // enable inline assets using base64 encoding
+        //         maxSize: 1000, // maximum file size to inline (in kilobytes)
+        //         publicPath: serverPath + '/vue-apps/dist/',
+        //     })
+
+        //   cssImport({
+        //     plugins: [
+        //         cssUrl(
+        //           { filter: [
+        //             'data:*', 'inline'
+        //           ]},
+        //           { filter: [
+        //             // '../../../node_modules/reveal.js/dist/reveal.css', 
+        //             // '../../../node_modules/reveal.js/dist/theme/white.css',
+        //             //'src/assets/theme/fonts/**/*.eot', 'src/assets/theme/fonts/**/*.ttf', 'src/assets/theme/fonts/**/*.woff'], 
+        //             '*.eot', '*.ttf', '*.woff'], 
+        //             url: (asset) => `${serverPath}/vue-apps/dist/public/fonts/${asset.relativePath}`             
+        //           }
+        //         )]
+        //   })
+   // ]
+    //  }),
       sourcemaps(),
 
     ]
+  },
+  {
+    input: ["room.js", "room-dev-url.js"],
+    output: {
+        dir: 'docs',
+        entryFileNames: "[name].js",
+        chunkFileNames: '[name].js',
+        format: 'es'
+    },
+    plugins: [
+        replace({
+            'https://resources.realitymedia.digital/vue-apps/': componentPath 
+        })
+    ]
+
   }
+]//))
