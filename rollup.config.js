@@ -7,16 +7,16 @@
 // ];
 import replace from '@rollup/plugin-replace'
 import vue from 'rollup-plugin-vue'
-import postcss from 'rollup-plugin-postcss';
+//import postcss from 'rollup-plugin-postcss';
 import rollupPluginNodeResolve from '@rollup/plugin-node-resolve'
 import rollupUrl from '@rollup/plugin-url';
 import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import copy from 'rollup-plugin-copy'
+//import copy from 'rollup-plugin-copy'
 import css from 'rollup-plugin-css-only'
-import { writeFileSync } from 'fs';
-import url from 'url';
+//import { writeFileSync } from 'fs';
+//import url from 'url';
 
 // import cssImport from "postcss-import"
 // import cssUrl from 'postcss-url'
@@ -67,13 +67,13 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
       virtual({
           three: `export default THREE`
       }),
-      copy({
-        targets: [
-            // { src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' },
-            { src: ['node_modules/reveal.js/dist/*'], dest: 'docs/public/reveal' }
-        ],
-        verbose: true
-      }),
+    //   copy({
+    //     targets: [
+    //         // { src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' },
+    //         { src: ['node_modules/reveal.js/dist/*'], dest: 'docs/public/reveal' }
+    //     ],
+    //     verbose: true
+    //   }),
 
       rollupPluginNodeResolve(),
       rollupUrl({
@@ -86,6 +86,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         publicPath: serverPath + '/vue-apps/dist/',
       }),
       replace({
+          preventAssignment: true,
           'process.env.NODE_ENV': JSON.stringify( 'production' ),
           'https://resources.realitymedia.digital/vue-apps/': componentPath //JSON.stringify( componentPath )
 
@@ -140,20 +141,21 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
       sourcemaps(),
 
     ]
-  },
-  {
-    input: ["room.js", "room-dev-url.js"],
-    output: {
-        dir: 'docs',
-        entryFileNames: "[name].js",
-        chunkFileNames: '[name].js',
-        format: 'es'
-    },
-    plugins: [
-        replace({
-            'https://resources.realitymedia.digital/vue-apps/': componentPath 
-        })
-    ]
-
   }
+//   ,
+//   {
+//     input: ["room.js", "room-dev-url.js"],
+//     output: {
+//         dir: 'docs',
+//         entryFileNames: "[name].js",
+//         chunkFileNames: '[name].js',
+//         format: 'es'
+//     },
+//     plugins: [
+//         replace({
+//             'https://resources.realitymedia.digital/vue-apps/': componentPath 
+//         })
+//     ]
+
+//   }
 ]//))

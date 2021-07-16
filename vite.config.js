@@ -25,7 +25,7 @@ export default defineConfig({
         index: resolve(__dirname, 'index.html'),
         index1: resolve(__dirname, 'src/apps/HubsTest1/index.html'),
         index2: resolve(__dirname, 'src/apps/HubsTest2/index.html'),
-        index3: resolve(__dirname, 'src/apps/HubsRevealTest/index.html'),
+        index3: resolve(__dirname, 'src/apps/Center_Map/index.html'),
         hubs: resolve(__dirname, 'hubs.js')
       },
     //   external: ['three'],
