@@ -1,7 +1,7 @@
 <template>
   <div id="room">
     
-    <Title msg="AR & VR as reality media" />
+    <div class="postertitle">AR & VR as reality media</div>
     <div class="spacer">
       <div class="flushleft">
       <br>
