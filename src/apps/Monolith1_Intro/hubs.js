@@ -4,7 +4,7 @@ import HubsAppProto from "../HubsApp";
 class HubsApp extends HubsAppProto {
     constructor (width, height) {
         super(App,width, height)
-        // this.isInteractive = true;
+        this.isInteractive = true;
     }
 }
 
