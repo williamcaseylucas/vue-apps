@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { defineProps, inject } from 'vue'
+import { inject } from 'vue'
 
 defineProps({
   msg: String

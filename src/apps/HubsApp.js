@@ -1,11 +1,65 @@
 import {createApp} from "vue";
 import { WebLayer3D } from "ethereal";
 
+// create init method for ethereal
+import * as ethereal from 'ethereal'
+
+export function initializeEthereal() {
+    HubsApp.initializeEthereal()
+}
+
+//THREE.Object3D.DefaultMatrixAutoUpdate = true;
+
+export function systemTick(time, deltaTime) {
+   HubsApp.systemTick(time, deltaTime)
+}
+
 export default class HubsApp {
+    static system;
+    static etherealCamera = new THREE.PerspectiveCamera()
+    static playerCamera;
+
+    static initializeEthereal() {
+        let scene = window.APP.scene;
+
+        this.system = ethereal.createLayoutSystem(scene.camera)
+        window.ethSystem = this.system
+
+        // can customize easing etc
+        // system.transition.duration = 1.5
+        // system.transition.delay = 0
+        // system.transition.maxWait = 4
+        // system.transition.easing = ethereal.easing.easeOut
+    }
+
+    static systemTick(time, deltaTime) {
+        let scene = window.APP.scene;
+
+        if (!this.playerCamera) {
+            this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+        }
+        
+        if (!this.playerCamera) return;
+    
+        if (this.playerCamera != this.system.viewNode) {
+            this.system.viewNode = this.playerCamera
+        }
+
+        scene.renderer.getSize(HubsApp.system.viewResolution)
+        this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix)
+
+        // tick method for ethereal
+        this.system.update(deltaTime, time)
+    }
+
     constructor (App, width, height, createOptions={}) {
+        this.isEthereal = false;
+
         this.isInteractive = false;
         this.isNetworked = false;
         this.isStatic = true;
+        this.updateTime = 100
+        this.raycaster = new THREE.Raycaster()
         this.width = width
         this.height = height
         this.size = { width: width/1000, height: height/1000}
@@ -18,7 +72,9 @@ export default class HubsApp {
         this.vueApp = createApp(App, createOptions)
     }
 
-    mount() {
+    mount(useEthereal) {
+        this.isEthereal = useEthereal === true
+        
         this.vueRoot = this.vueApp.mount(this.headDiv);
         this.vueRoot.$el.setAttribute("style","width: " + this.width + "px; height: " + this.height + "px;")
 
@@ -29,24 +85,22 @@ export default class HubsApp {
         l.setAttribute("crossorigin","anonymous")
         this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.firstChild)
 
+        // move this into method
         this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
             autoRefresh: true,
-            onLayerCreate: (layer) => {
-                // nothing yet
-            },
+            onLayerCreate: useEthereal ? 
+            (layer) => {
+                const adapter = HubsApp.system.getAdapter(layer)
+                adapter.opacity.enabled = true
+                adapter.onUpdate = () => layer.update()
+            } :
+            (layer) => {},
             onLayerPaint: (layer) => {
                 if (this.isStatic) { this.needsUpdate = true }
             },
             textureEncoding: THREE.sRGBEncoding,
-            renderOrderOffset: 0  // -1000
+            renderOrderOffset: 0
         });
-
-        console.log("size: ", this.size)
-
-        if (this.isInteractive) {
-            // for interaction
-            this.raycaster = new THREE.Raycaster()
-        }
     }
 
     setNetworkMethods(takeOwnership, setSharedData) {
@@ -123,9 +177,24 @@ export default class HubsApp {
     }
 
     tick(time) {
-        if (!this.isStatic || this.needsUpdate) {
-            this.webLayer3D.update(true);
+        if (this.isEthereal) {
+
+        } else {
+            var needsUpdate = this.needsUpdate
+            this.needsUpdate = false
+            if (this.isStatic && this.updateTime < time) {
+                needsUpdate = true
+                // wait a bit and do it again.  May get rid of this some day, we'll see
+                this.updateTime = Math.random() * 2000 + 1000;
+            }
+
+            if (!this.isStatic) {
+                this.updateTime = time
+                needsUpdate = true
+            }
+            if (needsUpdate) {
+                this.webLayer3D.update(true);
+            }
         }
-        this.needsUpdate = false
     }
 }
