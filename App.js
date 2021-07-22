@@ -1,7 +1,7 @@
 import { _ as _imports_0 } from "./logo.js";
 import { p as pushScopeId, b as popScopeId, i as inject, o as openBlock, d as createBlock, e as createVNode, t as toDisplayString, u as unref, F as Fragment } from "./vendor.js";
-/* empty css     */var NetworkedHelloWorld_vue_vue_type_style_index_0_scoped_true_lang = "\na[data-v-167fde6a] {\n  color: #b542b9;\n}\n.fade[data-v-167fde6a] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-167fde6a]:hover {\n  color: #a78e06;\n}\n";
-pushScopeId("data-v-167fde6a");
+/* empty css     */var NetworkedHelloWorld_vue_vue_type_style_index_0_scoped_true_lang = "\na[data-v-22fbac40] {\n  color: #b542b9;\n}\n.fade[data-v-22fbac40] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-22fbac40]:hover {\n  color: #a78e06;\n}\n";
+pushScopeId("data-v-22fbac40");
 const _hoisted_1$1 = {
   "xr-layer": "",
   class: "fade"
@@ -26,7 +26,7 @@ const _sfc_main$1 = {
     };
   }
 };
-_sfc_main$1.__scopeId = "data-v-167fde6a";
+_sfc_main$1.__scopeId = "data-v-22fbac40";
 var App_vue_vue_type_style_index_0_scoped_true_lang = "\n";
 pushScopeId("data-v-6b7e979c");
 const _hoisted_1 = { id: "top" };

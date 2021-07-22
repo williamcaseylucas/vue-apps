@@ -1,5 +1,11 @@
 
 
+#edit[data-v-6a11ec38] {
+  color: #000000;
+}
+#edit.upclose[data-v-6a11ec38] {
+  color: #c00303;
+}
 
 
 
@@ -169,17 +175,27 @@ footer, header, hgroup, main, menu, nav, section {
     text-align: justify;
     }
   
-a[data-v-04cbd54a] {
+a[data-v-0a280960] {
   color: #b542b9;
 }
-.fade[data-v-04cbd54a] {
+.fade[data-v-0a280960] {
   color: #9803a5;
   /* transition: color 1s; */
 }
-.fade[data-v-04cbd54a]:hover {
+.fade[data-v-0a280960]:hover {
   color: #a78e06;
 }
 
+a[data-v-b474cdac] {
+  color: #b542b9;
+}
+.fade[data-v-b474cdac] {
+  color: #9803a5;
+  /* transition: color 1s; */
+}
+.fade[data-v-b474cdac]:hover {
+  color: #06a71b;
+}
 
 a[data-v-ecd9120c] {
   color: #42b983;
