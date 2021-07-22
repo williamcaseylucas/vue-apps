@@ -1,4 +1,4 @@
-import App from "./App.vue";
+import App from "../App.vue";
 import HubsAppProto from "../HubsApp";
 
 class HubsApp extends HubsAppProto {

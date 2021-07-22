@@ -17,10 +17,11 @@ import Monolith4 from './src/apps/Monolith4_Presence/hubs.js'
 import Monolith5 from './src/apps/Monolith5_Genres/hubs.js'
 import Monolith6 from './src/apps/Monolith6_Future/hubs.js'
 import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
+import Alyx from './src/apps/Room5/Alyx/hubs.js'
 
 export {
     // Rotunda
-    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
+    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, Alyx,
 
     // Tests
     hubsTest1, hubsTest2}
