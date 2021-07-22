@@ -1,16 +1,13 @@
 <template>
   <div id="room">
   <div class="spacer">
-  <Title msg="AR & VR as reality media" />
-	<img src="../../../assets/images/Room5/Alyx-splash.jpg" width="250" >
-	<div class="squareoff"> Each reality medium mediates and remediates. It offers a new representation of the world that we implicitly compare 
-		to our experience of the world in itself, but also through other media.</div> 
+  <Title msg="" />
+  <br><br>
+	<img src="../../../assets/images/Room5/Alyx-splash.png" width="250" >
+  <br><br>
+	<div class="squareoff"> First person shooter games such as  <a href="https://www.half-life.com/en/alyx/" target="_blank">HalfLife: Alyx </a> have long used 3-D graphics to create an immersive experience for millions of players. And for decades, 
+    players on computers and game consoles have yearned for true VR so that they could fall through the screen into the worlds on the other side.</div> 
   </div>
-   <p>
-    <a href="https://realitymedia.digital" target="_blank">
-      Start at the reality media site. 
-    </a>
-  </p>
   </div>
 </template>
 
