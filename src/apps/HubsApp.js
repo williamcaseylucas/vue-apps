@@ -14,6 +14,38 @@ export function systemTick(time, deltaTime) {
    HubsApp.systemTick(time, deltaTime)
 }
 
+function copyCamera(source, target) {
+    source.updateMatrixWorld()
+    //let oldName = target.name
+    //target.copy(source, false)
+    //target.name = oldName
+
+    target.fov = source.fov;
+    target.zoom = source.zoom;
+
+    target.near = source.near;
+    target.far = source.far;
+
+    target.aspect = source.aspect;
+
+    // target.matrixWorldInverse.copy( source.matrixWorldInverse );
+    // target.projectionMatrix.copy( source.projectionMatrix );
+    // target.projectionMatrixInverse.copy( source.projectionMatrixInverse );
+
+    // target.up.copy( source.up );
+
+    // target.matrix.copy( source.matrix );
+    // target.matrixWorld.copy( source.matrixWorld );
+
+    // target.matrixAutoUpdate = source.matrixAutoUpdate;
+    // target.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
+
+    source.matrixWorld.decompose( target.position, target.quaternion, target.scale)
+    target.rotation.setFromQuaternion( target.quaternion, undefined, false );
+    target.updateMatrix()
+    target.updateMatrixWorld(true)
+}
+
 export default class HubsApp {
     static system;
     static etherealCamera = new THREE.PerspectiveCamera()
@@ -22,7 +54,16 @@ export default class HubsApp {
     static initializeEthereal() {
         let scene = window.APP.scene;
 
-        this.system = ethereal.createLayoutSystem(scene.camera)
+        this.etherealCamera.matrixAutoUpdate = true;
+        //this.etherealCamera.visible = false;
+
+        //scene.setObject3D("etherealCamera", this.etherealCamera)
+
+        this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+
+        // just in case "viewing-camera" isn't set up yet ... which it 
+        // should be, but just to be careful
+        this.system = ethereal.createLayoutSystem(this.playerCamera ? this.playerCamera : scene.camera)
         window.ethSystem = this.system
 
         // can customize easing etc
@@ -41,12 +82,14 @@ export default class HubsApp {
         
         if (!this.playerCamera) return;
     
-        if (this.playerCamera != this.system.viewNode) {
-            this.system.viewNode = this.playerCamera
+        copyCamera(this.playerCamera, this.etherealCamera)
+
+        if (this.etherealCamera != this.system.viewNode) {
+            this.system.viewNode = this.etherealCamera
         }
 
         scene.renderer.getSize(HubsApp.system.viewResolution)
-        this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix)
+        //this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix)
 
         // tick method for ethereal
         this.system.update(deltaTime, time)
