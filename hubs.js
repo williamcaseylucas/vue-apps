@@ -9,10 +9,24 @@ import { g as createLayoutSystem, c as createApp, W as WebLayer3D, p as pushScop
 import "./App2.js";
 import "./App3.js";
 /* empty css     */import "./logo.js";
+function copyCamera(source, target) {
+  source.updateMatrixWorld();
+  target.fov = source.fov;
+  target.zoom = source.zoom;
+  target.near = source.near;
+  target.far = source.far;
+  target.aspect = source.aspect;
+  source.matrixWorld.decompose(target.position, target.quaternion, target.scale);
+  target.rotation.setFromQuaternion(target.quaternion, void 0, false);
+  target.updateMatrix();
+  target.updateMatrixWorld(true);
+}
 const _HubsApp = class {
   static initializeEthereal() {
     let scene = window.APP.scene;
-    this.system = createLayoutSystem(scene.camera);
+    this.etherealCamera.matrixAutoUpdate = true;
+    this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+    this.system = createLayoutSystem(this.playerCamera ? this.playerCamera : scene.camera);
     window.ethSystem = this.system;
   }
   static systemTick(time, deltaTime) {
@@ -22,11 +36,11 @@ const _HubsApp = class {
     }
     if (!this.playerCamera)
       return;
-    if (this.playerCamera != this.system.viewNode) {
-      this.system.viewNode = this.playerCamera;
+    copyCamera(this.playerCamera, this.etherealCamera);
+    if (this.etherealCamera != this.system.viewNode) {
+      this.system.viewNode = this.etherealCamera;
     }
     scene.renderer.getSize(_HubsApp.system.viewResolution);
-    this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix);
     this.system.update(deltaTime, time);
   }
   constructor(App, width, height, createOptions = {}) {
