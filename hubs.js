@@ -18,7 +18,12 @@ import Monolith5 from './src/apps/Monolith5_Genres/hubs.js'
 import Monolith6 from './src/apps/Monolith6_Future/hubs.js'
 import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
 
+import {initializeEthereal, systemTick} from './src/apps/HubsApp'
+
 export {
+    // for updating ethereal once per tick
+    systemTick, initializeEthereal,
+
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
 
