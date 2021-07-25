@@ -18,6 +18,8 @@ import Monolith5 from './src/apps/Monolith5_Genres/hubs.js'
 import Monolith6 from './src/apps/Monolith6_Future/hubs.js'
 import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
 import Alyx from './src/apps/Room5/Alyx/hubs.js'
+import Pokemon from './src/apps/Room5/Pokemon/hubs.js'
+import BeatSaber from './src/apps/Room5/BeatSaber/hubs.js'
 
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
@@ -25,8 +27,8 @@ export {
     // for updating ethereal once per tick
     systemTick, initializeEthereal,
 
-    // Rotunda
-    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, Alyx,
+    // Rotunda and Rooms
+    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, Alyx,Pokemon, BeatSaber,
 
     // Tests
     hubsTest1, hubsTest2}
