@@ -14,8 +14,6 @@ class HubsApp extends HubsAppProto {
         this.isInteractive = true;
         this.isNetworked = true;
         this.isStatic = false;
-
-        console.log (JSON.stringify(this.shared.data))
     }
     
     updateSharedData(dataObject) {

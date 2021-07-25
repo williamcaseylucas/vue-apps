@@ -1,11 +1,108 @@
 import {createApp} from "vue";
 import { WebLayer3D } from "ethereal";
 
+// create init method for ethereal
+import * as ethereal from 'ethereal'
+
+export function initializeEthereal() {
+    HubsApp.initializeEthereal()
+}
+
+//THREE.Object3D.DefaultMatrixAutoUpdate = true;
+
+export function systemTick(time, deltaTime) {
+   HubsApp.systemTick(time, deltaTime)
+}
+
+function copyCamera(source, target) {
+    source.updateMatrixWorld()
+    //let oldName = target.name
+    //target.copy(source, false)
+    //target.name = oldName
+
+    target.fov = source.fov;
+    target.zoom = source.zoom;
+
+    target.near = source.near;
+    target.far = source.far;
+
+    target.aspect = source.aspect;
+
+    // target.matrixWorldInverse.copy( source.matrixWorldInverse );
+    // target.projectionMatrix.copy( source.projectionMatrix );
+    // target.projectionMatrixInverse.copy( source.projectionMatrixInverse );
+
+    // target.up.copy( source.up );
+
+    // target.matrix.copy( source.matrix );
+    // target.matrixWorld.copy( source.matrixWorld );
+
+    // target.matrixAutoUpdate = source.matrixAutoUpdate;
+    // target.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
+
+    source.matrixWorld.decompose( target.position, target.quaternion, target.scale)
+    target.rotation.setFromQuaternion( target.quaternion, undefined, false );
+    target.updateMatrix()
+    target.updateMatrixWorld(true)
+}
+
 export default class HubsApp {
+    static system;
+    static etherealCamera = new THREE.PerspectiveCamera()
+    static playerCamera;
+
+    static initializeEthereal() {
+        let scene = window.APP.scene;
+
+        this.etherealCamera.matrixAutoUpdate = true;
+        //this.etherealCamera.visible = false;
+
+        //scene.setObject3D("etherealCamera", this.etherealCamera)
+
+        this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+
+        // just in case "viewing-camera" isn't set up yet ... which it 
+        // should be, but just to be careful
+        this.system = ethereal.createLayoutSystem(this.playerCamera ? this.playerCamera : scene.camera)
+        window.ethSystem = this.system
+
+        // can customize easing etc
+        // system.transition.duration = 1.5
+        // system.transition.delay = 0
+        // system.transition.maxWait = 4
+        // system.transition.easing = ethereal.easing.easeOut
+    }
+
+    static systemTick(time, deltaTime) {
+        let scene = window.APP.scene;
+
+        if (!this.playerCamera) {
+            this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+        }
+        
+        if (!this.playerCamera) return;
+    
+        copyCamera(this.playerCamera, this.etherealCamera)
+
+        if (this.etherealCamera != this.system.viewNode) {
+            this.system.viewNode = this.etherealCamera
+        }
+
+        scene.renderer.getSize(HubsApp.system.viewResolution)
+        //this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix)
+
+        // tick method for ethereal
+        this.system.update(deltaTime, time)
+    }
+
     constructor (App, width, height, createOptions={}) {
+        this.isEthereal = false;
+
         this.isInteractive = false;
         this.isNetworked = false;
         this.isStatic = true;
+        this.updateTime = 100
+        this.raycaster = new THREE.Raycaster()
         this.width = width
         this.height = height
         this.size = { width: width/1000, height: height/1000}
@@ -18,7 +115,9 @@ export default class HubsApp {
         this.vueApp = createApp(App, createOptions)
     }
 
-    mount() {
+    mount(useEthereal) {
+        this.isEthereal = useEthereal === true
+        
         this.vueRoot = this.vueApp.mount(this.headDiv);
         this.vueRoot.$el.setAttribute("style","width: " + this.width + "px; height: " + this.height + "px;")
 
@@ -29,24 +128,22 @@ export default class HubsApp {
         l.setAttribute("crossorigin","anonymous")
         this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.firstChild)
 
+        // move this into method
         this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
             autoRefresh: true,
-            onLayerCreate: (layer) => {
-                // nothing yet
-            },
+            onLayerCreate: useEthereal ? 
+            (layer) => {
+                const adapter = HubsApp.system.getAdapter(layer)
+                adapter.opacity.enabled = true
+                adapter.onUpdate = () => layer.update()
+            } :
+            (layer) => {},
             onLayerPaint: (layer) => {
                 if (this.isStatic) { this.needsUpdate = true }
             },
             textureEncoding: THREE.sRGBEncoding,
-            renderOrderOffset: 0  // -1000
+            renderOrderOffset: 0
         });
-
-        console.log("size: ", this.size)
-
-        if (this.isInteractive) {
-            // for interaction
-            this.raycaster = new THREE.Raycaster()
-        }
     }
 
     setNetworkMethods(takeOwnership, setSharedData) {
@@ -123,9 +220,24 @@ export default class HubsApp {
     }
 
     tick(time) {
-        if (!this.isStatic || this.needsUpdate) {
-            this.webLayer3D.update(true);
+        if (this.isEthereal) {
+
+        } else {
+            var needsUpdate = this.needsUpdate
+            this.needsUpdate = false
+            if (this.isStatic && this.updateTime < time) {
+                needsUpdate = true
+                // wait a bit and do it again.  May get rid of this some day, we'll see
+                this.updateTime = Math.random() * 2000 + 1000;
+            }
+
+            if (!this.isStatic) {
+                this.updateTime = time
+                needsUpdate = true
+            }
+            if (needsUpdate) {
+                this.webLayer3D.update(true);
+            }
         }
-        this.needsUpdate = false
     }
 }
