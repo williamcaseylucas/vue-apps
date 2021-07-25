@@ -1,9 +1,10 @@
 <template>
   <div id="room">
   <div class="spacer">
-  <Title msg="Beat Saber" />
-	  <div class="squareoff">Beat Saber is a VR rhythm game 
-      with a little Star Wars thrown in. The player uses lightsabers to keep the beat. 
+  <Title msg="Walking Dead: Our World" />
+	  <div class="squareoff">In this AR version of the transmedia franchise
+      GPS is used to determine your location in the world. Your location 
+      and the zombies appear in an enhanced Google Maps map on the phone screen.
     </div> 
   </div>
   </div>

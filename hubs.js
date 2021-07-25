@@ -20,6 +20,9 @@ import Monolith7 from './src/apps/Monolith7_Privacy/hubs.js'
 import Alyx from './src/apps/Room5/Alyx/hubs.js'
 import Pokemon from './src/apps/Room5/Pokemon/hubs.js'
 import BeatSaber from './src/apps/Room5/BeatSaber/hubs.js'
+import WalkingDead from './src/apps/Room5/WalkingDead/hubs.js'
+import Apparizione from './src/apps/Room5/Apparizione/hubs.js'
+import Minecraft from './src/apps/Room5/Minecraft/hubs.js'
 
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
@@ -28,7 +31,9 @@ export {
     systemTick, initializeEthereal,
 
     // Rotunda and Rooms
-    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, Alyx,Pokemon, BeatSaber,
+    Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, 
+    Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, 
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione,
 
     // Tests
     hubsTest1, hubsTest2}

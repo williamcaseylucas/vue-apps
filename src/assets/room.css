@@ -15,6 +15,20 @@
     background-color: transparent;
   }
 
+
+#room h2{
+  font-size: 1.5em;
+  font-weight: bold;
+
+}
+
+
+#room  .center {
+  margin: auto;
+  width: 100%;
+  padding-left: 25px;
+  }
+
 #room .postertitle  {
     display: block;
     font-size: 1.5em;

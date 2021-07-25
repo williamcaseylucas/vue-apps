@@ -1,9 +1,10 @@
 <template>
   <div id="room">
   <div class="spacer">
-  <Title msg="Beat Saber" />
-	  <div class="squareoff">Beat Saber is a VR rhythm game 
-      with a little Star Wars thrown in. The player uses lightsabers to keep the beat. 
+  <Title msg="La Apparizione" />
+	  <div class="squareoff">Like video games and 360-degree video, 
+      VR art emphasizes immersion as the feature that makes the experience 
+      unique, as in a VR work by Christian Lemmerz entitled La Apparizione (2017).
     </div> 
   </div>
   </div>
