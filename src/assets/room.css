@@ -12,7 +12,7 @@
     border-color: red;
     position: absolute;
     display: block;
-    background-color: black;
+    background-color: transparent;
   }
 
 #room .postertitle  {

@@ -6,13 +6,17 @@
 	<div class="squareoff"> Each reality medium mediates and remediates. It offers a new representation of the world that we implicitly compare 
 		to our experience of the world in itself, but also through other media.</div> 
   </div>
-  <Linkout />
+   <p>
+    <a href="https://realitymedia.digital" target="_blank">
+      Start at the reality media site. 
+    </a>
+    |
+  </p>
   </div>
 </template>
 
 <script setup>
 import Title from '../../components/CenterTitle.vue'
-import Linkout from '../../components/Linkout.vue'
 
 import "../../assets/top.css"
 import "../../assets/room.css"
