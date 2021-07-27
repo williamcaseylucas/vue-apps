@@ -1,4 +1,5 @@
 <template>
+  <div> 
   <div id="room">
   <div class="spacer">
   <img src="../../../assets/images/Room5/Alyx-splash.png" width="300" >
@@ -8,6 +9,7 @@
     players on computers and game consoles have yearned for true VR so that they could fall through the screen into the worlds on the other side.</div> 
   </div>
   </div>
+  </div> 
 </template>
 
 <script setup>

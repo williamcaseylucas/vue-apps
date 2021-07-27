@@ -22,6 +22,9 @@
 
 }
 
+#room .headline{
+  font-size: 4em;
+}
 
 #room  .center {
   margin: auto;
