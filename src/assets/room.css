@@ -6,7 +6,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #f2e6e5;
-    width: 100%
+    width: auto;
     margin: 30px;
     border: 10px;
     border-radius: 10px;
