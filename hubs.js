@@ -24,6 +24,7 @@ import WalkingDead from './src/apps/Room5/WalkingDead/hubs.js'
 import Apparizione from './src/apps/Room5/Apparizione/hubs.js'
 import Minecraft from './src/apps/Room5/Minecraft/hubs.js'
 import GamesBanner from './src/apps/Room5/GamesBanner/hubs.js'
+import ArtBanner from './src/apps/Room5/ArtBanner/hubs.js'
 
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
@@ -34,7 +35,7 @@ export {
     // Rotunda and Rooms
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, 
     Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7, 
-    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner,
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner,
 
     // Tests
     hubsTest1, hubsTest2}
