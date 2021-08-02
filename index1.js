@@ -1,8 +1,9 @@
 import { W as WebApp$1 } from "./WebApp.js";
 import { _ as _sfc_main } from "./App.js";
 import { r as reactive, a as readonly } from "./vendor.js";
+import "./top.js";
 import "./logo.js";
-/* empty css     */class Store {
+class Store {
   constructor(app2) {
     this._state = reactive({
       count: 0
@@ -25,9 +26,9 @@ class WebApp extends WebApp$1 {
     super(_sfc_main, 400, 475);
     this.shared = new Store(this);
     this.vueApp.provide("shared", this.shared);
-    console.log(JSON.stringify(this.shared.data));
+    console.log(JSON.stringify(this.shared.state));
   }
 }
 let app = new WebApp();
 app.mount();
-app.vueApp.$el.style.border = "solid 0.1em";
+app.vueRoot.$el.style.border = "solid 0.1em";

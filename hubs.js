@@ -1,14 +1,9 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
 import "./App.js";
-import { g as createLayoutSystem, c as createApp, W as WebLayer3D, p as pushScopeId, b as popScopeId } from "./vendor.js";
+import { g as createLayoutSystem, W as WebLayer3D, p as pushScopeId, b as popScopeId } from "./vendor.js";
+import { V as VueApp } from "./top.js";
 import "./App2.js";
 import "./App3.js";
-/* empty css     */import "./logo.js";
+import "./logo.js";
 function copyCamera(source, target) {
   source.updateMatrixWorld();
   target.fov = source.fov;
@@ -21,7 +16,19 @@ function copyCamera(source, target) {
   target.updateMatrix();
   target.updateMatrixWorld(true);
 }
-const _HubsApp = class {
+const _HubsApp = class extends VueApp {
+  constructor(App, width, height, createOptions = {}) {
+    super(App, width, height, createOptions);
+    this.needsUpdate = false;
+    this.isEthereal = false;
+    this.isInteractive = false;
+    this.isNetworked = false;
+    this.isStatic = true;
+    this.updateTime = 100;
+    this.raycaster = new THREE.Raycaster();
+    this.size = { width: width / 1e3, height: height / 1e3 };
+    this.headDiv = document.createElement("div");
+  }
   static initializeEthereal() {
     let scene = window.APP.scene;
     this.etherealCamera.matrixAutoUpdate = true;
@@ -42,21 +49,6 @@ const _HubsApp = class {
     }
     scene.renderer.getSize(_HubsApp.system.viewResolution);
     this.system.update(deltaTime, time);
-  }
-  constructor(App, width, height, createOptions = {}) {
-    this.isEthereal = false;
-    this.isInteractive = false;
-    this.isNetworked = false;
-    this.isStatic = true;
-    this.updateTime = 100;
-    this.raycaster = new THREE.Raycaster();
-    this.width = width;
-    this.height = height;
-    this.size = { width: width / 1e3, height: height / 1e3 };
-    this.takeOwnership = this.takeOwnershipProto.bind(this);
-    this.setSharedData = this.setSharedDataProto.bind(this);
-    this.headDiv = document.createElement("div");
-    this.vueApp = createApp(App, createOptions);
   }
   mount(useEthereal) {
     this.isEthereal = useEthereal === true;
@@ -88,12 +80,6 @@ const _HubsApp = class {
     this.takeOwnership = takeOwnership;
     this.setSharedData = setSharedData;
   }
-  takeOwnershipProto() {
-    return true;
-  }
-  setSharedDataProto(object) {
-    return true;
-  }
   updateSharedData(dataObject) {
     this.needsUpdate = true;
   }
@@ -102,7 +88,7 @@ const _HubsApp = class {
     return this.size;
   }
   getSharedData(dataObject) {
-    raise("getSharedData should be overridden by subclasses");
+    throw new Error("getSharedData should be overridden by subclasses");
   }
   clicked(evt) {
     if (!this.isInteractive) {
@@ -142,15 +128,13 @@ const _HubsApp = class {
         needsUpdate = true;
       }
       if (needsUpdate) {
-        this.webLayer3D.update(true);
+        this.webLayer3D.update();
       }
     }
   }
 };
 let HubsApp = _HubsApp;
-__publicField(HubsApp, "system");
-__publicField(HubsApp, "etherealCamera", new THREE.PerspectiveCamera());
-__publicField(HubsApp, "playerCamera");
+HubsApp.etherealCamera = new THREE.PerspectiveCamera();
 var App_vue_vue_type_style_index_0_scoped_true_lang$d = "\n\n";
 pushScopeId("data-v-8bbf9448");
 popScopeId();

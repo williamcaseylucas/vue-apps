@@ -61660,4 +61660,4 @@ const DefaultBindings = {
 function createLayoutSystem(viewNode, bindings = DefaultBindings) {
   return new EtherealLayoutSystem(viewNode, bindings);
 }
-export { Fragment as F, WebLayer3D as W, readonly as a, popScopeId as b, createApp as c, createBlock as d, createVNode as e, createTextVNode as f, createLayoutSystem as g, inject as i, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u };
+export { Fragment as F, WebLayer3D as W, readonly as a, popScopeId as b, createBlock as c, createVNode as d, createApp as e, createTextVNode as f, createLayoutSystem as g, inject as i, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u };

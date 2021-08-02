@@ -1,6 +1,7 @@
 import { _ as _imports_0 } from "./logo.js";
-import { p as pushScopeId, b as popScopeId, i as inject, o as openBlock, d as createBlock, e as createVNode, t as toDisplayString, u as unref, F as Fragment } from "./vendor.js";
-/* empty css     */var NetworkedHelloWorld_vue_vue_type_style_index_0_scoped_true_lang = "\na[data-v-22fbac40] {\n  color: #b542b9;\n}\n.fade[data-v-22fbac40] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-22fbac40]:hover {\n  color: #a78e06;\n}\n";
+import { p as pushScopeId, b as popScopeId, i as inject, o as openBlock, c as createBlock, d as createVNode, t as toDisplayString, u as unref, F as Fragment } from "./vendor.js";
+import "./top.js";
+var NetworkedHelloWorld_vue_vue_type_style_index_0_scoped_true_lang = "\na[data-v-22fbac40] {\n  color: #b542b9;\n}\n.fade[data-v-22fbac40] {\n  color: #9803a5;\n  /* transition: color 1s; */\n}\n.fade[data-v-22fbac40]:hover {\n  color: #a78e06;\n}\n";
 pushScopeId("data-v-22fbac40");
 const _hoisted_1$1 = {
   "xr-layer": "",
