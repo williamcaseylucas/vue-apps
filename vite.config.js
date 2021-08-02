@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import copy from 'rollup-plugin-copy'
 import node_resolve from '@rollup/plugin-node-resolve';
 import virtual from '@rollup/plugin-virtual';
+import typescript from '@rollup/plugin-typescript'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,7 +27,7 @@ export default defineConfig({
         index1: resolve(__dirname, 'src/apps/HubsTest1/index.html'),
         index2: resolve(__dirname, 'src/apps/HubsTest2/index.html'),
         index3: resolve(__dirname, 'src/apps/Center_Map/index.html'),
-        hubs: resolve(__dirname, 'hubs.js')
+        hubs: resolve(__dirname, 'hubs.ts')
       },
     //   external: ['three'],
     //   globals: {
@@ -42,7 +43,10 @@ export default defineConfig({
         // virtual({
         //     three: `export default THREE`
         //   }),
-      
+        typescript({
+            typescript: require('typescript'),
+        }),
+         
           node_resolve(),
       ]
     }
