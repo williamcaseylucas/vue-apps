@@ -14,6 +14,7 @@ import virtual from '@rollup/plugin-virtual';
 import { terser } from "rollup-plugin-terser";
 import sourcemaps from 'rollup-plugin-sourcemaps';
 //import copy from 'rollup-plugin-copy'
+import typescript from '@rollup/plugin-typescript'
 import css from 'rollup-plugin-css-only'
 //import { writeFileSync } from 'fs';
 //import url from 'url';
@@ -32,7 +33,7 @@ var componentPath = serverPath + '/vue-apps/'
 export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     //input: ["src/apps/HubsTest1/hubs.js", "src/apps/HubsTest2/hubs.js"],
     //input: `src/apps/${name}/hubs.js`,
-    input: "hubs.js",
+    input: "hubs.ts",
     // external: ['three'],
     // globals: {
     //   'three': 'THREE'
@@ -74,6 +75,9 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     //     ],
     //     verbose: true
     //   }),
+    typescript({
+        typescript: require('typescript'),
+    }),
 
       rollupPluginNodeResolve(),
       rollupUrl({

@@ -1,8 +1,12 @@
-import {createApp} from "vue";
-import { WebLayer3D } from "ethereal";
+import { createApp, App, Component, ComponentPublicInstance } from "vue";
+import { Scene, Entity } from 'aframe'
+import { EtherealLayoutSystem, WebLayer3D } from "ethereal";
+import VueApp  from "./VueApp"
 
 // create init method for ethereal
 import * as ethereal from 'ethereal'
+import { createPrinter, ThisExpression, ThrowStatement } from "node_modules/typescript/lib/typescript";
+import { create } from "mathjs";
 
 export function initializeEthereal() {
     HubsApp.initializeEthereal()
@@ -10,11 +14,11 @@ export function initializeEthereal() {
 
 //THREE.Object3D.DefaultMatrixAutoUpdate = true;
 
-export function systemTick(time, deltaTime) {
+export function systemTick(time: number, deltaTime: number) {
    HubsApp.systemTick(time, deltaTime)
 }
 
-function copyCamera(source, target) {
+function copyCamera(source: THREE.PerspectiveCamera, target: THREE.PerspectiveCamera) {
     source.updateMatrixWorld()
     //let oldName = target.name
     //target.copy(source, false)
@@ -41,25 +45,51 @@ function copyCamera(source, target) {
     // target.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
 
     source.matrixWorld.decompose( target.position, target.quaternion, target.scale)
+    // @ts-ignore
     target.rotation.setFromQuaternion( target.quaternion, undefined, false );
     target.updateMatrix()
     target.updateMatrixWorld(true)
 }
 
-export default class HubsApp {
-    static system;
+export default class HubsApp extends VueApp {
+    static system: EtherealLayoutSystem;
     static etherealCamera = new THREE.PerspectiveCamera()
-    static playerCamera;
+    static playerCamera: THREE.PerspectiveCamera;
+
+    isEthereal: boolean
+    isInteractive: boolean
+    isNetworked: boolean
+    isStatic: boolean
+
+    private updateTime: number
+    private raycaster: THREE.Raycaster
+
+    size: {
+        width: number,
+        height: number
+    }
+
+    //takeOwnership:  () => boolean
+    //setSharedData: (object: {}) => boolean
+    //width: number
+    //height: number
+    //vueApp: App
+    //vueRoot: ComponentPublicInstance | undefined 
+
+    webLayer3D: WebLayer3D | undefined
+    needsUpdate: boolean = false
+
+    headDiv: Element
 
     static initializeEthereal() {
-        let scene = window.APP.scene;
+        let scene: Scene = window.APP.scene;
 
         this.etherealCamera.matrixAutoUpdate = true;
         //this.etherealCamera.visible = false;
 
         //scene.setObject3D("etherealCamera", this.etherealCamera)
 
-        this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+        this.playerCamera = (document.getElementById("viewing-camera") as Entity).getObject3D("camera") as THREE.PerspectiveCamera;
 
         // just in case "viewing-camera" isn't set up yet ... which it 
         // should be, but just to be careful
@@ -73,11 +103,11 @@ export default class HubsApp {
         // system.transition.easing = ethereal.easing.easeOut
     }
 
-    static systemTick(time, deltaTime) {
+    static systemTick(time: number, deltaTime: number) {
         let scene = window.APP.scene;
 
         if (!this.playerCamera) {
-            this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
+            this.playerCamera = (document.getElementById("viewing-camera") as Entity).getObject3D("camera") as THREE.PerspectiveCamera;
         }
         
         if (!this.playerCamera) return;
@@ -95,7 +125,8 @@ export default class HubsApp {
         this.system.update(deltaTime, time)
     }
 
-    constructor (App, width, height, createOptions={}) {
+    constructor (App: Component, width: number, height: number, createOptions={}) {
+        super(App, width, height, createOptions)
         this.isEthereal = false;
 
         this.isInteractive = false;
@@ -103,19 +134,19 @@ export default class HubsApp {
         this.isStatic = true;
         this.updateTime = 100
         this.raycaster = new THREE.Raycaster()
-        this.width = width
-        this.height = height
+        //this.width = width
+        //this.height = height
         this.size = { width: width/1000, height: height/1000}
-        this.takeOwnership = this.takeOwnershipProto.bind(this)
-        this.setSharedData = this.setSharedDataProto.bind(this)
+        //this.takeOwnership = this.takeOwnershipProto.bind(this)
+        //this.setSharedData = this.setSharedDataProto.bind(this)
 
         this.headDiv = document.createElement("div")
         //this.headDiv.setAttribute("style","width: 100%;height: 100%;")
 
-        this.vueApp = createApp(App, createOptions)
+        //this.vueApp = createApp(App, createOptions)
     }
 
-    mount(useEthereal) {
+    mount(useEthereal?: boolean) {
         this.isEthereal = useEthereal === true
         
         this.vueRoot = this.vueApp.mount(this.headDiv);
@@ -146,23 +177,24 @@ export default class HubsApp {
         });
     }
 
-    setNetworkMethods(takeOwnership, setSharedData) {
+    setNetworkMethods(takeOwnership: () => boolean, setSharedData: ({}) => boolean) {
         this.takeOwnership = takeOwnership;
         this.setSharedData = setSharedData;
     }
 
     // dummy functions, just to avoid errors if they get called before
     // networking is initialized, or called when networked is false
-    takeOwnershipProto() {
-        return true;
-    }
-    setSharedDataProto(object) {
-        return true;
-    }
+    // takeOwnershipProto(): boolean {
+    //     return true;
+    // }
+
+    // setSharedDataProto(object: {}) {
+    //     return true;
+    // }
 
     // receive data updates.  should be overridden by subclasses, also requests
     // update next tick
-    updateSharedData(dataObject) {
+    updateSharedData(dataObject: {}) {
         this.needsUpdate = true
     }
 
@@ -180,18 +212,18 @@ export default class HubsApp {
     }
 
     // receive data updates.  should be overridden by subclasses
-    getSharedData(dataObject) {
-        raise("getSharedData should be overridden by subclasses")
+    getSharedData(dataObject: {}) {
+        throw new Error("getSharedData should be overridden by subclasses")
     }
     
     // override to check for your own 3D objects that aren't webLayers
-    clicked(evt) {
+    clicked(evt: {object3D: THREE.Object3D}) {
         if (!this.isInteractive) { return }
         
         const obj = evt.object3D
         this.raycaster.ray.set(obj.position, 
-            this.webLayer3D.getWorldDirection(new THREE.Vector3()).negate())
-        const hit = this.webLayer3D.hitTest(this.raycaster.ray)
+            this.webLayer3D!.getWorldDirection(new THREE.Vector3()).negate())
+        const hit = this.webLayer3D!.hitTest(this.raycaster.ray)
         if (hit) {
           hit.target.click()
           hit.target.focus()
@@ -199,11 +231,11 @@ export default class HubsApp {
         }   
     }
 
-    dragStart(evt) {
+    dragStart(evt: {}) {
         // nothing here ... subclass should override
     }
 
-    dragEnd (evt) {
+    dragEnd (evt: {}) {
         // nothing here ... subclass should override
     }
 
@@ -219,7 +251,7 @@ export default class HubsApp {
         // TODO: destroy the vue component and any resources, etc., it has
     }
 
-    tick(time) {
+    tick(time: number) {
         if (this.isEthereal) {
 
         } else {
@@ -236,7 +268,7 @@ export default class HubsApp {
                 needsUpdate = true
             }
             if (needsUpdate) {
-                this.webLayer3D.update(true);
+                this.webLayer3D!.update();
             }
         }
     }

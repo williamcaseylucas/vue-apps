@@ -1,7 +1,16 @@
 import { reactive, readonly } from "vue";
+import VueApp from "../VueApp";
 
-export default class Store {
-    constructor(app) {
+export interface data {
+    close: number
+}
+
+export class Store {
+    _state: data
+    state: data
+    app: VueApp
+
+    constructor(app: VueApp) {
         this._state = reactive({
             close: 0
         })
