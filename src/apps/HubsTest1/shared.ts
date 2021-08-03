@@ -1,7 +1,15 @@
 import { reactive, readonly } from "vue";
+import VueApp from "../VueApp";
 
-export default class Store {
-    constructor(app) {
+export interface data {
+    count: number
+}
+
+export class Store {
+    _state: data
+    state: data
+    app: VueApp
+    constructor(app: VueApp) {
         this._state = reactive({
             count: 0
         })
@@ -16,7 +24,7 @@ export default class Store {
         }
     }
     
-    updateSharedData(dataObject) {
+    updateSharedData(dataObject: data) {
         // need to update the elements within the state, because otherwise
         // the data won't flow to the components
         this._state.count = dataObject.count

@@ -1,8 +1,10 @@
 import WebAppProto from "../WebApp";
 import App from './App.vue'
-import Store from "./shared"
+import {data as SharedData, Store} from "./shared"
 
 class WebApp extends WebAppProto {
+    shared: Store
+
     constructor () {
         super(App, 400, 475)
 
@@ -11,11 +13,11 @@ class WebApp extends WebAppProto {
         this.shared = new Store(this)
         this.vueApp.provide('shared', this.shared)
 
-        console.log (JSON.stringify(this.shared.data))
+        console.log (JSON.stringify(this.shared.state))
     }
 }
 
 let app = new WebApp()
 app.mount()
 
-app.vueApp.$el.style.border = "solid 0.1em"
+app.vueRoot!.$el.style.border = "solid 0.1em"

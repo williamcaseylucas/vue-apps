@@ -1,8 +1,11 @@
 import App from "./App.vue";
 import HubsAppProto from "../HubsApp";
-import Store from "./shared"
+import {data as SharedData, Store} from "./shared"
+import { WebLayer3DContent } from "ethereal";
 
 class HubsApp extends HubsAppProto {
+    shared: Store
+    
     constructor () {
         super(App, 500, 500)
         this.isInteractive = true;
@@ -11,23 +14,30 @@ class HubsApp extends HubsAppProto {
         this.vueApp.provide('shared', this.shared)
     }
 
+    docs: WebLayer3DContent | undefined
+    boundsSize: THREE.Vector3  = new THREE.Vector3()
+    bounds: THREE.Box3 = new THREE.Box3()
+
     mount () {
         super.mount(true) // use ethereal
 
-        this.docs = this.webLayer3D.querySelector('#edit')
-
+        this.docs = this.webLayer3D!.querySelector('#edit')
+        if (!this.docs) {
+            console.warn("Vue app needs #edit div")
+            return 
+        }
+        
         let adapter = HubsApp.system.getAdapter(this.docs) 
-        this.boundsSize = new THREE.Vector3()
         adapter.onUpdate = () => {
             this.bounds = adapter.metrics.target.visualBounds
             this.bounds.getSize(this.boundsSize)
-            this.size = Math.sqrt(this.boundsSize.x * this.boundsSize.x + this.boundsSize.y * this.boundsSize.y)
+            var size = Math.sqrt(this.boundsSize.x * this.boundsSize.x + this.boundsSize.y * this.boundsSize.y)
             if (this.shared.state.close) {
-                this.shared.setClose (this.size < 210)
+                this.shared.setClose (size < 210)
             } else {
-                this.shared.setClose (this.size < 190)
+                this.shared.setClose (size < 190)
             }
-            this.docs.update()
+            this.docs!.update()
         }
     }
 }
