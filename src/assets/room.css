@@ -13,7 +13,8 @@
     border-color: red;
     position: absolute;
     display: block;
-    background-color: transparent;
+    background-color: transparent;  
+    /* background-color: black; */ 
   }
 
 
@@ -50,4 +51,16 @@
   #room .squareoff {
     text-align: justify;
     }
+
+  .column {
+      float: left;
+      width: 50%;
+      padding: 10px;
+    }
   
+/* Clear floats after the columns */ 
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }  
