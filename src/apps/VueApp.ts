@@ -1,7 +1,16 @@
-import {createApp} from "vue";
+import { createApp, App, Component, ComponentPublicInstance } from "vue";
 
-export default class WebApp {
-    constructor (App, width, height, createOptions={}) {
+export default class VueApp {
+    takeOwnership:  () => boolean
+    setSharedData: (object: {}) => boolean
+
+    width: number
+    height: number
+
+    vueApp: App
+    vueRoot: ComponentPublicInstance | undefined
+
+    constructor (App: Component, width: number, height: number, createOptions={}) {
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
         this.width = width
@@ -11,8 +20,6 @@ export default class WebApp {
     }
 
     mount() {
-        this.vueRoot = this.vueApp.mount("#app");
-        this.vueRoot.$el.setAttribute("style","width: " + this.width + "px; height: " + this.height + "px;")
     }
 
     // dummy functions, just to let us use the same
@@ -20,7 +27,7 @@ export default class WebApp {
     takeOwnershipProto() {
         return true;
     }
-    setSharedDataProto(object) {
+    setSharedDataProto(object: {}) {
         return true;
     }
 }

@@ -1,8 +1,10 @@
 import App from "./App.vue";
 import HubsAppProto from "../HubsApp";
-import Store from "./shared"
+import {data as SharedData, Store} from "./shared"
 
 class HubsApp extends HubsAppProto {
+    shared: Store
+    
     constructor () {
         super(App, 400, 475)
 
@@ -16,7 +18,7 @@ class HubsApp extends HubsAppProto {
         this.isStatic = false;
     }
     
-    updateSharedData(dataObject) {
+    updateSharedData(dataObject: SharedData) {
         super.updateSharedData(dataObject)
         this.shared.updateSharedData(dataObject)
     }
