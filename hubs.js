@@ -1,8 +1,17 @@
-import "./App.js";
-import { g as createLayoutSystem, W as WebLayer3D, p as pushScopeId, b as popScopeId } from "./vendor.js";
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __require = typeof require !== "undefined" ? require : (x) => {
+  throw new Error('Dynamic require of "' + x + '" is not supported');
+};
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
+import "./NetworkedHelloWorld.js";
 import { V as VueApp } from "./top.js";
-import "./App2.js";
-import "./App3.js";
+import { j as jh, k as kh } from "./vendor.js";
+import "./App.js";
+import "./room.js";
 import "./logo.js";
 function copyCamera(source, target) {
   source.updateMatrixWorld();
@@ -19,7 +28,16 @@ function copyCamera(source, target) {
 const _HubsApp = class extends VueApp {
   constructor(App, width, height, createOptions = {}) {
     super(App, width, height, createOptions);
-    this.needsUpdate = false;
+    __publicField(this, "isEthereal");
+    __publicField(this, "isInteractive");
+    __publicField(this, "isNetworked");
+    __publicField(this, "isStatic");
+    __publicField(this, "updateTime");
+    __publicField(this, "raycaster");
+    __publicField(this, "size");
+    __publicField(this, "webLayer3D");
+    __publicField(this, "needsUpdate", false);
+    __publicField(this, "headDiv");
     this.isEthereal = false;
     this.isInteractive = false;
     this.isNetworked = false;
@@ -33,7 +51,7 @@ const _HubsApp = class extends VueApp {
     let scene = window.APP.scene;
     this.etherealCamera.matrixAutoUpdate = true;
     this.playerCamera = document.getElementById("viewing-camera").getObject3D("camera");
-    this.system = createLayoutSystem(this.playerCamera ? this.playerCamera : scene.camera);
+    this.system = jh(this.playerCamera ? this.playerCamera : scene.camera);
     window.ethSystem = this.system;
   }
   static systemTick(time, deltaTime) {
@@ -48,6 +66,7 @@ const _HubsApp = class extends VueApp {
       this.system.viewNode = this.etherealCamera;
     }
     scene.renderer.getSize(_HubsApp.system.viewResolution);
+    this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.etherealCamera.projectionMatrix);
     this.system.update(deltaTime, time);
   }
   mount(useEthereal) {
@@ -59,7 +78,7 @@ const _HubsApp = class extends VueApp {
     l.setAttribute("rel", "stylesheet");
     l.setAttribute("crossorigin", "anonymous");
     this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.firstChild);
-    this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
+    this.webLayer3D = new kh(this.vueRoot.$el, {
       autoRefresh: true,
       onLayerCreate: useEthereal ? (layer) => {
         const adapter = _HubsApp.system.getAdapter(layer);
@@ -134,46 +153,6 @@ const _HubsApp = class extends VueApp {
   }
 };
 let HubsApp = _HubsApp;
-HubsApp.etherealCamera = new THREE.PerspectiveCamera();
-var App_vue_vue_type_style_index_0_scoped_true_lang$d = "\n\n";
-pushScopeId("data-v-8bbf9448");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$c = "\n\n";
-pushScopeId("data-v-2f8a1568");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$b = "\n\n";
-pushScopeId("data-v-48533ae5");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$a = "\n\n";
-pushScopeId("data-v-62245168");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$9 = "\n\n";
-pushScopeId("data-v-88d0b02e");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$8 = "\n\n";
-pushScopeId("data-v-17011da7");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$7 = "\n\n";
-pushScopeId("data-v-e88e8c04");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$6 = "\n\n";
-pushScopeId("data-v-72718009");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$5 = "\n\n";
-pushScopeId("data-v-aadf164e");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$4 = "\n\n";
-pushScopeId("data-v-28844930");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$3 = "\n\n";
-pushScopeId("data-v-bb3eadc6");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$2 = "\n\n";
-pushScopeId("data-v-4ea20f04");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang$1 = "\n\n";
-pushScopeId("data-v-641fb642");
-popScopeId();
-var App_vue_vue_type_style_index_0_scoped_true_lang = "\n\n";
-pushScopeId("data-v-c4d0e768");
-popScopeId();
+__publicField(HubsApp, "system");
+__publicField(HubsApp, "etherealCamera", new THREE.PerspectiveCamera());
+__publicField(HubsApp, "playerCamera");

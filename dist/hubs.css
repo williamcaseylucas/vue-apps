@@ -1,41 +1,10 @@
 
-
 #edit[data-v-6a11ec38] {
   color: #000000;
 }
 #edit.upclose[data-v-6a11ec38] {
   color: #c00303;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* http://meyerweb.com/eric/tools/css/reset/
    v4.0 | 20180602
    License: none (public domain)
@@ -157,7 +126,7 @@ footer, header, hgroup, main, menu, nav, section {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #f2e6e5;
-    margin: 30px;
+    /* margin: 30px; */
     border: 5px;
     border-radius: 10px;
     border-color: red;
@@ -167,8 +136,9 @@ footer, header, hgroup, main, menu, nav, section {
   }
 
   #room .spacer {
-    margin-left: 25px;
-    margin-right: 25px;
+    /* margin-left: 25px;
+    margin-right: 25px; */
+    margin: 25px;
     }
 
   #room .squareoff {

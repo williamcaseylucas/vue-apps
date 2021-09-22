@@ -1,6 +1,21 @@
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __require = typeof require !== "undefined" ? require : (x) => {
+  throw new Error('Dynamic require of "' + x + '" is not supported');
+};
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
 import { e as createApp } from "./vendor.js";
 class VueApp {
   constructor(App, width, height, createOptions = {}) {
+    __publicField(this, "takeOwnership");
+    __publicField(this, "setSharedData");
+    __publicField(this, "width");
+    __publicField(this, "height");
+    __publicField(this, "vueApp");
+    __publicField(this, "vueRoot");
     this.takeOwnership = this.takeOwnershipProto.bind(this);
     this.setSharedData = this.setSharedDataProto.bind(this);
     this.width = width;

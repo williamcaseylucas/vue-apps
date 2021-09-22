@@ -1,1 +1,1 @@
-
+import "./modulepreload-polyfill.js";

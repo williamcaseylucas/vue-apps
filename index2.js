@@ -1,5 +1,6 @@
+import "./modulepreload-polyfill.js";
 import { W as WebApp$1 } from "./WebApp.js";
-import { _ as _sfc_main } from "./App2.js";
+import { _ as _sfc_main } from "./App.js";
 import "./top.js";
 import "./vendor.js";
 import "./logo.js";
