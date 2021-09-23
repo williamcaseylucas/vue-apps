@@ -6,7 +6,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #f2e6e5;
-    margin: 30px;
+    /* margin: 30px; */
     border: 10px;
     border-radius: 10px;
     border-color: red;
@@ -26,8 +26,9 @@
 }
 
   #room .spacer {
-    margin-left: 25px;
-    margin-right: 25px;
+    /* margin-left: 25px;
+    margin-right: 25px; */
+    margin: 25px;
     }
 
   #room .squareoff {
