@@ -119,7 +119,7 @@ export default class HubsApp extends VueApp {
         }
 
         scene.renderer.getSize(HubsApp.system.viewResolution)
-        //this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.system.viewNode.projectionMatrix)
+        this.system.viewFrustum.setFromPerspectiveProjectionMatrix(this.etherealCamera.projectionMatrix)
 
         // tick method for ethereal
         this.system.update(deltaTime, time)
