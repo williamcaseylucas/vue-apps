@@ -64,8 +64,35 @@ button[data-v-39aeb044] {
     border-color: red;
     position: absolute;
     display: block;
-    background-color: black;
+    background-color: transparent;  
+    /* background-color: black; */ 
   }
+
+
+#room h2{
+  font-size: 1.5em;
+  font-weight: bold;
+
+}
+
+#room .headline{
+  font-size: 4em;
+}
+
+#room  .center {
+  margin: 30px;
+  padding-left: 25px;
+  }
+
+#room .postertitle  {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
 
   #room .spacer {
     /* margin-left: 25px;
@@ -76,4 +103,16 @@ button[data-v-39aeb044] {
   #room .squareoff {
     text-align: justify;
     }
+
+  .column {
+      float: left;
+      width: 50%;
+      padding: 10px;
+    }
   
+/* Clear floats after the columns */ 
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }  
