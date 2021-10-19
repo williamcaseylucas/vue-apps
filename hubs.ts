@@ -27,13 +27,41 @@ import GamesBanner from './src/apps/Room5/GamesBanner/hubs.js'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs.js'
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
+//JP
+import ARandPresence from './src/apps/Room6/ARandPresence/hubs.js'
+import Aura from './src/apps/Room6/Aura/hubs.js'
+import cybersickness from './src/apps/Room6/cybersickness/hubs.js'
+import Empathy from './src/apps/Room6/Empathy/hubs.js'
+import Empathy_title from './src/apps/Room6/Empathy_title/hubs.js'
+
+import Presence_map from './src/apps/Room6/map/hubs.js'
+
+import Milk from './src/apps/Room6/Milk/hubs.js'
+import Milk_pic from './src/apps/Room6/Milk_pic/hubs.js'
+import Nonnie from './src/apps/Room6/Nonnie/hubs.js'
+import Nonnie_pic from './src/apps/Room6/Nonnie_pic/hubs.js'
+
+import PitExperiment from './src/apps/Room6/PitExperiment/hubs.js'
+import Pit_pic from './src/apps/Room6/Pit_pic/hubs.js'
+
+import Presence from './src/apps/Room6/Presence/hubs.js'
+import Treehugger from './src/apps/Room6/Treehugger/hubs.js'
+import Treehugger_pic from './src/apps/Room6/Treehugger_pic/hubs.js'
+import Exit from './src/apps/Room6/Exit/hubs.js'
+
+//Pit
+import Pit from './src/apps/Room_pit/Pit/hubs.js'
+import PitInstruction from './src/apps/Room_pit/PitInstruction/hubs.js'
+import pitSign1 from './src/apps/Room_pit/pitSign1/hubs.js'
+import pitSign2 from './src/apps/Room_pit/pitSign2/hubs.js'
+
 export {
     // for updating ethereal once per tick
     systemTick, initializeEthereal,
 
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
-    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner,
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit,
 
     // Tests
     hubsTest1, hubsTest2}
