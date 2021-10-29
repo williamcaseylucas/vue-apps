@@ -3,7 +3,7 @@
   <div id="room">
   <div class="spacer">
   <br><br>
-    <img src="../../../assets/images/Room6/nonnie.png" width="700" >
+    <img src="../../../assets/images/Room6/terracotta.jpg" width="800" >
 
   <!-- <Title msg="The future of news?" />
 	<div class="squareoff">Nonnie de la Peña's <a href="https://embed.ted.com/talks/nonny_de_la_pena_the_future_of_news_virtual_reality" target="_blank">Ted Talk</a> called 'The future of news?''  introduces a new form of journalism where Virtual Reality technology is used to put audience inside the stories. In her work, she created VR stories about imprisonment in Guantanamo and hunger in Los Angeles to induce empathy in the audience.</div>  -->

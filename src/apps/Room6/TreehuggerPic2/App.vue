@@ -3,8 +3,7 @@
   <div id="room">
   <div class="spacer">
   <br><br>
-  <img src="../../../assets/images/Room6/pitVR.png" width="436" >
-  <!-- <Title msg="Pit Experiment" /> -->
+    <img src="../../../assets/images/Room6/treehugger2.jpg" width="600" >
   </div>
   </div>
   </div> 

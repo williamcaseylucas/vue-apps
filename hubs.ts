@@ -49,11 +49,24 @@ import Treehugger from './src/apps/Room6/Treehugger/hubs.js'
 import Treehugger_pic from './src/apps/Room6/Treehugger_pic/hubs.js'
 import Exit from './src/apps/Room6/Exit/hubs.js'
 
+import Parthenon from './src/apps/Room6/Parthenon/hubs.js'
+import TerracottaPic from './src/apps/Room6/TerracottaPic/hubs.js'
+import Terracotta from './src/apps/Room6/Terracotta/hubs.js'
+import Treehuggerpic2 from './src/apps/Room6/TreehuggerPic2/hubs.js'
+
+
 //Pit
 import Pit from './src/apps/Room_pit/Pit/hubs.js'
 import PitInstruction from './src/apps/Room_pit/PitInstruction/hubs.js'
 import pitSign1 from './src/apps/Room_pit/pitSign1/hubs.js'
 import pitSign2 from './src/apps/Room_pit/pitSign2/hubs.js'
+
+//Onboarding Room
+import Welcome from './src/apps/Onboarding/Welcome/hubs.js'
+import MitPress from './src/apps/Onboarding/MitPress/hubs.js'
+import HubsPlatform from './src/apps/Onboarding/HubsPlatform/hubs.js'
+import HubsFeatures from './src/apps/Onboarding/HubsFeatures/hubs.js'
+import AudioText from './src/apps/Onboarding/AudioText/hubs.js'
 
 export {
     // for updating ethereal once per tick
@@ -61,7 +74,7 @@ export {
 
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
-    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit,
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2,
 
     // Tests
     hubsTest1, hubsTest2}
