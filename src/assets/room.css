@@ -10,7 +10,7 @@
     border: 5px;
     border-radius: 10px;
     border-color: red;
-    position: absolute;
+    /* position: absolute; */
     display: block;
     /* background-color: transparent;   */
     background-color: black; 

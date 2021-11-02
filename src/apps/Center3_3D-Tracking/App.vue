@@ -1,7 +1,7 @@
 <template>
   <div id="room">
 	<div class="spacer">
-    <Title msg="3-D Graphics & Tracking" />
+    <Title msg="3-D Graphics &amp; Tracking" />
 	<img src="../../assets/images/uncanny.jpg" width="200">
 	<div class="squareoff">3-D computer graphics help to construct the visual 
 		realities of AR and VR, that is photorealism. The uncanny valley.</div>

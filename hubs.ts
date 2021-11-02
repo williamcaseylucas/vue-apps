@@ -1,9 +1,9 @@
 
-import hubsTest1 from './src/apps/HubsTest1/hubs'
-import hubsTest2 from './src/apps/HubsTest2/hubs'
+import hubsTest1 from './src/apps/Testing/HubsTest1/hubs'
+import hubsTest2 from './src/apps/Testing/HubsTest2/hubs'
 
-import PortalTitle from './src/apps/PortalTitle/hubs'
-import PortalSubtitle from './src/apps/PortalSubtitle/hubs'
+import PortalTitle from './src/apps/Portal/PortalTitle/hubs'
+import PortalSubtitle from './src/apps/Portal/PortalSubtitle/hubs'
 
 import Map from './src/apps/Center_Map/hubs'
 import Center1 from './src/apps/Center1_Intro/hubs'
