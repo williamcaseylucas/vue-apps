@@ -2,6 +2,9 @@
 import hubsTest1 from './src/apps/HubsTest1/hubs'
 import hubsTest2 from './src/apps/HubsTest2/hubs'
 
+import PortalTitle from './src/apps/PortalTitle/hubs'
+import PortalSubtitle from './src/apps/PortalSubtitle/hubs'
+
 import Map from './src/apps/Center_Map/hubs'
 import Center1 from './src/apps/Center1_Intro/hubs'
 import Center2 from './src/apps/Center2_History/hubs'
@@ -63,6 +66,8 @@ export {
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit,
 
+    // Portal titles
+    PortalTitle, PortalSubtitle,
     // Tests
     hubsTest1, hubsTest2}
 

@@ -2,7 +2,7 @@ import { reactive, readonly } from "vue";
 import VueApp from "../VueApp";
 
 export interface data {
-    close: number
+    close: boolean
 }
 
 export class Store {
@@ -12,13 +12,13 @@ export class Store {
 
     constructor(app: VueApp) {
         this._state = reactive({
-            close: 0
+            close: false
         })
         this.app = app
         this.state = readonly(this._state)
     }    
 
-    setClose(c) {
+    setClose(c: boolean) {
         if (this._state.close != c) {
             this._state.close = c;
         }
