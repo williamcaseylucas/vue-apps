@@ -2,9 +2,9 @@
   <div> 
   <div id="room">
   <div class="spacer">
-  <br><br>
-  <img src="../../../assets/images/Room6/pitVR.png" width="436" >
-  <!-- <Title msg="Pit Experiment" /> -->
+<Title msg="How to Use the Audio Pads" />
+<br><br>
+	<div class="squareoff">Standing on the Audio Pads will start the narrations about the room you are currently in.</div> 
   </div>
   </div>
   </div> 
