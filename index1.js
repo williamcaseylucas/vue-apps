@@ -12,7 +12,7 @@ import { W as WebApp$1 } from "./WebApp.js";
 import { _ as _imports_0 } from "./logo.js";
 import { _ as _sfc_main$1 } from "./NetworkedHelloWorld.js";
 import "./top.js";
-import { c as createElementBlock, a as createVNode, b as createBaseVNode, o as openBlock, r as reactive, d as readonly } from "./vendor.js";
+import { i as inject, c as createElementBlock, a as createVNode, u as unref, b as createBaseVNode, o as openBlock, r as reactive, d as readonly } from "./vendor.js";
 const _hoisted_1 = { id: "top" };
 const _hoisted_2 = /* @__PURE__ */ createBaseVNode("img", {
   alt: "Vue logo",
@@ -20,10 +20,12 @@ const _hoisted_2 = /* @__PURE__ */ createBaseVNode("img", {
 }, null, -1);
 const _sfc_main = {
   setup(__props) {
+    let params = inject("params");
+    var mesg = params && params.mesg ? params.mesg : "Networked Vue Component with Shared Button Count";
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", _hoisted_1, [
         _hoisted_2,
-        createVNode(_sfc_main$1, { msg: "Networked Vue Component with Shared Button Count" })
+        createVNode(_sfc_main$1, { msg: unref(mesg) }, null, 8, ["msg"])
       ]);
     };
   }

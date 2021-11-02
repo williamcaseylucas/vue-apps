@@ -1,8 +1,7 @@
 import "./modulepreload-polyfill.js";
 import { W as WebApp$1 } from "./WebApp.js";
-import "./room.js";
 import "./top.js";
-import { c as createElementBlock, o as openBlock, b as createBaseVNode } from "./vendor.js";
+/* empty css      */import { c as createElementBlock, o as openBlock, b as createBaseVNode } from "./vendor.js";
 const _hoisted_1 = { id: "room" };
 const _hoisted_2 = /* @__PURE__ */ createBaseVNode("div", { class: "postertitle" }, "AR & VR as reality media", -1);
 const _hoisted_3 = /* @__PURE__ */ createBaseVNode("div", { class: "spacer" }, [

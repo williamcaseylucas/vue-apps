@@ -11,8 +11,7 @@ import "./NetworkedHelloWorld.js";
 import { V as VueApp } from "./top.js";
 import { j as jh, k as kh } from "./vendor.js";
 import "./App.js";
-import "./room.js";
-import "./logo.js";
+/* empty css      */import "./logo.js";
 function copyCamera(source, target) {
   source.updateMatrixWorld();
   target.fov = source.fov;
@@ -26,7 +25,20 @@ function copyCamera(source, target) {
   target.updateMatrixWorld(true);
 }
 const _HubsApp = class extends VueApp {
-  constructor(App, width, height, createOptions = {}) {
+  constructor(App, width, height, params = {}, createOptions = {}) {
+    if (params.width && params.height && params.width > 0 && params.height > 0) {
+      width = params.width;
+      height = params.height;
+    } else if (params.width && params.width > 0 || params.height && params.height > 0) {
+      if (params.width && params.width > 0) {
+        height = params.width / width * height;
+        width = params.width;
+      }
+      if (params.height && params.height > 0) {
+        width = params.height / height * height;
+        height = params.height;
+      }
+    }
     super(App, width, height, createOptions);
     __publicField(this, "isEthereal");
     __publicField(this, "isInteractive");
@@ -39,6 +51,7 @@ const _HubsApp = class extends VueApp {
     __publicField(this, "needsUpdate", false);
     __publicField(this, "headDiv");
     this.isEthereal = false;
+    this.vueApp.provide("params", params);
     this.isInteractive = false;
     this.isNetworked = false;
     this.isStatic = true;

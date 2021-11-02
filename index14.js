@@ -1,8 +1,8 @@
 import "./modulepreload-polyfill.js";
 import { W as WebApp$1 } from "./WebApp.js";
-import { _ as _sfc_main$1 } from "./room.js";
+import { _ as _sfc_main$1 } from "./CenterTitle.js";
 import "./top.js";
-import { c as createElementBlock, a as createVNode, b as createBaseVNode, o as openBlock } from "./vendor.js";
+/* empty css      */import { c as createElementBlock, a as createVNode, b as createBaseVNode, o as openBlock } from "./vendor.js";
 const _hoisted_1 = { id: "room" };
 const _hoisted_2 = /* @__PURE__ */ createBaseVNode("div", { class: "spacer" }, [
   /* @__PURE__ */ createBaseVNode("div", { class: "flushleft" }, [
