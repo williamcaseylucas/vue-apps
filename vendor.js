@@ -62,28 +62,6 @@ function normalizeClass(value) {
   }
   return res.trim();
 }
-const toDisplayString = (val) => {
-  return val == null ? "" : isArray(val) || isObject(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
-};
-const replacer = (_key, val) => {
-  if (val && val.__v_isRef) {
-    return replacer(_key, val.value);
-  } else if (isMap(val)) {
-    return {
-      [`Map(${val.size})`]: [...val.entries()].reduce((entries, [key, val2]) => {
-        entries[`${key} =>`] = val2;
-        return entries;
-      }, {})
-    };
-  } else if (isSet(val)) {
-    return {
-      [`Set(${val.size})`]: [...val.values()]
-    };
-  } else if (isObject(val) && !isArray(val) && !isPlainObject(val)) {
-    return String(val);
-  }
-  return val;
-};
 const EMPTY_OBJ = {};
 const EMPTY_ARR = [];
 const NOOP = () => {
@@ -1136,7 +1114,6 @@ function renderComponentRoot(instance) {
       result = root;
     }
   } catch (err) {
-    blockStack.length = 0;
     handleError(err, instance, 1);
     result = createVNode(Comment);
   }
@@ -3006,29 +2983,10 @@ const Fragment = Symbol(void 0);
 const Text = Symbol(void 0);
 const Comment = Symbol(void 0);
 const Static = Symbol(void 0);
-const blockStack = [];
 let currentBlock = null;
-function openBlock(disableTracking = false) {
-  blockStack.push(currentBlock = disableTracking ? null : []);
-}
-function closeBlock() {
-  blockStack.pop();
-  currentBlock = blockStack[blockStack.length - 1] || null;
-}
 let isBlockTreeEnabled = 1;
 function setBlockTracking(value) {
   isBlockTreeEnabled += value;
-}
-function setupBlock(vnode) {
-  vnode.dynamicChildren = isBlockTreeEnabled > 0 ? currentBlock || EMPTY_ARR : null;
-  closeBlock();
-  if (isBlockTreeEnabled > 0 && currentBlock) {
-    currentBlock.push(vnode);
-  }
-  return vnode;
-}
-function createElementBlock(type, props, children, patchFlag, dynamicProps, shapeFlag) {
-  return setupBlock(createBaseVNode(type, props, children, patchFlag, dynamicProps, shapeFlag, true));
 }
 function isVNode(value) {
   return value ? value.__v_isVNode === true : false;
@@ -45845,4 +45803,4 @@ const Uh = { getChildren(t3, e2) {
 function jh(t3, e2 = Uh) {
   return new du(t3, e2);
 }
-export { Fragment as F, createVNode as a, createBaseVNode as b, createElementBlock as c, readonly as d, createApp as e, popScopeId as f, createTextVNode as g, inject as i, jh as j, kh as k, normalizeClass as n, openBlock as o, pushScopeId as p, reactive as r, toDisplayString as t, unref as u };
+export { popScopeId as a, createApp as c, jh as j, kh as k, pushScopeId as p };
