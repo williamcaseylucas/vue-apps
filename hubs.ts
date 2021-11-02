@@ -59,10 +59,10 @@ import Treehuggerpic2 from './src/apps/Room6/TreehuggerPic2/hubs.js'
 
 
 //Pit
-import Pit from './src/apps/Room_pit/Pit/hubs.js'
-import PitInstruction from './src/apps/Room_pit/PitInstruction/hubs.js'
-import pitSign1 from './src/apps/Room_pit/pitSign1/hubs.js'
-import pitSign2 from './src/apps/Room_pit/pitSign2/hubs.js'
+import Pit from './src/apps/Room_Pit/Pit/hubs.js'
+import PitInstruction from './src/apps/Room_Pit/PitInstruction/hubs.js'
+import pitSign1 from './src/apps/Room_Pit/pitSign1/hubs.js'
+import pitSign2 from './src/apps/Room_Pit/pitSign2/hubs.js'
 
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs.js'
