@@ -1,6 +1,9 @@
 
-import hubsTest1 from './src/apps/HubsTest1/hubs'
-import hubsTest2 from './src/apps/HubsTest2/hubs'
+import hubsTest1 from './src/apps/Testing/HubsTest1/hubs'
+import hubsTest2 from './src/apps/Testing/HubsTest2/hubs'
+
+import PortalTitle from './src/apps/Portal/PortalTitle/hubs'
+import PortalSubtitle from './src/apps/Portal/PortalSubtitle/hubs'
 
 import Map from './src/apps/Center_Map/hubs'
 import Center1 from './src/apps/Center1_Intro/hubs'
@@ -56,10 +59,10 @@ import Treehuggerpic2 from './src/apps/Room6/TreehuggerPic2/hubs.js'
 
 
 //Pit
-import Pit from './src/apps/Room_pit/Pit/hubs.js'
-import PitInstruction from './src/apps/Room_pit/PitInstruction/hubs.js'
-import pitSign1 from './src/apps/Room_pit/pitSign1/hubs.js'
-import pitSign2 from './src/apps/Room_pit/pitSign2/hubs.js'
+import Pit from './src/apps/Room_Pit/Pit/hubs.js'
+import PitInstruction from './src/apps/Room_Pit/PitInstruction/hubs.js'
+import pitSign1 from './src/apps/Room_Pit/pitSign1/hubs.js'
+import pitSign2 from './src/apps/Room_Pit/pitSign2/hubs.js'
 
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs.js'
@@ -76,6 +79,8 @@ export {
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2,
 
+    // Portal titles
+    PortalTitle, PortalSubtitle,
     // Tests
     hubsTest1, hubsTest2}
 

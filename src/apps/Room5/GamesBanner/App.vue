@@ -1,7 +1,7 @@
 <template>
   <div id="room">
   <div class="spacer headline">
-  AR & VR GAMES
+  <Title msg="AR &amp; VR GAMES" />
   </div>
   </div>
 </template>

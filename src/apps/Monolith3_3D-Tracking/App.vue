@@ -1,6 +1,6 @@
 <template>
   <div id="room">
-    <Title msg="3-D & Tracking" />
+    <Title msg="3-D &amp; Tracking" />
       <div class="spacer">
         <div class="flushleft">
         <br>

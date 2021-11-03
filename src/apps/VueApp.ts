@@ -10,7 +10,7 @@ export default class VueApp {
     vueApp: App
     vueRoot: ComponentPublicInstance | undefined
 
-    constructor (App: Component, width: number, height: number, createOptions={}) {
+    constructor (App: Component, width: number, height: number, createOptions: any ={}) {
         this.takeOwnership = this.takeOwnershipProto.bind(this)
         this.setSharedData = this.setSharedDataProto.bind(this)
         this.width = width

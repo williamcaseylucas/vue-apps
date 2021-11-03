@@ -12,7 +12,7 @@ The files are
 - App.vue.  The Vue3 SFC file.
 - hubs.js initializes things for use with Hubs.  This exports a method to initialize the component.
 - index.html.  The file used for local viewing/debugging. Probably doesn't need to change.
-- main.js.  The mainline of the local viewing/debugging app.  Initializes the component and adds to the page. Probably doesn't need to change.
+- main.ts.  The mainline of the local viewing/debugging app.  Initializes the component and adds to the page. Probably doesn't need to change.
 - shared.js (if networked in hubs).  Creates the master datastore for the component and a method to update it's data if there are changes on the network.
 
 You'll want to add your component to the top level hubs.js and index.html.

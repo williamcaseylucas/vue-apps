@@ -1,6 +1,6 @@
 <template>
   <div id="room">
-    <Title msg="The Future of AR & VR" />
+    <Title msg="The Future of AR &amp; VR" />
     <div class="spacer">
 	  <img src="../../assets/images/parthenon.png" width="250">
 	  <div class="squareoff">VR will continue to construct special realities, apart from the everyday. VR worlds will continue to be metaphoric worlds.</div>  
