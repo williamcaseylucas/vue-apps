@@ -64,9 +64,17 @@ import pitSign2 from './src/apps/Room_pit/pitSign2/hubs.js'
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs.js'
 import MitPress from './src/apps/Onboarding/MitPress/hubs.js'
+import MitText from './src/apps/Onboarding/MitText/hubs.js'
+
 import HubsPlatform from './src/apps/Onboarding/HubsPlatform/hubs.js'
+import HubsPlatform2 from './src/apps/Onboarding/HubsPlatform2/hubs.js'
+
 import HubsFeatures from './src/apps/Onboarding/HubsFeatures/hubs.js'
 import AudioText from './src/apps/Onboarding/AudioText/hubs.js'
+import Sharing from './src/apps/Onboarding/Sharing/hubs.js'
+import rotundaMap from './src/apps/Onboarding/rotundaMap/hubs.js'
+import Overview from './src/apps/Onboarding/Overview/hubs.js'
+import Back from './src/apps/Onboarding/Back/hubs.js'
 
 export {
     // for updating ethereal once per tick
@@ -74,7 +82,7 @@ export {
 
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
-    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2,
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back,
 
     // Tests
     hubsTest1, hubsTest2}
