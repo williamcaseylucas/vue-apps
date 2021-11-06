@@ -10,13 +10,21 @@
     border: 5px;
     border-radius: 10px;
     border-color: red;
-    position: absolute;
+    /* position: absolute; */
     display: block;
+    /* background-color: transparent;   */
+    background-color: black; 
+ }
+
+#room .darkwall {
     background-color: transparent;  
-    /* background-color: black; */ 
-  }
+}
 
-
+#room .lightwall {
+    background-color: transparent;  
+    color: #1f1d1d;
+}
+ 
 #room h2{
   font-size: 1.5em;
   font-weight: bold;
@@ -27,7 +35,7 @@
   font-size: 4em;
 }
 
-#room  .center {
+#room .center {
   margin: 30px;
   padding-left: 25px;
   }

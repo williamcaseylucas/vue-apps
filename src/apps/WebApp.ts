@@ -10,8 +10,8 @@ export default class WebApp extends VueApp {
 
     // vueApp: App
     // vueRoot: ComponentPublicInstance | undefined
+    constructor (App: Component, width: number, height: number, createOptions: any ={}) {
 
-    constructor (App: Component, width: number, height: number, createOptions={}) {
         super(App,width,height,createOptions)
         // this.takeOwnership = this.takeOwnershipProto.bind(this)
         // this.setSharedData = this.setSharedDataProto.bind(this)

@@ -125,9 +125,29 @@ export default class HubsApp extends VueApp {
         this.system.update(deltaTime, time)
     }
 
-    constructor (App: Component, width: number, height: number, createOptions={}) {
+    constructor (App: Component, width: number, height: number, params: any = {}, createOptions: any ={}) {
+        
+
+        if (params.width && params.height && params.width > 0 && params.height > 0) {
+            // reset both
+            width = params.width   
+            height = params.height
+        } else if ((params.width && params.width > 0) || (params.height && params.height > 0)) {
+            // set one and scale the other
+            if (params.width && params.width > 0) {
+                height = (params.width / width) * height    
+                width = params.width   
+            }
+            if (params.height && params.height > 0) {
+                width = (params.height / height) * height
+                height = params.height
+            }
+
+        }
         super(App, width, height, createOptions)
         this.isEthereal = false;
+
+        this.vueApp.provide('params', params)
 
         this.isInteractive = false;
         this.isNetworked = false;
