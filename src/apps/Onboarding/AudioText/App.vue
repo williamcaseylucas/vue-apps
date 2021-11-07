@@ -2,26 +2,21 @@
   <div> 
   <div id="room">
   <div class="spacer">
-<Title v-bind:msg="title" />
+<!-- <Title msg="How to Use the Audio Pads" /> -->
+<Title msg="Standing on the Audio Pads will start the narration about the room or the sound of the video clip." />
+
 <br><br>
-	<div class="squareoff">Standing on the Audio Pads will {{ body }}</div> 
+	<!-- <div class="squareoff">Standing on the Audio Pads will start the narration about the room or the sound of the video clip.</div>  -->
   </div>
   </div>
   </div> 
 </template>
 
 <script setup>
-import { inject } from 'vue'
-
 import Title from '../../../components/CenterTitle.vue'
 
 import "../../../assets/top.css"
 import "../../../assets/room.css"
-
-let params = inject("params")
-var title = params && params.parameter1 ? params.parameter1 : "How to Use the Audio Pads"
-var body = params && params.parameter2 ? params.parameter2 : "start the narrations about the room you are currently in"
-
 </script>
 
 <style scoped>
