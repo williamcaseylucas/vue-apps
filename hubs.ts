@@ -1,6 +1,6 @@
 
-import hubsTest1 from './src/apps/HubsTest1/hubs'
-import hubsTest2 from './src/apps/HubsTest2/hubs'
+import hubsTest1 from './src/apps/Testing/HubsTest1/hubs'
+import hubsTest2 from './src/apps/Testing/HubsTest2/hubs'
 
 import Map from './src/apps/Center_Map/hubs'
 import Center1 from './src/apps/Center1_Intro/hubs'
@@ -83,7 +83,6 @@ export {
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back,
-
     // Tests
     hubsTest1, hubsTest2}
 
