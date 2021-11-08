@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room" class="darkwall" class="">
+  <div id="room" class="darkwall">
   <div class="spacer">
 <!-- <Title msg="Here is a map, which you will also find posted through the galleries" />   -->
 <br>
