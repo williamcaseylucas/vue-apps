@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Book: Reality Media" />
 	<div class="squareoff" style="width:380px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="AR &amp; VR as reality media" />
 	<img src="../../assets/images/laciotat-VR.jpg" width="250" >

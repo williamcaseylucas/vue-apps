@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="La Apparizione" />
 	  <div class="squareoff">Like video games and 360-degree video, 

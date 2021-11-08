@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     <Title msg="The LaCiotat Effect" />
     <div class="spacer">
 	  <img src="../../assets/images/laciotat.jpg" width="250">

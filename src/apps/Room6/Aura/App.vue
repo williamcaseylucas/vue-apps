@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <br><br>
   <!-- <Title msg="Aura" /> -->

@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer headline">
   <Title msg="AR &amp; VR GAMES" />
   </div>

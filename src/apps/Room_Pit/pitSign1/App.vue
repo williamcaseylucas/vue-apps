@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <br><br>
   <Title msg="Very carefully stretch your arms out for balance." />

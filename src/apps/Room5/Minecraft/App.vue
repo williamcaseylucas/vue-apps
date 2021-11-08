@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Minecraft VR" />
 	  <div class="squareoff">Minecraft VR is a fully immersive, 

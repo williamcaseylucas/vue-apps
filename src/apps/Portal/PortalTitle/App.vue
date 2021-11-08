@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <Title v-bind:msg="mesg" />
   </div>
 </template>

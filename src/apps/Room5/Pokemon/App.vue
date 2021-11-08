@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Pokemon Go" />
 	  <div class="squareoff">Pokemon Go (2016) is perhaps still the best-known AR game. 
