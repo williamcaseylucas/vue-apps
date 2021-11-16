@@ -3,6 +3,8 @@ import App from './App.vue'
 import {data as SharedData, Store} from "./shared"
 
 class WebApp extends WebAppProto {
+    shared: Store
+
     constructor () {
         super(App, 500, 500)
 
