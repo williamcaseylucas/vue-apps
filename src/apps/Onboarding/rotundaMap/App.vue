@@ -1,0 +1,22 @@
+<template>
+  <div> 
+  <div id="room">
+  <div class="spacer">
+<!-- <Title msg="Here is a map, which you will also find posted through the galleries" />   -->
+<br>
+<div class="squareoff keyPoint">Here is a map, which you will also find posted through the galleries</div>
+  </div>
+  </div>
+  </div> 
+</template>
+
+<script setup>
+import Title from '../../../components/CenterTitle.vue'
+
+import "../../../assets/top.css"
+import "../../../assets/room.css"
+</script>
+
+<style scoped>
+
+</style>

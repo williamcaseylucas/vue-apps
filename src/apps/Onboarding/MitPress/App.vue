@@ -2,13 +2,16 @@
   <div> 
   <div id="room">
   <div class="spacer">
-  <img src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="400" >
-  <br><br>
   <Title msg="Reality Media" />
-	<div class="squareoff">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>
-  <div class="oblique squareoff">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
+  <!-- <div style="width:auto"></div> -->
+  <br />
+  <img src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="300" style="float:left; margin-right:20px">
+
+	<div class="squareoff"><div style="margin-left:30px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>
+  <div class="oblique">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
   <br>
-  <div class="squareoff quote">How augmented reality and virtual reality are taking their places in contemporary media culture alongside film and television.</div>
+  <div class="quote">How augmented reality and virtual reality are taking their places in contemporary media culture alongside film and television.</div></div>
+
   </div>
   </div>
   </div> 
