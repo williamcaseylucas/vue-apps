@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     <Title msg="Genres" />
     <div class="spacer"> 
 	  <img src="../../assets/images/parthenon.png" width="250">

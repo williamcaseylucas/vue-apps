@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Beat Saber" />
 	  <div class="squareoff">Beat Saber is a VR rhythm game 

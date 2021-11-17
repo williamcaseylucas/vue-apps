@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     <Title msg="Future" />
       <div class="spacer">
         <div class="flushleft">

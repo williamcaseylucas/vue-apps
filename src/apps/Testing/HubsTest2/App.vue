@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div id="room">
+  <div id="room" class="darkwall">
       <img alt="Vue logo" src="../../../assets/logo.png" />
       <HelloWorld msg="Vue Component with Local Button Count" />
       <p id="edit" v-bind:class="{ upclose: shared.state.close }" xr-layer>

@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     <Title msg="Privacy and Public Space" />
     <div class="spacer">
 	  <div class="squareoff">Pervasive, always-on AR applications have the potential to provide companies or government authorities 

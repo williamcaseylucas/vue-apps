@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <!-- <img src="../../../assets/images/Room5/Alyx-splash.png" width="400" > -->
 <Title msg="Welcome to Reality Media!" />

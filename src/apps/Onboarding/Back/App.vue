@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
 <Title msg="Return back to the website" />  
 <!-- <div class="squareoff" style="font-size:45px">Return back to the website</div> -->

@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     
     <div class="postertitle">AR &amp; VR as reality media</div>
     <div class="spacer">

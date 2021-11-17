@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
       <img alt="Vue logo" src="../../../assets/logo.png" />
       <SomeText v-bind:msg="mesg" />
       <!-- <SomeText msg="Networked Vue Component with Shared Button Count" /> -->

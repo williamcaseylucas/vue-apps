@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
 	<div class="spacer">
     <Title msg="3-D Graphics &amp; Tracking" />
 	<img src="../../assets/images/uncanny.jpg" width="200">

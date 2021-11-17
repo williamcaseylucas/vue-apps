@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
     <Title msg="3-D &amp; Tracking" />
       <div class="spacer">
         <div class="flushleft">

@@ -1,5 +1,5 @@
 <template>
-  <div id="room">
+  <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Walking Dead: Our World" />
 	  <div class="squareoff">In this AR version of the transmedia franchise
