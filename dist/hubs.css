@@ -1,8 +1,8 @@
 
-#edit[data-v-7010a190] {
+#edit[data-v-91ee6202] {
   color: #bea7d1;
 }
-#edit.upclose[data-v-7010a190] {
+#edit.upclose[data-v-91ee6202] {
   color: #cc0a0a;
 }
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -54,11 +54,11 @@ footer, header, hgroup, main, menu, nav, section {
     background-color: black; 
  }
 
-#room .darkwall {
+#room.darkwall {
     background-color: transparent;  
 }
 
-#room .lightwall {
+#room.lightwall {
     background-color: transparent;  
     color: #1f1d1d;
 }

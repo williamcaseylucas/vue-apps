@@ -58,11 +58,11 @@ footer, header, hgroup, main, menu, nav, section {
     background-color: black; 
  }
 
-#room .darkwall {
+#room.darkwall {
     background-color: transparent;  
 }
 
-#room .lightwall {
+#room.lightwall {
     background-color: transparent;  
     color: #1f1d1d;
 }
@@ -126,9 +126,9 @@ a[data-v-051ea7d4] {
   color: #06a71b;
 }
 
-#edit[data-v-ec6d6fa0] {
+#edit[data-v-862575f2] {
   color: #bea7d1;
 }
-#edit.upclose[data-v-ec6d6fa0] {
+#edit.upclose[data-v-862575f2] {
   color: #cc0a0a;
 }
