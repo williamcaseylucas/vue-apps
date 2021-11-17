@@ -16,11 +16,11 @@
     background-color: black; 
  }
 
-#room .darkwall {
+#room.darkwall {
     background-color: transparent;  
 }
 
-#room .lightwall {
+#room.lightwall {
     background-color: transparent;  
     color: #1f1d1d;
 }
