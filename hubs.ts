@@ -20,14 +20,14 @@ import Monolith4 from './src/apps/Monolith4_Presence/hubs'
 import Monolith5 from './src/apps/Monolith5_Genres/hubs'
 import Monolith6 from './src/apps/Monolith6_Future/hubs'
 import Monolith7 from './src/apps/Monolith7_Privacy/hubs'
-import Alyx from './src/apps/Room5/Alyx/hubs.js'
-import Pokemon from './src/apps/Room5/Pokemon/hubs.js'
-import BeatSaber from './src/apps/Room5/BeatSaber/hubs.js'
-import WalkingDead from './src/apps/Room5/WalkingDead/hubs.js'
-import Apparizione from './src/apps/Room5/Apparizione/hubs.js'
-import Minecraft from './src/apps/Room5/Minecraft/hubs.js'
-import GamesBanner from './src/apps/Room5/GamesBanner/hubs.js'
-import ArtBanner from './src/apps/Room5/ArtBanner/hubs.js'
+import Alyx from './src/apps/Room5/Alyx/hubs'
+import Pokemon from './src/apps/Room5/Pokemon/hubs'
+import BeatSaber from './src/apps/Room5/BeatSaber/hubs'
+import WalkingDead from './src/apps/Room5/WalkingDead/hubs'
+import Apparizione from './src/apps/Room5/Apparizione/hubs'
+import Minecraft from './src/apps/Room5/Minecraft/hubs'
+import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
+import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
 import ARandPresence from './src/apps/Room6/ARandPresence/hubs'
@@ -39,8 +39,8 @@ import Empathy_title from './src/apps/Room6/Empathy_title/hubs'
 import Presence_map from './src/apps/Room6/map/hubs'
 
 import Milk from './src/apps/Room6/Milk/hubs'
-import Milk_pic from './src/apps/Room6/Milk_pic/hubs.js'
-import Nonnie from './src/apps/Room6/Nonnie/hubs.js'
+import Milk_pic from './src/apps/Room6/Milk_pic/hubs'
+import Nonnie from './src/apps/Room6/Nonnie/hubs'
 import Nonnie_pic from './src/apps/Room6/Nonnie_pic/hubs'
 
 import PitExperiment from './src/apps/Room6/PitExperiment/hubs'
@@ -87,9 +87,9 @@ export {
 
     // Portal titles
     PortalTitle, PortalSubtitle,
-
     // Tests
     hubsTest1, hubsTest2}
+
 
 
 // need to wait until we have some reasonable performance optimizations
