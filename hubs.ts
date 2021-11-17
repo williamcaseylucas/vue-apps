@@ -30,7 +30,6 @@ import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
-//JP
 import ARandPresence from './src/apps/Room6/ARandPresence/hubs'
 import Aura from './src/apps/Room6/Aura/hubs'
 import cybersickness from './src/apps/Room6/cybersickness/hubs'
@@ -57,7 +56,6 @@ import TerracottaPic from './src/apps/Room6/TerracottaPic/hubs'
 import Terracotta from './src/apps/Room6/Terracotta/hubs'
 import Treehuggerpic2 from './src/apps/Room6/TreehuggerPic2/hubs'
 
-
 //Pit
 import Pit from './src/apps/Room_Pit/Pit/hubs'
 import PitInstruction from './src/apps/Room_Pit/PitInstruction/hubs'
@@ -67,9 +65,17 @@ import pitSign2 from './src/apps/Room_Pit/pitSign2/hubs'
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs'
 import MitPress from './src/apps/Onboarding/MitPress/hubs'
+import MitText from './src/apps/Onboarding/MitText/hubs'
+
 import HubsPlatform from './src/apps/Onboarding/HubsPlatform/hubs'
+import HubsPlatform2 from './src/apps/Onboarding/HubsPlatform2/hubs'
+
 import HubsFeatures from './src/apps/Onboarding/HubsFeatures/hubs'
 import AudioText from './src/apps/Onboarding/AudioText/hubs'
+import Sharing from './src/apps/Onboarding/Sharing/hubs'
+import rotundaMap from './src/apps/Onboarding/rotundaMap/hubs'
+import Overview from './src/apps/Onboarding/Overview/hubs'
+import Back from './src/apps/Onboarding/Back/hubs'
 
 export {
     // for updating ethereal once per tick
@@ -77,7 +83,7 @@ export {
 
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
-    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2,
+    Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic,Exit, Welcome, MitPress, HubsPlatform, HubsFeatures, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back,
 
     // Portal titles
     PortalTitle, PortalSubtitle,

@@ -5,10 +5,11 @@
   <!-- <img src="../../../assets/images/Room5/Alyx-splash.png" width="400" > -->
 <Title msg="Welcome to Reality Media!" />
 <br><br>
-	<div class="squareoff"> This digital book is a complement to the printed book Reality Media: Augmented and Virtual Reality published by MIT Press. The digital version takes two forms: a website and a 3D immersive book, which allows you to get inside AR and VR, to inhabit these two new reality media. You are now standing in the entry hall to the immersive book. This hall provides information on how to “read” the immersive book: that is, how to navigate through its galleries and explore the exhibits presented. When you are ready, you can walk through the portal at the far end of this hall to the rotunda, from which you can visit all the galleries. </div> 
+	<div class="squareoff"> <i>Reality Media</i> is a project encompassing three writing spaces, three technologies for representing ideas: print, the web, and immersive VR. The printed page is a writing space with a tradition dating back to the fifteenth century (in Europe, much earlier in China). Obviously the web has a far shorter tradition, beginning around 1990. But in the thirty year since Tim Berners-Lee launched the first web server, the web has grown to rival print for many kinds of communication. The technologies for creating 3D graphic spaces in VR (and AR) actually predate the web. But only in the past 10 years have AR and VR become widely available media. The goal of RealityMedia is to demonstrate the potential range of AR and VR as communicative forms.
   </div>
   </div>
   </div> 
+  </div>
 </template>
 
 <script setup>
