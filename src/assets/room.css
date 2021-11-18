@@ -18,7 +18,7 @@
 
 #room.darkwall {
     background-color: transparent;  
-}
+}drive
 
 #room.lightwall {
     background-color: transparent;  
@@ -72,3 +72,20 @@
     display: table;
     clear: both;
     }  
+    
+/* JP */
+    .oblique {
+      font-style:italic;
+    }
+    
+    .quote {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      color: #DCDCDC;
+    }
+    
+    .keyPoint {
+      color: #78cfa8;
+      font-weight: bold;
+    }
+    
