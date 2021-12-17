@@ -4,8 +4,6 @@
   <div class="spacer">
   <br><br>
   <Title msg="Very carefully stretch your arms out for balance." />
-	<!-- <div class="squareoff"> First person shooter games such as  <a href="https://www.half-life.com/en/alyx/" target="_blank">HalfLife: Alyx </a> have long used 3-D graphics to create an immersive experience for millions of players. And for decades, 
-    players on computers and game consoles have yearned for true VR so that they could fall through the screen into the worlds on the other side.</div>  -->
   </div>
   </div>
   </div> 

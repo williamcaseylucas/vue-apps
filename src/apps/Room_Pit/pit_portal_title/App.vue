@@ -3,10 +3,11 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <br><br>
-  <Title msg="Does this experiment make you sweat or your heart beat faster?" />
+  <Title msg="Presence Gallery" />
   </div>
   </div> 
   </div>
+  
 </template>
 
 <script setup>

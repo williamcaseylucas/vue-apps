@@ -2,11 +2,9 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-<!-- <Title msg="How to Use the Audio Pads" /> -->
 <Title msg="Standing on the Audio Pads will start the narration about the room or the sound of the video clip." />
 
 <br><br>
-	<!-- <div class="squareoff">Standing on the Audio Pads will start the narration about the room or the sound of the video clip.</div>  -->
   </div>
   </div>
   </div> 

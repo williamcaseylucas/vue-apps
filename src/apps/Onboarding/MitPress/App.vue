@@ -3,7 +3,6 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Reality Media" />
-  <!-- <div style="width:auto"></div> -->
   <br />
   <img src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="300" style="float:left; margin-right:20px">
 
