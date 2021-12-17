@@ -2,10 +2,7 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-  <br><br>
-    <img src="../../../assets/images/Room6/cloudoversidra.jpg" width="700" >
-  <!-- <Title msg="Ultimate Empathy Machine" /> -->
-
+    <img src="../../../assets/images/Room6/cloudoversidra.jpg" style="width:100%">
   </div>
   </div>
   </div> 
