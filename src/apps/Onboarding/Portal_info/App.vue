@@ -2,8 +2,10 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-  <br><br>
-  <Title msg="Does this experiment make you sweat or your heart beat faster?" />
+<Title msg="Welcome to Reality Media!" />
+<br><br>
+	<div class="squareoff">These are the portals that will transport you to different galleries.
+  </div>
   </div>
   </div> 
   </div>
