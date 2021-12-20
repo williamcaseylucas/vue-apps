@@ -128,9 +128,15 @@ footer, header, hgroup, main, menu, nav, section {
     }
     
     .webIframe {
-      position: absolute;
-      right:500px;
-      bottom:220px;
+      position: fixed;
+      left:-200px;
+      top:-120px;
+    }
+    
+    .labelTitle {
+      font-size:1.2em;
+      font-weight: bold;
+      line-height: 1.6;
     }
 a[data-v-0a280960] {
   color: #b542b9;
