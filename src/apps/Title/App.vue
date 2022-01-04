@@ -4,9 +4,8 @@
   <div class="spacer">
   <br>
 <!--<Title v-bind:msg="title" />-->
-	<div class="squareoff labelTitle ">{{ title }}</div> 
-	<div class="squareoff">{{ body }}</div> 
-<br>
+	<div class="squareoff titleStyle ">{{ title }}</div> 
+  <br>
   </div>
   </div>
   </div> 
@@ -24,7 +23,6 @@ import "../../assets/room.css"
 
 let params = inject("params")
 var title = params && params.parameter1 ? params.parameter1 : " "
-var body = params && params.parameter2 ? params.parameter2 : " "
 
 </script>
 
