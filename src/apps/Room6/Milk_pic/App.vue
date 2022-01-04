@@ -1,9 +1,9 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
+
     <img src="../../../assets/images/Room6/cloudoversidra.jpg" style="width:100%">
-  </div>
+
   </div>
   </div> 
 </template>
