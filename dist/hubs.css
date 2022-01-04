@@ -138,6 +138,29 @@ footer, header, hgroup, main, menu, nav, section {
       font-weight: bold;
       line-height: 1.6;
     }
+
+    .titleStyle {
+      font-size:2em;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    .full {
+      padding: 0;
+      margin:0;
+      width: 100%;
+      height: auto;
+    }
+
+    #scaled-frame {
+      zoom: .75;
+      -moz-transform: scale(0.75);
+      -moz-transform-origin: 0 0;
+      -o-transform: scale(0.75);
+      -o-transform-origin: 0 0;
+      -webkit-transform: scale(0.75);
+      -webkit-transform-origin: 0 0;
+    }
 a[data-v-0a280960] {
   color: #b542b9;
 }
