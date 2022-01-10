@@ -130,7 +130,9 @@ footer, header, hgroup, main, menu, nav, section {
       color: #78cfa8;
       font-weight: bold;
     }
-    
+    .largerText{
+      font-size: 3em;
+    }
     .webIframe {
       position: fixed;
       left:-200px;
