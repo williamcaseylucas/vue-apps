@@ -38,6 +38,7 @@ import cybersickness from './src/apps/Room6/cybersickness/hubs'
 import cybersickness_pic from './src/apps/Room6/cybersickness_pic/hubs'
 import Empathy from './src/apps/Room6/Empathy/hubs'
 import Empathy_title from './src/apps/Room6/Empathy_title/hubs'
+import Mainmap_black from './src/apps/Room6/Mainmap_black/hubs'
 
 import Presence_map from './src/apps/Room6/Room6_map/hubs'
 import Presence_map2 from './src/apps/Room6/Room6_map_2/hubs'
@@ -107,7 +108,7 @@ export {
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     // Presence and Aura
-    Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, AudioPad,Label,Title, Gaudi, Gaudi_pic, cybersickness_pic,Milk_pic2, Pit_AR, Pit_AR_pic,Laciotat, PlaceandSpace,
+    Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, AudioPad,Label,Title, Gaudi, Gaudi_pic, cybersickness_pic,Milk_pic2, Pit_AR, Pit_AR_pic,Laciotat, PlaceandSpace,Mainmap_black,
     
     //Onboarding and Rotunda
     Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back,pit_portal_title, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,

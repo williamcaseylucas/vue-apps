@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
+  <div class="spacer-side">
   <br><br>
   <!-- <Title msg="Presence and Empathy" /> -->
   <div class="headline">Presence and Empathy</div>

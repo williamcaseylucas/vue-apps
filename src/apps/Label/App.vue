@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
+  <div class="spacer-side">
   <br>
 <!--<Title v-bind:msg="title" />-->
 	<div class="squareoff labelTitle ">{{ title }}</div> 

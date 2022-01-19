@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <img src="../../../assets/images/Room6/terracotta.jpg" class="full" >
+  <img src="../../../assets/images/Room6/terracotta2.jpg" class="full" >
   </div>
   </div> 
 </template>

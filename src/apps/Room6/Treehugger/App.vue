@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
+  <div class="spacer-side">
   <br><br>
   <Title msg="Treehugger: Wawona" />
   <br><br>
