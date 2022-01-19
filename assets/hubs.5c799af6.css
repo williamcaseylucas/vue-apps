@@ -158,15 +158,11 @@ footer, header, hgroup, main, menu, nav, section {
       height: auto;
     }
 
-    #scaled-frame {
-      zoom: .75;
-      -moz-transform: scale(0.75);
-      -moz-transform-origin: 0 0;
-      -o-transform: scale(0.75);
-      -o-transform-origin: 0 0;
-      -webkit-transform: scale(0.75);
-      -webkit-transform-origin: 0 0;
-    }
+    #room .spacer-side {
+      margin-left: auto;
+      margin-right: auto;
+      /* margin: 25px; */
+      }
 a[data-v-051ea7d4] {
   color: #b542b9;
 }
