@@ -2,7 +2,7 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-    <img src="../../../assets/images/Room6/treehugger.png" style="width:450px" >
+    <img src="../../../assets/images/Room6/treehugger.jpg" class="full" >
   </div>
   </div>
   </div> 

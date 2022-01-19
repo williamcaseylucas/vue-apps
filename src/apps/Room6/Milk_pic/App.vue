@@ -2,7 +2,7 @@
   <div> 
   <div id="room" class="darkwall">
 
-    <img src="../../../assets/images/Room6/cloudoversidra.jpg" style="width:100%">
+    <img src="../../../assets/images/Room6/cloudoversidra.jpg" class="full">
 
   </div>
   </div> 

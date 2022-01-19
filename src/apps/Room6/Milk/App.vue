@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
+  <div class="spacer-side">
   <br><br>
   <img src="../../../assets/images/Room6/lfarrow.png" width="20" style="float: left; margin: 10px">
   <Title msg="Ultimate Empathy Machine" />

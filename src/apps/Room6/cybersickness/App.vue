@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-
+ <div class="spacer-side">
   <Title msg="Cybersickness and the negattion of presence" />
 	<div class="squareoff">
   <br><br>
@@ -10,6 +10,7 @@
   </div>
   </div>
   </div> 
+  </div>
 </template>
 
 <script setup>
