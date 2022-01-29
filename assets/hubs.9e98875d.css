@@ -116,6 +116,13 @@ footer, header, hgroup, main, menu, nav, section {
     }  
     
 /* JP */
+   /* adding margin only to the side */
+   #room .spacer-side {
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    /*font styles*/
     .oblique {
       font-style:italic;
     }
@@ -133,24 +140,8 @@ footer, header, hgroup, main, menu, nav, section {
     .largerText{
       font-size: 3em;
     }
-    .webIframe {
-      position: fixed;
-      left:-200px;
-      top:-120px;
-    }
-    
-    .labelTitle {
-      font-size:1.2em;
-      font-weight: bold;
-      line-height: 1.6;
-    }
 
-    .titleStyle {
-      font-size:2em;
-      font-weight: bold;
-      line-height: 1.6;
-    }
-
+    /*sizing image*/
     .full {
       padding: 0;
       margin:0;
@@ -158,11 +149,32 @@ footer, header, hgroup, main, menu, nav, section {
       height: auto;
     }
 
-    #room .spacer-side {
-      margin-left: auto;
-      margin-right: auto;
-      /* margin: 25px; */
-      }
+    /* label vue-app */
+    .labelTitle {
+      font-size:1.2em;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+    .labelLgTitle{
+      font-size:6em;
+      font-weight: bold;
+    }
+    .labelLgBody{
+      font-size:5em;
+    }
+    
+    /* title vue-app */
+    .titleStyle {
+      font-size:2em;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+    .webIframe {
+      position: fixed;
+      left:-200px;
+      top:-120px;
+    }
+ 
 a[data-v-051ea7d4] {
   color: #b542b9;
 }
