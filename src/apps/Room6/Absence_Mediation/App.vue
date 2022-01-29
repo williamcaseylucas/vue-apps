@@ -2,9 +2,9 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer-side">
-  <br><br>
-  <!-- <Title msg="Presence and Empathy" /> -->
-  <div class="headline">Presence and Empathy</div>
+	<div class="squareoff">
+    "These definitions circle around one core idea: that presence is a kind of absence, <span class="keyPoint">the absence of mediation.</span> Presence as transportation, immersion, or realism all come down to the user's forgetting that the medium is there."
+  </div> 
   </div>
   </div>
   </div> 

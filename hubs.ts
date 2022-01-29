@@ -30,47 +30,38 @@ import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
-import ARandPresence from './src/apps/Room6/ARandPresence/hubs'
+
+// Presence and Aura Room 
 import Aura from './src/apps/Room6/Aura/hubs'
+import Absence_Mediation from './src/apps/Room6/Absence_Mediation/hubs'
 import Gaudi from './src/apps/Room6/Gaudi/hubs'
 import Gaudi_pic from './src/apps/Room6/Gaudi_pic/hubs'
 import cybersickness from './src/apps/Room6/cybersickness/hubs'
 import cybersickness_pic from './src/apps/Room6/cybersickness_pic/hubs'
 import Empathy from './src/apps/Room6/Empathy/hubs'
-import Empathy_title from './src/apps/Room6/Empathy_title/hubs'
 import Mainmap_black from './src/apps/Room6/Mainmap_black/hubs'
-
 import Presence_map from './src/apps/Room6/Room6_map/hubs'
 import Presence_map2 from './src/apps/Room6/Room6_map_2/hubs'
 import Presence_map3 from './src/apps/Room6/Room6_map_3/hubs'
 import Milk from './src/apps/Room6/Milk/hubs'
 import Milk_pic from './src/apps/Room6/Milk_pic/hubs'
-import Milk_pic2 from './src/apps/Room6/Milk_pic2/hubs'
 import Nonnie from './src/apps/Room6/Nonnie/hubs'
 import Nonnie_pic from './src/apps/Room6/Nonnie_pic/hubs'
-
-import PitExperiment from './src/apps/Room6/PitExperiment/hubs'
-import Pit_pic from './src/apps/Room6/Pit_pic/hubs'
+import Pit_Experiment from './src/apps/Room6/Pit_Experiment/hubs'
 import Pit_AR from './src/apps/Room6/Pit_AR/hubs'
-import Pit_AR_pic from './src/apps/Room6/Pit_AR_pic/hubs'
-
 import Presence from './src/apps/Room6/Presence/hubs'
 import Treehugger from './src/apps/Room6/Treehugger/hubs'
-import Treehugger_pic from './src/apps/Room6/Treehugger_pic/hubs'
-import Exit from './src/apps/Room6/Exit/hubs'
 import Laciotat from './src/apps/Room6/Laciotat/hubs'
 import PlaceandSpace from './src/apps/Room6/PlaceandSpace/hubs'
 import Parthenon from './src/apps/Room6/Parthenon/hubs'
 import TerracottaPic from './src/apps/Room6/TerracottaPic/hubs'
 import Terracotta from './src/apps/Room6/Terracotta/hubs'
-import Treehuggerpic2 from './src/apps/Room6/TreehuggerPic2/hubs'
 
 //Pit
 import Pit from './src/apps/Room_Pit/Pit/hubs'
 import PitInstruction from './src/apps/Room_Pit/PitInstruction/hubs'
 import pitSign1 from './src/apps/Room_Pit/pitSign1/hubs'
 import pitSign2 from './src/apps/Room_Pit/pitSign2/hubs'
-import pit_portal_title from './src/apps/Room_Pit/pit_portal_title/hubs'
 
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs'
@@ -86,6 +77,7 @@ import Sharing from './src/apps/Onboarding/Sharing/hubs'
 import rotundaMap from './src/apps/Onboarding/rotundaMap/hubs'
 import Overview from './src/apps/Onboarding/Overview/hubs'
 import Back from './src/apps/Onboarding/Back/hubs'
+import Exit from './src/apps/Room6/Exit/hubs'
 
 import ARVR_monolith from './src/apps/Onboarding/ARVR_monolith/hubs'
 import History_monolith from './src/apps/Onboarding/History_monolith/hubs'
@@ -98,20 +90,24 @@ import Future_monolith from './src/apps/Onboarding/Future_monolith/hubs'
 //test
 import AudioPad from './src/apps/AudioPad/hubs'
 import Label from './src/apps/Label/hubs'
+import Label_lg from './src/apps/Label_lg_text/hubs'
 import Title from './src/apps/Title/hubs'
+
 export {
     // for updating ethereal once per tick
     systemTick, initializeEthereal,
 
+    //General Use
+    Label,Title,Label_lg,
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     // Presence and Aura
-    Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, PitExperiment,ARandPresence, cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic, Empathy_title, Nonnie_pic, Treehugger_pic, Pit_pic, AudioText, Parthenon, Terracotta, TerracottaPic, Treehuggerpic2, AudioPad,Label,Title, Gaudi, Gaudi_pic, cybersickness_pic,Milk_pic2, Pit_AR, Pit_AR_pic,Laciotat, PlaceandSpace,Mainmap_black,
+    Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
     
     //Onboarding and Rotunda
-    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back,pit_portal_title, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
+    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
     //Pit 
 
     // Portal titles
