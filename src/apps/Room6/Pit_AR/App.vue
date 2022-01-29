@@ -2,7 +2,8 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer-side">
-  <div style="font-weight:bold">Presence in AR</div><br>
+  <Title msg="Presence in AR" />
+  <br><br>
   	<div class="squareoff">
   <img src="../../../assets/images/Room6/pitAR.jpg" style="width: 60%; float: right; margin:0 0 0 15px">
 
