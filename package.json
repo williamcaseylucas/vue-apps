@@ -9,7 +9,7 @@
     "buildDev": "npm run buildDevV && npm run buildDevR",
     "buildDevV": "vite build",
     "buildDevR": "rollup -c rollup.config.js --environment BUILD:dev",
-    "serveV": "vite preview",
+    "serveV": "vite preview --port 5001",
     "serve": "npm run buildDev && npm run serveV"
   },
   "dependencies": {
