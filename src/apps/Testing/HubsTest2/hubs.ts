@@ -1,7 +1,7 @@
 import App from "./App.vue";
 import HubsAppProto from "../../HubsApp";
 import {data as SharedData, Store} from "./shared"
-import { WebLayer3DContent } from "ethereal";
+import { WebLayer3D } from "@etherealjs/web-layer/three";
 
 class HubsApp extends HubsAppProto {
     shared: Store
@@ -14,7 +14,7 @@ class HubsApp extends HubsAppProto {
         this.vueApp.provide('shared', this.shared)
     }
 
-    docs: WebLayer3DContent | undefined
+    docs: WebLayer3D | undefined
     boundsSize: THREE.Vector3  = new THREE.Vector3()
     bounds: THREE.Box3 = new THREE.Box3()
 

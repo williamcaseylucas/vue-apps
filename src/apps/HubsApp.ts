@@ -1,6 +1,8 @@
 import { createApp, App, Component, ComponentPublicInstance } from "vue";
 import { Scene, Entity } from 'aframe'
-import { EtherealLayoutSystem, WebLayer3D } from "ethereal";
+//import { EtherealLayoutSystem } from "ethereal";
+import { WebContainer3D } from "@etherealjs/web-layer/three";
+
 import VueApp  from "./VueApp"
 
 // create init method for ethereal
@@ -52,7 +54,7 @@ function copyCamera(source: THREE.PerspectiveCamera, target: THREE.PerspectiveCa
 }
 
 export default class HubsApp extends VueApp {
-    static system: EtherealLayoutSystem;
+    static system: ethereal.EtherealLayoutSystem;
     static etherealCamera = new THREE.PerspectiveCamera()
     static playerCamera: THREE.PerspectiveCamera;
 
@@ -76,7 +78,7 @@ export default class HubsApp extends VueApp {
     //vueApp: App
     //vueRoot: ComponentPublicInstance | undefined 
 
-    webLayer3D: WebLayer3D | undefined
+    webLayer3D: WebContainer3D | undefined
     needsUpdate: boolean = false
 
     headDiv: Element
@@ -180,21 +182,23 @@ export default class HubsApp extends VueApp {
         this.vueRoot.$el.insertBefore(l, this.vueRoot.$el.firstChild)
 
         // move this into method
-        this.webLayer3D = new WebLayer3D(this.vueRoot.$el, {
+        this.webLayer3D = new WebContainer3D(this.vueRoot.$el, {
             autoRefresh: true,
             onLayerCreate: useEthereal ? 
             (layer) => {
+                layer.desiredPseudoStates.hover = true;
                 const adapter = HubsApp.system.getAdapter(layer)
                 adapter.opacity.enabled = true
                 adapter.onUpdate = () => layer.update()
             } :
-            (layer) => {},
+            (layer) => { layer.desiredPseudoStates.hover = true },
             onLayerPaint: (layer) => {
                 if (this.isStatic) { this.needsUpdate = true }
             },
-            textureEncoding: THREE.sRGBEncoding,
+            //textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0
         });
+        //await this.webLayer3D.updateUntilReady()
     }
 
     setNetworkMethods(takeOwnership: () => boolean, setSharedData: ({}) => boolean) {
