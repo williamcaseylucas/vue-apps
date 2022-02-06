@@ -37,20 +37,23 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     // external: ['three'],
     // globals: {
     //   'three': 'THREE'
-    // },
-  
+    // },    
+    
     output: [{
         dir: 'docs/dist',
         //entryFileNames: `${name}.js`,
-        entryFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
-        manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return 'vendor';
-            }
-        },
+        // entryFileNames: "[name].js",
+        // assetFileNames: "[name].[ext]",
+        // manualChunks(id) {
+        //     if (id.includes('node_modules')) {
+        //       return 'vendor';
+        //     }
+        // },
         
         format: 'es',
+        globals: {
+          three: 'THREE'
+        },
         sourcemap: 'inline'
       },
       {
