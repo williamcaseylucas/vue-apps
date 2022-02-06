@@ -41,16 +41,20 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
   
     output: [{
         dir: 'docs/dist',
-        //entryFileNames: `${name}.js`,
-        entryFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
-        manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return 'vendor';
-            }
-        },
+        //entryFileNames: `${name}-iife.js`,
+        //entryFileNames: "[name].js",
+        //assetFileNames: "[name].[ext]",
+        // manualChunks(id) {
+        //     if (id.includes('node_modules')) {
+        //       return 'vendor';
+        //     }
+        // },
         
-        format: 'es',
+        format: 'iife',
+        globals: {
+          'three': 'THREE'
+        },
+        name: "vueComponents",
         sourcemap: 'inline'
       },
       {
@@ -59,15 +63,19 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         //entryFileNames: `${name}.js`,
         //entryFileNames: "[name].min.js",
 
-        format: 'es', 
+        format: 'iife', 
+        globals: {
+          'three': 'THREE'
+        },
+        name: "vueComponents",
         plugins: [terser()]
       }
     ], 
 
     plugins: [
-      virtual({
-          three: `export default THREE`
-      }),
+      // virtual({
+      //     three: `export default THREE`
+      // }),
     //   copy({
     //     targets: [
     //         // { src: ['src/assets/theme/fonts/*/*.ttf','src/assets/theme/fonts/*/*.eot','src/assets/theme/fonts/*/*.woff'], dest: 'docs/dist/public/fonts' },
