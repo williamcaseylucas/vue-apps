@@ -34,10 +34,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     //input: ["src/apps/HubsTest1/hubs.js", "src/apps/HubsTest2/hubs.js"],
     //input: `src/apps/${name}/hubs.js`,
     input: "hubs.ts",
-    // external: ['three'],
-    // globals: {
-    //   'three': 'THREE'
-    // },
+    external: ['three'],
   
     output: [{
         dir: 'docs/dist',
@@ -50,12 +47,12 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         //     }
         // },
         
-        format: 'iife',
+        format: 'es',
         globals: {
-          'three': 'THREE'
+          three: 'THREE'
         },
         name: "vueComponents",
-        sourcemap: 'inline'
+        //sourcemap: 'inline'
       },
       {
         //file: `docs/dist/${name}.min.js`, 
@@ -63,11 +60,11 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         //entryFileNames: `${name}.js`,
         //entryFileNames: "[name].min.js",
 
-        format: 'iife', 
+        format: 'es', 
         globals: {
-          'three': 'THREE'
+          three: 'THREE'
         },
-        name: "vueComponents",
+  //      name: "vueComponents",
         plugins: [terser()]
       }
     ], 
