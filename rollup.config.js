@@ -47,7 +47,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         //     }
         // },
         
-        format: 'es',
+        format: 'iife',
         globals: {
           three: 'THREE'
         },
@@ -60,11 +60,11 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
         //entryFileNames: `${name}.js`,
         //entryFileNames: "[name].min.js",
 
-        format: 'es', 
+        format: 'iife', 
         globals: {
           three: 'THREE'
         },
-  //      name: "vueComponents",
+        name: "vueComponents",
         plugins: [terser()]
       }
     ], 
@@ -97,7 +97,8 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
       replace({
           preventAssignment: true,
           'process.env.NODE_ENV': JSON.stringify( 'production' ),
-          'https://resources.realitymedia.digital/vue-apps/': componentPath //JSON.stringify( componentPath )
+          'https://resources.realitymedia.digital/vue-apps/': componentPath,
+          'var vueComponents = (': 'export const vueComponents = (',
 
       }),
       vue({
