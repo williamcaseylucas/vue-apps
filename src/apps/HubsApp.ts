@@ -86,7 +86,7 @@ export default class HubsApp extends VueApp {
     static initializeEthereal() {
         let scene: Scene = window.APP.scene;
         WebLayerManager.initialize(scene.renderer)
-        
+
         // this.etherealCamera.matrixAutoUpdate = true;
         //this.etherealCamera.visible = false;
 
@@ -169,7 +169,7 @@ export default class HubsApp extends VueApp {
         //this.vueApp = createApp(App, createOptions)
     }
 
-    mount(useEthereal?: boolean) {
+    async mount(useEthereal?: boolean) {
         this.isEthereal = useEthereal === true
         
         this.vueRoot = this.vueApp.mount(this.headDiv);
@@ -188,9 +188,9 @@ export default class HubsApp extends VueApp {
             onLayerCreate: useEthereal ? 
             (layer) => {
                 layer.desiredPseudoStates.hover = true;
-                const adapter = HubsApp.system.getAdapter(layer)
-                adapter.opacity.enabled = true
-                adapter.onUpdate = () => layer.update()
+                // const adapter = HubsApp.system.getAdapter(layer)
+                // adapter.opacity.enabled = true
+                // adapter.onUpdate = () => layer.update()
             } :
             (layer) => { layer.desiredPseudoStates.hover = true },
             onLayerPaint: (layer) => {
@@ -199,7 +199,7 @@ export default class HubsApp extends VueApp {
             //textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0
         });
-        //await this.webLayer3D.updateUntilReady()
+        await this.webLayer3D.updateUntilReady()
     }
 
     setNetworkMethods(takeOwnership: () => boolean, setSharedData: ({}) => boolean) {
