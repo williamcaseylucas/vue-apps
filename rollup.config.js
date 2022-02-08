@@ -52,7 +52,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
           three: 'THREE'
         },
         name: "vueComponents",
-        //sourcemap: 'inline'
+        sourcemap: 'inline'
       },
       {
         //file: `docs/dist/${name}.min.js`, 

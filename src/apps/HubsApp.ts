@@ -199,7 +199,12 @@ export default class HubsApp extends VueApp {
             //textureEncoding: THREE.sRGBEncoding,
             renderOrderOffset: 0
         });
-        await this.webLayer3D.updateUntilReady()
+        try {
+            await this.webLayer3D.updateUntilReady()
+            this.webLayer3D.rootLayer.setNeedsRefresh();
+        } catch (e) {
+            console.error("webLayerUpdate failed. ", e)
+        }
     }
 
     setNetworkMethods(takeOwnership: () => boolean, setSharedData: ({}) => boolean) {
