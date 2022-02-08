@@ -1,18 +1,18 @@
 <template>
 <div>
   <div id="room" >
-    <div class="titleStyle" xr-layer>{{ title }}</div>
+    <div class="titleStyle">{{ title }}</div>
 
     <div>{{ help }}</div>
 
-    <br>
+    <div></div>
     <div>Click to swap objects: <button xr-layer @click="shared.nextObject">Swap Objects</button></div>
     <div>Current object is: {{ shared.getName() }}</div>
 
-    <br>    
+    <div></div>    
     
-    <div>Click to make larger: <span class="fakeButton" xr-layer @click="shared.larger">Larger</span></div>
-    <div>Click to make smaller: <span class="fakeButton" xr-layer @click="shared.smaller">Smaller</span></div>
+    <div xr-layer>Click to make larger: <span class="fakeButton"  @click="shared.larger">Larger</span></div>
+    <div xr-layer>Click to make smaller: <span class="fakeButton"  @click="shared.smaller">Smaller</span></div>
   </div>
 </div>
 </template>
