@@ -35,7 +35,7 @@ export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
     //input: `src/apps/${name}/hubs.js`,
     input: "hubs.ts",
     external: ['three'],
-  
+    context: 'window',
     output: [{
         dir: 'docs/dist',
         //entryFileNames: `${name}-iife.js`,
