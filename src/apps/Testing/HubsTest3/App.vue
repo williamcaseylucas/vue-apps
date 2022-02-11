@@ -32,7 +32,7 @@ const shared = inject('shared')
 <style scoped>
 .fakeButton {
   color: #9803a5;
-  background: #a78e06
+  background: #a78e06;
   /* transition: color 1s; */
 }
 

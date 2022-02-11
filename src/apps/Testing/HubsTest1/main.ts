@@ -18,6 +18,6 @@ class WebApp extends WebAppProto {
 }
 
 let app = new WebApp()
-app.mount()
+await app.mount()
 
 app.vueRoot!.$el.style.border = "solid 0.1em"

@@ -22,6 +22,10 @@ a {
   color: #b542b9;
 }
 
+button {
+  width: 150px;
+}
+
 .fade {
   color: #9803a5;
   /* transition: color 1s; */
