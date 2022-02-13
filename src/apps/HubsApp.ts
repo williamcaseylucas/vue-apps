@@ -66,6 +66,8 @@ export default class HubsApp extends VueApp {
     private updateTime: number
     private raycaster: THREE.Raycaster
 
+    tempV: THREE.Vector3 = new THREE.Vector3()
+
     size: {
         width: number,
         height: number
@@ -249,8 +251,10 @@ export default class HubsApp extends VueApp {
         if (!this.isInteractive) { return }
         
         const obj = evt.object3D
-        this.raycaster.ray.set(obj.position, 
-            this.webLayer3D!.getWorldDirection(new THREE.Vector3()).negate())
+        const dir = this.webLayer3D!.getWorldDirection(new THREE.Vector3()).negate()
+        this.tempV.copy(obj.position)
+        this.tempV.addScaledVector(dir, -0.1)
+        this.raycaster.ray.set(this.tempV, dir)
         const hit = this.webLayer3D!.hitTest(this.raycaster.ray)
         if (hit) {
           hit.target.click()
@@ -288,9 +292,10 @@ export default class HubsApp extends VueApp {
         }
 
         if (this.webLayer3D) {
-            let parent = this.webLayer3D.rootLayer.element.getRootNode().host;
-            parent ? parent.remove(this.webLayer3D) : null
-        
+            let parent = (this.webLayer3D.rootLayer.element.getRootNode() as ShadowRoot).host;
+            parent ? parent.remove() : null
+            
+            this.webLayer3D.removeFromParent()
             this.webLayer3D.rootLayer.dispose()
             // this.webLayer3D = null
         }
