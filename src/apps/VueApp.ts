@@ -19,9 +19,6 @@ export default class VueApp {
         this.vueApp = createApp(App, createOptions)
     }
 
-    mount() {
-    }
-
     // dummy functions, just to let us use the same
     // data store with hubs and the web testing setup
     takeOwnershipProto() {

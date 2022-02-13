@@ -7,8 +7,8 @@ import VueApp  from "./VueApp"
 
 // create init method for ethereal
 //import * as ethereal from 'ethereal'
-import { createPrinter, ThisExpression, ThrowStatement } from "node_modules/typescript/lib/typescript";
-import { create } from "mathjs";
+// import { createPrinter, ThisExpression, ThrowStatement } from "node_modules/typescript/lib/typescript";
+// import { create } from "mathjs";
 
 export function initializeEthereal() {
     HubsApp.initializeEthereal()
@@ -129,8 +129,6 @@ export default class HubsApp extends VueApp {
     }
 
     constructor (App: Component, width: number, height: number, params: any = {}, createOptions: any ={}) {
-        
-
         if (params.width && params.height && params.width > 0 && params.height > 0) {
             // reset both
             width = params.width   
@@ -278,7 +276,28 @@ export default class HubsApp extends VueApp {
     }
 
     destroy() {
-        // TODO: destroy the vue component and any resources, etc., it has
+        //  clean up weblayer
+        if (this.vueRoot && this.vueRoot.$el) {
+            let parent = this.vueRoot.$el.parentElement
+            parent ? parent.removeChild(this.vueRoot.$el) : null
+        }
+
+        if (this.headDiv) {
+            let parent = this.headDiv.parentElement
+            parent ? parent.removeChild(this.headDiv) : null
+        }
+
+        if (this.webLayer3D) {
+            let parent = this.webLayer3D.rootLayer.element.getRootNode().host;
+            parent ? parent.remove(this.webLayer3D) : null
+        
+            this.webLayer3D.rootLayer.dispose()
+            // this.webLayer3D = null
+        }
+
+        this.vueApp.unmount()
+        // this.vueRoot = null
+        // this.vueApp = null
     }
 
     tick(time: number) {
