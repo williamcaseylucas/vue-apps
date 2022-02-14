@@ -22,12 +22,15 @@ import css from 'rollup-plugin-css-only'
 // import cssImport from "postcss-import"
 // import cssUrl from 'postcss-url'
 
+var componentPath
 var serverPath
 if ((process.env.BUILD !== 'production')) {
+  componentPath = ""
     // your ngrok host name for local testing
     serverPath = "https://blair-vue-apps.ngrok.io";
 } else {
-    serverPath = "https://resources.realitymedia.digital";
+    componentPath = "https://williamcaseylucas.github.io/vue-apps/"
+    serverPath = "https://williamcaseylucas.github.io/core-components/";
 }
 var componentPath = serverPath + '/vue-apps/'
 export default [{//["HubsTest1", "HubsTest2"].map((name, index) => ({
