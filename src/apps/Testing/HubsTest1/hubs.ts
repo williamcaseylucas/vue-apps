@@ -28,9 +28,9 @@ class HubsApp extends HubsAppProto {
     }
 }
 
-var init = async function (params: any = {}) {
+var init = function(params: any = {}) {
     let app = new HubsApp(params)
-    await app.mount()
+    app.mount()
     return app
 }
 
