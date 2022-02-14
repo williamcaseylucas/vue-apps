@@ -281,22 +281,24 @@ export default class HubsApp extends VueApp {
 
     destroy() {
         //  clean up weblayer
-        if (this.vueRoot && this.vueRoot.$el) {
-            let parent = this.vueRoot.$el.parentElement
-            parent ? parent.removeChild(this.vueRoot.$el) : null
-        }
+        // if (this.vueRoot && this.vueRoot.$el) {
+        //     let parent = this.vueRoot.$el.parentElement
+        //     parent ? parent.removeChild(this.vueRoot.$el) : null
+        // }
 
-        if (this.headDiv) {
-            let parent = this.headDiv.parentElement
-            parent ? parent.removeChild(this.headDiv) : null
-        }
+        // if (this.headDiv) {
+        //     let parent = this.headDiv.parentElement
+        //     parent ? parent.removeChild(this.headDiv) : null
+        // }
 
         if (this.webLayer3D) {
-            let parent = (this.webLayer3D.rootLayer.element.getRootNode() as ShadowRoot).host;
-            parent ? parent.remove() : null
+            // let parent = (this.webLayer3D.rootLayer.element.getRootNode() as ShadowRoot).host;
+            // parent ? parent.remove() : null
             
-            this.webLayer3D.removeFromParent()
-            this.webLayer3D.rootLayer.dispose()
+            // this.webLayer3D.removeFromParent()
+            // this.webLayer3D.rootLayer.dispose()
+
+            this.webLayer3D.destroy()
             // this.webLayer3D = null
         }
 
