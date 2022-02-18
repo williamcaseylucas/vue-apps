@@ -1,10 +1,9 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
-  <img src="../../../assets/images/Rotunda/10-future.jpg" width="400">
+  <img src="../../../assets/images/Rotunda/10-future.jpg" class="full">
 
-  </div>
+
   </div>
   </div> 
 </template>

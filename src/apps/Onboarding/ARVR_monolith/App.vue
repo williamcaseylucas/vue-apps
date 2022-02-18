@@ -1,10 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
-  <img src="../../../assets/images/Rotunda/1-minecraft-ar.jpg" width="400">
-
-  </div>
+  <img src="../../../assets/images/Rotunda/1-minecraft-ar.jpg" class="full">
   </div>
   </div> 
 </template>
