@@ -1,6 +1,7 @@
 
 import hubsTest1 from './src/apps/Testing/HubsTest1/hubs'
 import hubsTest2 from './src/apps/Testing/HubsTest2/hubs'
+import hubsTest3 from './src/apps/Testing/HubsTest3/hubs'
 
 import PortalTitle from './src/apps/Portal/PortalTitle/hubs'
 import PortalSubtitle from './src/apps/Portal/PortalSubtitle/hubs'
@@ -113,7 +114,7 @@ export {
     // Portal titles
     PortalTitle, PortalSubtitle,
     // Tests
-    hubsTest1, hubsTest2}
+    hubsTest1, hubsTest2, hubsTest3}
 
 
 
