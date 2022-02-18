@@ -1,8 +1,9 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <img src="../../../assets/images/Rotunda/10-future.jpg" class="full">
-
+  <div  class="full">
+  <img xr-layer src="../../../assets/images/Rotunda/10-future.jpg">
+</div>
 
   </div>
   </div> 
