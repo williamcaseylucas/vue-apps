@@ -4,7 +4,9 @@
   <div class="spacer">
   <Title msg="Reality Media" />
   <br />
-  <img src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="260" style="float:left; margin-right:20px">
+  <div style="float:left; margin-right:20px">
+  <img xr-layer src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="260" >
+  </div>
 
 	<div class="squareoff"><div style="margin-left:30px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>
   <div class="oblique">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
