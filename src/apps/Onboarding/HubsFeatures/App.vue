@@ -7,7 +7,7 @@
 <br>
 	<div class="squareoff"> The figure below indicates how to mute your microphone, take photos, share your screen, create media objects, and so on: </div> 
     <br><br>
-    <div width="400">
+    <div style="width:400px">
       <img xr-layer src="../../../assets/images/Onboarding/hubs-user-interface.jpg">
     </div>
 
