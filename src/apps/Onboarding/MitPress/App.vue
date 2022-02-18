@@ -5,6 +5,7 @@
   <Title msg="Reality Media" />
   <br />
   <div style="float:left; margin-right:20px">
+  <br />
   <img xr-layer src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="260" >
   </div>
 
