@@ -3,6 +3,7 @@
    <div id="room" class="darkwall">
     <div class="spacer-side">
      <div class="postertitle">Pit Experiment</div>
+     <br/>
      <div style="float: right; margin:0 0 0 15px">
          <img xr-layer src="../../../assets/images/Room6/pitVR.png" height="250">
       </div>
