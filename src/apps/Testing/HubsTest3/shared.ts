@@ -65,6 +65,14 @@ export class Store {
         this.objects[this._state.object].visible = true;
         this._copyVec3(this.objects[this._state.object].scale, this._state.size);
 
+        // update the portals when the object changes, just to demonstrate this
+        // is possible.  Probably don't want to do this very often, since we don't need
+        // or want the portals to reflect the up-to-date state of the scene
+        if (window.AFRAME) {
+            let scene = window.AFRAME.scenes[0]
+            //@ts-ignore
+            scene.emit('updatePortals') 
+        }
     }
 
     _updateSize (size: vec3) {
