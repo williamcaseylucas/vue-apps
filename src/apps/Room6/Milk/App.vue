@@ -3,7 +3,9 @@
   <div id="room" class="darkwall">
   <div class="spacer-side">
   <br><br>
-  <img src="../../../assets/images/Room6/lfarrow.png" width="20" style="float: left; margin: 10px">
+  <div style="float: left; margin: 10px">
+    <img src="../../../assets/images/Room6/lfarrow.png" width="20" height="20" >
+  </div>
   <Title msg="Ultimate Empathy Machine" />
   <br><br>
   <div class="squareoff">360<span>&#176;</span> film Clouds Over Sidra created by Chris Milk and Gabo Arora shows the life of Syrian refugees in Za'atari camp in Jordan. The camera follows 12-year old Sidra in her everyday life, allowing the users to be present with Sidra. </div>

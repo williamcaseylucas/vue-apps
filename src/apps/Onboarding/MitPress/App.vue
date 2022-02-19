@@ -6,7 +6,7 @@
   <br />
   <div style="float:left; margin-right:20px">
   <br />
-  <img xr-layer src="../../../assets/images/Onboarding/realityMediaBook.jpg" width="260" >
+  <img xr-layer src="../../../assets/images/Onboarding/realityMediaBook.jpg" height="383">
   </div>
 
 	<div class="squareoff"><div style="margin-left:30px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>

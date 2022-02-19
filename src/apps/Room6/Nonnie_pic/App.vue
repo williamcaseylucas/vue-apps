@@ -2,7 +2,7 @@
   <div> 
   <div id="room" class="darkwall">
 
-  <img xr-layer src="../../../assets/images/Room6/nonnie.jpg" width="600">
+  <img xr-layer src="../../../assets/images/Room6/nonnie.jpg" height="475">
 
   </div>
   </div> 
