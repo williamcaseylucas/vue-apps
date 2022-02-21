@@ -9,7 +9,7 @@
   <img xr-layer src="../../../assets/images/Onboarding/realityMediaBook.jpg" height="383">
   </div>
 
-	<div class="squareoff"><div style="margin-left:30px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>
+	<div class="squareoff"><div style="margin-left:30px">Published by <a xr-link href="https://mitpress.mit.edu/books/reality-media" class="alink">MIT Press</a></div>
   <div class="oblique">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
   <br>
   <div class="quote">How augmented reality and virtual reality are taking their places in contemporary media culture alongside film and television.</div></div>
