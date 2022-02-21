@@ -17,7 +17,8 @@
  }
 
 #room.darkwall {
-    background-color: transparent;  
+    background-color: transparent;
+    color: #f2e6e5;
 }
 
 #room.lightwall {
