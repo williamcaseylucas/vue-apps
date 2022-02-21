@@ -129,6 +129,7 @@
     }
 .alink a {
   color: #78cfa8;
+  text-decoration: underline;
 }
 .alink a:link {
   color:#78cfa8;
