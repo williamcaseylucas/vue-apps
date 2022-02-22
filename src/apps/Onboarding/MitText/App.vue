@@ -3,7 +3,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <Title msg="Book: Reality Media" />
-	<div class="squareoff" style="width:380px">Published by <a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></div>
+	<div class="squareoff" style="width:380px">Published by <span class="alink"><a href="https://mitpress.mit.edu/books/reality-media">MIT Press</a></span></div>
   <br>
   <div class="oblique squareoff">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
   <br>
