@@ -1,30 +1,32 @@
 <template>
   <h1 xr-layer class="fade">{{ msg }}</h1>
-
   <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
+    <a xr-layer href="https://vitejs.dev/guide/features.html" target="_blank">
       Vite Documentation and Then Some! 
     </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
+    <a xr-layer href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
 
-  <button xr-layer @click="state.count++">count is: {{ state.count }}</button>
+  <button xr-layer @click="shared.increment">count is: {{ shared.state.count }}</button>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { inject } from 'vue'
 
 defineProps({
   msg: String
 })
 
-const state = reactive({ count: 0 })
+const shared = inject('shared')
 </script>
 
 <style scoped>
 a {
   color: #b542b9;
+}
+
+button {
+  width: 150px;
 }
 
 .fade {
