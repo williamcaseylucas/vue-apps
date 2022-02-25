@@ -6,7 +6,7 @@
       <br>
       <br>
       <br>
-<div class="keyPoint">To enter the room:</div>
+<div class="keyPoint" xr-layer>To enter the room:</div>
 <br>
 - On a desktop or mobile device, follow the prompts to select a name/avatar and enable the mic.
 <br>
@@ -16,7 +16,7 @@
 <br>
 - On desktop use your WASD or arrow keys to move around. You can also press your right mouse button to teleport to a different location. Rotate your view using the Q and E keys, or hold down your left mouse button and drag.
 <br>
-- For VR and mobile controls, see the list of <span><a href="https://hubs.mozilla.com/docs/hubs-controls.html" target="blank" class="alink">Hubs controls.</a></span>
+- For VR and mobile controls, see the list of <a href="https://hubs.mozilla.com/docs/hubs-controls.html" target="blank" class="alink">Hubs controls.</a>
   </div>
   </div>
   </div> 
