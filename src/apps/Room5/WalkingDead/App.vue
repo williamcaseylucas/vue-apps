@@ -3,8 +3,8 @@
   <div class="spacer">
   <Title msg="Walking Dead: Our World" />
   <!-- Take out color red -->
-    <img src="../../assets/images/Room5/Walking Dead Image.png" alt="">
-	  <div class="squareoff" style="color: red;">In this AR version of the transmedia franchise
+    <img style="width: 100%; height: auto;" src="../../../assets/images/Room5/Walking Dead Image.png" alt="">
+	  <div class="squareoff">In this AR version of the transmedia franchise
       GPS is used to determine your location in the world. Your location 
       and the zombies appear in an enhanced Google Maps map on the phone screen.
     </div> 
