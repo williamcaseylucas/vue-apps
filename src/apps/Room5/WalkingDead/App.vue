@@ -15,6 +15,7 @@
 <script setup>
 import Title from '../../../components/CenterTitle.vue'
 
+import "../../../assets/images/Room5/Walking Dead Image.png"
 import "../../../assets/top.css"
 import "../../../assets/room.css"
 </script>
