@@ -4,7 +4,7 @@
   <div class="spacer">
 <Title v-bind:msg="title" />
 <br><br>
-  <a href="{{link}}"></a>
+  <a href={{link}}></a>
   </div>
   </div>
   </div> 
