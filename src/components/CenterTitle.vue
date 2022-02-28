@@ -1,5 +1,5 @@
 <template>
-  <h2 id="room" class="darkwall">{{ msg }}</h2>
+  <h2 style="color: white">{{ msg }}</h2>
 </template>
 
 <script setup>
