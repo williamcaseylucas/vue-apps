@@ -2,7 +2,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <a target="_blank" href="https://www.thewalkingdeadourworld.com/">
-  <img style="width: 100%; height: auto;" src="../../../assets/images/Room5/Walking_Dead_Image.png" alt="Walking Dead Image">
+  <img class="componentImage" src="../../../assets/images/Room5/Walking_Dead_Image.png" alt="Walking Dead Image">
   </a>
   <Title msg="Walking Dead: Our World" />
   <!-- Take out color red -->

@@ -133,4 +133,7 @@
       left:-200px;
       top:-120px;
     }
- 
+
+    #room .componentImage {
+      width: 100%; height: auto;
+    }
