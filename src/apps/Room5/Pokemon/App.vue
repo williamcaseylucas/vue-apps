@@ -2,7 +2,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <a target="_blank" href="https://pokemongolive.com/en/">
-  <img class="componentImage" src="../../../assets/images/Room5/Pokemon_go_image.jpg" alt="Pokemon Go Image">
+  <img xr-layer class="componentImage" src="../../../assets/images/Room5/Pokemon_go_image.jpg" alt="Pokemon Go Image">
   </a>
   <Title msg="Pokemon Go" />
 	  <div class="squareoff">Pokemon Go (2016) is perhaps still the best-known AR game. 
