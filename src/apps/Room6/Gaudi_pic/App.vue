@@ -1,9 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-
-    <img src="../../../assets/images/Room6/Casa-batllo.jpg" class="full">
-
+    <img xr-layer src="../../../assets/images/Room6/Casa-batllo.jpg" height="326">
   </div>
   </div> 
 </template>

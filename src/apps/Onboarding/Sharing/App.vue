@@ -10,7 +10,9 @@
     <br />
     <br />
       <div class="keyPoint">Favorite your room</div>
-     <img src="../../../assets/images/Onboarding/favorite.png" width="400" >
+
+     <img xr-layer src="../../../assets/images/Onboarding/favorite.png" height="212">
+
       <br />
    Set your room as a favorite under the 'more' menu. Then, you can easily revisit the room from the list in the 'favorite rooms'.
   </div> 

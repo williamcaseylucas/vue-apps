@@ -85,6 +85,8 @@ export default class HubsApp extends VueApp {
 
     headDiv: Element
 
+    readyPromise: Promise<void> | null = null
+
     static initializeEthereal() {
         let scene: Scene = window.APP.scene;
         WebLayerManager.initialize(scene.renderer)
@@ -200,8 +202,9 @@ export default class HubsApp extends VueApp {
             renderOrderOffset: 0
         });
         try {
-            await this.webLayer3D.updateUntilReady()
-            this.webLayer3D.rootLayer.setNeedsRefresh();
+            this.readyPromise = this.webLayer3D?.updateUntilReady().then(() => {
+                this.webLayer3D?.rootLayer.setNeedsRefresh();
+            })
         } catch (e) {
             console.error("webLayerUpdate failed. ", e)
         }

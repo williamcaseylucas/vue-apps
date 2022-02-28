@@ -1,9 +1,8 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
-  <img src="../../../assets/images/Rotunda/9-privacy.jpg" width="400">
-
+  <div class="full">
+  <img xr-layer src="../../../assets/images/Rotunda/9-privacy.jpg">
   </div>
   </div>
   </div> 

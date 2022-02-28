@@ -128,6 +128,7 @@
       font-weight: bold;
       line-height: 1.6;
     }
+<<<<<<< HEAD
     .webIframe {
       position: fixed;
       left:-200px;
@@ -137,3 +138,16 @@
     #room .componentImage {
       width: 100%; height: auto;
     }
+=======
+.alink {
+  color: #fdfd96;
+  text-decoration: underline;
+}
+.alinklink {
+  color:#fdfd96;
+}
+.alink:hover {
+  color: white;
+  background:#78cfa8;
+}
+>>>>>>> d73938a589774e1fcb89d3b8c24da0011c460c72
