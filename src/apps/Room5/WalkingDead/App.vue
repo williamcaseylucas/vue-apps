@@ -2,7 +2,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <a target="_blank" href="https://www.thewalkingdeadourworld.com/">
-  <img xr-layer class="componentImage" src="../../../assets/images/Room5/Walking_Dead_Image.png" alt="Walking Dead Image">
+  <img xr-layer width="400px" src="../../../assets/images/Room5/Walking_Dead_Image.png" alt="Walking Dead Image">
   </a>
   <Title msg="Walking Dead: Our World" />
 	  <div class="squareoff">In this AR version of the transmedia franchise
