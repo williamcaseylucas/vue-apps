@@ -178,7 +178,10 @@ footer, header, hgroup, main, menu, nav, section {
       left:-200px;
       top:-120px;
     }
- 
+
+    #room .componentImage {
+      width: 100%; height: auto;
+    }
 a[data-v-051ea7d4] {
   color: #b542b9;
 }
