@@ -1,29 +1,16 @@
 
-#edit[data-v-214c13a8] {
-  color: #bea7d1;
+a[data-v-1580acae] {
+  color: #b542b9;
 }
-#edit.upclose[data-v-214c13a8] {
-  color: #cc0a0a;
+button[data-v-1580acae] {
+  width: 150px;
 }
-
-button[data-v-6e9d9acd] {
-    width: 120px;
-    color: -internal-light-dark(black, white);
-    text-indent: 0px;
-    text-align: center;
-    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
-    margin: 0em;
-    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-    border-radius: 2px;
-}
-.fakeButton[data-v-6e9d9acd] {
+.fade[data-v-1580acae] {
   color: #9803a5;
-  background: #a78e06;
   /* transition: color 1s; */
 }
-.fakeButton[data-v-6e9d9acd]:hover {
+.fade[data-v-1580acae]:hover {
   color: #a78e06;
-  background: #9803a5;
 }
 /* http://meyerweb.com/eric/tools/css/reset/
    v4.0 | 20180602
@@ -210,30 +197,43 @@ footer, header, hgroup, main, menu, nav, section {
 }
 >>>>>>> d73938a589774e1fcb89d3b8c24da0011c460c72
 
-a[data-v-06a9f319] {
+a[data-v-05e47e44] {
   color: #b542b9;
 }
-button[data-v-06a9f319] {
+button[data-v-05e47e44] {
   width: 150px;
 }
-.fade[data-v-06a9f319] {
+.fade[data-v-05e47e44] {
   color: #9803a5;
   /* transition: color 1s; */
 }
-.fade[data-v-06a9f319]:hover {
-  color: #a78e06;
+.fade[data-v-05e47e44]:hover {
+  color: #06a71b;
 }
 
-a[data-v-0b72a6b4] {
-  color: #b542b9;
+#edit[data-v-2a0e1798] {
+  color: #bea7d1;
 }
-button[data-v-0b72a6b4] {
-  width: 150px;
+#edit.upclose[data-v-2a0e1798] {
+  color: #cc0a0a;
 }
-.fade[data-v-0b72a6b4] {
+
+button[data-v-4e7d8fb2] {
+    width: 120px;
+    color: -internal-light-dark(black, white);
+    text-indent: 0px;
+    text-align: center;
+    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+    margin: 0em;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-radius: 2px;
+}
+.fakeButton[data-v-4e7d8fb2] {
   color: #9803a5;
+  background: #a78e06;
   /* transition: color 1s; */
 }
-.fade[data-v-0b72a6b4]:hover {
-  color: #06a71b;
+.fakeButton[data-v-4e7d8fb2]:hover {
+  color: #a78e06;
+  background: #9803a5;
 }
