@@ -1,9 +1,14 @@
 <template>
   <div> 
-  <div id="room" class="darkwall">
-  <div class="spacer">
-  <br><br>
-  <Title msg="Very carefully stretch your arms out for balance." />
+  <div id="room">
+  <div class="squareoff">
+  <br>
+  We hypothesized that to the degree that a VE seems real, it would evoke physiological responses similar to those evoked by the corresponding real environment, and that greater presence would evoke a greater response. To examine this, we conducted three experiments, the results of which support the use of physiological reaction as a reliable, valid, sensitive, and objective presence measure. 
+  <br />
+  <br />
+  <br />
+  <div class="oblique">Meehan, Michael, Brent Insko, Mary Whitton, and Frederick P Brooks. 2002. “Physiological Measures of Presence in Stressful Virtual Environments.” ACM Transactions on Graphics 21 (3): 645–52.</div>
+  <br />
   </div>
   </div>
   </div> 

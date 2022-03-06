@@ -6,11 +6,7 @@
   <Title msg="Pit Experiment" />
   <br>
   <br>
-	<div class="squareoff">Measuring the amount of presence or the sense of being there, is one of the few ways to assess the quality of a virtual space. This virtual pit experiment is a space that measures the presence by measuring changes in physiological reactions in users such as changes in heart rate. In this virtual room, feel whether your heart is beating faster or your hands get sweaty as if you are in a real space.  
-    <br>
-    <br>
-    <br>
-  Meehan, M., Insko, B., Whitton, M., & Brooks Jr, F. P. (2002). Physiological measures of presence in stressful virtual environments. Acm transactions on graphics (tog), 21(3), 645-652. 
+	<div class="squareoff">The experiments in the Pit Room required subjects to walk along the edges of the virtual pit while carrying an object (a book or a colored block). The physical room was designed to copy the virtual room: the subjects walked on actual wooden board, which they could feel through flimsy slippers that they were wearing. This is called "passive haptics.") The subjects's heart rate, skin conductance, and skin temperature were monitored for changes. The goal was to establish empirical measures for the subjective feeling of presence. Changes in heart rate proved to be the best physical measure of presence, and the passive haptics were particularly effective.
   <br>
   <br>
   </div> 
