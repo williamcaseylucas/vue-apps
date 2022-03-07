@@ -106,12 +106,12 @@ export {
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     // Presence and Aura
-    Milk, Nonnie, Treehugger, Presence, Empathy, Aura, Pit, PitInstruction, pitSign1,pitSign2, cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
+    Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
     
     //Onboarding and Rotunda
     Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
     //Pit 
-
+    Pit, PitInstruction, pitSign1,pitSign2,
     // Portal titles
     PortalTitle, PortalSubtitle, GraphLabel,
     // Tests

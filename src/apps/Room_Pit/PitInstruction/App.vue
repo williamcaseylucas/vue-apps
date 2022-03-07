@@ -6,10 +6,10 @@
   <Title msg="Instructions" />
   <br>
   <br>
-	<div class="squareoff">1. Pick up the rubber duck in this room and try to place it in the designated area on the far side of the room.
+	<div class="squareoff">1. Pick up the red ball in this room and try to place it in the red target on the floor.
   <br>
   <br>
-2. Pick up another rubber duck and drop it on the red and blue target on the floor.
+2. Pick up the blue ball and drop it on the blue target on the floor.
 <br>
 <br>
 <br>
