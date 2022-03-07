@@ -18,7 +18,7 @@ class HubsApp extends HubsAppProto {
     boundsSize: THREE.Vector3  = new THREE.Vector3()
     bounds: THREE.Box3 = new THREE.Box3()
 
-    async mount () {
+    mount () {
         super.mount(true) // use ethereal
 
         this.docs = this.webLayer3D!.querySelector('#edit')

@@ -6,7 +6,7 @@ class HubsApp extends HubsAppProto {
     shared: Store
     
     constructor (params: any = {}) {
-        super(App, 400, 475, params)
+        super(App, 400, 300, params)
 
         // create our shared data object that will
         // share data between vue and hubs
