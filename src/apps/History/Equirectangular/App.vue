@@ -15,7 +15,7 @@ Equirectangular Projection
 	</div>
   </div> 
   <div xr-layer>
-      <img class="centerImg" height="270" src="../../../assets/images/History/Equirectangular.jpg"></div>
+      <img class="centerImg" height="270" src="../../../assets/images/History/equirectangular.jpg"></div>
   </div>
 </div>
 </template>
