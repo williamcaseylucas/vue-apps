@@ -4,7 +4,7 @@
 <div class="spacer-side">
   <div class="squareoff">
   <br>
-  <div ><img class="centerImg" height="270" src="../../../assets/images/Pit/Original_pit2.jpg"></div>
+  <div xr-layer<img class="centerImg" height="270" src="../../../assets/images/Pit/Original_pit2.jpg"></div>
   <br />
   A subject wearing HMD and physiological monitoring equipment. Subjects also took their shoes off to better feel the edges of the platform. (Fig 3 in Meehan et al.)
   <br />
