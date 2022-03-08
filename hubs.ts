@@ -32,6 +32,21 @@ import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
 import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
+//History Room
+import LinearPerspective from './src/apps/History/LinearPerspective/hubs'
+import Panorama from './src/apps/History/Panorama/hubs'
+import CameraObscura from './src/apps/History/CameraObscura/hubs'
+import Photography from './src/apps/History/Photography/hubs'
+import Film from './src/apps/History/Film/hubs'
+import TV from './src/apps/History/TV/hubs'
+import Equirectangular from './src/apps/History/Equirectangular/hubs'
+import Sensorama from './src/apps/History/Sensorama/hubs'
+import ImmersiveRides from './src/apps/History/ImmersiveRides/hubs'
+import Theaters from './src/apps/History/Theaters/hubs'
+import VR from './src/apps/History/VR/hubs'
+import AR from './src/apps/History/AR/hubs'
+import GoogleStreetView from './src/apps/History/GoogleStreetView/hubs'
+
 
 // Presence and Aura Room 
 import Aura from './src/apps/Room6/Aura/hubs'
@@ -106,6 +121,9 @@ export {
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
+    //History
+    LinearPerspective, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView,
+
     // Presence and Aura
     Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
     
