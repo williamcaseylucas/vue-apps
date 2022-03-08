@@ -64,6 +64,7 @@ import Pit from './src/apps/Room_Pit/Pit/hubs'
 import PitInstruction from './src/apps/Room_Pit/PitInstruction/hubs'
 import pitSign1 from './src/apps/Room_Pit/pitSign1/hubs'
 import pitSign2 from './src/apps/Room_Pit/pitSign2/hubs'
+import pitSign3 from './src/apps/Room_Pit/pitSign3/hubs'
 
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs'
@@ -111,7 +112,7 @@ export {
     //Onboarding and Rotunda
     Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
     //Pit 
-    Pit, PitInstruction, pitSign1,pitSign2,
+    Pit, PitInstruction, pitSign1,pitSign2,pitSign3,
     // Portal titles
     PortalTitle, PortalSubtitle, GraphLabel,
     // Tests
