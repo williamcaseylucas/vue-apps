@@ -5,6 +5,7 @@ import hubsTest3 from './src/apps/Testing/HubsTest3/hubs'
 
 import PortalTitle from './src/apps/Portal/PortalTitle/hubs'
 import PortalSubtitle from './src/apps/Portal/PortalSubtitle/hubs'
+import GraphLabel from './src/apps/GraphLabel/hubs'
 
 import Map from './src/apps/Center_Map/hubs'
 import Center1 from './src/apps/Center1_Intro/hubs'
@@ -113,7 +114,7 @@ export {
     //Pit 
     Pit, PitInstruction, pitSign1,pitSign2,pitSign3,
     // Portal titles
-    PortalTitle, PortalSubtitle,
+    PortalTitle, PortalSubtitle, GraphLabel,
     // Tests
     hubsTest1, hubsTest2, hubsTest3}
 
