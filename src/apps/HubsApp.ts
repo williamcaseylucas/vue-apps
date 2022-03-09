@@ -339,16 +339,16 @@ export default class HubsApp extends VueApp {
         } else {
             var needsUpdate = this.needsUpdate
             this.needsUpdate = false
-            if (this.isStatic && this.updateTime < time) {
-                needsUpdate = true
-                // wait a bit and do it again.  May get rid of this some day, we'll see
-                this.updateTime = Math.random() * 2000 + 1000;
-            }
+            // if (this.isStatic && this.updateTime < time) {
+            //     needsUpdate = true
+            //     // wait a bit and do it again.  May get rid of this some day, we'll see
+            //     this.updateTime = Math.random() * 2000 + 1000;
+            // }
 
-            if (!this.isStatic) {
+            // if (!this.isStatic) {
                 this.updateTime = time
                 needsUpdate = true
-            }
+            // }
             if (needsUpdate) {
                 this.webLayer3D!.update();
             }
