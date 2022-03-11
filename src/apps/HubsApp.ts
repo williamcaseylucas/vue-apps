@@ -348,7 +348,7 @@ export default class HubsApp extends VueApp {
             // if (!this.isStatic) {
                 this.updateTime = time
                 needsUpdate = true
-            // }
+            }
             if (needsUpdate) {
                 this.webLayer3D!.update();
             }
