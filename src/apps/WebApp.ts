@@ -34,8 +34,8 @@ export default class WebApp extends VueApp {
         let rect = this.vueRoot.$el.getBoundingClientRect()
         console.log("mounted has rect: ", rect)
 
-        this.height = this.height > 0 ? this.height : Math.ceil(rect.height)
-        this.width = this.width > 0 ? this.width : Math.ceil(rect.width)
+        this.height = this.height > 0 ? this.height : Math.ceil(rect.height*1.1)
+        this.width = this.width > 0 ? this.width : Math.ceil(rect.width*1.1)
 
         style = "width: " + this.width + "px; height: " + this.height + "px;"
         console.log("setting style: ", style)

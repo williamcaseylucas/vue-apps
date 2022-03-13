@@ -2,7 +2,7 @@
   <div> 
   <div id="room" class="darkwall" :style="style">
 <!--<Title v-bind:msg="title" />-->
-	<div class="squareoff titleStyle ">{{ title }}</div> 
+	<div class="titleStyle ">{{ title }}</div> 
   </div>
   </div> 
 </template>
