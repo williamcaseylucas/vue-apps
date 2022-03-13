@@ -212,8 +212,8 @@ export default class HubsApp extends VueApp {
             let rect = this.vueRoot?.$el.getBoundingClientRect()
             console.log("mounted has rect: ", rect)
 
-            this.height = this.height > 0 ? this.height : Math.ceil(rect.height)
-            this.width = this.width > 0 ? this.width : Math.ceil(rect.width)
+            this.height = this.height > 0 ? this.height : Math.ceil(rect.height)+4
+            this.width = this.width > 0 ? this.width : Math.ceil(rect.width)+4
             this.size = { width: this.width/1000, height: this.height/1000}
 
             style = "width: " + this.width + "px; height: " + this.height + "px;"
