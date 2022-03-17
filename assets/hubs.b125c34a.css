@@ -122,8 +122,8 @@ footer, header, hgroup, main, menu, nav, section {
 /* JP */
    /* adding margin only to the side */
    #room .spacer-side {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 25px;
+    margin-right: 25px;
     }
 
     /*font styles*/
@@ -152,6 +152,11 @@ footer, header, hgroup, main, menu, nav, section {
       width: 100%;
       height: auto;
     }
+    img.centerImg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     /* label vue-app */
     .labelTitle {
@@ -163,16 +168,19 @@ footer, header, hgroup, main, menu, nav, section {
       font-size:6em;
       font-weight: bold;
     }
+
     .labelLgBody{
       font-size:5em;
     }
     
-    /* title vue-app */
-    .titleStyle {
-      font-size:2em;
-      font-weight: bold;
-      line-height: 1.6;
-    }
+/* title vue-app */
+.titleStyle {
+  font-size: 2em;
+  font-weight: bold;
+  padding: 5px;
+  text-shadow: 1px 0 2px black, 1px 0 4px white, 0 1px 2px black, 0 1px 4px white, -1px 0 2px black, -1px 0 4px white, 0 -1px  2px black, 0 -1px  4px white;
+}
+
 .alink {
   color: #fdfd96;
   text-decoration: underline;
@@ -184,6 +192,8 @@ footer, header, hgroup, main, menu, nav, section {
   color: white;
   background:#78cfa8;
 }
+
+
 a[data-v-05e47e44] {
   color: #b542b9;
 }
