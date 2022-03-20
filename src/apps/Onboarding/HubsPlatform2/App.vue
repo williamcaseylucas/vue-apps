@@ -6,7 +6,7 @@
       <br>
       <br>
       <br>
-<div class="keyPoint" xr-layer>To enter the room:</div>
+<div class="keyPoint">To enter the room:</div>
 <br>
 - On a desktop or mobile device, follow the prompts to select a name/avatar and enable the mic.
 <br>
