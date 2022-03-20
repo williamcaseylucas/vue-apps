@@ -1,23 +1,18 @@
 <template>
   <div> 
   <div id="room">
-  <div class="spacer">
-  <br><br>
+  <div class="spacer-side">
+  <br />
   <Title msg="Instructions" />
   <br>
-  <br>
-	<div class="squareoff">1. Pick up the rubber duck in this room and try to place it in the designated area on the far side of the room.
-  <br>
-  <br>
-2. Pick up another rubber duck and drop it on the red and blue target on the floor.
+  <div class="squareoff">
+To get a sense of what the experiment was like, you should visit this room in a head-worn VR display and walk around the pit instead of teleporting or using the controller to move. Note that the lack of "passive haptics" (the physical set used in the UNC experiment) will diminish the sense of vertigo that you feel compared to the participants in the original experiment.
+<br><br>
+At each of the two locations marked with the red and blue arrows on the floor, stand on the arrow facing in the indicated direction, pick up a ball with your controller, and try to drop it on the target. (Head-Mounted Display devices such as Oculus Quests are recommended for this experiment.)
+</div>
 <br>
 <br>
-<br>
-<br>
-Head-Mounted Display devices such as Oculus Quests are recommended for this experiment. </div>
-<br>
-<br>
-  </div>
+</div>
   </div>
   </div> 
 </template>

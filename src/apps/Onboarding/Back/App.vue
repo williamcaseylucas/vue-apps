@@ -1,8 +1,11 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
-<a href="https://realitymedia.digital/"><Title msg="Click here to return back to the website" /></a>
+  <div xr-layer>
+    <a href="https://realitymedia.digital/" target="blank" class="alink" style="fontSize:1.5em;">Click here to return back to the website</a>
+    <br />
+    <br />
+    <img src="../../../assets/images/Onboarding/website.jpg" height="400">
   </div>
   </div>
   </div> 

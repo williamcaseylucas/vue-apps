@@ -6,7 +6,7 @@ class WebApp extends WebAppProto {
     shared: Store
 
     constructor () {
-        super(App, 400, 475)
+        super(App, 400, 300)
 
         // create our shared data object that will
         // share data between vue and hubs
