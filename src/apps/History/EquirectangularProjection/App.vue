@@ -14,9 +14,6 @@ Among the different kinds of cameras and techniques used for creating panoramic 
 <br /><br />
   </div>
   </div>
-  <div xr-layer>
-      <img class="centerImg" height="270" src="../../../assets/images/History/Equirectangular.jpg"></div>
-  </div>
 </div>
 </template>
  
