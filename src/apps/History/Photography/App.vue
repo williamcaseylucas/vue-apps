@@ -10,7 +10,7 @@
   <Title msg="Photography" />
   <br>
 <div class="squareoff">
-Photography developed through mechanizing the process of linear perspective. 
+Photography developed through mechanizing the process of linear perspective. Until today, photography is recognized as a medium that has a strong claim to reality.
 <br /><br />
 	</div>
   </div> 
