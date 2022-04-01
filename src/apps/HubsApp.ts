@@ -91,6 +91,9 @@ export default class HubsApp extends VueApp {
         let scene: Scene = window.APP.scene;
         WebLayerManager.initialize(scene.renderer)
 
+        // WebLayerManager.instance.MAX_RASTERIZE_TASK_COUNT = 25;
+        // WebLayerManager.instance.MAX_SERIALIZE_TASK_COUNT = 25;
+
         // this.etherealCamera.matrixAutoUpdate = true;
         //this.etherealCamera.visible = false;
 
