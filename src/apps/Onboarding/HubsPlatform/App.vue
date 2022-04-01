@@ -3,7 +3,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <div xr-layer>
-    <imgsrc="../../../assets/images/Onboarding/MozillaHubs.jpg" height="212">
+    <img src="../../../assets/images/Onboarding/MozillaHubs.jpg" height="212">
   </div>
   <br><br>
   <Title msg="The Hubs Platform" />
