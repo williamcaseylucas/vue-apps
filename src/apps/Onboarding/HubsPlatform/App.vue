@@ -2,7 +2,9 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-  <img xr-layer src="../../../assets/images/Onboarding/MozillaHubs.jpg" height="212">
+  <div style="margin: 0 auto; display: block">
+    <img xr-layer src="../../../assets/images/Onboarding/MozillaHubs.jpg" height="212">
+  <div>
   <br><br>
   <Title msg="The Hubs Platform" />
   <br />
