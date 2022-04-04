@@ -112,6 +112,7 @@ import Future_monolith from './src/apps/Onboarding/Future_monolith/hubs'
 //test
 import AudioPad from './src/apps/AudioPad/hubs'
 import Label from './src/apps/Label/hubs'
+import Label_bk from './src/apps/Label_bk/hubs'
 import Label_lg from './src/apps/Label_lg_text/hubs'
 import Title from './src/apps/Title/hubs'
 
@@ -120,7 +121,7 @@ export {
     systemTick, initializeEthereal,
 
     //General Use
-    Label,Title,Label_lg,
+    Label,Title,Label_lg,Label_bk,
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 

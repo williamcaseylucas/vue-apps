@@ -10,7 +10,7 @@
   <br />
 A view of the original Pit model.  Shows a side view of the virtual environment. Subjects start in the Training Room and later enter the Pit Room.   
 <br><br>
-<div class="oblique">Meehan, Michael, Brent Insko, Mary Whitton, and Frederick P Brooks. 2002. (Figure 1 in “Physiological Measures of Presence in Stressful Virtual Environments.” ACM Transactions on Graphics 21 (3): 645–52.)</div>
+<div class="oblique" style="fontSize:0.9rem;">Meehan, Michael, Brent Insko, Mary Whitton, and Frederick P Brooks. 2002. (Figure 1 in “Physiological Measures of Presence in Stressful Virtual Environments.” ACM Transactions on Graphics 21 (3): 645–52.)</div>
 <br />
   </div>
 </div>

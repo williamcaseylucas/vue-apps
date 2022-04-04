@@ -2,10 +2,6 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer-side">
-  <br><br>
-  <div style="float: right; margin: 10px">
-  <img src="../../../assets/images/Room6/rtarrow.png" width="20" height="20" >
-  </div>
   <Title msg="The future of news?" />
   <br>
   <br>
