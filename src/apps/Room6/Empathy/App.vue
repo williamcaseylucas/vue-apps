@@ -2,7 +2,6 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer-side">
-  <br><br>
   <Title msg="Presence and Empathy" />
   <br/>
 	<div class="squareoff">Researchers have long pursued the idea of emotional reactions such as empathy as a test of presence. 
