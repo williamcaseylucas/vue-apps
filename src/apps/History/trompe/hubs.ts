@@ -4,12 +4,12 @@ import HubsAppProto from "../../HubsApp";
 class HubsApp extends HubsAppProto {
     constructor (width: number, height: number, params: any = {}) {
         super(App, width, height, params)
-        this.isInteractive = true;
+    //    this.isInteractive = true;
     }
 }
 
-var init = function() {
-    let app = new HubsApp(600, 475)
+var init = function(params: any = {}) {
+    let app = new HubsApp(600, 475, params)
     app.mount()
     return app
 }

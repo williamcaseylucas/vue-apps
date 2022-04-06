@@ -2,7 +2,6 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer-side">
-  <br><br>
   <Title msg="Treehugger: Wawona" />
   <br><br>
 	<div class="squareoff">Treehugger: Wawona VR experience transports the users to the red giant Sequoia trees from the Sequoia National Park. It provides a sense of intimacy with the tree - with its bark, with the cells that make up its being. The vividness of the work illustrates <em>presence</em>. </div>

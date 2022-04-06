@@ -8,7 +8,7 @@
   <br />
   <br />
   <br />
-  <div class="oblique">Meehan, Michael, Brent Insko, Mary Whitton, and Frederick P Brooks. 2002. “Physiological Measures of Presence in Stressful Virtual Environments.” ACM Transactions on Graphics 21 (3): 645–52.</div>
+  <div class="oblique" style="fontSize:0.9rem;">Meehan, Michael, Brent Insko, Mary Whitton, and Frederick P Brooks. 2002. “Physiological Measures of Presence in Stressful Virtual Environments.” ACM Transactions on Graphics 21 (3): 645–52.</div>
   <br />
   </div>
   </div>
