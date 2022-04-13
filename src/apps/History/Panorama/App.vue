@@ -1,23 +1,19 @@
 <template>
   <div> 
-  <div id="room" class="lightwall">
-   <div class="headline squareoff" style="color:white">18th century</div>
-   <br />
-   <br />
-   <br />
- <div class="spacer-side">
+  <div id="room" class="whitewall"> 
 
-  <Title msg="Panorama" />
-  <br>
+  <div style="padding-top: 10px">
+    <Title class="history_title" msg="Panorama" />
+    <p class="history_year">1930</p>
+    <br />
+  </div>
+ <div class="spacer-side">
 <div class="squareoff">
 The panorama conceived by artist Robert Barker was one of the ways to represent reality at the end of the 18th century. Barker used perspective painting to create a panorama on a canvas stretched around the cylindrical surface. Viewers stood in the middle and experienced the scene in either direction. Therefore, the panoramas were fully immersive virtual environments consisting of a painted canvas.
 <br /><br />
 	</div>
   </div> 
-  <div xr-layer>
-      <img class="centerImg" height="90" src="../../../assets/images/History/panorama.jpg"></div>
   </div>
-  <div  style="fontSize:0.8em; padding-left:40px;padding-top:6px;">Robert Barker and Henry Aston Barker, Panorama of London from the Roof of Albion Mills, 1972</div>
   </div>
 </template>
 

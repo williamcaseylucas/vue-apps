@@ -1,16 +1,19 @@
 <template>
   <div> 
-  <div id="room" class="lightwall">
- <div class="spacer-side">
+  <div id="room" class="whitewall"> 
 
-  <Title msg="Stereoscopic Film" />
-  <br>
+  <div style="padding-top: 10px">
+    <Title class="history_title" msg="Stereoscopic Film" />
+    <p class="history_year">1930</p>
+    <br />
+  </div>
+ <div class="spacer-side">
 <div class="squareoff">
 The stereoscopic film allowed people to generate 3D views of images by mimicking the human eyes with two cameras. The stereoscope, a device for viewing these photographs, was first invented in 1832 by Charles Wheatstone. Many methods to generate stereoscopic movies were attempted, but it wasn't until 1922 that the first 3D film, The Power of Love, came out. This used one projector but had the two sets of images coded into red and blue, while the audience would were glasses with red and blue lenses. Later, polarization allowed full-color 3D films to be made.
 <br /><br />
-</div>
 	</div>
   </div> 
+  </div>
   </div>
 </template>
 
@@ -24,3 +27,4 @@ import "../../../assets/room.css"
 <style scoped>
 
 </style>
+
