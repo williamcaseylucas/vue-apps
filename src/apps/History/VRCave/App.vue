@@ -3,13 +3,13 @@
   <div id="room" class="whitewall"> 
 
   <div style="padding-top: 10px">
-    <Title class="history_title" msg="Camera Obscura" />
+    <Title class="history_title" msg="VRCave" />
     <p class="history_year">1930</p>
     <br />
   </div>
  <div class="spacer-side">
 <div class="squareoff">
-The forerunner of the camera, camera obscura is a darkened room with a small hole that admitted light to project the inverted image of the outside scene onto the opposite wall. This image was ephemeral until the development of modern chemistry that made another medium possible. 
+ "A Cave Automatic Virtual Environment is an immersive virtual reality environment where projectors are directed to between three and six of the walls of a room-sized cube. The name is also a reference to the allegory of the Cave in Plato's Republic in which a philosopher contemplates perception, reality, and illusion."
 <br /><br />
 	</div>
   </div> 
