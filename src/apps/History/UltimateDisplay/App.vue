@@ -1,18 +1,21 @@
-<template> 
-<div>
-  <div id="room" class="lightwall">
- <div class="spacer-side">
-
-  <Title msg="Ultimate Display" />
-  <br>
-  <div class="squareoff">
-  "In 1965 Ivan E. Sutherland envisioned the Ultimate Display, a room in which a computer
+<template>
+  <div> 
+  <div id="room" class="whitewall"> 
+  <div style="padding-top: 10px">
+  <Title class="history_title" msg="Ultimate Display" />
+  </div>
+  <p class="history_year">1430s</p>
+  <br/>
+  <div class="spacer-side">
+<div class="squareoff">
+ "In 1965 Ivan E. Sutherland envisioned the Ultimate Display, a room in which a computer
 can directly control the existence of matter. This type of display would merge the digital
 and the physical world, dramatically changing how people interact with computers."
+</div>
+	</div>
+  <br />
+  </div> 
   </div>
-</div>
-</div>
-</div>
 </template>
 
 <script setup>
