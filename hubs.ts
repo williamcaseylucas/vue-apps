@@ -46,10 +46,11 @@ import Theaters from './src/apps/History/Theaters/hubs'
 import VR from './src/apps/History/VR/hubs'
 import AR from './src/apps/History/AR/hubs'
 import GoogleStreetView from './src/apps/History/GoogleStreetView/hubs'
-import Streoscopic from './src/apps/History/Stereoscopic/hubs'
+import Stereoscopic from './src/apps/History/Stereoscopic/hubs'
 import Trompe from './src/apps/History/trompe/hubs'
-
-
+import UltimateDisplay from './src/apps/History/UltimateDisplay/hubs'
+import VRCave from './src/apps/History/VRCave/hubs'
+import Zoetrope from './src/apps/History/Zoetrope/hubs'
 
 
 // Presence and Aura Room 
@@ -127,13 +128,14 @@ export {
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     //History
-    LinearPerspective, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Streoscopic,
+    LinearPerspective, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Stereoscopic,UltimateDisplay, VRCave, Zoetrope,
 
     // Presence and Aura
     Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
     
     //Onboarding and Rotunda
     Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
+   
     //Pit 
     Pit, PitInstruction, pitSign1,pitSign2,pitSign3,
     // Portal titles
