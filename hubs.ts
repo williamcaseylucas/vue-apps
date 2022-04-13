@@ -46,7 +46,7 @@ import Theaters from './src/apps/History/Theaters/hubs'
 import VR from './src/apps/History/VR/hubs'
 import AR from './src/apps/History/AR/hubs'
 import GoogleStreetView from './src/apps/History/GoogleStreetView/hubs'
-import Streoscopic from './src/apps/History/Streoscopic/hubs'
+import Streoscopic from './src/apps/History/Stereoscopic/hubs'
 import Trompe from './src/apps/History/trompe/hubs'
 
 
