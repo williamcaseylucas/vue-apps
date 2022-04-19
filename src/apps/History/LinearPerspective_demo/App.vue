@@ -3,12 +3,12 @@
   <div id="room" class="ivorywall"> 
   <div style="padding-top: 10px">
   <div class="history_spacer-side"> 
-  <div class="history_subtitle">Photography</div> 
+  <div class="history_subtitle">Linear Perspective</div> 
   <hr class="history_hr2">
   <br/>
   
 <div class="squareoff">
-The forerunner of the camera, <span style="font-weight:bold; font-size:1.3rem;">camera obscura</span> is a darkened room with a small hole that admitted light to project the inverted image of the outside scene onto the opposite wall. This image was ephemeral until the development of modern chemistry that made another medium possible. 
+Around 1425, Italian Renaissance architect Filippo Brunelleschi demonstrated linear perspective with the help of a mirror. Using the technique of parallel lines converging in a single vanishing point and a mirror, he painted the Florence Baptistry. This is the first example of diminished reality, in which the real world is overlayed and obscured by the technology.
 </div>
 </div>
 	</div>

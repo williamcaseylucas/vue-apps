@@ -34,6 +34,7 @@ import {initializeEthereal, systemTick} from './src/apps/HubsApp'
 
 //History Room
 import LinearPerspective from './src/apps/History/LinearPerspective/hubs'
+import LinearPerspective_Demo from './src/apps/History/LinearPerspective_demo/hubs'
 import Panorama from './src/apps/History/Panorama/hubs'
 import CameraObscura from './src/apps/History/CameraObscura/hubs'
 import Photography from './src/apps/History/Photography/hubs'
@@ -128,7 +129,7 @@ export {
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     //History
-    LinearPerspective, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Stereoscopic,UltimateDisplay, VRCave, Zoetrope,
+    LinearPerspective, LinearPerspective_Demo, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Stereoscopic,UltimateDisplay, VRCave, Zoetrope,
 
     // Presence and Aura
     Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
