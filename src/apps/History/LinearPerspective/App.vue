@@ -10,11 +10,11 @@
   <br/>
   
 <div class="squareoff">
-Linear perspective is a system developed by architects and painters to create an illusion of depth on a flat surface using the vanishing points. This technique resembles the way we see the world, as it imitates how rays of light reflects off objects in the world and could be focused on a surface. Around 1425, Italian Renaissance architect Filippo Brunelleschi demonstrated linear perspective with the help of a mirror. Using the technique of parallel lines converging in a single vanishing point and a mirror, he painted the Florence Baptistry. This is the first example of diminished reality, in which the real world is overlayed and obscured by the technology.
-</div>
+Linear perspective is a system developed by architects and painters to create an illusion of depth on a flat surface using the vanishing points. This technique resembles the way we see the world, as it imitates how rays of light reflects off objects in the world and could be focused on a surface.
 </div>
 	</div>
   <br />
+  </div>
   </div> 
   </div>
 </template>

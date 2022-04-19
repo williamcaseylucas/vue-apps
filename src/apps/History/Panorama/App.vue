@@ -5,7 +5,7 @@
   <div class="history_spacer-side">
   <Title class="history_title" msg="Panorama" />
   
-  <p class="history_year">1430s</p>
+  <p class="history_year">1790</p>
   <hr class="history_hr">
   <br/>
   

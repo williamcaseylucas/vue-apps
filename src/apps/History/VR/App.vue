@@ -5,7 +5,7 @@
   <div class="history_spacer-side">
   <Title class="history_title" msg="Personal VR Systems" />
   
-  <p class="history_year">1430s</p>
+  <p class="history_year">1968</p>
   <hr class="history_hr">
   <br/>
   
