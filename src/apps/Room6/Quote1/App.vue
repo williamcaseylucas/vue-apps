@@ -3,7 +3,8 @@
   <div id="room" class="darkwall">
   <div class="spacer-side">
 	<div class="squareoff">
-   <div class="lgquote">"[Virtual Reality] feels like life; <br><br>it feels like truth." (Chris Milk) </div>
+   <div class="lgquote">"[Virtual Reality] feels like life; it feels like truth." 
+   <br> <span style="float:right;">- Chris Milk</span></div>
   </div> 
   </div>
   </div>
