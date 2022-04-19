@@ -1,4 +1,5 @@
 /* Now, our styles */
+@import url('https://fonts.googleapis.com/css2?family=Buenard&family=Montserrat:wght@100&display=swap');
 
 #room {
     font-family: Avenir,  Arial, Helvetica, sans-serif;
@@ -134,25 +135,42 @@
     }
     
 /* History Gallery */
-.history_title {
-  color: white;
-  background:#76614E;
+#room h2.history_title {
   text-align: left;
-  padding:5px;
-  margin-left: 20px;
+  font-size: 2rem;
 }
-
+.history_subtitle{
+  background-color: #E3E3E3;
+  display: inline;
+  float: right;
+}
+.history_spacer-side{
+  margin: 20px 60px;
+}
 .history_year{
   font-size: 2rem;
   font-weight: 100;
-  color: white;
-  opacity: 0.3;
+  opacity: 0.8;
   text-align: right;
   position: absolute;
-  top: 13px;
-  left:500px;
-  font-style:italic;
-  font-family: 'Courier New', Courier, monospace
+  top: 30px;
+  left:465px;
+  font-family: 'Montserrat', sans-serif;
+}
+.history_hr{
+  border: 2px solid #E3E3E3;
+  background-color: #E3E3E3;
+}
+.history_hr2{
+  border: 0;
+  border-bottom: 3px dotted #E3E3E3;
+  padding-top:9px;
+}
+#room.ivorywall{
+  background: #F9EFE4;
+  color:#42487C;
+  font-family: 'Buenard', serif;
+  border-radius: 0;
 }
 
 /* title vue-app */
