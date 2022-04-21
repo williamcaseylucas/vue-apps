@@ -6,7 +6,7 @@
   color: #cc0a0a;
 }
 
-button[data-v-6e9d9acd] {
+button[data-v-d5ef8e02] {
     width: 120px;
     color: -internal-light-dark(black, white);
     text-indent: 0px;
@@ -16,12 +16,12 @@ button[data-v-6e9d9acd] {
     border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
     border-radius: 2px;
 }
-.fakeButton[data-v-6e9d9acd] {
+.fakeButton[data-v-d5ef8e02] {
   color: #9803a5;
   background: #a78e06;
   /* transition: color 1s; */
 }
-.fakeButton[data-v-6e9d9acd]:hover {
+.fakeButton[data-v-d5ef8e02]:hover {
   color: #a78e06;
   background: #9803a5;
 }
@@ -57,7 +57,7 @@ footer, header, hgroup, main, menu, nav, section {
   display: block;
 }
 /* Now, our styles */
-
+@import url('https://fonts.googleapis.com/css2?family=Buenard&family=Montserrat:wght@100&family=Roboto:wght@900&display=swap');
 #room {
     font-family: Avenir,  Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -83,7 +83,13 @@ footer, header, hgroup, main, menu, nav, section {
     background-color: transparent;  
     color: #1f1d1d;
 }
- 
+
+#room.whitewall{
+  background-color: white;  
+  color: #1f1d1d;
+  border-radius: 0px;
+}
+
 #room h2{
   font-size: 1.5em;
   font-weight: bold;
@@ -138,7 +144,12 @@ footer, header, hgroup, main, menu, nav, section {
     margin-left: 25px;
     margin-right: 25px;
     }
-
+    .lgquote{
+      font-family: 'Roboto', sans-serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: #8E9097;
+    }
     /*font styles*/
     .oblique {
       font-style:italic;
@@ -186,6 +197,52 @@ footer, header, hgroup, main, menu, nav, section {
       font-size:5em;
     }
     
+/* History Gallery */
+#room h2.history_title {
+  text-align: left;
+  font-size: 2rem;
+  float: left;
+  padding-bottom: 10px;
+}
+.history_subtitle{
+  background-color: #E3E3E3;
+  padding: 0 6px;
+  display: inline;
+  float: right;
+}
+
+.history_spacer-side{
+  margin: 20px 60px;
+}
+.history_year{
+  font-size: 2rem;
+  font-weight: 100;
+  opacity: 0.8;
+  float: right;
+  /* text-align: right;
+  position: absolute;
+  top: 30px;
+  left:465px; */
+  font-family: 'Montserrat', sans-serif;
+}
+.history_hr{
+  clear: both;
+  border: 2px solid #E3E3E3;
+  background-color: #E3E3E3;
+}
+.history_hr2{
+
+  border: 0;
+  border-bottom: 3px dotted #E3E3E3;
+  padding-top:9px;
+}
+#room.ivorywall{
+  background: #F9EFE4;
+  color:#42487C;
+  font-family: 'Buenard', serif;
+  border-radius: 0;
+}
+
 /* title vue-app */
 .titleStyle {
   font-size: 2em;
