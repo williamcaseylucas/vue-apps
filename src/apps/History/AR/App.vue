@@ -1,15 +1,20 @@
 <template>
   <div> 
-  <div id="room" class="lightwall">
- <div class="spacer-side">
-
-  <Title msg="Augmented Reality" />
-  <br>
+  <div id="room" class="ivorywall"> 
+  <div style="padding-top: 10px">
+  <div class="history_spacer-side">
+  <Title class="history_title" msg="Augmented Reality" />
+  
+  <p class="history_year">1968</p>
+  <hr class="history_hr">
+  <br/>
+  
 <div class="squareoff">
-AR
-<br /><br />
+Augmented Reality
+</div>
 </div>
 	</div>
+  <br />
   </div> 
   </div>
 </template>
@@ -24,3 +29,4 @@ import "../../../assets/room.css"
 <style scoped>
 
 </style>
+

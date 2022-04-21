@@ -11,8 +11,8 @@
 
     <div></div>    
     
-    <div xr-layer>Click to make larger: <span class="fakeButton"  @click="shared.larger">Larger</span></div>
-    <div xr-layer>Click to make smaller: <span class="fakeButton"  @click="shared.smaller">Smaller</span></div>
+    <div>Click to make larger: <span xr-layer class="fakeButton"  @click="shared.larger">Larger</span></div>
+    <div>Click to make smaller: <span xr-layer class="fakeButton"  @click="shared.smaller">Smaller</span></div>
   </div>
 </div>
 </template>

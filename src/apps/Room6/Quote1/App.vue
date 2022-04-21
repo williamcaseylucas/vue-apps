@@ -1,11 +1,11 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="spacer">
-
-<Title msg="Features in Hubs" />
-<br>
-	<div class="squareoff"> The figure below indicates how to mute your microphone, take photos, share your screen, create media objects, and so on: </div> 
+  <div class="spacer-side">
+	<div class="squareoff">
+   <div class="lgquote">"[Virtual Reality] feels like life; it feels like truth." 
+   <br> <span style="float:right;">- Chris Milk</span></div>
+  </div> 
   </div>
   </div>
   </div> 
@@ -21,4 +21,3 @@ import "../../../assets/room.css"
 <style scoped>
 
 </style>
-

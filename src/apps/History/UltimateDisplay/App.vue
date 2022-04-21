@@ -3,14 +3,16 @@
   <div id="room" class="ivorywall"> 
   <div style="padding-top: 10px">
   <div class="history_spacer-side">
-  <Title class="history_title" msg="Google Street View" />
+  <Title class="history_title" msg="Ultimate Display" />
   
-  <p class="history_year">2007</p>
+  <p class="history_year">1965</p>
   <hr class="history_hr">
   <br/>
   
 <div class="squareoff">
-Google Street View, which was first launched in 2007, provides the user interactive panoramas that are created through stitching photographs together seamlessly. In Google Maps, the user could feel as if they are on the streets of the place they select, looking around the world.
+ "In 1965 Ivan E. Sutherland envisioned the Ultimate Display, a room in which a computer
+can directly control the existence of matter. This type of display would merge the digital
+and the physical world, dramatically changing how people interact with computers."
 </div>
 </div>
 	</div>

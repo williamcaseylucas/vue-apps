@@ -3,14 +3,14 @@
   <div id="room" class="ivorywall"> 
   <div style="padding-top: 10px">
   <div class="history_spacer-side">
-  <Title class="history_title" msg="Google Street View" />
+  <Title class="history_title" msg="VRCave" />
   
-  <p class="history_year">2007</p>
+  <p class="history_year">1992</p>
   <hr class="history_hr">
   <br/>
   
 <div class="squareoff">
-Google Street View, which was first launched in 2007, provides the user interactive panoramas that are created through stitching photographs together seamlessly. In Google Maps, the user could feel as if they are on the streets of the place they select, looking around the world.
+ "A Cave Automatic Virtual Environment is an immersive virtual reality environment where projectors are directed to between three and six of the walls of a room-sized cube. The name is also a reference to the allegory of the Cave in Plato's Republic in which a philosopher contemplates perception, reality, and illusion."
 </div>
 </div>
 	</div>
@@ -29,3 +29,6 @@ import "../../../assets/room.css"
 <style scoped>
 
 </style>
+
+
+

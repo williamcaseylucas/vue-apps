@@ -20,6 +20,15 @@ export function systemTick(time: number, deltaTime: number) {
    HubsApp.systemTick(time, deltaTime)
 }
 
+export async function loadCache(url: string) {
+    await WebLayerManager.instance.importCache(url)
+}
+
+export async function exportCache(states: Array<string> | undefined) {
+    await WebLayerManager.instance.saveStore()
+    return await WebLayerManager.instance.exportCache(states)
+}
+
 function copyCamera(source: THREE.PerspectiveCamera, target: THREE.PerspectiveCamera) {
     source.updateMatrixWorld()
     //let oldName = target.name
