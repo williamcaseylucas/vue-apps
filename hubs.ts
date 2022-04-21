@@ -30,7 +30,7 @@ import Apparizione from './src/apps/Room5/Apparizione/hubs'
 import Minecraft from './src/apps/Room5/Minecraft/hubs'
 import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
-import {initializeEthereal, systemTick} from './src/apps/HubsApp'
+import {initializeEthereal, systemTick, loadCache, exportCache} from './src/apps/HubsApp'
 
 //History Room
 import LinearPerspective from './src/apps/History/LinearPerspective/hubs'
@@ -125,6 +125,9 @@ import Title from './src/apps/Title/hubs'
 export {
     // for updating ethereal once per tick
     systemTick, initializeEthereal,
+
+    // cache management
+    exportCache, loadCache,
 
     //General Use
     Label,Title,Label_lg,Label_bk,
