@@ -97,7 +97,6 @@ import pitSign3 from './src/apps/Room_Pit/pitSign3/hubs'
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs'
 import MitPress from './src/apps/Onboarding/MitPress/hubs'
-import MitText from './src/apps/Onboarding/MitText/hubs'
 
 import HubsPlatform from './src/apps/Onboarding/HubsPlatform/hubs'
 import HubsPlatform2 from './src/apps/Onboarding/HubsPlatform2/hubs'
@@ -109,14 +108,6 @@ import rotundaMap from './src/apps/Onboarding/rotundaMap/hubs'
 import Overview from './src/apps/Onboarding/Overview/hubs'
 import Back from './src/apps/Onboarding/Back/hubs'
 import Exit from './src/apps/Room6/Exit/hubs'
-
-import ARVR_monolith from './src/apps/Onboarding/ARVR_monolith/hubs'
-import History_monolith from './src/apps/Onboarding/History_monolith/hubs'
-import Graphics_monolith from './src/apps/Onboarding/Graphics_monolith/hubs'
-import Presence_monolith from './src/apps/Onboarding/Presence_monolith/hubs'
-import Genres_monolith from './src/apps/Onboarding/Genres_monolith/hubs'
-import Privacy_monolith from './src/apps/Onboarding/Privacy_monolith/hubs'
-import Future_monolith from './src/apps/Onboarding/Future_monolith/hubs'
 
 //test
 import AudioPad from './src/apps/AudioPad/hubs'
@@ -145,7 +136,7 @@ export {
     Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation, Quote1, Quote2,Quote3, Quote4, Quote5,
     
     //Onboarding and Rotunda
-    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
+    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing, HubsPlatform2, Overview, Back,
    
     //Pit 
     Pit, PitInstruction, pitSign1,pitSign2,pitSign3,

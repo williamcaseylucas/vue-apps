@@ -21,22 +21,7 @@ import Title from '../../../components/CenterTitle.vue'
 import "../../../assets/top.css"
 import "../../../assets/room.css"
 </script>
-.fakeButton {
-  color: #fdfd96;
-  background: #a78e06;
-  /* transition: color 1s; */
-}
-.fakeButton{
-  color: #fdfd96;
-}
-.fakeButton a{
-    text-decoration: underline;
-}
 
-.fakeButton:hover {
-  color: white;
-  background:#78cfa8;
-}
 <style scoped>
 
 </style>

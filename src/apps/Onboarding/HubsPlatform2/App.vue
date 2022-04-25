@@ -17,7 +17,7 @@
 <br>
 - On desktop use your WASD or arrow keys to move around. You can also press your right mouse button to teleport to a different location. Rotate your view using the Q and E keys, or hold down your left mouse button and drag.
 <br>
-- For VR and mobile controls, see the <a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank"><span class="test">list of Hubs controls.</span></a>
+- For VR and mobile controls, see the <a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a>
  </div>
   </div>
   </div>
@@ -34,14 +34,5 @@ import "../../../assets/room.css"
 
 <style scoped>
 
-.test{
-    text-decoration: underline;
-    color: #fdfd96;
-}
-
-.test:hover {
-  color: white;
-  background:#78cfa8;
-}
 </style>
 

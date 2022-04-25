@@ -6,7 +6,7 @@
   <br />
 <br />
 <div style="width: 50%; float: right">
-  <div class="squareoff">Published by <a href="https://mitpress.mit.edu/books/reality-media" target="_blank" class="alink">MIT Press</a>
+  <div class="squareoff">Published by <a xr-layer href="https://mitpress.mit.edu/books/reality-media" target="_blank" class="alink">MIT Press</a>
   <div class="oblique">By Jay David Bolter, Maria Engberg and Blair MacIntyre</div> 
   <br>
   <br>
