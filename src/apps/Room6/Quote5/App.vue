@@ -1,8 +1,10 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="full">
-  <img xr-layer src="../../../assets/images/Rotunda/1-minecraft-ar.jpg">
+  <div class="spacer-side">
+	<div class="squareoff">
+   <div class="lgquote">Each reality medium strives to achieve presence, and each one falls short.</div>
+  </div> 
   </div>
   </div>
   </div> 

@@ -1,8 +1,10 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="full">
-  <img xr-layer src="../../../assets/images/Rotunda/5-promachos.jpg">
+  <div class="spacer-side">
+	<div class="squareoff">
+   <div class="lgquote">Cybersickness is visceral evidence that VR is not the medium to end all media.</div>
+  </div> 
   </div>
   </div>
   </div> 

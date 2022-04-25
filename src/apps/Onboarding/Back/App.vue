@@ -1,8 +1,8 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div>
-    <a href="https://realitymedia.digital/" target="_blank" class="alink" style="fontSize:1.5em;">Click here to return back to the website</a>
+  <div >
+    <a xr-layer href="https://realitymedia.digital/" target="_blank" class="alink" style="fontSize:1.5em;">Click here to return back to the website</a>
 
   </div>
   </div>
