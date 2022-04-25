@@ -17,7 +17,7 @@
 <br>
 - On desktop use your WASD or arrow keys to move around. You can also press your right mouse button to teleport to a different location. Rotate your view using the Q and E keys, or hold down your left mouse button and drag.
 <br>
-- For VR and mobile controls, see the <a href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a>
+- For VR and mobile controls, see the <a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a>
  </div>
   </div>
   </div>
