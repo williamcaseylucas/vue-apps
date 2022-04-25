@@ -204,3 +204,13 @@
   background:#78cfa8;
 }
 
+.alink2 a{
+  color: #fdfd96;
+  text-decoration: underline;
+}
+
+.alink2 a:hover {
+  color: white;
+  background:#78cfa8;
+}
+
