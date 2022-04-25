@@ -4,6 +4,10 @@
   <div class="spacer">
   <Title msg="The Hubs Platform" />
   <br />
+    <div xr-layer>
+     <img src="../../../assets/images/Onboarding/MozillaHubs.jpg" height="212">
+   </div>
+   <br>
 	<div class="squareoff"><em>Realitymedia</em> is built on top of Mozilla's open-source platform. An extensive guide to using Mozilla Hubs is available <a href="https://hubs.mozilla.com/docs/intro-hubs.html" target="_blank" class="alink">in the Hubs user documentation.</a><br><br>
   Here are the highlights:
   <br><br>
