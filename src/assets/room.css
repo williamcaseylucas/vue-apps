@@ -203,25 +203,3 @@
   color: white;
   background:#78cfa8;
 }
-
-.test{
-  color: #fdfd96;
-  text-decoration: underline;
-  text-align: left;
-}
-.test:hover{
-  color: white;
-  background:#78cfa8;
-  text-align: left;
-}
-
-.test > a{
-  color: #fdfd96;
-  text-decoration: underline;
-  text-align: left;
-}
-.test > a:hover{
-  color: white;
-  background:#78cfa8;
-  text-align: left;
-}
