@@ -1,7 +1,7 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div>
+  <div xr-layer>
     <a href="https://realitymedia.digital/" target="_blank" class="alink" style="fontSize:1.5em;">Click here to return back to the website</a>
 
   </div>

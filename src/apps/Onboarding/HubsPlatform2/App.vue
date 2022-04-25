@@ -2,7 +2,7 @@
   <div> 
   <div id="room" class="darkwall">
   <div class="spacer">
-    <div xr-layer class="squareoff">
+    <div class="squareoff">
       <br>
       <br>
       <br>
