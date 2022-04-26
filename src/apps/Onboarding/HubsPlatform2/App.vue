@@ -17,13 +17,12 @@
 <br>
 <!--- On desktop use your WASD or arrow keys to move around. You can also press your right mouse button to teleport to a different location. Rotate your view using the Q and E keys, or hold down your left mouse button and drag. -->
 <br>
-- For VR and mobile controls, see the <span class="test"><a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank">list of Hubs controls.</a></span>
+- For VR and mobile controls, see the <span class="test3"><a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank">list of Hubs controls.</a></span>
 <br/>
-- For VR and mobile controls, see the <span class="test1"><a href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank">list of Hubs controls.</a></span>
+- For VR and mobile controls, see the <span class="test1"><a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a></span>
 <br/>
-- For VR and mobile controls, see the <a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="test2"><span xr-layer>list of Hubs controls.</span></a>
+- For VR and mobile controls, see the <a xr-layer href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a>
 <br/>
-- For VR and mobile controls, see the <span xr-layer><a href="https://hubs.mozilla.com/docs/hubs-controls.html" target="_blank" class="alink">list of Hubs controls.</a></span>
  </div>
   </div>
   </div>
@@ -37,39 +36,28 @@ import Title from '../../../components/CenterTitle.vue'
 import "../../../assets/top.css"
 import "../../../assets/room.css"
 </script>
-.test span{
-  color: #fdfd96;
-  text-decoration: underline;
-}
- 
-.test span:hover{
-  color: white;
-  background:#78cfa8;
-}
- 
-.test1>a{
-  color: #fdfd96;
-  text-decoration: underline;
-}
- 
-.test1>a:hover{
-  color: white;
-  background:#78cfa8;
-}
-
-.test2{
-  color: #fdfd96;
-  text-decoration: underline;
-}
- 
-.test2:hover{
-  color: white;
-  background:#78cfa8;
-}
-
 
 <style scoped>
+ .test3  a{
+  color: #fdfd96;
+  text-decoration: underline;
+}
  
+.test3 a:hover{
+  color: white;
+  background:#78cfa8;
+}
+
+.test1{
+  color: #fdfd96;
+  text-decoration: underline;
+}
+ 
+.test1:hover{
+  color: white;
+  background:#78cfa8;
+}
+
 </style>
  
  
