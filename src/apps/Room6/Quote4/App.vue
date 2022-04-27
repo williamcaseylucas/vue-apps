@@ -1,8 +1,10 @@
 <template>
   <div> 
   <div id="room" class="darkwall">
-  <div class="full">
-  <img xr-layer src="../../../assets/images/Rotunda/2-brunelleschi.jpg">
+  <div class="spacer-side">
+	<div class="squareoff">
+   <div class="lgquote">VR experiences generally lack aura, but AR experiences for cultural heritage can borrow or even enhance the aura of place.</div>
+  </div> 
   </div>
   </div>
   </div> 
