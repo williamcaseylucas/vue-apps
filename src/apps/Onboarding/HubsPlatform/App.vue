@@ -21,11 +21,9 @@ Before entering, you are in the room's lobby. From here, you can see and hear wh
 
 <script setup>
 import Title from '../../../components/CenterTitle.vue'
-
 import "../../../assets/top.css"
 import "../../../assets/room.css"
 </script>
 
 <style scoped>
-
 </style>
