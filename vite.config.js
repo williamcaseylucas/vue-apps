@@ -47,11 +47,15 @@ export default defineConfig({
     //   globals: {
     //     'three': 'THREE'
     //   },
-  
+    external: ['three'],
+
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        format: 'es'
+        format: 'es',
+        globals: {
+          three: 'THREE'
+        },
       }, 
       plugins: [
         // virtual({
