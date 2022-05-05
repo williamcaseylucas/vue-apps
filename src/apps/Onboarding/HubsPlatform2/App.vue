@@ -26,6 +26,8 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
+
 import Title from '../../../components/CenterTitle.vue'
 import "../../../assets/top.css"
 import "../../../assets/room.css"
