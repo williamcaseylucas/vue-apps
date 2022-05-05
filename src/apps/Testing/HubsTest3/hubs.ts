@@ -12,7 +12,8 @@ export class HubsApp extends HubsAppProto {
         // share data between vue and hubs
         this.shared = new Store(this)
         this.vueApp.provide('shared', this.shared)
-
+        // @ts-ignore
+        this.vueApp.provide('linkClick', window.APP.utils.followLinkClick)
         this.isInteractive = true;
         this.isNetworked = true;
         this.isStatic = false;

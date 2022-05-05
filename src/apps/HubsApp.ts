@@ -367,3 +367,33 @@ export default class HubsApp extends VueApp {
         }
     }
 }
+
+async function logAndFollow(id: string | null, url: string) {
+    //@ts-ignore
+    await window.APP.scene.systems["data-logging"].logCLink(id, url);
+    
+    if (url.length > 0) {
+        window.open(url, "_blank");
+    }
+}
+
+//@ts-ignore
+window.APP.utils.followLinkClick = function (event: MouseEvent) {
+    // Get url from the target element (<a>) href attribute
+    var url: string = "";
+    event.preventDefault();
+
+    if (event.target instanceof HTMLElement) {
+        if (event.target instanceof HTMLAnchorElement) {
+            url = (event.target as HTMLAnchorElement).href;
+            // Prevent default action (e.g. following the link)
+        } else if (event.target instanceof HTMLSpanElement) {
+            let child = event.target.childNodes[0]
+            if (child instanceof HTMLAnchorElement) {
+                url = (child as HTMLAnchorElement).href;;
+            }
+        }
+        logAndFollow(event.target.id, url);
+    }
+}
+
