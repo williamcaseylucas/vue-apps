@@ -1,10 +1,10 @@
 <template>
-  <h1 xr-layer class="fade">{{ msg }}</h1>
+  <span class="fade"><h1>{{ msg }}</h1></span>
   <p>
-    <a xr-layer href="https://vitejs.dev/guide/features.html" target="_blank">
+    <span><a href="https://vitejs.dev/guide/features.html" target="_blank">
       Vite Documentation and Then Some! 
-    </a>
-    <a xr-layer href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
+    </a></span>
+    <span><a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a></span>
   </p>
 
   <button xr-layer @click="shared.increment">count is: {{ shared.state.count }}</button>
