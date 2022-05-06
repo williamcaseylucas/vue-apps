@@ -1,7 +1,7 @@
 /* Now, our styles */
-
+@import url('https://fonts.googleapis.com/css2?family=Buenard&family=Montserrat:wght@100&family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap');
 #room {
-    font-family: Avenir,  Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -25,7 +25,13 @@
     background-color: transparent;  
     color: #1f1d1d;
 }
- 
+
+#room.whitewall{
+  background-color: white;  
+  color: #1f1d1d;
+  border-radius: 0px;
+}
+
 #room h2{
   font-size: 1.5em;
   font-weight: bold;
@@ -80,7 +86,12 @@
     margin-left: 25px;
     margin-right: 25px;
     }
-
+    .lgquote{
+      font-family: 'Roboto', sans-serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: #8E9097;
+    }
     /*font styles*/
     .oblique {
       font-style:italic;
@@ -128,6 +139,52 @@
       font-size:5em;
     }
     
+/* History Gallery */
+#room h2.history_title {
+  text-align: left;
+  font-size: 2rem;
+  float: left;
+  padding-bottom: 10px;
+}
+.history_subtitle{
+  background-color: #E3E3E3;
+  padding: 0 6px;
+  display: inline;
+  float: right;
+}
+
+.history_spacer-side{
+  margin: 20px 60px;
+}
+.history_year{
+  font-size: 2rem;
+  font-weight: 100;
+  opacity: 0.8;
+  float: right;
+  /* text-align: right;
+  position: absolute;
+  top: 30px;
+  left:465px; */
+  font-family: 'Montserrat', sans-serif;
+}
+.history_hr{
+  clear: both;
+  border: 2px solid #E3E3E3;
+  background-color: #E3E3E3;
+}
+.history_hr2{
+
+  border: 0;
+  border-bottom: 3px dotted #E3E3E3;
+  padding-top:9px;
+}
+#room.ivorywall{
+  background: #F9EFE4;
+  color:#42487C;
+  font-family: 'Buenard', serif;
+  border-radius: 0;
+}
+
 /* title vue-app */
 .titleStyle {
   font-size: 2em;
@@ -147,4 +204,3 @@
   color: white;
   background:#78cfa8;
 }
-

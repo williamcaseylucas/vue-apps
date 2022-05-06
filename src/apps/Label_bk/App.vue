@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <div id="room" class="lightwall">
+  <div id="room">
   <div class="spacer-side">
   <br>
 <!--<Title v-bind:msg="title" />-->

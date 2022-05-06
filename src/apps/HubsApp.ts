@@ -20,6 +20,15 @@ export function systemTick(time: number, deltaTime: number) {
    HubsApp.systemTick(time, deltaTime)
 }
 
+export async function loadCache(url: string) {
+    await WebLayerManager.instance.importCache(url)
+}
+
+export async function exportCache(states: Array<string> | undefined) {
+    await WebLayerManager.instance.saveStore()
+    return await WebLayerManager.instance.exportCache(states)
+}
+
 function copyCamera(source: THREE.PerspectiveCamera, target: THREE.PerspectiveCamera) {
     source.updateMatrixWorld()
     //let oldName = target.name
@@ -358,3 +367,33 @@ export default class HubsApp extends VueApp {
         }
     }
 }
+
+async function logAndFollow(id: string | null, url: string) {
+    //@ts-ignore
+    await window.APP.scene.systems["data-logging"].logClick(id, url);
+    
+    if (url.length > 0) {
+        window.open(url, "_blank");
+    }
+}
+
+//@ts-ignore
+window.APP.utils.followLinkClick = function (event: MouseEvent) {
+    // Get url from the target element (<a>) href attribute
+    var url: string = "";
+    event.preventDefault();
+
+    if (event.target instanceof HTMLElement) {
+        if (event.target instanceof HTMLAnchorElement) {
+            url = (event.target as HTMLAnchorElement).href;
+            // Prevent default action (e.g. following the link)
+        } else if (event.target instanceof HTMLSpanElement) {
+            let child = event.target.childNodes[0]
+            if (child instanceof HTMLAnchorElement) {
+                url = (child as HTMLAnchorElement).href;;
+            }
+        }
+        logAndFollow(event.target.id, url);
+    }
+}
+

@@ -1,15 +1,20 @@
 <template>
   <div> 
-  <div id="room" class="lightwall">
- <div class="spacer-side">
-
-  <Title msg="Theaters" />
-  <br>
+  <div id="room" class="ivorywall"> 
+  <div style="padding-top: 10px">
+  <div class="history_spacer-side">
+  <Title class="history_title" msg="Theaters" />
+  
+  <p class="history_year">1430s</p>
+  <hr class="history_hr">
+  <br/>
+  
 <div class="squareoff">
 Theaters
-<br /><br />
+</div>
 </div>
 	</div>
+  <br />
   </div> 
   </div>
 </template>
@@ -24,3 +29,4 @@ import "../../../assets/room.css"
 <style scoped>
 
 </style>
+
