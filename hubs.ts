@@ -30,10 +30,11 @@ import Apparizione from './src/apps/Room5/Apparizione/hubs'
 import Minecraft from './src/apps/Room5/Minecraft/hubs'
 import GamesBanner from './src/apps/Room5/GamesBanner/hubs'
 import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
-import {initializeEthereal, systemTick} from './src/apps/HubsApp'
+import {initializeEthereal, systemTick, loadCache, exportCache} from './src/apps/HubsApp'
 
 //History Room
 import LinearPerspective from './src/apps/History/LinearPerspective/hubs'
+import LinearPerspective_Demo from './src/apps/History/LinearPerspective_demo/hubs'
 import Panorama from './src/apps/History/Panorama/hubs'
 import CameraObscura from './src/apps/History/CameraObscura/hubs'
 import Photography from './src/apps/History/Photography/hubs'
@@ -46,10 +47,11 @@ import Theaters from './src/apps/History/Theaters/hubs'
 import VR from './src/apps/History/VR/hubs'
 import AR from './src/apps/History/AR/hubs'
 import GoogleStreetView from './src/apps/History/GoogleStreetView/hubs'
-import Streoscopic from './src/apps/History/Streoscopic/hubs'
+import Stereoscopic from './src/apps/History/Stereoscopic/hubs'
 import Trompe from './src/apps/History/trompe/hubs'
-
-
+import UltimateDisplay from './src/apps/History/UltimateDisplay/hubs'
+import VRCave from './src/apps/History/VRCave/hubs'
+import Zoetrope from './src/apps/History/Zoetrope/hubs'
 
 
 // Presence and Aura Room 
@@ -77,6 +79,13 @@ import PlaceandSpace from './src/apps/Room6/PlaceandSpace/hubs'
 import Parthenon from './src/apps/Room6/Parthenon/hubs'
 import TerracottaPic from './src/apps/Room6/TerracottaPic/hubs'
 import Terracotta from './src/apps/Room6/Terracotta/hubs'
+import Quote1 from './src/apps/Room6/Quote1/hubs'
+import Quote2 from './src/apps/Room6/Quote2/hubs'
+import Quote3 from './src/apps/Room6/Quote3/hubs'
+import Quote4 from './src/apps/Room6/Quote4/hubs'
+import Quote5 from './src/apps/Room6/Quote5/hubs'
+
+
 
 //Pit
 import Pit from './src/apps/Room_Pit/Pit/hubs'
@@ -88,7 +97,6 @@ import pitSign3 from './src/apps/Room_Pit/pitSign3/hubs'
 //Onboarding Room
 import Welcome from './src/apps/Onboarding/Welcome/hubs'
 import MitPress from './src/apps/Onboarding/MitPress/hubs'
-import MitText from './src/apps/Onboarding/MitText/hubs'
 
 import HubsPlatform from './src/apps/Onboarding/HubsPlatform/hubs'
 import HubsPlatform2 from './src/apps/Onboarding/HubsPlatform2/hubs'
@@ -101,14 +109,6 @@ import Overview from './src/apps/Onboarding/Overview/hubs'
 import Back from './src/apps/Onboarding/Back/hubs'
 import Exit from './src/apps/Room6/Exit/hubs'
 
-import ARVR_monolith from './src/apps/Onboarding/ARVR_monolith/hubs'
-import History_monolith from './src/apps/Onboarding/History_monolith/hubs'
-import Graphics_monolith from './src/apps/Onboarding/Graphics_monolith/hubs'
-import Presence_monolith from './src/apps/Onboarding/Presence_monolith/hubs'
-import Genres_monolith from './src/apps/Onboarding/Genres_monolith/hubs'
-import Privacy_monolith from './src/apps/Onboarding/Privacy_monolith/hubs'
-import Future_monolith from './src/apps/Onboarding/Future_monolith/hubs'
-
 //test
 import AudioPad from './src/apps/AudioPad/hubs'
 import Label from './src/apps/Label/hubs'
@@ -120,6 +120,9 @@ export {
     // for updating ethereal once per tick
     systemTick, initializeEthereal,
 
+    // cache management
+    exportCache, loadCache,
+
     //General Use
     Label,Title,Label_lg,Label_bk,
     // Rotunda
@@ -127,13 +130,14 @@ export {
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
     
     //History
-    LinearPerspective, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Streoscopic,
+    LinearPerspective, LinearPerspective_Demo, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Stereoscopic,UltimateDisplay, VRCave, Zoetrope,
 
     // Presence and Aura
-    Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation,
+    Milk, Nonnie, Treehugger, Presence, Empathy, Aura,  cybersickness, Presence_map, Presence_map2, Presence_map3, Milk_pic,  Nonnie_pic, AudioText, Parthenon, Terracotta, TerracottaPic, AudioPad, Gaudi, Gaudi_pic, cybersickness_pic,  Pit_AR, Laciotat, PlaceandSpace, Mainmap_black,Pit_Experiment, Absence_Mediation, Quote1, Quote2,Quote3, Quote4, Quote5,
     
     //Onboarding and Rotunda
-    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing,MitText, HubsPlatform2, Overview, Back, ARVR_monolith, History_monolith,Graphics_monolith,Presence_monolith,Genres_monolith,Privacy_monolith,Future_monolith,
+    Exit, Welcome, MitPress, HubsPlatform, HubsFeatures,rotundaMap, Sharing, HubsPlatform2, Overview, Back,
+   
     //Pit 
     Pit, PitInstruction, pitSign1,pitSign2,pitSign3,
     // Portal titles
