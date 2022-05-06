@@ -2,9 +2,9 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <a target="_blank" href="https://www.steamvr.com/en/">
-  <img xr-layer width="400" src="../../../assets/images/Room5/STEAM VR.png" alt="Pokemon Go Image">
+  <img xr-layer width="400" src="../../../assets/images/Room5/STEAM VR.png" alt="Steam Image">
   </a>
-  <Title msg="Pokemon Go" />
+  <Title msg="Steam" />
 	  <div class="squareoff"></div> 
   </div>
   </div>
