@@ -6,7 +6,6 @@
   </a>
   <Title msg="Google Live View" />
 	  <div class="squareoff">
-      Temporary Text
     </div> 
   </div>
   </div>
