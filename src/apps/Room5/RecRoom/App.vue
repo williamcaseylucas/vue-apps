@@ -2,7 +2,7 @@
   <div id="room" class="darkwall">
   <div class="spacer">
   <a target="_blank" href="https://recroom.com/">
-  <img xr-layer width="400" src="../../../assets/images/Room5/RecRoom.png" alt="Rec Room">
+  <img xr-layer width="400" src="../../../assets/images/Room5/RecRoom.jpg" alt="Rec Room">
   </a>
   <Title msg="Rec Room" />
 	  <div class="squareoff">
