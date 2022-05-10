@@ -33,6 +33,8 @@ import ArtBanner from './src/apps/Room5/ArtBanner/hubs'
 import RecRoom from './src/apps/Room5/RecRoom/hubs'
 import Steam from './src/apps/Room5/Steam/hubs'
 import GoogleLiveView from './src/apps/Room5/GoogleLiveView/hubs'
+import TheDayTheWorldChanged from './src/apps/Room5/TheDayTheWorldChanged/hubs'
+import CerneYArena from './src/apps/Room5/CerneYArena/hubs'
 import {initializeEthereal, systemTick, loadCache, exportCache} from './src/apps/HubsApp'
 
 //History Room
@@ -131,7 +133,7 @@ export {
     // Rotunda
     Map, Center1, Center2, Center3, Center4, Center5, Center6, Center7, Monolith1, Monolith2, Monolith3, Monolith4, Monolith5, Monolith6, Monolith7,
     Alyx, Pokemon, BeatSaber, WalkingDead, Minecraft, Apparizione, GamesBanner, ArtBanner, 
-    RecRoom, GoogleLiveView, Steam,
+    RecRoom, GoogleLiveView, Steam, TheDayTheWorldChanged, CerneYArena,
     
     //History
     LinearPerspective, LinearPerspective_Demo, Panorama, CameraObscura, Photography, Film, TV, Equirectangular, Sensorama, ImmersiveRides, Theaters, VR, AR, GoogleStreetView, Trompe, Stereoscopic,UltimateDisplay, VRCave, Zoetrope,
